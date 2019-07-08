@@ -1,0 +1,80 @@
+
+/*!
+Theme Name: horse-photogarpher
+Theme URI: http://underscores.me/
+Author: Diagonal
+Author URI: http://diagonal.software
+Description: Description
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: LICENSE
+Text Domain: horse
+Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+
+horse-photogarpher is based on Underscores https://underscores.me/, (C) 2012-2017 Automattic, Inc.
+Underscores is distributed under the terms of the GNU GPL v2 or later.
+
+Normalizing styles have been helped along thanks to the fine work of
+Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
+*/
+
+/**
+*
+* TABLE OF CONTENT
+*
+* # Reset
+* # Typography
+* # Elements
+* # Froms
+* # Navigations
+* # Modules
+	# Accessibility
+	# Alignments
+	# Clearings
+* # Header
+* # Widgets
+* # Content
+	# Posts and Pages
+	# Asides
+	# Comments
+* # Footer
+* # Media
+	# captions
+	# galleries
+* # Media Queriess
+	# Mobile
+	# Tablets
+	# Computers
+* # Print
+*
+*/
+
+@import "variables/colors";
+@import "variables/structure";
+@import "variables/typography";
+@import "mixins/master";
+@import "reset/normalize";
+@import "typography/copy";
+@import "typography/headings";
+@import "global/common";
+@import "elements/lists";
+@import "elements/tables";
+@import "navigations/links";
+@import "navigations/menus";
+@import "modules/accessibility";
+@import "modules/alignments";
+@import "modules/clearings";
+@import "forms/buttons";
+@import "forms/fields";
+@import "layout/header";
+@import "site/secondary/widgets";
+@import "site/primary/posts-and-pages";
+@import "media/captions";
+@import "media/galleries";
+@import "layout/footer";
+@import "responsive/large";
+@import "responsive/medium";
+@import "responsive/small";

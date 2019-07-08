@@ -1,0 +1,26 @@
+/*=============================================
+=            Button            =
+=============================================*/
+
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	border: 1px solid;
+	border-color: $color-button-border;
+	border-radius: 3px;
+	background: $color-button-bg;
+	font-size: $font-size-base;
+	line-height: 1;
+	padding: 15px 20px;
+	color: $color-body;
+
+	&:hover {
+		border-color: $color-button-border-hover;
+	}
+
+	&:active,
+	&:focus {
+		border-color: $color-button-border-focus;
+	}
+}
