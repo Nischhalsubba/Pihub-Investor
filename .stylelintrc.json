@@ -1,20 +1,4 @@
 {
-	"extends": ["stylelint-config-wordpress/scss"],
-
-	"rules": {
-		"no-eol-whitespace": [
-			true,
-			{
-				"ignore": ["empty-lines"]
-			}
-		],
-		"font-family-no-missing-generic-family-keyword": null,
-		"value-no-vendor-prefix": true,
-		"no-descending-specificity": null,
-		"font-family-name-quotes": null,
-		"function-url-quotes": null,
-		"function-comma-space-after": "always-single-line",
-		"function-parentheses-space-inside": null
-	},
+	"extends": ["stylelint-config-standard"],
 	"ignoreFiles": ["**/*.html", "**/*.js", "**/*.md", "**/*.svg"]
 }
