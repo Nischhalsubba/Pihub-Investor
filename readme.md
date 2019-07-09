@@ -21,6 +21,6 @@ What files you need to edit?
 
 | Files | Where to edit |
 | ------ | ------ |
-| CSS | Edit `scss` files inside `src/assets/sass`|
-| HTML | Edit `pug` files inside `src` and `src/templates`|
-| JS | Edit `js` files inside `src/assets/js`|
+| CSS | Edit scss files inside src/assets/sass|
+| HTML | Edit pug files inside src and src/templates|
+| JS | Edit js files inside src/assets/js|
