@@ -4,11 +4,18 @@ var browserSync = require('browser-sync').create();
 var pug = require('gulp-pug');
 var autoprefixer = require('gulp-autoprefixer');
 var imagemin = require('gulp-imagemin');
+var uglify = require('gulp-uglify');
+var clean = require('gulp-clean-css');
 
 // Paths and directories
 var paths = {
-	styles: {
+	sass: {
 		src: './src/assets/sass/**/*.scss',
+		dest: './dist/assets/css'
+	},
+
+	css: {
+		src: './src/assets/css/*.css',
 		dest: './dist/assets/css'
 	},
 
@@ -35,7 +42,7 @@ var paths = {
 // Compiles Sass into CSS
 gulp.task('sass', function () {
 	return gulp
-		.src(paths.styles.src)
+		.src(paths.sass.src)
 		.pipe(sass().on('error', sass.logError))
 		.pipe(autoprefixer({
 			browsers: ['last 2 versions'],
@@ -63,11 +70,28 @@ gulp.task('compileHTML', function(){
 		.pipe(gulp.dest(paths.html.dest));
 });
 
+// Optimizes images
 gulp.task('minifyImg', function(){
 	return gulp
 		.src(paths.img.src)
 		.pipe(imagemin())
 		.pipe(gulp.dest(paths.img.dest))
+});
+
+// Minifies the javascript
+gulp.task('minifyJs', function() {
+	return gulp
+		.src(paths.js.src)
+		.pipe(uglify())
+		.pipe(gulp.dest(paths.js.dest));
+});
+
+// Minifies the css
+gulp.task('minifyCss', function() {
+	return gulp
+		.src(paths.css.src)
+		.pipe(clean())
+		.pipe(gulp.dest(paths.css.dest));
 });
 
 // reload browser
@@ -76,6 +100,7 @@ gulp.task('reloadBrowser', function(done){
 	done();
 });
 
+// injects css changes to the browser
 gulp.task('streamBrowser', function(done){
 	browserSync.stream();
 	done();
@@ -86,6 +111,8 @@ gulp.task('watch', function () {
 	gulp.watch(paths.styles.src, gulp.series('sass', 'streamBrowser'));
 	gulp.watch(paths.watch.pug, gulp.series('compileHTML', 'reloadBrowser'));
 	gulp.watch(paths.img.src, gulp.series('minifyImg', 'reloadBrowser'));
+	gulp.watch(paths.css.src, gulp.series('minifyCss', 'reloadBrowser'));
+	gulp.watch(paths.js.src, gulp.series('minifyJs', 'reloadBrowser'));
 });
 
 // Starts the development server
