@@ -108,7 +108,7 @@ gulp.task('streamBrowser', function(done){
 
 // Watches file for changes and runs the task
 gulp.task('watch', function () {
-	gulp.watch(paths.styles.src, gulp.series('sass', 'streamBrowser'));
+	gulp.watch(paths.sass.src, gulp.series('sass', 'streamBrowser'));
 	gulp.watch(paths.watch.pug, gulp.series('compileHTML', 'reloadBrowser'));
 	gulp.watch(paths.img.src, gulp.series('minifyImg', 'reloadBrowser'));
 	gulp.watch(paths.css.src, gulp.series('minifyCss', 'reloadBrowser'));
