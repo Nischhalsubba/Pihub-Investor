@@ -18,6 +18,7 @@ Make sure you never edit any files inside the `dist` folder. Every files inside 
 We use `pug` as a `html` preprocessor and `sass` for the `css`
 
 What files you need to edit?
+
 | Files | Where to edit |
 | ------ | ------ |
 | CSS | Edit `scss` files inside `src/assets/sass`|
