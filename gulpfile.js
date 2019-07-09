@@ -82,7 +82,11 @@ gulp.task('minifyImg', function(){
 gulp.task('minifyJs', function() {
 	return gulp
 		.src(paths.js.src)
-		.pipe(uglify())
+		.pipe(uglify({
+			output: {
+				comments: true
+			}
+		}))
 		.pipe(gulp.dest(paths.js.dest));
 });
 
