@@ -2,10 +2,53 @@
 <!DOCTYPE html>
 html(lang="en")
     head
-        include includes/head.pug
+        include templates/head.pug
         title This is right
     body
-        header#masthead.site-header
-            .container
-                div.site-branding
-                    h1.site-title Credit tech
+        .panel-container
+            .feature-container
+                .feature-sidebar.feature-sidebar--signup
+                    h3.feature-sidebar__sub-title The Perfect Investment
+                    h2.feature-sidebar__title At Credittech you can easily find creditor and make an investment
+
+                .signup-quote
+                    h2.signup-quote__title Why Credit Tech?
+                    p.signup-quote__content At first I Invested little and by time pass I Invested to the sector I like and Credit Tech takes me right there
+                    p.signup-quote__name John Doe
+
+                    a.btn.btn-white What others say?
+            .main-container
+                header.page-header
+                    h1.page-title Sign Up to Credit Tech as an Investor 
+                    h2.page-subtitle Enter your details below
+
+                    form.form-signup(action="")
+                        .row
+                            .col
+                                .form-group
+                                    label(for='first-name') First Name
+                                    input(type="text", name="first-name" class="form-control")
+                            .col
+                                .form-group
+                                    label(for='last-name') Last Name
+                                    input(type="text", name="last-name" class="form-control")
+                        .form-group
+                            label(for='company-name') Company Name
+                            input(type="text", name="company-name" class="form-control")
+                        .form-group
+                            label(for='email-address') Email Address
+                            input(type="email", name="email-address" class="form-control")
+                        .form-group
+                            label(for='password') Password
+                            input(type="password", name="password" class="form-control")
+                        .form-group
+                            label(for='confirm-password') Confirm Password
+                            input(type="password", name="confirm-password" class="form-control")
+                        .form-group
+                            label(for='phone-number') Phone Number
+                            input(type="tel", name="phone-number" class="form-control")
+                        .form-check
+                            input(type="checkbox", name="agreed-term")
+                            label(for="phone-number") I agree to the 
+                                a(href="") Terms & Conditions
+                        <button type="submit" class="btn btn-primary">Sign Up Now</button>
