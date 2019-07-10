@@ -460,7 +460,20 @@ input[type="submit"] {
     border-color: #ddd; }
 
 .btn {
-  padding: 15px 30px; }
+  padding: 12px 25px;
+  border: 0;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  border-radius: 3px; }
+
+.btn-primary {
+  background-color: #242a5a; }
+  .btn-primary:hover {
+    background-color: #151936; }
+  .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active {
+    background-color: #242a5a; }
 
 input[type="text"],
 input[type="email"],

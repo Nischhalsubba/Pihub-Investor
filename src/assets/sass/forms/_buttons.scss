@@ -26,5 +26,29 @@ input[type="submit"] {
 }
 
 .btn {
-	padding: 15px 30px;
+	padding: 12px 25px;
+	border: 0;
+	text-transform: uppercase;
+	font-size: $font-size-small;
+	font-weight: 500;
+	letter-spacing: 1px;
+	border-radius: 3px;
 }
+
+.btn-primary {
+	background-color: $color-primary;
+
+	&:hover {
+		background-color: darken($color-primary, 10);
+	}
+
+	&:active {
+		// background-color: darken($color-primary, 10);
+	}
+
+	&:not(:disabled):not(.disabled).active,
+	&:not(:disabled):not(.disabled):active {
+		background-color: $color-primary;
+	}
+}
+
