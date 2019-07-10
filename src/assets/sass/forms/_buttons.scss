@@ -47,3 +47,12 @@ input[type="submit"] {
 		background-color: $color-primary;
 	}
 }
+
+.btn-white {
+	background-color: $color-white;
+	color: $color-heading;
+}
+
+.btn-form {
+	margin-top: 20px;
+}

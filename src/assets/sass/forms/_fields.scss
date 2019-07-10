@@ -3,6 +3,10 @@ input[type="email"],
 input[type="url"],
 input[type="password"],
 input[type="search"],
+textarea {
+	width: 100%;
+}
+
 input[type="number"],
 input[type="tel"],
 input[type="range"],
@@ -28,6 +32,21 @@ select {
 	border: 1px solid $color-input-border;
 }
 
-textarea {
-	width: 100%;
+label {
+	font-weight: 500;
+	margin-bottom: 15px;
+	color: $color-gray-9;
+}
+
+.form-check {
+	padding: 0;
+
+	label {
+		font-size: 12px;
+		color: $color-gray-7;
+	}
+
+	a {
+		text-decoration: underline;
+	}
 }

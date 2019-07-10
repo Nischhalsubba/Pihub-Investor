@@ -5,23 +5,25 @@ html(lang="en")
         include templates/head.pug
         title This is right
     body
-        .container-fluid
+        .container-full-width
             .panel-container
-                .feature-container
-                    .feature-sidebar.feature-sidebar--signup
-                        h3.feature-sidebar__sub-title The Perfect Investment
-                        h2.feature-sidebar__title At Credittech you can easily find creditor and make an investment
+                .feature-container.feature-container--signup
+                    .feature-sidebar
+                        .feature-ours
+                            h3.feature-ours__sub-title The Perfect Investment
+                            h2.feature-ours__title At Credittech you can easily find creditor and make an investment
 
-                    .signup-quote
-                        h2.signup-quote__title Why Credit Tech?
-                        p.signup-quote__content At first I Invested little and by time pass I Invested to the sector I like and Credit Tech takes me right there
-                        p.signup-quote__name John Doe
+                        .signup-quote
+                            h2.signup-quote__title Why Credit Tech?
+                            p.signup-quote__content At first I Invested little and by time pass I Invested to the sector I like and Credit Tech takes me right there
+                            p.signup-quote__name John Doe
 
-                        a.btn.btn-white What others say?
+                            a.btn.btn-white What others say?
                 .main-container
-                    header.page-header
-                        h1.page-title Sign Up to Credit Tech as an Investor 
-                        h2.page-subtitle Enter your details below
+                    .signup-form-container
+                        header.page-header
+                            h1.page-title Sign Up to Credit Tech as an Investor 
+                            p.page-desc Enter your details below
 
                         form.form-signup(action="")
                             .row
@@ -52,5 +54,5 @@ html(lang="en")
                                 input(type="checkbox", name="agreed-term" checked)
                                 label(for="phone-number") I agree to the 
                                     a(href="") Terms & Conditions
-                            button.btn.btn-primary(type="submit") Sign Up Now
-                            
+                            button.btn.btn-primary.btn-form(type="submit") Sign Up Now
+                                

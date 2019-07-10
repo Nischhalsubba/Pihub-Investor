@@ -1,0 +1,28 @@
+.container-full-width {
+	width: 100%;
+}
+
+.panel-container {
+	display: flex;
+	min-height: 100vh;
+}
+
+.feature-container,
+.main-container {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.feature-container {
+	flex: 1;
+	max-width: 550px;
+	padding: 60px;
+	text-align: center;
+}
+
+.feature-container--signup {
+	background-image: url('../img/signup-bg.jpg');
+	background-size: cover;
+}
