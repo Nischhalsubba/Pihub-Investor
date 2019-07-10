@@ -11,6 +11,11 @@ $ npm install
 $ gulp serve
 ```
 
+If you don't have gulp cli, `gulp serve` won't work for you. You must install the gulp cli first.
+```sh
+$ npm install -g gulp-cli
+```
+
 ### Important
 
 Make sure you never edit any files inside the `dist` folder. Every files inside it will be replaced by the files from the `src` folder.
