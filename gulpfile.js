@@ -45,10 +45,10 @@ gulp.task('sass', function () {
 		.src(paths.sass.src)
 		.pipe(sass().on('error', sass.logError))
 		.pipe(autoprefixer({
-			browsers: ['last 2 versions'],
 			cascade: false
 		}))
-		.pipe(gulp.dest(paths.styles.dest));
+		.pipe(gulp.dest(paths.sass.dest))
+		.pipe(browserSync.stream());
 });
 
 // Watches files for change and reloads the browser
@@ -104,15 +104,9 @@ gulp.task('reloadBrowser', function(done){
 	done();
 });
 
-// injects css changes to the browser
-gulp.task('streamBrowser', function(done){
-	browserSync.stream();
-	done();
-});
-
 // Watches file for changes and runs the task
 gulp.task('watch', function () {
-	gulp.watch(paths.sass.src, gulp.series('sass', 'streamBrowser'));
+	gulp.watch(paths.sass.src, gulp.series('sass'));
 	gulp.watch(paths.watch.pug, gulp.series('compileHTML', 'reloadBrowser'));
 	gulp.watch(paths.img.src, gulp.series('minifyImg', 'reloadBrowser'));
 	gulp.watch(paths.css.src, gulp.series('minifyCss', 'reloadBrowser'));

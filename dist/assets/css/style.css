@@ -119,7 +119,6 @@ figure {
   margin: 1em 40px; }
 
 hr {
-  -webkit-box-sizing: content-box;
   box-sizing: content-box;
   height: 0; }
 
@@ -170,7 +169,6 @@ input {
 
 input[type="checkbox"],
 input[type="radio"] {
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 0; }
 
@@ -212,7 +210,7 @@ body {
   font-family: "Ubuntu", "helvetica", "arial", sans-serif;
   font-size: 18px;
   line-height: 1.3;
-  color: #868e96; }
+  color: #364b63; }
 
 p {
   line-height: 24px; }
@@ -227,7 +225,7 @@ h4,
 h5,
 h6 {
   font-family: "Ubuntu", "helvetica", "arial", sans-serif;
-  color: #343a40;
+  color: #05101a;
   font-weight: 700; }
 
 h1 {
@@ -274,16 +272,16 @@ table {
   width: 100%; }
 
 a {
-  color: #343a40; }
+  color: #05101a; }
   a:visited {
-    color: #343a40; }
+    color: #05101a; }
   a:hover, a:focus, a:active {
-    color: #f06781; }
+    color: #242a5a; }
   a:focus {
     outline: thin dotted; }
   a:hover, a:active {
     outline: 0;
-    color: #f06781; }
+    color: #242a5a; }
 
 .main-navigation {
   clear: both;
@@ -296,7 +294,6 @@ a {
     margin: 0;
     padding-left: 0; }
     .main-navigation ul ul {
-      -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
       box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
       float: left;
       position: absolute;
@@ -371,7 +368,6 @@ a {
   .screen-reader-text:focus {
     background-color: #f8f9fa;
     border-radius: 3px;
-    -webkit-box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
     box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
     clip: auto !important;
     -webkit-clip-path: none;
@@ -448,7 +444,7 @@ input[type="submit"] {
   font-size: 18px;
   line-height: 1;
   padding: 15px 20px;
-  color: #868e96; }
+  color: #364b63; }
   button:hover,
   input[type="button"]:hover,
   input[type="reset"]:hover,
@@ -462,6 +458,9 @@ input[type="submit"] {
   input[type="submit"]:active,
   input[type="submit"]:focus {
     border-color: #ddd; }
+
+.btn {
+  padding: 15px 30px; }
 
 input[type="text"],
 input[type="email"],
@@ -479,7 +478,7 @@ input[type="datetime"],
 input[type="datetime-local"],
 input[type="color"],
 textarea {
-  color: #868e96;
+  color: #364b63;
   border: 1px solid #f8f9fa;
   border-radius: 3px;
   padding: 3px; }
@@ -499,7 +498,7 @@ textarea {
   input[type="datetime-local"]:focus,
   input[type="color"]:focus,
   textarea:focus {
-    color: #343a40; }
+    color: #05101a; }
 
 select {
   border: 1px solid #f8f9fa; }
