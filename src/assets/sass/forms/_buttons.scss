@@ -42,13 +42,8 @@ input[type="submit"] {
 		background-color: darken($color-primary, 10);
 	}
 
-	&:active {
-		// background-color: darken($color-primary, 10);
-	}
-
 	&:not(:disabled):not(.disabled).active,
 	&:not(:disabled):not(.disabled):active {
 		background-color: $color-primary;
 	}
 }
-
