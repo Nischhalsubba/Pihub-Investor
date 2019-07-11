@@ -1,0 +1,28 @@
+.signin-form-container,
+.signin-banner-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.signin-banner-container {
+	background-color: $color-primary;
+}
+
+.signin-banner {
+	max-width: 500px;
+	
+	&__title {
+		color: $color-white;
+	}
+	
+	&__desc {
+		color: $color-gray-4;
+		margin-bottom: 60px;
+	}
+}
+
+.form-signin {
+	width: 100%;
+	min-width: 500px;
+}

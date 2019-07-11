@@ -563,6 +563,9 @@ label {
   background-image: url("../img/signup-bg.jpg");
   background-size: cover; }
 
+.container-full-height {
+  min-height: 100vh; }
+
 .widget {
   margin: 0 0 1.5em;
   /* Make sure select elements fit in widgets. */ }
@@ -661,3 +664,24 @@ label {
 .signup-form-container {
   width: 80%;
   padding: 60px; }
+
+.signin-form-container,
+.signin-banner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.signin-banner-container {
+  background-color: #242a5a; }
+
+.signin-banner {
+  max-width: 500px; }
+  .signin-banner__title {
+    color: #fff; }
+  .signin-banner__desc {
+    color: #ced4da;
+    margin-bottom: 60px; }
+
+.form-signin {
+  width: 100%;
+  min-width: 500px; }

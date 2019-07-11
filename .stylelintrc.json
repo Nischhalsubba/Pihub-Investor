@@ -1,8 +1,23 @@
 {
 	"extends": ["stylelint-config-standard"],
 	"rules": {
+		"no-eol-whitespace": [
+			true,
+			{
+				"ignore": [
+					"empty-lines"
+				]
+			}
+		],
 		"indentation": "tab",
-		"comment-whitespace-inside": null
+		"comment-whitespace-inside": null,
+		"font-family-no-missing-generic-family-keyword": null,
+		"value-no-vendor-prefix": true,
+		"no-descending-specificity": null,
+		"font-family-name-quotes": null,
+		"function-url-quotes": null,
+		"function-comma-space-after": "always-single-line",
+		"function-parentheses-space-inside": null
 	},
 	"ignoreFiles": ["**/*.html", "**/*.js", "**/*.md", "**/*.svg"]
 }
