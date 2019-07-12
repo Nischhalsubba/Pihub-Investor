@@ -12,7 +12,7 @@
 	# Alignments
 	# Clearings
 * # Header
-* # Widgets
+* # Sidebar
 * # Content
 	# Posts and Pages
 	# Asides
@@ -48,7 +48,7 @@
 @import "forms/fields";
 @import "layout/header";
 @import "layout/structure";
-@import "site/secondary/widgets";
+@import "site/secondary/sidebar";
 @import "site/primary/posts-and-pages";
 @import "media/captions";
 @import "media/galleries";

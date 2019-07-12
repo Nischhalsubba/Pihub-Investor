@@ -12,7 +12,7 @@
 	# Alignments
 	# Clearings
 * # Header
-* # Widgets
+* # Sidebar
 * # Content
 	# Posts and Pages
 	# Asides
@@ -283,70 +283,16 @@ a {
     outline: 0;
     color: #242a5a; }
 
-.main-navigation {
-  clear: both;
-  display: block;
-  float: left;
-  width: 100%; }
-  .main-navigation ul {
-    display: none;
-    list-style: none;
-    margin: 0;
-    padding-left: 0; }
-    .main-navigation ul ul {
-      box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
-      float: left;
-      position: absolute;
-      top: 100%;
-      left: -999em;
-      z-index: 99999; }
-      .main-navigation ul ul ul {
-        left: -999em;
-        top: 0; }
-      .main-navigation ul ul li:hover > ul,
-      .main-navigation ul ul li.focus > ul {
-        left: 100%; }
-      .main-navigation ul ul a {
-        width: 200px; }
-    .main-navigation ul li:hover > ul,
-    .main-navigation ul li.focus > ul {
-      left: auto; }
-  .main-navigation li {
-    float: left;
-    position: relative; }
-  .main-navigation a {
+.nav-sidebar .menu-sidebar {
+  margin: 0;
+  padding: 0;
+  list-style-type: none; }
+  .nav-sidebar .menu-sidebar li a {
     display: block;
-    text-decoration: none; }
-
-/* Small menu. */
-.menu-toggle,
-.main-navigation.toggled ul {
-  display: block; }
-
-@media screen and (min-width: 37.5em) {
-  .menu-toggle {
-    display: none; }
-  .main-navigation ul {
-    display: block; } }
-
-.site-main .comment-navigation, .site-main
-.posts-navigation, .site-main
-.post-navigation {
-  margin: 0 0 1.5em;
-  overflow: hidden; }
-
-.comment-navigation .nav-previous,
-.posts-navigation .nav-previous,
-.post-navigation .nav-previous {
-  float: left;
-  width: 50%; }
-
-.comment-navigation .nav-next,
-.posts-navigation .nav-next,
-.post-navigation .nav-next {
-  float: right;
-  text-align: right;
-  width: 50%; }
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 30px; }
 
 /*=============================================
 =            Accesibility            =
@@ -566,11 +512,10 @@ label {
 .container-full-height {
   min-height: 100vh; }
 
-.widget {
-  margin: 0 0 1.5em;
-  /* Make sure select elements fit in widgets. */ }
-  .widget select {
-    max-width: 100%; }
+.sidebar {
+  background-color: #242a5a;
+  max-width: 240px;
+  height: 100vh; }
 
 .sticky {
   display: block; }
