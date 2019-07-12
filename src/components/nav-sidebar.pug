@@ -1,11 +1,26 @@
 nav.nav-sidebar
 	ul.menu-sidebar
-		li(class="active")
+		li(class="current-menu has-sub-menu")
 			
 			a(href="http://")
 				i.bx.bx-dollar-circle
 				| Products
+			ul.sub-menu
+				li
+					a(href="http://", target="_blank", rel="noopener noreferrer") All Products
+				li
+					a(href="http://", target="_blank", rel="noopener noreferrer") Product Request
+				li
+					a(href="http://", target="_blank", rel="noopener noreferrer") Add New Account
+				li
+					a(href="http://", target="_blank", rel="noopener noreferrer") All Accounts
+				li
+					a(href="http://", target="_blank", rel="noopener noreferrer") Account Request
 		li
-			a(href="http://") Appearance
+			a(href="http://")
+				i.bx.bx-news
+				| News & Updates
 		li
-			a(href="http://") News & Updates
+			a(href="http://")
+				i.bx.bx-cog
+				| Settings

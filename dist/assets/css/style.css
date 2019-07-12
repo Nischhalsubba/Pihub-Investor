@@ -287,12 +287,26 @@ a {
   margin: 0;
   padding: 0;
   list-style-type: none; }
-  .nav-sidebar .menu-sidebar li a {
-    display: block;
+  .nav-sidebar .menu-sidebar > li > a {
+    text-decoration: none;
     color: #fff;
     font-size: 14px;
     font-weight: 700;
-    padding: 10px 30px; }
+    padding: 12px 30px;
+    position: relative;
+    transition: all 0.35s ease-in-out;
+    display: flex; }
+    .nav-sidebar .menu-sidebar > li > a::after {
+      position: absolute;
+      right: 30px;
+      font-family: "boxicons";
+      display: inline-block;
+      content: "\ea48"; }
+    .nav-sidebar .menu-sidebar > li > a i {
+      padding-right: 10px;
+      font-size: 18px; }
+  .nav-sidebar .menu-sidebar > li:hover, .nav-sidebar .menu-sidebar > li.current-menu {
+    background-color: #2b336c; }
 
 /*=============================================
 =            Accesibility            =
