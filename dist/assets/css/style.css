@@ -674,13 +674,22 @@ label {
 .signin-banner-container {
   background-color: #242a5a; }
 
+.signin-form-container,
 .signin-banner {
+  padding: 0 60px; }
+
+.signin-banner__header {
   max-width: 500px; }
-  .signin-banner__title {
-    color: #fff; }
-  .signin-banner__desc {
-    color: #ced4da;
-    margin-bottom: 60px; }
+
+.signin-banner__title {
+  color: #fff; }
+
+.signin-banner__desc {
+  color: #ced4da;
+  margin-bottom: 60px; }
+
+.signin-banner__thumb {
+  max-width: 100%; }
 
 .form-signin {
   width: 100%;

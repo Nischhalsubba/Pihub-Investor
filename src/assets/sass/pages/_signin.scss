@@ -9,9 +9,16 @@
 	background-color: $color-primary;
 }
 
+.signin-form-container,
 .signin-banner {
-	max-width: 500px;
-	
+	padding: 0 60px;
+}
+
+.signin-banner {
+	&__header {
+		max-width: 500px;
+	}
+
 	&__title {
 		color: $color-white;
 	}
@@ -19,6 +26,10 @@
 	&__desc {
 		color: $color-gray-4;
 		margin-bottom: 60px;
+	}
+
+	&__thumb {
+		max-width: 100%;
 	}
 }
 
