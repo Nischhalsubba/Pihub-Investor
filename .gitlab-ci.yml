@@ -1,0 +1,9 @@
+pages:
+  stage: deploy
+  script:
+    - docker-compose build
+    - docker-compose up -d
+  tags:
+    - credittech-frontend
+  only:
+    - staging # or dev, the branch you want to publish
