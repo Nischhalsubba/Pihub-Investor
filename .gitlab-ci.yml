@@ -7,4 +7,3 @@ pages:
     - credittech-frontend
   only:
     - html-staging # or dev, the branch you want to publish
-  when: manual
