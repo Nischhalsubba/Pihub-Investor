@@ -10,5 +10,26 @@ html(lang="en")
 				include components/nav-sidebar
 			.main-content.main-content--padded
 				include templates/site-header
-
+				
+				.content-body
+					table.table.tablesaw.tablesaw-stack(data-tablesaw-mode="swipe" data-tablesaw-minimap)
+						thead
+							tr
+								th Name
+								th Category
+								th Interest
+								th Minimum Credit Amount
+								th Available Credit Amount
+								th Status
+						tbody
+							tr
+								td 
+									a(href="") IT Investment
+								td
+									a(href="") Health and personal care
+								td 10%
+								td $7186
+								td $233456
+								td 
+									span.badge.badge-warning Awaiting Approval
 
