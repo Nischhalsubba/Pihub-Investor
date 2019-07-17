@@ -5,3 +5,49 @@
 		font-size: $font-size-h2;
 	}
 }
+
+.site-header {
+	display: flex;
+	justify-content: space-between;
+}
+
+.header-actions {
+	ul {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		list-style-type: none;
+	}
+
+	.header-notification {
+		margin-right: 25px;
+		font-size: 22px;
+		color: #6e8398;
+		display: block;
+		position: relative;
+
+		.notification-count {
+			top: -5px;
+			right: -5px;
+			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: $color-white;
+			font-size: 10px;
+			width: 15px;
+			height: 15px;
+			border-radius: 100%;
+			background-color: $color-accent;
+		}
+	}
+
+}
+
+.logo-container,
+.header-actions {
+	flex: 1;
+}

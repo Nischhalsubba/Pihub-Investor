@@ -273,8 +273,6 @@ table {
 
 a {
   color: #05101a; }
-  a:visited {
-    color: #05101a; }
   a:hover, a:focus, a:active {
     color: #242a5a; }
   a:focus {
@@ -525,6 +523,43 @@ label {
   .page-header .page-title {
     font-size: 32px; }
 
+.site-header {
+  display: flex;
+  justify-content: space-between; }
+
+.header-actions ul {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  list-style-type: none; }
+
+.header-actions .header-notification {
+  margin-right: 25px;
+  font-size: 22px;
+  color: #6e8398;
+  display: block;
+  position: relative; }
+  .header-actions .header-notification .notification-count {
+    top: -5px;
+    right: -5px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 10px;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    background-color: #6ee8d8; }
+
+.logo-container,
+.header-actions {
+  flex: 1; }
+
 .container-full-width {
   width: 100%; }
 
@@ -552,10 +587,21 @@ label {
 .container-full-height {
   min-height: 100vh; }
 
+.ct-container {
+  display: flex; }
+
+.main-content {
+  flex: 1;
+  width: 100%; }
+
+.main-content--padded {
+  padding: 30px 60px; }
+
 .sidebar {
   background-color: #242a5a;
   max-width: 240px;
-  height: 100vh; }
+  height: 100vh;
+  flex: 1; }
 
 .sticky {
   display: block; }

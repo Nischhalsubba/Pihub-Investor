@@ -5,7 +5,10 @@ html(lang="en")
 		include templates/head.pug
 		title This is right
 	body
-		.container-full-height
+		.container-full-height.ct-container
 			.sidebar
 				include components/nav-sidebar
-			.main-content
+			.main-content.main-content--padded
+				include templates/site-header
+
+
