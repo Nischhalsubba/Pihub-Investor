@@ -5,3 +5,73 @@
 		font-size: $font-size-h2;
 	}
 }
+
+.site-header {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 15px;
+}
+
+.header-actions {
+	ul {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		list-style-type: none;
+	}
+
+	.header-notification {
+		margin-right: 25px;
+		font-size: 22px;
+		color: #6e8398;
+		display: block;
+		position: relative;
+
+		.notification-count {
+			top: -5px;
+			right: -5px;
+			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: $color-white;
+			font-size: 10px;
+			width: 15px;
+			height: 15px;
+			border-radius: 100%;
+			background-color: $color-accent;
+		}
+	}
+
+	.header-user-dropdown {
+		display: flex;
+		align-items: center;
+
+		img {
+			margin-right: 5px;
+		}
+
+		i {
+			font-size: $font-size-large;
+		}
+	}
+}
+
+.logo-container,
+.header-actions {
+	flex: 1;
+}
+
+.content-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 10px;
+
+	&__title {
+		font-size: $font-size-h3;
+	}
+}

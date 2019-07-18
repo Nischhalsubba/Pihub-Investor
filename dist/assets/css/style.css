@@ -271,10 +271,17 @@ table {
   margin: 0 0 1.5em;
   width: 100%; }
 
+.table {
+  border-bottom: 1px solid #dee2e6; }
+  .table thead td,
+  .table thead th {
+    border-top: none; }
+  .table td,
+  .table th {
+    padding: 20px 0; }
+
 a {
   color: #05101a; }
-  a:visited {
-    color: #05101a; }
   a:hover, a:focus, a:active {
     color: #242a5a; }
   a:focus {
@@ -333,6 +340,20 @@ a {
       font-size: 18px; }
   .nav-sidebar > ul > li:hover, .nav-sidebar > ul > li.current-menu {
     background-color: #2b336c; }
+
+.pagination li {
+  margin-right: 15px; }
+  .pagination li.active .page-link {
+    background-color: #242a5a;
+    border-color: #242a5a; }
+  .pagination li a {
+    border-color: #e4e4e4;
+    border-radius: 3px;
+    color: #05101a; }
+    .pagination li a i {
+      font-size: 20px; }
+  .pagination li:first-child a, .pagination li:last-child a {
+    padding: 5px 6px; }
 
 /*=============================================
 =            Accesibility            =
@@ -525,6 +546,60 @@ label {
   .page-header .page-title {
     font-size: 32px; }
 
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px; }
+
+.header-actions ul {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  list-style-type: none; }
+
+.header-actions .header-notification {
+  margin-right: 25px;
+  font-size: 22px;
+  color: #6e8398;
+  display: block;
+  position: relative; }
+  .header-actions .header-notification .notification-count {
+    top: -5px;
+    right: -5px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 10px;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    background-color: #6ee8d8; }
+
+.header-actions .header-user-dropdown {
+  display: flex;
+  align-items: center; }
+  .header-actions .header-user-dropdown img {
+    margin-right: 5px; }
+  .header-actions .header-user-dropdown i {
+    font-size: 16px; }
+
+.logo-container,
+.header-actions {
+  flex: 1; }
+
+.content-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px; }
+  .content-head__title {
+    font-size: 26px; }
+
 .container-full-width {
   width: 100%; }
 
@@ -552,10 +627,21 @@ label {
 .container-full-height {
   min-height: 100vh; }
 
+.ct-container {
+  display: flex; }
+
+.main-content {
+  flex: 1;
+  width: 100%; }
+
+.main-content--padded {
+  padding: 30px 60px; }
+
 .sidebar {
   background-color: #242a5a;
   max-width: 240px;
-  height: 100vh; }
+  height: 100vh;
+  flex: 1; }
 
 .sticky {
   display: block; }
@@ -622,6 +708,9 @@ label {
 
 .wp-block-gallery {
   margin: 0; }
+
+.content-footer {
+  padding: 30px 0 0 0; }
 
 .feature-ours {
   margin-bottom: 80px; }

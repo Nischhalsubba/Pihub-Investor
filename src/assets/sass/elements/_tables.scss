@@ -2,3 +2,19 @@ table {
 	margin: 0 0 1.5em;
 	width: 100%;
 }
+
+.table {
+	border-bottom: 1px solid #dee2e6;
+	
+	thead {
+		td,
+		th {
+			border-top: none;
+		}
+	}
+
+	td,
+	th {
+		padding: 20px 0;
+	}
+}
