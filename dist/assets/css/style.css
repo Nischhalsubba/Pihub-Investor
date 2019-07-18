@@ -271,13 +271,14 @@ table {
   margin: 0 0 1.5em;
   width: 100%; }
 
-.table thead td,
-.table thead th {
-  border-top: none; }
-
-.table td,
-.table th {
-  padding: 20px 0; }
+.table {
+  border-bottom: 1px solid #dee2e6; }
+  .table thead td,
+  .table thead th {
+    border-top: none; }
+  .table td,
+  .table th {
+    padding: 20px 0; }
 
 a {
   color: #05101a; }
@@ -339,6 +340,20 @@ a {
       font-size: 18px; }
   .nav-sidebar > ul > li:hover, .nav-sidebar > ul > li.current-menu {
     background-color: #2b336c; }
+
+.pagination li {
+  margin-right: 15px; }
+  .pagination li.active .page-link {
+    background-color: #242a5a;
+    border-color: #242a5a; }
+  .pagination li a {
+    border-color: #e4e4e4;
+    border-radius: 3px;
+    color: #05101a; }
+    .pagination li a i {
+      font-size: 20px; }
+  .pagination li:first-child a, .pagination li:last-child a {
+    padding: 5px 6px; }
 
 /*=============================================
 =            Accesibility            =
@@ -693,6 +708,9 @@ label {
 
 .wp-block-gallery {
   margin: 0; }
+
+.content-footer {
+  padding: 30px 0 0 0; }
 
 .feature-ours {
   margin-bottom: 80px; }

@@ -83,3 +83,33 @@
 		}
 	}
 }
+
+.pagination {
+	li {
+		margin-right: 15px;
+
+		&.active {
+			.page-link {
+				background-color: $color-primary;
+				border-color: $color-primary;
+			}
+		}
+
+		a {
+			border-color: #e4e4e4;
+			border-radius: 3px;
+			color: $color-heading;
+
+			i {
+				font-size: 20px;
+			}
+		}
+
+		&:first-child,
+		&:last-child {
+			a {
+				padding: 5px 6px;
+			}
+		}
+	}
+}
