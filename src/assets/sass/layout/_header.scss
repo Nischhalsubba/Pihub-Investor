@@ -9,6 +9,7 @@
 .site-header {
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 15px;
 }
 
 .header-actions {
@@ -45,9 +46,32 @@
 		}
 	}
 
+	.header-user-dropdown {
+		display: flex;
+		align-items: center;
+
+		img {
+			margin-right: 5px;
+		}
+
+		i {
+			font-size: $font-size-large;
+		}
+	}
 }
 
 .logo-container,
 .header-actions {
 	flex: 1;
+}
+
+.content-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 10px;
+
+	&__title {
+		font-size: $font-size-h3;
+	}
 }

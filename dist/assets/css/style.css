@@ -271,6 +271,14 @@ table {
   margin: 0 0 1.5em;
   width: 100%; }
 
+.table thead td,
+.table thead th {
+  border-top: none; }
+
+.table td,
+.table th {
+  padding: 20px 0; }
+
 a {
   color: #05101a; }
   a:hover, a:focus, a:active {
@@ -525,7 +533,8 @@ label {
 
 .site-header {
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+  margin-bottom: 15px; }
 
 .header-actions ul {
   margin: 0;
@@ -556,9 +565,25 @@ label {
     border-radius: 100%;
     background-color: #6ee8d8; }
 
+.header-actions .header-user-dropdown {
+  display: flex;
+  align-items: center; }
+  .header-actions .header-user-dropdown img {
+    margin-right: 5px; }
+  .header-actions .header-user-dropdown i {
+    font-size: 16px; }
+
 .logo-container,
 .header-actions {
   flex: 1; }
+
+.content-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px; }
+  .content-head__title {
+    font-size: 26px; }
 
 .container-full-width {
   width: 100%; }
