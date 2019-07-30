@@ -1,0 +1,15 @@
+version: '3'
+services:
+  giftcard-frontend:
+    build: .
+    restart: always
+    ports:
+      - '5000:5000'
+    environment:
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+    networks:
+      - webapp
+
+networks:
+  webapp:
+    external: true
