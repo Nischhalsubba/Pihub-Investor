@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
+import { Link } from 'react-router-dom';
 import { inputField, checkBox } from '../formFields';
 import * as validation from '../../utils/validate';
 class Signup extends Component {
@@ -30,7 +31,9 @@ class Signup extends Component {
                   sector I like and Credit Tech takes me right there
                 </p>
                 <p className="signup-quote__name">John Doe</p>
-                <a className="btn btn-white">What others say?</a>
+                <Link to="/login" className="btn btn-white">
+                  What others say?
+                </Link>
               </div>
             </div>
           </div>

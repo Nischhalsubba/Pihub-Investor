@@ -9,14 +9,15 @@ import App from './App';
 import reducers from './reducers';
 import Signup from './components/auth/Signup';
 import Login from './components/auth/Login';
-
+import Header from './components/general/Header';
 const store = createStore(reducers, applyMiddleware(reduxThunk));
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
+      <Route path="/" exact component={Signup} />
+      <Route path="/login" exact component={Login} />
       <Switch>
-        <Route path="/" exact component={Signup} />
-        <Route path="/login" exact component={Login} />
+        <App />
       </Switch>
     </BrowserRouter>
   </Provider>,
