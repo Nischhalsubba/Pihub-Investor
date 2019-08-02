@@ -10,40 +10,45 @@ class Signup extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      <div class="container-full-width">
-        <div class="panel-container">
-          <div class="feature-container feature-container--signup">
-            <div class="feature-sidebar">
-              <div class="feature-ours">
-                <h3 class="feature-ours__sub-title">The Perfect Investment</h3>
-                <h2 class="feature-ours__title">
+      <div className="container-full-width">
+        <div className="panel-container">
+          <div className="feature-container feature-container--signup">
+            <div className="feature-sidebar">
+              <div className="feature-ours">
+                <h3 className="feature-ours__sub-title">
+                  The Perfect Investment
+                </h3>
+                <h2 className="feature-ours__title">
                   At Credittech you can easily find creditor and make an
                   investment
                 </h2>
               </div>
-              <div class="signup-quote">
-                <h2 class="signup-quote__title">Why Credit Tech?</h2>
-                <p class="signup-quote__content">
+              <div className="signup-quote">
+                <h2 className="signup-quote__title">Why Credit Tech?</h2>
+                <p className="signup-quote__content">
                   At first I Invested little and by time pass I Invested to the
                   sector I like and Credit Tech takes me right there
                 </p>
-                <p class="signup-quote__name">John Doe</p>
-                <a class="btn btn-white">What others say?</a>
+                <p className="signup-quote__name">John Doe</p>
+                <a className="btn btn-white">What others say?</a>
               </div>
             </div>
           </div>
-          <div class="main-container">
-            <div class="signup-form-container">
-              <header class="page-header">
-                <h1 class="page-title">
+          <div className="main-container">
+            <div className="signup-form-container">
+              <header className="page-header">
+                <h1 className="page-title">
                   Sign Up to Credit Tech as an Investor{' '}
                 </h1>
-                <p class="page-desc">Enter your details below</p>
+                <p className="page-desc">Enter your details below</p>
               </header>
-              <form class="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
-                <div class="row">
-                  <div class="col">
-                    <div class="form-group">
+              <form
+                className="form-signup"
+                onSubmit={handleSubmit(this.onSubmit)}
+              >
+                <div className="row">
+                  <div className="col">
+                    <div className="form-group">
                       <Field
                         name="first_name"
                         type="text"
@@ -54,8 +59,8 @@ class Signup extends Component {
                     </div>
                   </div>
 
-                  <div class="col">
-                    <div class="form-group">
+                  <div className="col">
+                    <div className="form-group">
                       <Field
                         name="last_name"
                         type="text"
@@ -66,7 +71,7 @@ class Signup extends Component {
                     </div>
                   </div>
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <Field
                     name="company_name"
                     type="text"
@@ -75,7 +80,7 @@ class Signup extends Component {
                     className="form-control"
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <Field
                     name="email_address"
                     type="email"
@@ -84,7 +89,7 @@ class Signup extends Component {
                     className="form-control"
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <Field
                     name="password"
                     type="password"
@@ -93,7 +98,7 @@ class Signup extends Component {
                     className="form-control"
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <Field
                     name="confirm_password"
                     type="password"
@@ -102,7 +107,7 @@ class Signup extends Component {
                     className="form-control"
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <Field
                     name="phone_number"
                     type="text"
@@ -117,7 +122,7 @@ class Signup extends Component {
                   component={checkBox}
                   type="checkbox"
                 />
-                <button class="btn btn-primary btn-form" type="submit">
+                <button className="btn btn-primary btn-form" type="submit">
                   Sign Up Now
                 </button>
               </form>

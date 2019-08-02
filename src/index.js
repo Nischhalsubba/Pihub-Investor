@@ -7,13 +7,16 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import App from './App';
 import reducers from './reducers';
-import Signup from './components/general/Signup';
+import Signup from './components/auth/Signup';
+import Login from './components/auth/Login';
+
 const store = createStore(reducers, applyMiddleware(reduxThunk));
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Signup} />
+        <Route path="/login" exact component={Login} />
       </Switch>
     </BrowserRouter>
   </Provider>,
