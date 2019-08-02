@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Sidebar from './components/general/Sidebar';
 import Header from './components/general/Header';
+import Pagination from './components/general/Pagination';
 class App extends Component {
   render() {
     return (
@@ -9,6 +10,7 @@ class App extends Component {
         <div class="main-content main-content--padded">
           <Header />
           {this.props.children}
+          <Pagination />
         </div>
       </div>
     );
