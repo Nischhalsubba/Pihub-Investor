@@ -1,10 +1,17 @@
+.panel-container .company-logo{
+	position: absolute;
+	top: 50px;
+	left: 30px;
+}
 .feature-ours {
 	margin-bottom: 80px;
+	margin-top: 13rem;
 
 	.feature-ours__sub-title {
 		font-size: $font-size-base;
 		color: $color-white;
 		font-weight: 500;
+		margin-bottom: 16px;
 	}
 
 	.feature-ours__title {
@@ -22,7 +29,26 @@
 
 	.signup-quote__content,
 	.signup-quote__name {
-		color: #bec6d6;
+		color: $color-white;
+	}
+
+	.signup-quote__content{
+		position: relative;
+		font-size: 1rem;
+
+		&::before{
+			content: url('../img/icons/bxs-quote-left.svg');
+			position: absolute;
+			left: -30px;
+			top: 0;
+		}
+
+		&::after{
+			content: url('../img/icons/bxs-quote-right.svg');
+			position: absolute;
+			right: -30px;
+			bottom: 0;
+		}
 	}
 
 	.signup-quote__name {

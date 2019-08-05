@@ -537,7 +537,8 @@ label {
   padding: 0; }
   .form-check label {
     font-size: 12px;
-    color: #495057; }
+    color: #495057;
+    padding-left: 10px; }
   .form-check a {
     text-decoration: underline; }
 
@@ -622,7 +623,8 @@ label {
 
 .feature-container--signup {
   background-image: url("../img/signup-bg.jpg");
-  background-size: cover; }
+  background-size: cover;
+  padding: 80px; }
 
 .container-full-height {
   min-height: 100vh; }
@@ -639,7 +641,7 @@ label {
 
 .sidebar {
   background-color: #242a5a;
-  max-width: 240px;
+  max-width: 340px;
   height: 100vh;
   flex: 1; }
 
@@ -712,12 +714,19 @@ label {
 .content-footer {
   padding: 30px 0 0 0; }
 
+.panel-container .company-logo {
+  position: absolute;
+  top: 50px;
+  left: 30px; }
+
 .feature-ours {
-  margin-bottom: 80px; }
+  margin-bottom: 80px;
+  margin-top: 13rem; }
   .feature-ours .feature-ours__sub-title {
     font-size: 14px;
     color: #fff;
-    font-weight: 500; }
+    font-weight: 500;
+    margin-bottom: 16px; }
   .feature-ours .feature-ours__title {
     font-size: 18px;
     color: #fff; }
@@ -729,7 +738,21 @@ label {
 
 .signup-quote .signup-quote__content,
 .signup-quote .signup-quote__name {
-  color: #bec6d6; }
+  color: #fff; }
+
+.signup-quote .signup-quote__content {
+  position: relative;
+  font-size: 1rem; }
+  .signup-quote .signup-quote__content::before {
+    content: url("../img/icons/bxs-quote-left.svg");
+    position: absolute;
+    left: -30px;
+    top: 0; }
+  .signup-quote .signup-quote__content::after {
+    content: url("../img/icons/bxs-quote-right.svg");
+    position: absolute;
+    right: -30px;
+    bottom: 0; }
 
 .signup-quote .signup-quote__name {
   font-weight: 700;

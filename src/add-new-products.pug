@@ -1,0 +1,66 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+	head
+		include templates/head.pug
+		title Add New Product
+	body
+		.container-full-height.ct-container
+			.sidebar
+				include components/nav-sidebar
+			.main-content.main-content--padded
+				include templates/site-header
+				.content-head
+					.content-head-left
+						h1.content-head__title All Products
+
+				.content-body
+					form.form-signup(action="signin.html")
+						.row
+							.col
+								.form-group
+									label(for="first-name") Product Title
+									input(type="text", name="product-title" class="form-control")
+							.col
+								.form-group
+									label(for="first-name") Geographical region of Interest
+									input(type="text", name="geographical-region" class="form-control")
+						.row
+							.col
+								.form-group
+									label(for='customRange1' class="d-block") Minimum Credit Amount 
+										.row
+											.col.col-10
+												input#customRange1.custom-range(type='range' class="w-100")
+											.col.col-2
+												input(type='text' class="form-control")
+							.col
+								.form-group
+									label(for='customRange1' class="d-block") Interest
+										.row
+											.col.col-10
+												input#customRange1.custom-range(type='range' class="w-100")
+											.col.col-2
+												input(type="text" class="form-control")
+						.row
+							.col
+								.form-group
+									label(for='customRange1' class="d-block") Credit Amount 
+										.row
+											.col.col-10
+												input#customRange1.custom-range(type='range' class="w-100")
+											.col.col-2
+												input(type='text' class="form-control")
+							.col
+								.form-group
+									label(for="" class="") Tags
+									input(type="text" class="form-control")
+						.row
+							.col
+								.form-group
+									label(for="" class="d-block") File Upload
+									input(type="file", name="" class="form-control")
+
+						.row
+							.col
+								button.btn.btn-primary.btn-form(type="submit") Submit
