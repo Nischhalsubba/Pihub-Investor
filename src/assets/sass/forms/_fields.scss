@@ -5,6 +5,7 @@ input[type="password"],
 input[type="search"],
 textarea {
 	width: 100%;
+	color: $color-primary;
 }
 
 input[type="number"],
@@ -28,8 +29,23 @@ textarea {
 	}
 }
 
+input[type="range"] {
+	background-color: inherit;
+	width: 20px;
+	height: 20px;
+
+	&::-webkit-slider-thumb {
+		background-color: red;
+	}
+}
+
 select {
 	border: 1px solid $color-input-border;
+}
+
+select.regionof-interest {
+	background-image: $color-white !important;
+	background-size: 5px 5px;
 }
 
 label {
@@ -50,4 +66,46 @@ label {
 	a {
 		text-decoration: underline;
 	}
+}
+
+//Dropzone
+#file_dropzone {
+	min-height: 200px;
+	cursor: pointer;
+}
+
+.dz-success-mark,
+.dz-error-mark {
+	display: none;
+}
+
+.dz-details {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: left;
+}
+
+.dz-size {
+	margin-left: 2rem;
+}
+
+.dz-message {
+	left: 35%;
+	top: 35%;
+}
+
+
+// Range
+.rangeslider--horizontal {
+	margin-bottom: 15px;
+}
+
+// progress bar
+.progress-bar {
+	background-color: black;
+}
+
+// Tags
+.select2-selection__choice {
+	padding: 4px 10px 4px 10px !important;
 }
