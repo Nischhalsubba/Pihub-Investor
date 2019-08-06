@@ -79,6 +79,17 @@ html(lang="en")
 							.col
 								.form-group
 									label(for="" class="d-block") File Upload
+
+									#tpl.d-none
+										.dz-preview.dz-file-preview
+											.dz-progress
+												span.dz-upload(data-dz-uploadprogress='')
+											.dz-details
+												.dz-filename
+												span(data-dz-name='')
+												.dz-size(data-dz-size='')
+												img(src='removebutton.png' alt='X' data-dz-remove='')
+
 									.file-upload-display.dz-preview.mb-4 
 										//- .progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
 										//- .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')

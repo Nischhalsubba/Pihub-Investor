@@ -2,7 +2,6 @@ $(document).ready(function () {
 
     if ($('#file_dropzone').length) {
         var previewTemplate = document.querySelector('#tpl').innerHTML;
-        console.log(previewTemplate);
         $("div#file_dropzone").dropzone({
             url: "http://google.com",
             previewTemplate:previewTemplate,
