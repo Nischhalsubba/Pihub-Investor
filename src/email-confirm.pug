@@ -1,0 +1,33 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include templates/head.pug
+        title Email Confirm
+    body
+        img(src="./assets/img/logo.png", alt="company logo",class="company-logo company-logo-email")
+        .container-full-height.text-centerd.d-flex
+            .content.m-auto 
+                .email-staging.d-flex.justify-content-center.justify-content-between
+                    .indicator-container.d-flex.flex-column.align-items-center
+                        .indicator.active.d-flex.justify-content-center.align-items-center.connect
+                            span 1
+                        span.mt-3 Confirm Email
+                        hr
+                    .indicator-container.d-flex.flex-column.align-items-center  
+                        .indicator.d-flex.justify-content-center.align-items-center
+                            span 2
+                        span.mt-3 Admin Approval
+                    .indicator-container.d-flex.flex-column.align-items-center    
+                        .indicator.d-flex.justify-content-center.align-items-center
+                            span 3
+                        span.mt-3 Activation  
+                .content.text-center    
+                    img(src="./assets/img/icons/mail.png", alt="Mail icon") 
+
+                    h4 We've just send you an Email
+                    P Your account has been successfully created. Please check your email for the confirmation
+                    span Didn't recieve an email? 
+                        a(href="#") Send it again
+
+

@@ -249,6 +249,24 @@ h6 {
 .border-dotted {
   border: 2px dashed #7e91e5; }
 
+.company-logo-email {
+  position: absolute;
+  left: 10%;
+  top: 5%; }
+
+.connect {
+  position: relative; }
+
+.indicator {
+  border: 2px solid #242a5a;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px; }
+
+.indicator.active {
+  background-color: #242a5a;
+  color: #fff; }
+
 ul
 ol {
   margin: 0 0 1.5em 3em; }
