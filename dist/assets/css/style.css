@@ -249,6 +249,17 @@ h6 {
 .border-dotted {
   border: 2px dashed #7e91e5; }
 
+.notification .notification-item .status {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%; }
+
+.notification .notification-item .status.wait {
+  background-color: #ffe066; }
+
+.notification .notification-item p.wait {
+  color: #AB8D0D; }
+
 .company-logo-email {
   position: absolute;
   left: 10%;
