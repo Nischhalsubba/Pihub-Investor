@@ -249,64 +249,24 @@ h6 {
 .border-dotted {
   border: 2px dashed #7e91e5; }
 
-<<<<<<< HEAD
-=======
-.notification .notification-item .status {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%; }
-
-.notification .notification-item .status.wait {
-  background-color: #ffe066; }
-
-.notification .notification-item p.wait {
-  color: #AB8D0D; }
-
->>>>>>> 3e4d51f5bfcf9a404e1830c0134ddc47b8e21da2
 .company-logo-email {
   position: absolute;
   left: 10%;
   top: 5%; }
 
-<<<<<<< HEAD
 .connect {
   position: relative; }
-=======
-.line {
-  position: absolute;
-  top: 20%;
-  left: 5%;
-  z-index: 0;
-  background-color: #242a5a;
-  height: 2px;
-  width: 90%; }
->>>>>>> 3e4d51f5bfcf9a404e1830c0134ddc47b8e21da2
 
 .indicator {
   border: 2px solid #242a5a;
   border-radius: 50%;
   width: 48px;
-<<<<<<< HEAD
   height: 48px; }
-=======
-  height: 48px;
-  z-index: 1;
-  background-color: #fff; }
->>>>>>> 3e4d51f5bfcf9a404e1830c0134ddc47b8e21da2
 
 .indicator.active {
   background-color: #242a5a;
   color: #fff; }
 
-<<<<<<< HEAD
-=======
-.email-content img {
-  margin-bottom: 40px; }
-
-.email-content a {
-  color: #242a5a; }
-
->>>>>>> 3e4d51f5bfcf9a404e1830c0134ddc47b8e21da2
 ul
 ol {
   margin: 0 0 1.5em 3em; }
@@ -746,12 +706,6 @@ label {
   max-width: 340px;
   height: 100vh;
   flex: 1; }
-
-.nav-sidebar ul li ul li a::before {
-  background-color: transparent; }
-
-.nav-sidebar ul li ul li.current-menu a::before {
-  background-color: transparent; }
 
 .sticky {
   display: block; }

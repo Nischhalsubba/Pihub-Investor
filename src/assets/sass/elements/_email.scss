@@ -6,19 +6,8 @@
     top: 5%;
 }
 
-<<<<<<< HEAD
 .connect{
     position: relative;
-=======
-.line {
-    position: absolute;
-    top: 20%;
-    left: 5%;
-    z-index: 0;
-    background-color: $color-primary;
-    height: 2px;
-    width: 90%;
->>>>>>> 3e4d51f5bfcf9a404e1830c0134ddc47b8e21da2
 }
 
 .indicator {
@@ -26,33 +15,15 @@
     border-radius: 50%;
     width: 48px;
     height: 48px;
-<<<<<<< HEAD
 
     // span {
     //     vertical-align: -.5em;
     //     text-align: center;
     //     margin-left: .7em;
     // }
-=======
-    z-index: 1;
-    background-color: $color-white;
->>>>>>> 3e4d51f5bfcf9a404e1830c0134ddc47b8e21da2
 }
 
 .indicator.active {
     background-color: $color-primary;
     color: $color-white;
-<<<<<<< HEAD
-=======
-}
-
-.email-content {
-    img {
-        margin-bottom: 40px;
-    }
-
-    a {
-        color: $color-primary;
-    }
->>>>>>> 3e4d51f5bfcf9a404e1830c0134ddc47b8e21da2
 }
