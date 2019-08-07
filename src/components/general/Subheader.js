@@ -6,11 +6,13 @@ export default props => {
       <div class="content-head-left">
         <h1 class="content-head__title">{props.heading}</h1>
       </div>
-      <div class="content-head-right">
-        <a class="btn btn-primary" href="">
-          {props.buttonLabel}
-        </a>
-      </div>
+      {props.buttonLabel ? (
+        <div class="content-head-right">
+          <a class="btn btn-primary" href="">
+            {props.buttonLabel}
+          </a>
+        </div>
+      ) : null}
     </div>
   );
 };
