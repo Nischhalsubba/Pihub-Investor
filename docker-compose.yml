@@ -1,0 +1,18 @@
+version: '3'
+services:
+  creditech-static:
+    build: .
+    restart: always
+    ports:
+      - '3000:3000'
+    networks:
+      - credittech
+    labels:
+      - traefik.backend=credditech-static
+      - traefik.normal.frontend.rule=Host:static.credittech.diagonal.solutions
+      - traefik.docker.network=webapp
+      - traefik.port=3000
+
+networks:
+    credittech:
+      external: true

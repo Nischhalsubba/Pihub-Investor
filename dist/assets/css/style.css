@@ -249,48 +249,23 @@ h6 {
 .border-dotted {
   border: 2px dashed #7e91e5; }
 
-.notification .notification-item .status {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%; }
-
-.notification .notification-item .status.wait {
-  background-color: #ffe066; }
-
-.notification .notification-item p.wait {
-  color: #AB8D0D; }
-
 .company-logo-email {
   position: absolute;
   left: 10%;
   top: 5%; }
 
-.line {
-  position: absolute;
-  top: 20%;
-  left: 5%;
-  z-index: 0;
-  background-color: #242a5a;
-  height: 2px;
-  width: 90%; }
+.connect {
+  position: relative; }
 
 .indicator {
   border: 2px solid #242a5a;
   border-radius: 50%;
   width: 48px;
-  height: 48px;
-  z-index: 1;
-  background-color: #fff; }
+  height: 48px; }
 
 .indicator.active {
   background-color: #242a5a;
   color: #fff; }
-
-.email-content img {
-  margin-bottom: 40px; }
-
-.email-content a {
-  color: #242a5a; }
 
 ul
 ol {
@@ -731,12 +706,6 @@ label {
   max-width: 340px;
   height: 100vh;
   flex: 1; }
-
-.nav-sidebar ul li ul li a::before {
-  background-color: transparent; }
-
-.nav-sidebar ul li ul li.current-menu a::before {
-  background-color: transparent; }
 
 .sticky {
   display: block; }
