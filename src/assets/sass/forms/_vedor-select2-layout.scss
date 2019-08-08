@@ -96,4 +96,12 @@
       padding: 6px;
     }
   }
-  
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice{
+    background:#D3F9D8;
+    color:#2B8A3E;
+    border:none;
+  }
+  .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+    color:#2B8A3E;
+  }
