@@ -1,0 +1,77 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include templates/head.pug
+        title This is right
+    body
+        .container-full-height.ct-container
+            .sidebar
+                include components/nav-sidebar
+            .main-content.main-content--padded
+                include templates/site-header
+                .content-head
+                    .content-head-left
+                        h1.content-head__title Notifications
+
+                .content-body.mt-2
+                    ul.notification.p-0
+                        li.notification-item.d-flex.flex-row.align-items-top.mb-3.pb-3
+                            .status.wait.mr-4
+                            .title
+                                p.wait
+                                    | Your product "IT Information" needs more information
+                                .time
+                                    | 20 Minutes ago
+                        li.notification-item.d-flex.flex-row.align-items-top.mb-3.pb-3
+                            .status.sucess.mr-4
+                            .title
+                                p.wait
+                                    | Your product "IT Information" needs more information
+                                .time
+                                    | 2 days ago
+                        li.notification-item.d-flex.flex-row.align-items-top.mb-3.pb-3
+                            .status.stop.mr-4
+                            .title
+                                p.wait
+                                    | Your product "IT Information" needs more information
+                                .time
+                                    | on August 3
+                        li.notification-item.d-flex.flex-row.align-items-top.mb-3.pb-3
+                            .status.wait.mr-4
+                            .title
+                                p.wait
+                                    | Your product "IT Information" needs more information
+                                .time
+                                    | 20 Minutes ago
+                        li.notification-item.d-flex.flex-row.align-items-top.mb-3.pb-3
+                            .status.sucess.mr-4
+                            .title
+                                p.wait
+                                    | Your product "IT Information" needs more information
+                                .time
+                                    | 2 days ago
+                        li.notification-item.d-flex.flex-row.align-items-top.mb-3.pb-3
+                            .status.stop.mr-4
+                            .title
+                                p.wait
+                                    | Your product "IT Information" needs more information
+                                .time
+                                    | on August 3
+                .content-footer
+                    nav.nav-content
+                        ul.pagination
+                            li.page-item
+                                a.page-link(href="")
+                                    i.bx.bx-chevron-left
+                            li.page-item.active
+                                a.page-link(href="") 1
+                            li.page-item
+                                a.page-link(href="") 2
+                            li.page-item
+                                a.page-link(href="") 3
+                            li.page-item
+                                a.page-link(href="") 4
+                            li.page-item
+                                a.page-link(href="")
+                                    i.bx.bx-chevron-right        
