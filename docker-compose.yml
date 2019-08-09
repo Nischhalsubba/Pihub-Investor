@@ -1,6 +1,6 @@
 version: '3'
 services:
-  giftcard-frontend:
+  credittech-frontend-react:
     build: .
     restart: always
     ports:
@@ -9,7 +9,12 @@ services:
       - REACT_APP_API_URL=${REACT_APP_API_URL}
     networks:
       - webapp
+    labels:
+      - traefik.backend=credittech-frontend-react
+      - traefik.normal.frontend.rule=Host:credittech.diagonal.solutions
+      - traefik.docker.network=webapp
+      - traefik.port=5000
 
 networks:
-  webapp:
-    external: true
+    webapp:
+      external: true
