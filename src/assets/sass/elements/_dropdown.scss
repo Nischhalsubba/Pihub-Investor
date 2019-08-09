@@ -1,0 +1,76 @@
+// Dropdown related scss are located here
+
+li.header-actions__item {
+    .dropdown-menu {
+        transform: none !important;
+        border: 1px solid #BEC6D6;
+
+        &::after,
+        &::before {
+            bottom: 100%;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        &::after {
+            border-color: rgba(204, 204, 204, 0);
+            border-bottom-color: rgb(255, 255, 255);
+            border-width: 20px;
+            margin-left: -20px;
+        }
+
+        &::before {
+            border-color: rgba(190, 198, 214, 0);
+            border-bottom-color: #BEC6D6;
+            border-width: 21px;
+            margin-left: -21px;
+        }
+    }
+}
+
+.header-actions__item {
+
+    ul {
+        display: block !important;
+    }
+
+    //notification dropdown
+    .dropdown-menu-notificaiton {
+        width: 270px !important;
+        left: -122px !important;
+        top: 55px !important;
+
+
+        li.notification-item .status {
+            flex: 0 0 26px;
+        }
+
+        p.wait {
+            font-size: 12px;
+            line-height: 16px;
+        }
+    }
+
+
+    //users dropdown
+    .dropdown-menu.dropdown-menu-user {
+        left: auto !important;
+        width: 170px !important;
+        right: 0px !important;
+        top: 80px !important;
+
+        li{
+            padding: 15px 16px 10px 16px;
+            // border: 1px solid red;
+            &:last-child{
+                margin: 0 !important;
+                border: none;
+            }
+        }
+    }
+}
