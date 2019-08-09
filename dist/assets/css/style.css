@@ -249,23 +249,58 @@ h6 {
 .border-dotted {
   border: 2px dashed #7e91e5; }
 
+.notification .notification-item {
+  border-bottom: 1px solid #D1D7E2; }
+  .notification .notification-item .status {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%; }
+  .notification .notification-item .status.wait {
+    background-color: #ffe066;
+    margin-top: 3px; }
+  .notification .notification-item .status.sucess {
+    background-color: #D3F9D8;
+    margin-top: 3px; }
+  .notification .notification-item .status.stop {
+    background-color: #F9D3D3;
+    margin-top: 3px; }
+  .notification .notification-item p.wait {
+    color: #AB8D0D; }
+  .notification .notification-item .time {
+    color: #949CAC;
+    font-size: 12px; }
+
 .company-logo-email {
   position: absolute;
   left: 10%;
   top: 5%; }
 
-.connect {
-  position: relative; }
+.line {
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  z-index: 0;
+  background-color: #242a5a;
+  height: 2px;
+  width: 90%; }
 
 .indicator {
   border: 2px solid #242a5a;
   border-radius: 50%;
   width: 48px;
-  height: 48px; }
+  height: 48px;
+  z-index: 1;
+  background-color: #fff; }
 
 .indicator.active {
   background-color: #242a5a;
   color: #fff; }
+
+.email-content img {
+  margin-bottom: 40px; }
+
+.email-content a {
+  color: #242a5a; }
 
 ul
 ol {
@@ -706,6 +741,12 @@ label {
   max-width: 340px;
   height: 100vh;
   flex: 1; }
+
+.nav-sidebar ul li ul li a::before {
+  background-color: transparent; }
+
+.nav-sidebar ul li ul li.current-menu a::before {
+  background-color: transparent; }
 
 .sticky {
   display: block; }
@@ -1200,8 +1241,8 @@ input[type="range"]:focus + .rangeslider .rangeslider__handle {
 
 .select2-container {
   box-sizing: border-box;
-  margin-top: 14px;
   display: inline-block;
+  margin: 0;
   position: relative;
   vertical-align: middle; }
   .select2-container .select2-selection--single {
@@ -1385,8 +1426,7 @@ input[type="range"]:focus + .rangeslider .rangeslider__handle {
   background-color: white;
   border: 1px solid #aaa;
   border-radius: 4px;
-  cursor: text;
-  padding: 2px; }
+  cursor: text; }
   .select2-container--default .select2-selection--multiple .select2-selection__rendered {
     box-sizing: border-box;
     list-style: none;
@@ -1402,18 +1442,16 @@ input[type="range"]:focus + .rangeslider .rangeslider__handle {
     margin-top: 5px;
     margin-right: 10px; }
   .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #D3F9D8;
-    color: #2B8A3E;
-    border: none;
+    background-color: #e4e4e4;
+    border: 1px solid #aaa;
     border-radius: 4px;
     cursor: default;
-    height: 25px;
     float: left;
     margin-right: 5px;
     margin-top: 5px;
     padding: 0 5px; }
   .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-    color: #2B8A3E;
+    color: #999;
     cursor: pointer;
     display: inline-block;
     font-weight: bold;
@@ -1732,8 +1770,7 @@ input[type="range"]:focus + .rangeslider .rangeslider__handle {
   background-color: white;
   border: 1px solid #aaa;
   border-radius: 4px;
-  cursor: text;
-  padding: 2px; }
+  cursor: text; }
   .select2-container--default .select2-selection--multiple .select2-selection__rendered {
     box-sizing: border-box;
     list-style: none;
@@ -1749,18 +1786,16 @@ input[type="range"]:focus + .rangeslider .rangeslider__handle {
     margin-top: 5px;
     margin-right: 10px; }
   .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #D3F9D8;
-    color: #2B8A3E;
-    border: none;
+    background-color: #e4e4e4;
+    border: 1px solid #aaa;
     border-radius: 4px;
     cursor: default;
-    height: 25px;
     float: left;
     margin-right: 5px;
     margin-top: 5px;
     padding: 0 5px; }
   .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-    color: #2B8A3E;
+    color: #999;
     cursor: pointer;
     display: inline-block;
     font-weight: bold;
@@ -1849,3 +1884,11 @@ input[type="range"]:focus + .rangeslider .rangeslider__handle {
   cursor: default;
   display: block;
   padding: 6px; }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background: #D3F9D8;
+  color: #2B8A3E;
+  border: none; }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  color: #2B8A3E; }
