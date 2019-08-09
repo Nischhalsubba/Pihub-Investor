@@ -8,13 +8,13 @@ services:
     environment:
       - REACT_APP_API_URL=${REACT_APP_API_URL}
     networks:
-      - webapp
+      - credittech
     labels:
       - traefik.backend=credittech-frontend-react
       - traefik.normal.frontend.rule=Host:credittech.diagonal.solutions
-      - traefik.docker.network=webapp
+      - traefik.docker.network=credittech
       - traefik.port=5000
 
 networks:
-    webapp:
+    credittech:
       external: true
