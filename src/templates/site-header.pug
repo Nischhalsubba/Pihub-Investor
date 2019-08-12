@@ -3,12 +3,60 @@ header.site-header
 		img(src="assets/img/logo.png", alt="Pinhub Logo")
 	nav.header-actions
 		ul
-			li.header-actions__item
-				a.header-notification(href="")
+			li.header-actions__item.dropdown.notification
+				a.header-notification#dropDownnMenuNotificaiton(href="",data-toggle="dropdown",aria-haspopup="true",aria-expanded="false")
 					i.bx.bx-bell
 					span.notification-count 2
-			li.header-dropdown
-				a.header-user-dropdown
+					.dropdown-menu.dropdown-menu-notificaiton(aria-labelledby="dropDownnMenuNotificaiton")
+						.dropdown-container
+							.heading.clearfix.p-3
+								a(href="#" class="float-left text-uppercase") Notification
+								a(href="#" class="float-right text-uppercase") Clear all
+							ul.notification.p-0.d-flex.flex-column
+								li.notification-item.d-flex.flex-row.align-items-top.mb-3.p-3
+									.status.wait
+									.title.pl-3
+										p.wait.mb-2
+											| Your product "IT Information" needs more information
+										.time
+											| 20 Minutes ago
+								li.notification-item.d-flex.flex-row.align-items-top.mb-3.p-3
+									.status.sucess
+									.title.pl-3
+										p.wait.mb-2
+											| Your product "IT Information" needs more information
+										.time
+											| 2 days ago
+								li.notification-item.d-flex.flex-row.align-items-top.mb-3.p-3
+									.status.stop
+									.title.pl-3
+										p.wait.mb-2
+											| Your product "IT Information" needs more information
+										.time
+											| on August 3
+								li.text-center.text-uppercase
+									a(href="#") view all
+			li.header-actions__item.header-dropdown
+				a.header-user-dropdown#dropDownnMenuButtonUser(href="",data-toggle="dropdown",aria-haspopup="true",aria-expanded="false")
 					img(src="assets/img/user.png", alt="John Doe")
 					i.bx.bx-chevron-down
+					.dropdown-menu.dropdown-menu-right.dropdown-menu-user.p-0(aria-labelledby="dropDownnMenuButtonUser")
+						.dropdown-container
+							ul.notification.p-0
+								li.notification-item.d-flex.flex-row.align-items-top
+									.notification-item-container
+										img(src="assets/img/icons/bx-user.svg", alt="alt",class="mr-2")
+										span My Profile
+								li.notification-item.d-flex.flex-row.align-items-top
+									.notification-item-container
+										img(src="assets/img/icons/bx-edit.svg", alt="alt",class="mr-2")
+										span Edit Profile
+								li.notification-item.d-flex.flex-row.align-items-top
+									.notification-item-container
+										img(src="assets/img/icons/bx-cog.svg", alt="alt",class="mr-2")
+										span My Settings
+								li.notification-item.d-flex.flex-row.align-items-top
+									.notification-item-container
+										img(src="assets/img/icons/bx-log-in.svg", alt="alt",class="mr-2")
+										span Logout
 
