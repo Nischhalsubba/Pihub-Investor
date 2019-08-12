@@ -3,7 +3,7 @@
 html(lang="en")
     head
         include templates/head.pug
-        title This is right
+        title Signup here
     body
         .container-full-width
             .panel-container
@@ -50,10 +50,11 @@ html(lang="en")
                                 input(type="password", name="confirm-password" class="form-control")
                             .form-group
                                 label(for="phone-number") Phone Number
-                                input(type="tel", name="phone-number" class="form-control")
+                                .d-flex
+                                    select.form-control#countries
+                                    input(type="tel", name="phone-number" class="form-control ml-4")
                             .form-check
                                 input(type="checkbox", name="agreed-term" checked)
                                 label(for="phone-number") I agree to the 
                                     a(href="") Terms & Conditions
                             button.btn.btn-primary.btn-form(type="submit") Sign Up Now
-                                

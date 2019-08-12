@@ -1,3 +1,58 @@
-.border-dotted{
+.border-dotted {
     border: 2px dashed $color-secondary;
+}
+
+.btn-accept {
+    background-color: #40C057;
+    color: $color-white;
+}
+
+.btn-reject {
+    background-color: $color-brand-danger;
+    color: $color-white;
+}
+
+.btn-option {
+    background-color: #DDE2EB;
+    color: #BEC6D6;
+}
+
+.alert-sucess {
+    background-color: #E2FCE6;
+    border: 1px solid #91BF97;
+    color: #358444;
+}
+
+.alert-rejected {
+    background-color: #FFE3E3;
+    border: 1px solid #FF6B6B;
+    color: #F03E3E;
+}
+
+.text-right-piehub-table {
+    text-align: right;
+}
+
+.form-control {
+    height: 45px;
+}
+
+.error{
+    border: 1px solid #FF8787;
+}
+
+.error-text{
+    color:#FF8787;
+}
+
+.green{
+    border: 1px solid $color-brand-success;
+}
+
+.green-text{
+    color: $color-brand-success;
+}
+
+.select2-container--default{
+    width: 100% !important;
 }

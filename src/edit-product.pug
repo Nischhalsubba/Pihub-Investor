@@ -3,15 +3,6 @@
 html(lang="en")
 	head
 		include templates/head.pug
-		//- Temporary plugin test through cdn
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone-amd-module.min.js")
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js")
-
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js")
-
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.min.js")
-
-		script(src="assets/js/main-script.js")
 		title Edit Product
 	body
 		.container-full-height.ct-container
@@ -26,11 +17,11 @@ html(lang="en")
 				.content-body
 					form.form-signup(action="signin.html")
 						.row.mt-4
-							.col
+							.col-12.col-xs-12
 								.form-group
 									label(for="first-name") Product Title
 									input(type="text", name="product-title" class="form-control")
-							.col
+							.col-12.col-xs-12
 								.form-group
 									label(for="first-name") Geographical region of Interest
 									//- input(type="text", name="geographical-region" class="form-control")
@@ -41,7 +32,7 @@ html(lang="en")
 										option(value="Advertisement/Offine Marketing") Advertisement/Offine Marketing
 
 						.row.mt-4
-							.col
+							.col-12.col-md-6
 								.form-group
 										.row.align-items-end
 											.col.col-10
@@ -49,27 +40,27 @@ html(lang="en")
 												input#mincredit-amount.w-100(type='range')
 											.col.col-2
 												input(type='text' class="form-control" id="mincredit-amount-value" data-prefix="$")
-							.col
+							.col-12.col-md-6
 								.form-group
 										.row.align-items-end
-											.col.col-10
+											.col.col-10.col-md-10
 												label(for='interest' class="d-block interest mb-5") Interest
 												input#interest(type='range' class="w-100")
-											.col.col-2
+											.col.col-2.col-md-2
 												input(type="text" class="form-control" id="interest-value" data-sufix="%")
 						.row.mt-4
-							.col
+							.col-12.col-md-6
 								.form-group 
 										.row.align-items-end
-											.col.col-10
+											.col-10.col-md-8.col-lg-10
 												label(for='credit-amount' class="d-block credit-amount mb-5") Credit Amount
 												input#credit-amount(type='range' class="w-100" min="0" max="999999" step="1" data-orientation="horizontal")
-											.col.col-2
+											.col-2.col-md-4.col-lg-2
 												input(type='text' class="form-control" id="credit-amount-value" data-prefix="$")
-							.col
-								.form-group
+							.col-12.col-md-6
+								.form-group.d-flex.flex-column
 									label(for="" class="") Tags
-									select.form-control#tags(multiple='multiple')
+									select.form-control.w-100#tags(multiple='multiple')
 										option(selected='selected' value='orange') Advertise						
 										option(selected='selected' value="Agency") Agency
 										option(selected='selected' value="ad") ad

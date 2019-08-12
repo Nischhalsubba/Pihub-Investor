@@ -9,16 +9,7 @@ $(document).ready(function () {
             acceptedFiles: 'accept',
             //addRemoveLinks: true,
         });
-
-        // other code here
     }
-    
-    $("#tags").select2({
-        tags: true,
-        tokenSeparators: [',', ' '],
-        selectOnClose: true,
-        CloseOnselect: false
-    });
 
     $('input[type="range"]').rangeslider({
         polyfill: false,
@@ -44,14 +35,11 @@ $(document).ready(function () {
         },
     });
 
-    $('.js-example-basic-single').select2();
-
-
-
-
-
-
-
-
+    //hamburger action
+    $('#hamburger').click(function () {
+        var deviceWidth = window.innerWidth;
+        $(this).toggleClass('open');
+        $('.sidebar').toggleClass('active');
+    });
 
 });

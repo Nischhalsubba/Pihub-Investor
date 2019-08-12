@@ -14,18 +14,18 @@ html(lang="en")
 					.content-head-left
 						h1.content-head__title All Products
 					.content-head-right
-						a.btn.btn-primary(href="") Add New Product
+						a.btn.btn-primary(href="add-new-products.html") Add New Product
 
 				.content-body
-					table.table.tablesaw-stack(data-tablesaw-mode="swipe" data-tablesaw-minimap)
+					table.table.tablesaw-stack(data-tablesaw-mode="stack" data-tablesaw-minimap)
 						thead
 							tr 
-								th Name
-								th Category
-								th Interest
-								th Minimum Credit Amount
-								th Available Credit Amount
-								th Status
+								th(data-tablesaw-sortable-col) Name
+								th(data-tablesaw-sortable-col data-tablesaw-priority="persist" scope="col") Category
+								th(data-tablesaw-sortable-col scope="col") Interest
+								th(data-tablesaw-sortable-col scope="col") Minimum Credit Amount
+								th(data-tablesaw-sortable-col scope="col") Available Credit Amount
+								th(data-tablesaw-sortable-col scope="col") Status
 						tbody
 							tr
 								td 

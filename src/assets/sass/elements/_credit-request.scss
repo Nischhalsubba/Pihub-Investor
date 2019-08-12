@@ -1,0 +1,42 @@
+// All the scss related with credit request can be found here
+
+.credit-request {
+    p {
+        line-height: 26px;
+    }
+
+    .stat-alignment-right {
+        text-align: right;
+    }
+
+    .rightbar {
+        text-align: right;
+
+        .investor-profile {
+            float: right;
+        }
+    }
+
+    .attachments {
+        .file-name {
+            color: #6E8398;
+        }
+
+        .file-size {
+            color: #BEC6D6;
+        }
+    }
+}
+
+.sub-heading {
+    width: 300px;
+
+    .btn {
+        // margin-right: 5rem;
+        margin-top: -9px;
+    }
+}
+
+.alert {
+    width: 100%;
+}

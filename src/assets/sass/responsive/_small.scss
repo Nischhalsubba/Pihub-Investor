@@ -1,0 +1,13 @@
+@media (max-width: 639px) {
+
+    // Customzing table
+    .table.tablesaw-stack {
+
+        tr td {
+            &:first-child {
+                // background-color: $color-gray-1 ;
+                border-top: 2px solid $color-primary;
+            }
+        }
+    }
+}
