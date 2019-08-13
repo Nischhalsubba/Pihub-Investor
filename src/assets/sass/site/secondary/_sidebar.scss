@@ -1,19 +1,19 @@
 .sidebar {
-	background-color: $color-primary;
-	max-width: 340px;
-	flex: 1;
+  background-color: $color-primary;
+  max-width: 340px;
+  flex: 1;
 
-	.nav-sidebar{
-		margin-top: 75px;
-	}
+  .nav-sidebar {
+    margin-top: 75px;
+  }
 }
 
 .nav-sidebar ul li ul li a::before {
-	background-color: transparent;
+  background-color: transparent;
 }
 
 .nav-sidebar ul li ul li.current-menu a::before {
-	background-color: transparent;
+  background-color: transparent;
 }
 
 
@@ -22,19 +22,13 @@
   width: 35px;
   height: 40px;
   position: relative;
-  float:left;
-//   margin: 50px auto;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
-  -webkit-transition: .5s ease-in-out;
-  -moz-transition: .5s ease-in-out;
-  -o-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
+  float: left;
+  //   margin: 50px auto;
+  @include transform-rotate(0deg);
+  @include enable-transition(ease-in-out, .5s);
   cursor: pointer;
-  margin:10px 10px 0 0;
-  display:none;
+  margin: 10px 10px 0 0;
+  display: none;
 }
 
 #hamburger span {
@@ -44,14 +38,9 @@
   width: 50%;
   background: $color-primary;
   opacity: 1;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
-  -webkit-transition: .25s ease-in-out;
-  -moz-transition: .25s ease-in-out;
-  -o-transition: .25s ease-in-out;
-  transition: .25s ease-in-out;
+  @include transform-rotate(0deg);
+
+  @include enable-transition(ease-in-out);
 }
 
 #hamburger span:nth-child(even) {
@@ -60,34 +49,34 @@
 }
 
 #hamburger span:nth-child(odd) {
-  left:0px;
+  left: 0px;
   border-radius: 9px 0 0 9px;
 }
 
-#hamburger span:nth-child(1), #hamburger span:nth-child(2) {
+#hamburger span:nth-child(1),
+#hamburger span:nth-child(2) {
   top: 0px;
 }
 
-#hamburger span:nth-child(3), #hamburger span:nth-child(4) {
+#hamburger span:nth-child(3),
+#hamburger span:nth-child(4) {
   top: 15px;
 }
 
-#hamburger span:nth-child(5), #hamburger span:nth-child(6) {
+#hamburger span:nth-child(5),
+#hamburger span:nth-child(6) {
   top: 30px;
 }
 
-#hamburger.open span:nth-child(1),#hamburger.open span:nth-child(6) {
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg);
+#hamburger.open span:nth-child(1),
+#hamburger.open span:nth-child(6) {
+  @include transform-rotate(45deg);
+
 }
 
-#hamburger.open span:nth-child(2),#hamburger.open span:nth-child(5) {
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform: rotate(-45deg);
+#hamburger.open span:nth-child(2),
+#hamburger.open span:nth-child(5) {
+  @include transform-rotate(-45deg);
 }
 
 #hamburger.open span:nth-child(1) {

@@ -870,7 +870,7 @@ label {
   position: relative;
   float: left;
   transform: rotate(0deg);
-  transition: .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   cursor: pointer;
   margin: 10px 10px 0 0;
   display: none; }
@@ -883,7 +883,7 @@ label {
   background: #242a5a;
   opacity: 1;
   transform: rotate(0deg);
-  transition: .25s ease-in-out; }
+  transition: all 0.25s ease-in-out; }
 
 #hamburger span:nth-child(even) {
   left: 50%;
@@ -893,19 +893,24 @@ label {
   left: 0px;
   border-radius: 9px 0 0 9px; }
 
-#hamburger span:nth-child(1), #hamburger span:nth-child(2) {
+#hamburger span:nth-child(1),
+#hamburger span:nth-child(2) {
   top: 0px; }
 
-#hamburger span:nth-child(3), #hamburger span:nth-child(4) {
+#hamburger span:nth-child(3),
+#hamburger span:nth-child(4) {
   top: 15px; }
 
-#hamburger span:nth-child(5), #hamburger span:nth-child(6) {
+#hamburger span:nth-child(5),
+#hamburger span:nth-child(6) {
   top: 30px; }
 
-#hamburger.open span:nth-child(1), #hamburger.open span:nth-child(6) {
+#hamburger.open span:nth-child(1),
+#hamburger.open span:nth-child(6) {
   transform: rotate(45deg); }
 
-#hamburger.open span:nth-child(2), #hamburger.open span:nth-child(5) {
+#hamburger.open span:nth-child(2),
+#hamburger.open span:nth-child(5) {
   transform: rotate(-45deg); }
 
 #hamburger.open span:nth-child(1) {
