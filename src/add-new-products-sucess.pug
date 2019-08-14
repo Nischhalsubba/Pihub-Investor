@@ -1,0 +1,108 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+	head
+		include templates/head.pug
+		title Add New Product
+	body
+		.container-full-height.ct-container
+			.sidebar
+				include components/nav-sidebar
+			.main-content.main-content--padded
+				include templates/site-header
+				.content-head
+					.content-head-left
+						h1.content-head__title Edit: IT Investment
+					
+				.alert.alert-sucess
+						| Product Added. You can still keep editing product
+
+				.content-body
+					form.form-signup(action="signin.html")
+						.row.mt-4
+							.col-12.col-sm-12.col-md-6
+								.form-group
+									label(for="first-name") Product Title
+									input(type="text", name="product-title" class="form-control")
+							.col-12.col-sm-12.col-md-6
+								.form-group
+									label(for="first-name") Geographical region of Interest
+									//- input(type="text", name="geographical-region" class="form-control")
+									select.form-control.regionof-interest
+										option(value=" ") Select region of interest
+										option(value="Advertisement/Online Marketing") Advertisement/Online Marketing
+										option(value="Advertisement/Marketing") Advertisement/Marketing
+										option(value="Advertisement/Offine Marketing") Advertisement/Offine Marketing
+
+						.row.mt-4
+							.col-12.col-sm-12.col-md-6
+								.form-group
+										.row.align-items-end
+											.col.col-10
+												label(for='mincredit-amount' class="d-block mincredit-amount mb-5") Minimum Credit Amount 
+												input#mincredit-amount.w-100(type='range')
+											.col.col-2
+												input(type='text' class="form-control" id="mincredit-amount-value" data-prefix="$")
+							.col-12.col-sm-12.col-md-6
+								.form-group
+										.row.align-items-end
+											.col.col-10
+												label(for='interest' class="d-block interest mb-5") Interest
+												input#interest(type='range' class="w-100")
+											.col.col-2
+												input(type="text" class="form-control" id="interest-value" data-sufix="%")
+						.row.mt-4
+							.col-12.col-sm-12.col-md-6
+								.form-group 
+										.row.align-items-end
+											.col.col-10
+												label(for='credit-amount' class="d-block credit-amount mb-5") Credit Amount
+												input#credit-amount(type='range' class="w-100" min="0" max="999999" step="1" data-orientation="horizontal")
+											.col.col-2
+												input(type='text' class="form-control" id="credit-amount-value" data-prefix="$")
+							.col-12.col-sm-12.col-md-6
+								.form-group
+									label(for="" class="") Tags
+									select.form-control#tags(multiple='multiple')
+										option(selected='selected' value='orange') Advertise						
+										option(selected='selected' value="Agency") Agency
+										option(selected='selected' value="ad") ad
+										option(selected='selected' value="fund") fund
+
+						.row.mt-4
+							.col
+								.form-group
+									label(for="" class="d-block") File Upload
+
+									#tpl.d-none
+										.dz-preview.dz-file-preview
+											.dz-progress
+												span.dz-upload(data-dz-uploadprogress='')
+											.dz-details
+												.dz-filename
+												span(data-dz-name='')
+												.dz-size(data-dz-size='')
+												img(src='removebutton.png' alt='X' data-dz-remove='')
+
+									.file-upload-display
+
+									//- .file-upload-display.mb-4 
+										//- .progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
+										//- .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')
+										
+									.border-dotted
+										#file_dropzone.position-relative
+											.dz-message.needsclick.w-25.position-absolute
+												img(src="./assets/img/icons/bx-cloud-upload.png", alt="" class="d-block m-auto")
+												.text-center.mt-3
+													a(href="" class="font-weight-bold") Add file 
+													span
+														| or drop files here
+														input(type="file", name="" class="d-none")
+
+											.fallback
+												input(name='file', type='file', multiple='')
+
+						.row.mt-4
+							.col
+								button.btn.btn-primary.btn-form(type="submit") Submit

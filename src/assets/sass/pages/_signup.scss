@@ -1,8 +1,9 @@
-.panel-container .company-logo{
+.panel-container .company-logo {
 	position: absolute;
 	top: 50px;
 	left: 30px;
 }
+
 .feature-ours {
 	margin-bottom: 80px;
 	margin-top: 13rem;
@@ -32,18 +33,18 @@
 		color: $color-white;
 	}
 
-	.signup-quote__content{
+	.signup-quote__content {
 		position: relative;
 		font-size: 1rem;
 
-		&::before{
+		&::before {
 			content: url('../img/icons/bxs-quote-left.svg');
 			position: absolute;
 			left: -30px;
 			top: 0;
 		}
 
-		&::after{
+		&::after {
 			content: url('../img/icons/bxs-quote-right.svg');
 			position: absolute;
 			right: -30px;
@@ -60,4 +61,20 @@
 .signup-form-container {
 	width: 80%;
 	padding: 60px;
+}
+
+input[type='email'].error {
+	position: relative;
+
+	&::after {
+		content: url(../img/icons/bx-x.svg);
+		position: absolute;
+		right: 0;
+		top: 0;
+		display: block;
+	}
+}
+
+span.select2-selection--single{
+	height: 45px;
 }
