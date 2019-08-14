@@ -1,0 +1,54 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include templates/head.pug
+        title Credit Request on IT investment
+    body
+        .container-full-height.ct-container
+            .sidebar
+                include components/nav-sidebar
+            .main-content.main-content--padded
+                include templates/site-header
+                .content-head.flex-column.align-items-start
+                    .content-head-left.w-100
+                        h1.content-head__title Credit Request on IT investment
+
+                        .alert.alert-rejected
+                            | You rejected this Investment
+
+                .content-body.credit-request.mt-4
+                    .row.justify-content-between.w-100
+                        .col-lg-12.col-xl-8
+                            .sub-heading.clearfix.mb-4
+                                p.font-weight-bold.mb-2  Requested for
+                                h4.float-left IT Investment
+                                a.btn.btn-primary.float-right(href="") VIew Product
+                            p In computer programming, a placeholder is a character, word, or string of characters that may be used to take up space until such a time that the space is needed. For example, a programmer may know that she needs a certain number of values or variables, but doesn't yet know what to input. She can use a placeholder as a temporary solution until a proper value or variable can be assigned.
+                            p A placeholder in programming code may also be used to indicate where specific code needs to be added, but the programmer has not yet written the code. The placeholder reminds the programmer where to add the code, or it can be include to let other programmers know that additional code still needs to be added any programmer in general.
+
+                            p Placeholders may also be commented out to prevent the computer program from executing part of the code.Alternatively referred to as dummy text or filler text, placeholder text is text that temporarily "holds a place" in a document for the purpose of typesetting and layout. It may be used to preview fonts, spoof an e-mail spam filter, or reserve a specific place on a web page or other document for images, text, or some other object. For example, the designer of an online newsletter may have a template that they fill with dummy text so they can get an idea of how the layout of a page looks. One of the most common filler texts is lorem ipsum
+                            p Placeholders may also be commented out to prevent the computer program from executing part of the code.Alternatively referred to as dummy text or filler text, placeholder text is text that temporarily "holds a place" in a document for the purpose of typesetting and layout. It may be used to preview fonts, spoof an e-mail spam filter, or reserve a specific place on a web page or other document for images, text, or some other object. For example, the designer of an online newsletter may have a template that they fill with dummy text so they can get an idea of how the layout of a page looks. One of the most common filler texts is lorem ipsum
+
+                        .col-lg-12.col-xl-4.rightbar
+                            .amount
+                                h6 Requested amount of
+                                h2 $400,000
+                            .investor.clearfix.mt-5
+                                h6 Requested By
+                                .investor-profile.d-flex.align-items-center
+                                    img(src="assets/img/investor-profile.jpg", alt="Investor profile picture")
+                                    a(href="#",class="ml-2") John Doe
+                            .date.mt-5
+                                h6 Request on
+                                a(href="#") Jan 23, 2019
+                    .attachments.mt-4.mb-5
+                        h4 Attachments
+                        .file.mb-2
+                            span.file-name tax payer investment.docx
+                            span.ml-4.file-size 400.5kb
+                        .file
+                            span.file-name investment agreement.pdf
+                            span.ml-4.file-size 322.2kb
+                    span.mt-3
+                        a(href="#", class="btn btn-option") Rejected
