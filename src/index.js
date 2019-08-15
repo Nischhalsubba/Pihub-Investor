@@ -65,7 +65,7 @@ ReactDOM.render(
           {/** --- product aplications related routes --- */}
           <Route path="/product/applications" component={Applicationlist} />
           <Route path="/application" component={ViewApplication} />        
-          {/** --- end of signup related routes --- */}
+          {/** --- end of product related routes --- */}
 
           <Route path="/notifications" component={Notifications} />
         </App>
