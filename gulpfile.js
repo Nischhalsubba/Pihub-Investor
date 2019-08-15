@@ -20,7 +20,7 @@ var paths = {
 	},
 
 	html: {
-		src: './src/*.pug',
+		src: ['src/**/*.pug','!src/**/components/*','!src/**/templates/*'],
 		dest: './dist'
 	},
 	
