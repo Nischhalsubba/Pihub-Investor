@@ -24,7 +24,7 @@ const userOptions = [
     value: '57d3578a-3583-4290-8bae-596a4da81a8d'
   }
 ];
-class AddProducts extends Component {
+class AddProduct extends Component {
   render() {
     const {
       handleSubmit,
@@ -34,7 +34,7 @@ class AddProducts extends Component {
     } = this.props;
     return (
       <Fragment>
-        <Subheader heading="All Products" />
+        <Subheader heading="Add Product" />
         <div class="content-body">
           <form class="form-signup" action="signin.html">
             <div class="row mt-4">
@@ -215,12 +215,12 @@ class AddProducts extends Component {
   }
 }
 
-AddProducts = reduxForm({
+AddProduct = reduxForm({
   form: 'addProduct'
-})(AddProducts);
+})(AddProduct);
 
 const selector = formValueSelector('addProduct');
-AddProducts = connect(state => {
+AddProduct = connect(state => {
   const min_creditValue = selector(state, 'min_credit');
   const interestValue = selector(state, 'interest');
   const credit_amountValue = selector(state, 'credit_amount');
@@ -230,6 +230,6 @@ AddProducts = connect(state => {
     interestValue,
     credit_amountValue
   };
-})(AddProducts);
+})(AddProduct);
 
-export default AddProducts;
+export default AddProduct;

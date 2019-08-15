@@ -4,7 +4,7 @@ export default props => {
   return (
     <header class="site-header">
       <div class="logo-container">
-        <img src="assets/img/logo.png" alt="Pinhub Logo" />
+        <img src="/assets/img/logo.png" alt="Pinhub Logo" />
       </div>
       <nav class="header-actions">
         <ul>
