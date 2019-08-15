@@ -272,7 +272,7 @@ h6 {
   color: #F03E3E; }
 
 .text-right-piehub-table {
-  text-align: right; }
+  text-align: right !important; }
 
 .form-control {
   height: 45px !important; }
