@@ -7,10 +7,10 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import App from './App';
 import reducers from './reducers';
-import Signup from './components/auth/Signup';
+import Signup from './components/auth/signup/Signup';
 import Login from './components/auth/Login';
-import ProductList from './components/products/ProductList';
-import AddProducts from './components/products/AddProducts';
+import ProductList from './components/products/List';
+import AddProducts from './components/products/Add';
 const store = createStore(reducers, applyMiddleware(reduxThunk));
 ReactDOM.render(
   <Provider store={store}>
@@ -20,7 +20,7 @@ ReactDOM.render(
         <Route path="/login" exact component={Login} />
         <App>
           <Route path="/products" component={ProductList} />
-          <Route path="/add_products" component={AddProducts} />
+          <Route path="/add_product" component={AddProducts} />
         </App>
       </Switch>
     </BrowserRouter>
