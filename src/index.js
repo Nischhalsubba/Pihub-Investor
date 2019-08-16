@@ -8,8 +8,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import App from './App';
 import reducers from './reducers';
 import NoMatch from './components/general/NoMatch';
+import RequireInvestorAuth from './components/_auth/RequireInvestorAuth';
 
-// Signup related imports
+// Sign-up related imports
 import Signup from './components/user/Signup';
 import SignUpActivated from './components/user/signup/Activated';
 import ConfirmEmail from './components/user/signup/ConfirmEmail';
@@ -43,30 +44,32 @@ ReactDOM.render(
         <Route path="/login" exact component={Login} />
         <Route path="/password-set" exact component={SetPassword} />
         <Route path="/forgot-password" exact component={ForgotPassword} />
-        <Route path="/logout" exact component={Signout} />
+        <Route path="/logout" exact component={RequireInvestorAuth(Signout)} />
         {/** --- signup related routes --- */}
         <Route path="/" exact component={Signup} />
         <Route path="/signup" exact component={Signup} />
-        <Route path="/signup/activated" exact component={SignUpActivated} />
-        <Route path="/signup/confirm-email" exact component={ConfirmEmail} />
-        <Route path="/signup/confirmation" exact component={Confirmation} />
-        <Route path="/signup/approval" exact component={Approval} />        
-        {/** --- end of signup related routes --- */}
+        {/** --- start: signup protected routes (auth for these routes handled within component itself) --- */}
+        <Route path="/signup/activated" exact component={SignUpActivated} />{/** Logged in and activated accounts investors only*/}
+        <Route path="/signup/confirm-email" exact component={ConfirmEmail} /> {/** Logged in (there should be a token) and unconfirmed accounts only*/}
+        <Route path="/signup/confirmation" exact component={Confirmation} /> {/** Logged in (there should be a token) and unconfirmed accounts only*/}
+        <Route path="/signup/approval" exact component={Approval} /> {/** Logged in (there should be a token) - confirmed but waiting to e approved accounts only*/}
+        {/** --- end: signup protected routes --- */}
+        {/** --- end: signup related routes --- */}
         <App>
           {/** --- products related routes --- */}
-          <Route path="/products" component={ProductList} />
-          <Route path="/add-product" component={AddProduct} />
-          <Route path="/edit-product" component={EditProduct} />
-          <Route path="/products-invested" component={InvestedList} />
-          <Route path="/products-applications" component={AppliedList} />
-          <Route path="/product/" component={ViewProduct} />
+          <Route path="/products" component={RequireInvestorAuth(ProductList)} />
+          <Route path="/add-product" component={RequireInvestorAuth(AddProduct)} />
+          <Route path="/edit-product" component={RequireInvestorAuth(EditProduct)} />
+          <Route path="/products-invested" component={RequireInvestorAuth(InvestedList)} />
+          <Route path="/products-applications" component={RequireInvestorAuth(AppliedList)} />
+          <Route path="/product/" component={RequireInvestorAuth(ViewProduct)} />
           {/** --- product aplications related routes --- */}
-          <Route path="/product/applications" component={Applicationlist} />
-          <Route path="/application" component={ViewApplication} />        
+          <Route path="/product/applications" component={RequireInvestorAuth(Applicationlist)} />
+          <Route path="/application" component={RequireInvestorAuth(ViewApplication)} />
           {/** --- end of product related routes --- */}
-          <Route path="/notifications" component={Notifications} />
-          <Route component={NoMatch} />
+          <Route path="/notifications" component={RequireInvestorAuth(Notifications)} />
         </App>
+        <Route component={NoMatch} />
       </Switch>
     </BrowserRouter>
   </Provider>,
