@@ -10,16 +10,16 @@ import reducers from './reducers';
 import NoMatch from './components/general/NoMatch';
 
 // Signup related imports
-import Signup from './components/auth/signup/Signup';
-import SignUpActivated from './components/auth/signup/Activated';
-import ConfirmEmail from './components/auth/signup/ConfirmEmail';
-import Confirmation from './components/auth/signup/Confirmation';
-import Approval from './components/auth/signup/Approval';
+import Signup from './components/user/Signup';
+import SignUpActivated from './components/user/signup/Activated';
+import ConfirmEmail from './components/user/signup/ConfirmEmail';
+import Confirmation from './components/user/signup/Confirmation';
+import Approval from './components/user/signup/Approval';
 
-import Login from './components/auth/Login';
-import ForgotPassword from './components/auth/ForgotPassword';
-import SetPassword from './components/auth/SetPassword';
-import Signout from './components/auth/Signout';
+import Login from './components/user/Login';
+import ForgotPassword from './components/user/ForgotPassword';
+import SetPassword from './components/user/SetPassword';
+import Signout from './components/user/Signout';
 
 //Product related imports
 import ProductList from './components/products/List';
