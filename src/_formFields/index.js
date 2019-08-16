@@ -93,13 +93,12 @@ export const inputSlider = ({
 }) => {
   return (
     <Fragment>
-      <div class="col col-10">
+      <div className="col col-10">
         <label className="d-block mincredit-amount mb-5" for="mincredit-amount">
           {label}
         </label>
         <input
           {...input}
-          color={'white'}
           className={className}
           id={id}
           placeholder={placeholder}
@@ -108,6 +107,7 @@ export const inputSlider = ({
           max="999999"
           step="1"
           data-orientation="horizontal"
+          styles={{ color: 'red' }}
         />
       </div>
 

@@ -26,7 +26,7 @@ export default props => {
             </a>
           </li>
           <li className="page-item">
-            <a class="page-link" href="">
+            <a className="page-link" href="">
               <i className="bx bx-chevron-right" />
             </a>
           </li>
