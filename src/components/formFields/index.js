@@ -99,7 +99,6 @@ export const inputSlider = ({
         </label>
         <input
           {...input}
-          color={'white'}
           className={className}
           id={id}
           placeholder={placeholder}
@@ -108,6 +107,7 @@ export const inputSlider = ({
           max="999999"
           step="1"
           data-orientation="horizontal"
+          styles={{ color: 'red' }}
         />
       </div>
 
