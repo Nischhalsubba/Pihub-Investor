@@ -2,13 +2,13 @@ import React from 'react';
 
 export default props => {
   return (
-    <div class="content-head">
-      <div class="content-head-left">
-        <h1 class="content-head__title">{props.heading}</h1>
+    <div className="content-head">
+      <div className="content-head-left">
+        <h1 className="content-head__title">{props.heading}</h1>
       </div>
       {props.buttonLabel ? (
-        <div class="content-head-right">
-          <a class="btn btn-primary" href="">
+        <div className="content-head-right">
+          <a className="btn btn-primary" href="">
             {props.buttonLabel}
           </a>
         </div>

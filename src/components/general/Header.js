@@ -2,22 +2,22 @@ import React from 'react';
 
 export default props => {
   return (
-    <header class="site-header">
-      <div class="logo-container">
+    <header className="site-header">
+      <div className="logo-container">
         <img src="/assets/img/logo.png" alt="Pinhub Logo" />
       </div>
-      <nav class="header-actions">
+      <nav className="header-actions">
         <ul>
-          <li class="header-actions__item">
-            <a class="header-notification" href="">
-              <i class="bx bx-bell" />
-              <span class="notification-count">2</span>
+          <li className="header-actions__item">
+            <a className="header-notification" href="">
+              <i className="bx bx-bell" />
+              <span className="notification-count">2</span>
             </a>
           </li>
-          <li class="header-dropdown">
-            <a class="header-user-dropdown">
+          <li className="header-dropdown">
+            <a className="header-user-dropdown">
               <img src="assets/img/user.png" alt="John Doe" />
-              <i class="bx bx-chevron-down" />
+              <i className="bx bx-chevron-down" />
             </a>
           </li>
         </ul>

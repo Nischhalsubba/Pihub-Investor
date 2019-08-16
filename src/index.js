@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import App from './App';
 import reducers from './reducers';
+import NoMatch from './components/general/NoMatch';
 
 // Signup related imports
 import Signup from './components/auth/signup/Signup';
@@ -39,12 +40,10 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        
         <Route path="/login" exact component={Login} />
         <Route path="/password-set" exact component={SetPassword} />
         <Route path="/forgot-password" exact component={ForgotPassword} />
         <Route path="/logout" exact component={Signout} />
-
         {/** --- signup related routes --- */}
         <Route path="/" exact component={Signup} />
         <Route path="/signup" exact component={Signup} />
@@ -54,7 +53,6 @@ ReactDOM.render(
         <Route path="/signup/approval" exact component={Approval} />        
         {/** --- end of signup related routes --- */}
         <App>
-
           {/** --- products related routes --- */}
           <Route path="/products" component={ProductList} />
           <Route path="/add-product" component={AddProduct} />
@@ -66,10 +64,9 @@ ReactDOM.render(
           <Route path="/product/applications" component={Applicationlist} />
           <Route path="/application" component={ViewApplication} />        
           {/** --- end of product related routes --- */}
-
           <Route path="/notifications" component={Notifications} />
+          <Route component={NoMatch} />
         </App>
-        
       </Switch>
     </BrowserRouter>
   </Provider>,

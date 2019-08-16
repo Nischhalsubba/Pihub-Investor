@@ -93,7 +93,7 @@ export const inputSlider = ({
 }) => {
   return (
     <Fragment>
-      <div class="col col-10">
+      <div className="col col-10">
         <label className="d-block mincredit-amount mb-5" for="mincredit-amount">
           {label}
         </label>

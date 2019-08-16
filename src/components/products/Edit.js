@@ -35,11 +35,11 @@ class EditProduct extends Component {
     return (
       <Fragment>
         <Subheader heading="Edit Product" />
-        <div class="content-body">
-          <form class="form-signup" action="signin.html">
-            <div class="row mt-4">
-              <div class="col">
-                <div class="form-group">
+        <div className="content-body">
+          <form className="form-signup" action="signin.html">
+            <div className="row mt-4">
+              <div className="col">
+                <div className="form-group">
                   <Field
                     name="product_title"
                     type="text"
@@ -49,8 +49,8 @@ class EditProduct extends Component {
                   />
                 </div>
               </div>
-              <div class="col">
-                <div class="form-group">
+              <div className="col">
+                <div className="form-group">
                   <Field
                     name="geographical_interest"
                     component={dropDownField}
@@ -60,10 +60,10 @@ class EditProduct extends Component {
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col">
-                <div class="form-group">
-                  <div class="row align-items-end">
+            <div className="row mt-4">
+              <div className="col">
+                <div className="form-group">
+                  <div className="row align-items-end">
                     <Field
                       name="min_credit"
                       type="range"
@@ -72,9 +72,9 @@ class EditProduct extends Component {
                       label="Minimum Credit Amount"
                       id="mincredit-amount"
                     />
-                    <div class="col col-2">
+                    <div className="col col-2">
                       <input
-                        class="form-control"
+                        className="form-control"
                         type="text"
                         id="mincredit-amount-value"
                         value={min_creditValue}
@@ -83,9 +83,9 @@ class EditProduct extends Component {
                   </div>
                 </div>
               </div>
-              <div class="col">
-                <div class="form-group">
-                  <div class="row align-items-end">
+              <div className="col">
+                <div className="form-group">
+                  <div className="row align-items-end">
                     <Field
                       name="interest"
                       type="range"
@@ -95,9 +95,9 @@ class EditProduct extends Component {
                       id="mincredit-amount"
                       readOnly
                     />
-                    <div class="col col-2">
+                    <div className="col col-2">
                       <input
-                        class="form-control"
+                        className="form-control"
                         type="text"
                         id="mincredit-amount-value"
                         value={interestValue}
@@ -107,10 +107,10 @@ class EditProduct extends Component {
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col">
-                <div class="form-group">
-                  <div class="row align-items-end">
+            <div className="row mt-4">
+              <div className="col">
+                <div className="form-group">
+                  <div className="row align-items-end">
                     <Field
                       name="credit_amount"
                       type="range"
@@ -120,9 +120,9 @@ class EditProduct extends Component {
                       id="credit-amount"
                       readOnly
                     />
-                    <div class="col col-2">
+                    <div className="col col-2">
                       <input
-                        class="form-control"
+                        className="form-control"
                         type="text"
                         id="credit-amount-value"
                         data-prefix="$"
@@ -132,8 +132,8 @@ class EditProduct extends Component {
                   </div>
                 </div>
               </div>
-              <div class="col">
-                <div class="form-group">
+              <div className="col">
+                <div className="form-group">
                   <Field
                     name="tags"
                     component={renderMultiselect}
@@ -145,41 +145,41 @@ class EditProduct extends Component {
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col">
-                <div class="form-group">
-                  <label class="d-block" for="">
+            <div className="row mt-4">
+              <div className="col">
+                <div className="form-group">
+                  <label className="d-block" for="">
                     File Upload
                   </label>
-                  <div class="d-none" id="tpl">
-                    <div class="dz-preview dz-file-preview">
-                      <div class="dz-progress">
-                        <span class="dz-upload" data-dz-uploadprogress="" />
+                  <div className="d-none" id="tpl">
+                    <div className="dz-preview dz-file-preview">
+                      <div className="dz-progress">
+                        <span className="dz-upload" data-dz-uploadprogress="" />
                       </div>
-                      <div class="dz-details">
-                        <div class="dz-filename" />
+                      <div className="dz-details">
+                        <div className="dz-filename" />
                         <span data-dz-name="" />
-                        <div class="dz-size" data-dz-size="" />
+                        <div className="dz-size" data-dz-size="" />
                         <img src="removebutton.png" alt="X" data-dz-remove="" />
                       </div>
                     </div>
                   </div>
-                  <div class="file-upload-display" />
-                  <div class="border-dotted">
-                    <div class="position-relative" id="file_dropzone">
-                      <div class="dz-message needsclick w-25 position-absolute">
+                  <div className="file-upload-display" />
+                  <div className="border-dotted">
+                    <div className="position-relative" id="file_dropzone">
+                      <div className="dz-message needsclick w-25 position-absolute">
                         <img
-                          class="d-block m-auto"
+                          className="d-block m-auto"
                           src="/assets/img/icons/bx-cloud-upload.png"
                           alt=""
                         />
-                        <div class="text-center mt-3">
-                          <a class="font-weight-bold" href="">
+                        <div className="text-center mt-3">
+                          <a className="font-weight-bold" href="">
                             Add file{' '}
                           </a>
                           <span>
                             or drop files here
-                            {/* <input class="d-none" type="file" name="" /> */}
+                            {/* <input className="d-none" type="file" name="" /> */}
                             {/* <Field
                               name="profile_pic"
                               component="input"
@@ -188,7 +188,7 @@ class EditProduct extends Component {
                           </span>
                         </div>
                       </div>
-                      <div class="fallback">
+                      <div className="fallback">
                         {/* <input name="file" type="file" multiple="" /> */}
                         <Field
                           name="profile_pic"
@@ -201,9 +201,9 @@ class EditProduct extends Component {
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col">
-                <button class="btn btn-primary btn-form" type="submit">
+            <div className="row mt-4">
+              <div className="col">
+                <button className="btn btn-primary btn-form" type="submit">
                   Update
                 </button>
               </div>
