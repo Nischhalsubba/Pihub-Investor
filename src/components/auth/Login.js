@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { inputField } from '../formFields';
-import * as validation from '../../utils/validate';
+import { inputField } from '../../_formFields';
+import * as validation from '../../_utils/validate';
 class Login extends Component {
   onSubmit = formProps => {
     console.log(formProps);

@@ -8,7 +8,7 @@ import {
   dropDownField,
   inputSlider,
   renderMultiselect
-} from '../formFields';
+} from '../../_formFields';
 
 const userOptions = [
   {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
-import { inputField, checkBox } from '../../formFields';
-import * as validation from '../../../utils/validate';
+import { inputField, checkBox } from '../../../_formFields';
+import * as validation from '../../../_utils/validate';
 class Signup extends Component {
   onSubmit = formProps => {
     console.log(formProps);
