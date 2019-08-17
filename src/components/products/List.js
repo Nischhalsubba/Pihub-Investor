@@ -3,12 +3,44 @@ import Subheader from '../general/Subheader';
 import Translate from 'react-translate-component';
 import * as actions from '../../actions/product';
 import {connect} from 'react-redux';
+import { Link } from 'react-router-dom';
 
-class ProductList extends Component {
+class ProductsList extends Component {
 
     componentDidMount() {
-        this.props.getProductList();
+        this.props.getProductsList();
     }
+
+    renderList = (productsObject) => {
+        if (productsObject && productsObject.productsList.data.length > 0) {
+            let products = productsObject.productsList.data
+            return products.map((product, index) => {
+                console.log(product)
+                return (
+                    <tr key={product.id}>
+                        <td>
+                            <Link to="/product/">
+                                {product.product_code}
+                            </Link>
+                        </td>
+                        <td>
+                            <a href="">Health and personal care</a>
+                        </td>
+                        <td>10%</td>
+                        <td>{product.min_credit_amount}</td>
+                        <td>{product.amount}</td>
+                        <td>
+                            {' '}
+                            <span className="badge badge-warning">{product.status}</span>
+                        </td>
+                    </tr>
+                );
+            });
+        } else {
+            /*@todo handle empty conditions properly with designed layout*/
+            return <tr><td>You do not have any products yet!</td></tr>
+        }
+    };
 
     render() {
         return (
@@ -24,141 +56,14 @@ class ProductList extends Component {
                         <tr>
                             <th><Translate content="column.name"/></th>
                             <th><Translate content="column.category"/></th>
-                            <th>Interest</th>
-                            <th>Minimum Credit Amount</th>
-                            <th>Available Credit Amount</th>
-                            <th>Status</th>
+                            <th><Translate content="column.interest"/></th>
+                            <th><Translate content="column.minimum_credit_amount"/></th>
+                            <th><Translate content="column.available_credit_amount"/></th>
+                            <th><Translate content="column.status"/></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                                {' '}
-                                <a href="">IT Investment</a>
-                            </td>
-                            <td>
-                                <a href="">Health and personal care</a>
-                            </td>
-                            <td>10%</td>
-                            <td>$7186</td>
-                            <td>$233456</td>
-                            <td>
-                                {' '}
-                                <span className="badge badge-warning">Awaiting Approval</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {' '}
-                                <a href="">IT Investment</a>
-                            </td>
-                            <td>
-                                <a href="">Health and personal care</a>
-                            </td>
-                            <td>10%</td>
-                            <td>$7186</td>
-                            <td>$233456</td>
-                            <td>
-                                {' '}
-                                <span className="badge badge-warning">Awaiting Approval</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {' '}
-                                <a href="">IT Investment</a>
-                            </td>
-                            <td>
-                                <a href="">Health and personal care</a>
-                            </td>
-                            <td>10%</td>
-                            <td>$7186</td>
-                            <td>$233456</td>
-                            <td>
-                                {' '}
-                                <span className="badge badge-warning">Awaiting Approval</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {' '}
-                                <a href="">IT Investment</a>
-                            </td>
-                            <td>
-                                <a href="">Health and personal care</a>
-                            </td>
-                            <td>10%</td>
-                            <td>$7186</td>
-                            <td>$233456</td>
-                            <td>
-                                {' '}
-                                <span className="badge badge-warning">Awaiting Approval</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {' '}
-                                <a href="">IT Investment</a>
-                            </td>
-                            <td>
-                                <a href="">Health and personal care</a>
-                            </td>
-                            <td>10%</td>
-                            <td>$7186</td>
-                            <td>$233456</td>
-                            <td>
-                                {' '}
-                                <span className="badge badge-warning">Awaiting Approval</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {' '}
-                                <a href="">IT Investment</a>
-                            </td>
-                            <td>
-                                <a href="">Health and personal care</a>
-                            </td>
-                            <td>10%</td>
-                            <td>$7186</td>
-                            <td>$233456</td>
-                            <td>
-                                {' '}
-                                <span className="badge badge-warning">Awaiting Approval</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {' '}
-                                <a href="">IT Investment</a>
-                            </td>
-                            <td>
-                                <a href="">Health and personal care</a>
-                            </td>
-                            <td>10%</td>
-                            <td>$7186</td>
-                            <td>$233456</td>
-                            <td>
-                                {' '}
-                                <span className="badge badge-success">Approved</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {' '}
-                                <a href="">IT Investment</a>
-                            </td>
-                            <td>
-                                <a href="">Health and personal care</a>
-                            </td>
-                            <td>10%</td>
-                            <td>$7186</td>
-                            <td>$233456</td>
-                            <td>
-                                {' '}
-                                <span className="badge badge-danger">Rejected</span>
-                            </td>
-                        </tr>
+                        {this.renderList(this.props.data)}
                         </tbody>
                     </table>
                 </div>
@@ -174,4 +79,4 @@ function mapStateToProps(state) {
 export default connect(
     mapStateToProps,
     actions
-)(ProductList);
+)(ProductsList);

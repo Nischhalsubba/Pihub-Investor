@@ -27,7 +27,7 @@ import SetPassword from './components/user/SetPassword';
 import Signout from './components/user/Signout';
 
 //Product related imports
-import ProductList from './components/products/List';
+import ProductsList from './components/products/List';
 import AddProduct from './components/products/Add';
 import EditProduct from './components/products/Edit';
 import InvestedList from './components/products/InvestedList';
@@ -82,8 +82,8 @@ ReactDOM.render(
 
                 <App>
                     {/** ___ Start: Authenticated User's routes --- */}
-                    <Route path="/" exact component={RequireInvestorAuth(ProductList)}/>
-                    <Route path="/products" component={RequireInvestorAuth(ProductList)}/>
+                    <Route path="/" exact component={RequireInvestorAuth(ProductsList)}/>
+                    <Route path="/products" component={RequireInvestorAuth(ProductsList)}/>
                     <Route path="/add-product" component={RequireInvestorAuth(AddProduct)}/>
                     <Route path="/edit-product" component={RequireInvestorAuth(EditProduct)}/>
                     <Route path="/products-invested" component={RequireInvestorAuth(InvestedList)}/>
