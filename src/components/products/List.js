@@ -1,9 +1,11 @@
 import React, {Component, Fragment} from 'react';
 import Subheader from '../general/Subheader';
+import Translate from 'react-translate-component';
 import * as actions from '../../actions/product';
 import {connect} from 'react-redux';
 
 class ProductList extends Component {
+
     componentDidMount() {
         this.props.getProductList();
     }
@@ -20,8 +22,8 @@ class ProductList extends Component {
                     >
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Category</th>
+                            <th><Translate content="column.name"/></th>
+                            <th><Translate content="column.category"/></th>
                             <th>Interest</th>
                             <th>Minimum Credit Amount</th>
                             <th>Available Credit Amount</th>

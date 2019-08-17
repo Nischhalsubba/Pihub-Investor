@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Sidebar from './components/general/Sidebar';
-import Header from './components/general/Header';
-import Pagination from './components/general/Pagination';
+import Sidebar from './general/Sidebar';
+import Header from './general/Header';
+import Pagination from './general/Pagination';
 class App extends Component {
   render() {
     return (
