@@ -4,8 +4,11 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import reduxThunk from 'redux-thunk';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import counterpart from 'counterpart';
+import en from './_locale/en';
+import de from './_locale/de';
 
-import App from './App';
+import App from './components/App';
 import reducers from './reducers';
 import NoMatch from './components/general/NoMatch';
 import RequireInvestorAuth from './components/_auth/RequireInvestorAuth';
@@ -36,6 +39,13 @@ import ViewApplication from './components/products/applications/View';
 
 //Notification related imports
 import Notifications from './components/notifications/List';
+
+
+counterpart.registerTranslations('en', en);
+counterpart.registerTranslations('de', de);
+counterpart.setLocale(
+    localStorage.getItem('language') || navigator.language.split('-')[0] || 'de'
+);
 
 const store = createStore(
     reducers,
