@@ -1,7 +1,11 @@
 export default {
     column: {
         name: 'Name',
-        category: 'Category'
+        category: 'Category',
+        interest: 'Interest',
+        minimum_credit_amount: 'Minimum Cr. Amount',
+        available_credit_amount: 'Available Amount',
+        status: 'Status'
     },
     sidebar: {
         product: 'Product',
