@@ -1,0 +1,65 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include ../templates/head.pug
+        title Search product
+    body
+        .container-full-height.ct-container
+            .sidebar
+                include ../components/creditor-nav-sidebar
+            .main-content.main-content--padded
+                include ../templates/site-header
+                .content-head
+                    .content-head-left
+                        h1.content-head__title Search
+
+                .content-body
+                    form.form-signup(action="add-new-products-sucess.html")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label(for="first-name") Domain
+                                    input(type="text", name="product-title" class="form-control")
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label(for="amount") Amount
+                                    .d-flex.align-items-center
+                                        input.form-control.col-md-2.mr-2(type="text", name="")
+                                        .demo.w-100
+                                            input.position-relative.w-100(type="range", name="")
+                                        input.form-control.col-md-2.ml-2(type="text", name="")
+
+
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    .row.align-items-end
+                                        .col.col-12
+                                            label(for="first-name") Category
+                                            //- input(type="text", name="geographical-region" class="form-control")
+                                            select.form-control.regionof-interest.category
+                                                option(value=" ") Select category of interest
+                                                option(value="Advertisement/Online Marketing") Advertisement/Online Marketing
+                                                option(value="Advertisement/Marketing") Advertisement/Marketing
+                                                option(value="Advertisement/Offine Marketing") Advertisement/Offine Marketing
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    .row.align-items-end
+                                        .col.col-12
+                                            label(for="first-name") Region
+                                            input(type="text", name="product-title" class="form-control",placeholder="Deutshland")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-6
+                                .form-group 
+                                    .row.align-items-end
+                                        .col.col-12
+                                            label(for='interest' class="d-block interest ") Posted From
+                                            input#interest(type='date' class="w-100 form-control" placeholder="Choose a date")
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label(for='interest' class="d-block interest ") To
+                                    input#interest(type='date' class="w-100 form-control" placeholder="Choose a date")
+                        .row.mt-4
+                            .col
+                                button.btn.btn-primary.btn-form(type="submit") Search

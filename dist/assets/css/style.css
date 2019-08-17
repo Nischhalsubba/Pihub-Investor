@@ -807,6 +807,35 @@ input[type="radio"]:checked + .label:after {
 .hidden {
   display: none; }
 
+input[type='date']::-webkit-inner-spin-button,
+input[type='date'] input::-webkit-clear-button {
+  display: none; }
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  content: url("../img/icons/bx-calender.svg");
+  opacity: 1; }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  background-color: #242a5a;
+  height: 4px; }
+  input[type="range"]:focus {
+    outline: none; }
+
+.category {
+  position: relative;
+  display: inline-block;
+  -webkit-appearance: none;
+  -moz-appearance: none; }
+  .category::after {
+    background-image: url("../../assets/img/icons/bx-chevron-down.svg");
+    right: 10px;
+    position: absolute;
+    pointer-events: none; }
+
 .page-header {
   margin-bottom: 30px; }
   .page-header .page-title {

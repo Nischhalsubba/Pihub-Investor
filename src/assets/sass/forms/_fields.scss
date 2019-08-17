@@ -117,8 +117,9 @@ label {
 	line-height: 20px;
 	font-size: 14px;
 	margin: 15px 0px;
-  }
-  .radio .label {
+}
+
+.radio .label {
 	position: relative;
 	display: block;
 	float: left;
@@ -128,8 +129,9 @@ label {
 	border: 2px solid #c8ccd4;
 	border-radius: 100%;
 	-webkit-tap-highlight-color: transparent;
-  }
-  .radio .label:after {
+}
+
+.radio .label:after {
 	content: '';
 	position: absolute;
 	top: 3px;
@@ -142,25 +144,71 @@ label {
 	transition: all 0.2s ease;
 	opacity: 0.08;
 	pointer-events: none;
-  }
-  .radio:hover .label:after {
+}
+
+.radio:hover .label:after {
 	transform: scale(3.6);
-  }
-  input[type="radio"]:checked + .label {
+}
+
+input[type="radio"]:checked+.label {
 	border-color: #225cff;
-  }
-  input[type="radio"]:checked + .label:after {
+}
+
+input[type="radio"]:checked+.label:after {
 	transform: scale(1);
 	transition: all 0.2s cubic-bezier(0.35, 0.9, 0.4, 0.9);
 	opacity: 1;
-  }
-  .cntr {
+}
+
+.cntr {
 	position: absolute;
 	top: calc(50% - 10px);
 	left: 0;
 	width: 100%;
 	text-align: center;
-  }
-  .hidden {
+}
+
+.hidden {
 	display: none;
-  }
+}
+
+// Date picker
+input[type='date'] {
+
+	&::-webkit-inner-spin-button,
+	input::-webkit-clear-button {
+		display: none;
+	}
+
+	&::-webkit-calendar-picker-indicator {
+		content: url('../img/icons/bx-calender.svg');
+		opacity: 1;
+	}
+}
+
+// Range slider
+input[type="range"] {
+	appearance: none;
+	border: none;
+	background-color: $color-primary;
+	height: 4px;
+
+	&:focus {
+		outline: none;
+	}
+}
+
+// Category
+.category {
+	position: relative;
+	display: inline-block;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+
+	&::after {
+		background-image: url("../../assets/img/icons/bx-chevron-down.svg");
+		right: 10px;
+		position: absolute;
+		pointer-events: none;
+	}
+}
