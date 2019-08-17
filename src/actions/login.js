@@ -8,25 +8,16 @@ export const signin = ({email, password}, callback) => async dispatch => {
             email,
             password
         });
-        localStorage.setItem('role', response.data.data.userInfo.role[0]);
-        localStorage.setItem('token', response.data.data.token);
-        localStorage.setItem('email', response.data.data.userInfo.email);
-        localStorage.setItem('name', response.data.data.userInfo.first_name);
-        dispatch({
-            type: USER_DETAIL,
-            payload: response.data.data.userInfo
-        });
+        localStorage.setItem('token', response.data.message.token);
         dispatch({
             type: AUTH_USER,
-            payload: response.data.data.token
+            payload: response.data.message.token
         });
-
         callback();
     } catch (e) {
-        console.log(e);
         dispatch({
             type: AUTH_ERROR,
-            payload: `* ${e}`
+            payload: `${e.response.data.error}.`
         });
     }
 };

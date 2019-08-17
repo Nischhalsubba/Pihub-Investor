@@ -51,6 +51,10 @@ class Login extends Component {
                                         validate={validation.required}
                                     />
                                 </div>
+                                {/*@todo replace error message below with proper designed div*/}
+                                <div className="form-group">
+                                    <font color="red">{this.props.errorMessage}</font>
+                                </div>
                                 <button className="btn btn-primary btn-form" type="submit">
                                     Login{' '}
                                 </button>
@@ -81,7 +85,7 @@ class Login extends Component {
 
 function mapStateToProps(state) {
     return {
-        errorMessage: ""
+        errorMessage: state.auth.errorMessage
     };
 }
 
