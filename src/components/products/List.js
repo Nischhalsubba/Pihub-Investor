@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import Subheader from '../general/Subheader';
+import Translate from 'react-translate-component';
+
 class ProductList extends Component {
   render() {
     return (
@@ -13,8 +15,8 @@ class ProductList extends Component {
           >
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Category</th>
+                <th><Translate content="column.name" /></th>
+                <th><Translate content="column.category" /></th>
                 <th>Interest</th>
                 <th>Minimum Credit Amount</th>
                 <th>Available Credit Amount</th>

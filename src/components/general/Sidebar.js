@@ -1,34 +1,36 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Translate from 'react-translate-component';
+
 export default props => {
   return (
     <div className="sidebar">
       <nav className="nav-sidebar">
         <ul className="menu-sidebar">
           <li className="current-menu has-sub-menu">
-            <a href="http://">
+            <Link to="/products" rel="noopener noreferrer">
               <i className="bx bx-dollar-circle" />
-              Product
-            </a>
+              <Translate content="sidebar.product" />
+            </Link>
             <ul className="sub-menu">
               <li className="current-menu">
                 <Link to="/products" rel="noopener noreferrer">
-                  All Products
+                  <Translate content="sidebar.products" />
                 </Link>
               </li>
               <li>
                 <a href="/add-product" target="_self" rel="noopener noreferrer">
-                  New Product
+                  <Translate content="sidebar.new_product" />
                 </a>
               </li>
               <li>
                 <a href="/products-invested" target="_self" rel="noopener noreferrer">
-                  Invested Products
+                  <Translate content="sidebar.invested_products" />
                 </a>
               </li>
               <li>
                 <a href="/products-applications" target="_self" rel="noopener noreferrer">
-                  Credit Request
+                  <Translate content="sidebar.credit_requested_products" />
                 </a>
               </li>
             </ul>
