@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import jwt from "jsonwebtoken";
 
 export default ChildComponent => {
     class ComposedComponent extends Component {
@@ -13,6 +14,14 @@ export default ChildComponent => {
 
         shouldNavigateAway() {
             // give false condition
+            if (!this.props.auth) {
+                this.props.history.push('/login');
+            } else {
+                const {exp} = jwt.decode(this.props.auth);
+                if ((exp * 1000) < Date.now()) {
+                    this.props.history.push('/login');
+                }
+            }
         }
 
         render() {
@@ -22,7 +31,7 @@ export default ChildComponent => {
 
     function mapStateToProps(state) {
         return {
-            auth: state.auth
+            auth: state.auth.authenticated
         };
     }
 
