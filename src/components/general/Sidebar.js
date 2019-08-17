@@ -8,10 +8,10 @@ export default props => {
       <nav className="nav-sidebar">
         <ul className="menu-sidebar">
           <li className="current-menu has-sub-menu">
-            <a href="http://">
+            <Link to="/products" rel="noopener noreferrer">
               <i className="bx bx-dollar-circle" />
               <Translate content="sidebar.product" />
-            </a>
+            </Link>
             <ul className="sub-menu">
               <li className="current-menu">
                 <Link to="/products" rel="noopener noreferrer">
