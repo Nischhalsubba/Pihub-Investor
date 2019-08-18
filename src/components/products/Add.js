@@ -7,7 +7,8 @@ import {
   inputField,
   dropDownField,
   inputSlider,
-  renderMultiselect
+  renderMultiselect,
+  renderDropzoneField
 } from '../../_formFields';
 
 const userOptions = [
@@ -25,6 +26,9 @@ const userOptions = [
   }
 ];
 class AddProduct extends Component {
+  onSubmit = formProps => {
+    console.log(formProps);
+  };
   render() {
     const {
       handleSubmit,
@@ -36,7 +40,7 @@ class AddProduct extends Component {
       <Fragment>
         <Subheader heading="Add Product" />
         <div className="content-body">
-          <form className="form-signup" action="signin.html">
+          <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
             <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
@@ -151,53 +155,11 @@ class AddProduct extends Component {
                   <label className="d-block" for="">
                     File Upload
                   </label>
-                  <div className="d-none" id="tpl">
-                    <div className="dz-preview dz-file-preview">
-                      <div className="dz-progress">
-                        <span className="dz-upload" data-dz-uploadprogress="" />
-                      </div>
-                      <div className="dz-details">
-                        <div className="dz-filename" />
-                        <span data-dz-name="" />
-                        <div className="dz-size" data-dz-size="" />
-                        <img src="removebutton.png" alt="X" data-dz-remove="" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="file-upload-display" />
-                  <div className="border-dotted">
-                    <div className="position-relative" id="file_dropzone">
-                      <div className="dz-message needsclick w-25 position-absolute">
-                        <img
-                          className="d-block m-auto"
-                          src="./assets/img/icons/bx-cloud-upload.png"
-                          alt=""
-                        />
-                        <div className="text-center mt-3">
-                          <a className="font-weight-bold" href="">
-                            Add file{' '}
-                          </a>
-                          <span>
-                            or drop files here
-                            {/* <input className="d-none" type="file" name="" /> */}
-                            {/* <Field
-                              name="profile_pic"
-                              component="input"
-                              type="file"
-                            /> */}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="fallback">
-                        {/* <input name="file" type="file" multiple="" /> */}
-                        <Field
-                          name="profile_pic"
-                          component="input"
-                          type="file"
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  <Field
+                    name="profile_pic"
+                    component={renderDropzoneField}
+                    type="file"
+                  />
                 </div>
               </div>
             </div>
