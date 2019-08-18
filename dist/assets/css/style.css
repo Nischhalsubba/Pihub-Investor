@@ -289,6 +289,27 @@ h6 {
 .green-text {
   color: #8ce99a; }
 
+.status-badge {
+  padding: 11px 14px;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 3px; }
+
+.status-badge-awaiting {
+  background-color: #FFF3BF;
+  color: #E67700; }
+
+.status-badge-approved {
+  background-color: #D3F9D8;
+  color: #1E822C;
+  padding: 12px 41px; }
+
+.status-badge-rejected {
+  background-color: #fa5252;
+  color: #fff;
+  padding: 12px 44px; }
+
 .select2-container--default {
   width: 100% !important; }
 
