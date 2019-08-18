@@ -10,7 +10,7 @@ import { compose } from 'redux';
 class Signup extends Component {
   onSubmit = formProps => {
     this.props.signup(formProps, () => {
-      this.props.history.push('/signup/activated');
+      this.props.history.push('/signup/confirm-email');
     });
   };
   render() {

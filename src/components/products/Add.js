@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
-
+import { addProduct } from '../../actions/product';
 import Subheader from '../general/Subheader';
+import * as validation from '../../_utils/validate';
 import {
   inputField,
   dropDownField,
@@ -27,7 +28,7 @@ const userOptions = [
 ];
 class AddProduct extends Component {
   onSubmit = formProps => {
-    console.log(formProps);
+    this.props.addProduct(formProps);
   };
   render() {
     const {
@@ -50,6 +51,7 @@ class AddProduct extends Component {
                     component={inputField}
                     label="Product Title"
                     className="form-control"
+                    validate={validation.required}
                   />
                 </div>
               </div>
@@ -60,6 +62,7 @@ class AddProduct extends Component {
                     component={dropDownField}
                     options={userOptions}
                     label="Geographical region of Interest"
+                    validate={validation.required}
                   />
                 </div>
               </div>
@@ -75,6 +78,7 @@ class AddProduct extends Component {
                       component={inputSlider}
                       label="Minimum Credit Amount"
                       id="mincredit-amount"
+                      validate={validation.required}
                     />
                     <div className="col col-2">
                       <input
@@ -82,6 +86,7 @@ class AddProduct extends Component {
                         type="text"
                         id="mincredit-amount-value"
                         value={min_creditValue}
+                        validate={validation.required}
                       />
                     </div>
                   </div>
@@ -98,6 +103,7 @@ class AddProduct extends Component {
                       label="Interest"
                       id="mincredit-amount"
                       readOnly
+                      validate={validation.required}
                     />
                     <div className="col col-2">
                       <input
@@ -105,6 +111,7 @@ class AddProduct extends Component {
                         type="text"
                         id="mincredit-amount-value"
                         value={interestValue}
+                        validate={validation.required}
                       />
                     </div>
                   </div>
@@ -123,6 +130,7 @@ class AddProduct extends Component {
                       label="Credit Amount"
                       id="credit-amount"
                       readOnly
+                      validate={validation.required}
                     />
                     <div className="col col-2">
                       <input
@@ -145,6 +153,7 @@ class AddProduct extends Component {
                     label="Tags"
                     className="form-control"
                     id="tags"
+                    validate={validation.required}
                   />
                 </div>
               </div>
@@ -156,13 +165,19 @@ class AddProduct extends Component {
                     File Upload
                   </label>
                   <Field
-                    name="profile_pic"
+                    name="files"
                     component={renderDropzoneField}
                     type="file"
+                    validate={validation.required}
                   />
                 </div>
               </div>
             </div>
+            {this.props.errMsg ? (
+              <small>
+                <font color="red">{this.props.errMsg.errors}</font>
+              </small>
+            ) : null}
             <div className="row mt-4">
               <div className="col">
                 <button className="btn btn-primary btn-form" type="submit">
@@ -175,6 +190,9 @@ class AddProduct extends Component {
       </Fragment>
     );
   }
+}
+function mapStateToProps(state) {
+  return { errMsg: state.errors };
 }
 
 AddProduct = reduxForm({
@@ -193,5 +211,7 @@ AddProduct = connect(state => {
     credit_amountValue
   };
 })(AddProduct);
-
-export default AddProduct;
+export default connect(
+  mapStateToProps,
+  { addProduct }
+)(AddProduct);

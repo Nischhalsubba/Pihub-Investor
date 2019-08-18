@@ -156,16 +156,6 @@ export const renderDropzoneField = ({
 }) => {
   return (
     <Fragment>
-      {/* {field.meta.touched && field.meta.error && (
-        <span className="error">{field.meta.error}</span>
-      )}
-      {files && Array.isArray(files) && (
-        <ul>
-          {files.map((file, i) => (
-            <li key={i}>{file.name}</li>
-          ))}
-        </ul>
-      )} */}
       <Dropzone
         onDrop={filesToUpload => {
           input.onChange(filesToUpload);
@@ -192,6 +182,7 @@ export const renderDropzoneField = ({
           </div>
         )}
       </Dropzone>
+      <font color="red">{touched && error}</font>
     </Fragment>
   );
 };

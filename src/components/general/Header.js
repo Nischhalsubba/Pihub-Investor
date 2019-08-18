@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 export default props => {
   return (
     <header className="site-header">
@@ -9,14 +9,14 @@ export default props => {
       <nav className="header-actions">
         <ul>
           <li className="header-actions__item">
-            <a className="header-notification" href="">
+            <Link className="header-notification" to="/notifications">
               <i className="bx bx-bell" />
               <span className="notification-count">2</span>
-            </a>
+            </Link>
           </li>
           <li className="header-dropdown">
             <a className="header-user-dropdown">
-              <img src="assets/img/user.png" alt="John Doe" />
+              <img src="/assets/img/user.png" alt="John Doe" />
               <i className="bx bx-chevron-down" />
             </a>
           </li>
