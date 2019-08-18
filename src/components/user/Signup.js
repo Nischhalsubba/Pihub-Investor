@@ -3,9 +3,15 @@ import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { inputField, checkBox } from '../../_formFields';
 import * as validation from '../../_utils/validate';
+import { signup } from '../../actions/signup';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+
 class Signup extends Component {
   onSubmit = formProps => {
-    console.log(formProps);
+    this.props.signup(formProps, () => {
+      this.props.history.push('/');
+    });
   };
   render() {
     const { handleSubmit } = this.props;
@@ -53,7 +59,7 @@ class Signup extends Component {
                   <div className="col">
                     <div className="form-group">
                       <Field
-                        name="first_name"
+                        name="fname"
                         type="text"
                         component={inputField}
                         label="First Name"
@@ -65,7 +71,7 @@ class Signup extends Component {
                   <div className="col">
                     <div className="form-group">
                       <Field
-                        name="last_name"
+                        name="lname"
                         type="text"
                         component={inputField}
                         label="Last Name"
@@ -85,7 +91,7 @@ class Signup extends Component {
                 </div>
                 <div className="form-group">
                   <Field
-                    name="email_address"
+                    name="email"
                     type="email"
                     component={inputField}
                     label="Email Address"
@@ -103,7 +109,7 @@ class Signup extends Component {
                 </div>
                 <div className="form-group">
                   <Field
-                    name="confirm_password"
+                    name="password_confirmation"
                     type="password"
                     component={inputField}
                     label="Confirm Password"
@@ -138,17 +144,17 @@ class Signup extends Component {
 }
 function validate(values) {
   const errors = {};
-  errors.first_name = validation.required(values.first_name);
-  errors.last_name = validation.required(values.last_name);
-  errors.company_name = validation.required(values.company_name);
-  errors.email_address = validation.email(values.email_address);
+  errors.first_name = validation.required(values.fname);
+  errors.last_name = validation.required(values.lname);
+  // errors.company_name = validation.required(values.company_name);
+  errors.email_address = validation.email(values.email);
 
-  if (!values.email_address) {
+  if (!values.email) {
     errors.email_address = '* Required';
   }
   errors.password = validation.required(values.password);
-  errors.confirm_password = validation.required(values.confirm_password);
-  if (values.password !== values.confirm_password) {
+  errors.confirm_password = validation.required(values.password_confirmation);
+  if (values.password !== values.password_confirmation) {
     errors.confirm_password = '* Password Mismatch';
   }
   errors.phone_number = validation.phoneNumber(values.phone_number);
@@ -158,4 +164,13 @@ function validate(values) {
   return errors;
 }
 
-export default reduxForm({ validate, form: 'signUp' })(Signup);
+export default compose(
+  connect(
+    null,
+    { signup }
+  ),
+  reduxForm({
+    validate,
+    form: 'signup'
+  })
+)(Signup);
