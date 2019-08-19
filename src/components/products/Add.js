@@ -14,21 +14,21 @@ import {
 
 const userOptions = [
   {
-    label: 'Erika',
-    value: '4e4cf51f-b406-413a-ae46-2cf06c7aabff'
+    label: 'Information Technology',
+    value: '1'
   },
   {
-    label: 'Julia',
-    value: 'edad97c7-f2dc-4198-91a9-8f20c7bc67b2'
+    label: 'Construction',
+    value: '2'
   },
   {
-    label: 'Sarah',
-    value: '57d3578a-3583-4290-8bae-596a4da81a8d'
+    label: 'Food and Wines',
+    value: '0'
   }
 ];
 class AddProduct extends Component {
   onSubmit = formProps => {
-    this.props.addProduct(formProps);
+    this.props.addProduct(formProps, () => this.props.history.push('/'));
   };
   render() {
     const {
@@ -46,7 +46,7 @@ class AddProduct extends Component {
               <div className="col">
                 <div className="form-group">
                   <Field
-                    name="product_title"
+                    name="product_details"
                     type="text"
                     component={inputField}
                     label="Product Title"
@@ -58,7 +58,7 @@ class AddProduct extends Component {
               <div className="col">
                 <div className="form-group">
                   <Field
-                    name="geographical_interest"
+                    name="category_id"
                     component={dropDownField}
                     options={userOptions}
                     label="Geographical region of Interest"
@@ -72,7 +72,7 @@ class AddProduct extends Component {
                 <div className="form-group">
                   <div className="row align-items-end">
                     <Field
-                      name="min_credit"
+                      name="min_credit_amount"
                       type="range"
                       className="w-100"
                       component={inputSlider}
@@ -96,7 +96,7 @@ class AddProduct extends Component {
                 <div className="form-group">
                   <div className="row align-items-end">
                     <Field
-                      name="interest"
+                      name="interest_rate"
                       type="range"
                       className="w-100"
                       component={inputSlider}
@@ -109,7 +109,7 @@ class AddProduct extends Component {
                       <input
                         className="form-control"
                         type="text"
-                        id="mincredit-amount-value"
+                        id="amount"
                         value={interestValue}
                         validate={validation.required}
                       />
@@ -123,7 +123,7 @@ class AddProduct extends Component {
                 <div className="form-group">
                   <div className="row align-items-end">
                     <Field
-                      name="credit_amount"
+                      name="amount"
                       type="range"
                       className="w-100"
                       component={inputSlider}
@@ -201,9 +201,9 @@ AddProduct = reduxForm({
 
 const selector = formValueSelector('addProduct');
 AddProduct = connect(state => {
-  const min_creditValue = selector(state, 'min_credit');
-  const interestValue = selector(state, 'interest');
-  const credit_amountValue = selector(state, 'credit_amount');
+  const min_creditValue = selector(state, 'min_credit_amount');
+  const interestValue = selector(state, 'interest_rate');
+  const credit_amountValue = selector(state, 'amount');
 
   return {
     min_creditValue,
