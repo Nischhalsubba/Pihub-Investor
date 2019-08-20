@@ -1,7 +1,11 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import Subheader from '../general/Subheader';
 
 class DetailCreditRequest extends Component {
+  componentDidMount() {
+    // get the id of the product and send request//
+  }
   renderTableData = data => {
     return (
       <tr>
@@ -174,4 +178,4 @@ class DetailCreditRequest extends Component {
   }
 }
 
-export default DetailCreditRequest;
+export default connect()(DetailCreditRequest);

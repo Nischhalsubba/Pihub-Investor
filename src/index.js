@@ -140,11 +140,15 @@ ReactDOM.render(
             component={RequireInvestorAuth(Notifications)}
           />
           {/* Credit related route definition */}
-          <Route exact path="/credit-request" component={ListCreditRequest} />
+          <Route
+            exact
+            path="/credit-request"
+            component={RequireInvestorAuth(ListCreditRequest)}
+          />
           <Route
             exact
             path="/credit-request/detail"
-            component={DetailCreditRequest}
+            component={RequireInvestorAuth(DetailCreditRequest)}
           />
           {/** --- End: Authenticated User's routes ___ */}
         </App>
