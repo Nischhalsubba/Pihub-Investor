@@ -6,3 +6,5 @@ export const PRODUCTS_LIST = 'products_list';
 export const PRODUCTS_LIST_ERROR = 'products_list_error';
 export const ERROR = 'error';
 export const CREDIT_REQUESTS_LIST = 'credit_requests_list';
+export const LIST_NOTIFICATION = 'list_notification';
+export const NOTIFICATION_COUNT = 'notification_count';

@@ -4,5 +4,7 @@ export const routes = {
   signup: `${API_URL}/register`,
   products: `${API_URL}/investor/products`,
   addProduct: `${API_URL}/investor/product`,
-  listCreditRequests: `${API_URL}/investor/credit-requested-products`
+  listCreditRequests: `${API_URL}/investor/credit-requested-products`,
+  getNotificationList: `${API_URL}/me/notifications`,
+  countNotification: `${API_URL}/me/notification/count-new`
 };

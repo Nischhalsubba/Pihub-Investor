@@ -4,6 +4,7 @@ import auth from './auth';
 import user from './user';
 import productsList from './productsList';
 import creditRequests from './creditRequests';
+import notificationCount from './notificationCount';
 import errors from './errors';
 const rootReducer = combineReducers({
   user,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   productsList,
   creditRequests,
   errors,
+  notificationCount,
   form: formReducer
 });
 

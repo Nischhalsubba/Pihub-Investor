@@ -139,7 +139,7 @@ ReactDOM.render(
             path="/notifications"
             component={RequireInvestorAuth(Notifications)}
           />
-          {/* Credit related route definition */}
+          {/* Credit requests related route definition */}
           <Route
             exact
             path="/credit-request"
