@@ -1,7 +1,20 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import Subheader from '../general/Subheader';
+import { getCreditRequestList } from '../../actions/credits';
 class ListCreditRequests extends Component {
+  componentDidMount() {
+    this.props.getCreditRequestList(1);
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.list !== this.props.list) {
+      console.log('data arrived', this.props.list.creditRequests.data);
+    }
+  }
   renderData = data => {
+    if (data.length === 0) {
+      return <span>You dont have any credit requests yet</span>;
+    }
     return (
       <tr>
         <td>
@@ -18,56 +31,67 @@ class ListCreditRequests extends Component {
     );
   };
   render() {
-    return (
-      <Fragment>
-        <Subheader heading="Credit Request" />
-        <div class="content-body">
-          <table
-            class="table tablesaw-stack"
-            data-tablesaw-mode="stack"
-            data-tablesaw-minimap="data-tablesaw-minimap"
-          >
-            <thead>
-              <tr>
-                <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
-                  Product Name
-                </th>
-                <th
-                  data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                  data-tablesaw-priority="persist"
-                  scope="col"
-                >
-                  Region of interest
-                </th>
-                <th
-                  class="text-right-piehub-table"
-                  data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                  scope="col"
-                >
-                  Created on
-                </th>
-                <th
-                  class="text-right-piehub-table"
-                  data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                  scope="col"
-                >
-                  Numbers of Request
-                </th>
-                <th
-                  class="text-right-piehub-table"
-                  data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                  scope="col"
-                >
-                  Total Budget
-                </th>
-              </tr>
-            </thead>
-            <tbody>{this.renderData()}</tbody>
-          </table>
-        </div>
-      </Fragment>
-    );
+    if (this.props.list) {
+      return (
+        <Fragment>
+          <Subheader heading="Credit Request" />
+          <div class="content-body">
+            <table
+              class="table tablesaw-stack"
+              data-tablesaw-mode="stack"
+              data-tablesaw-minimap="data-tablesaw-minimap"
+            >
+              <thead>
+                <tr>
+                  <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
+                    Product Name
+                  </th>
+                  <th
+                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                    data-tablesaw-priority="persist"
+                    scope="col"
+                  >
+                    Region of interest
+                  </th>
+                  <th
+                    class="text-right-piehub-table"
+                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                    scope="col"
+                  >
+                    Created on
+                  </th>
+                  <th
+                    class="text-right-piehub-table"
+                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                    scope="col"
+                  >
+                    Numbers of Request
+                  </th>
+                  <th
+                    class="text-right-piehub-table"
+                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                    scope="col"
+                  >
+                    Total Budget
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.renderData(this.props.list.creditRequests.data)}
+              </tbody>
+            </table>
+          </div>
+        </Fragment>
+      );
+    } else {
+      return <span>Just a second</span>;
+    }
   }
 }
-
-export default ListCreditRequests;
+function mapStateToProps(state) {
+  return { list: state.creditRequests };
+}
+export default connect(
+  mapStateToProps,
+  { getCreditRequestList }
+)(ListCreditRequests);
