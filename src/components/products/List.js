@@ -45,7 +45,11 @@ class ProductsList extends Component {
   render() {
     return (
       <Fragment>
-        <Subheader heading="All Products" buttonLabel="Add New Product" />
+        <Subheader
+          heading="All Products"
+          buttonLabel="Add New Product"
+          link="/add-product"
+        />
         <div className="content-body">
           <table
             className="table tablesaw-stack"

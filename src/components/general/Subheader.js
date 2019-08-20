@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 export default props => {
   return (
     <div className="content-head">
@@ -8,9 +8,9 @@ export default props => {
       </div>
       {props.buttonLabel ? (
         <div className="content-head-right">
-          <a className="btn btn-primary" href="">
+          <Link className="btn btn-primary" to={props.link}>
             {props.buttonLabel}
-          </a>
+          </Link>
         </div>
       ) : null}
     </div>

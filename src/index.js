@@ -39,7 +39,8 @@ import ViewApplication from './components/products/applications/View';
 
 //Notification related imports
 import Notifications from './components/notifications/List';
-
+//Credit related
+import ListCreditRequest from './components/credits/ListCreditRequests';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
 counterpart.setLocale(
@@ -93,6 +94,7 @@ ReactDOM.render(
           {/** ___ Start: Authenticated User's routes --- */}
           <Route path="/" exact component={RequireInvestorAuth(ProductsList)} />
           <Route
+            exact
             path="/products"
             component={RequireInvestorAuth(ProductsList)}
           />
@@ -101,22 +103,27 @@ ReactDOM.render(
             component={RequireInvestorAuth(AddProduct)}
           />
           <Route
+            exact
             path="/edit-product"
             component={RequireInvestorAuth(EditProduct)}
           />
           <Route
+            exact
             path="/products-invested"
             component={RequireInvestorAuth(InvestedList)}
           />
           <Route
+            exact
             path="/products-applications"
             component={RequireInvestorAuth(AppliedList)}
           />
           <Route
+            exact
             path="/product/"
             component={RequireInvestorAuth(ViewProduct)}
           />
           <Route
+            exact
             path="/product/applications"
             component={RequireInvestorAuth(ApplicationList)}
           />
@@ -125,9 +132,11 @@ ReactDOM.render(
             component={RequireInvestorAuth(ViewApplication)}
           />
           <Route
+            exact
             path="/notifications"
             component={RequireInvestorAuth(Notifications)}
           />
+          <Route path="/credit-request" component={ListCreditRequest} />
           {/** --- End: Authenticated User's routes ___ */}
         </App>
         <Route component={NoMatch} />
