@@ -24,14 +24,18 @@ export default props => {
                 </a>
               </li>
               <li>
-                <a href="/products-invested" target="_self" rel="noopener noreferrer">
+                <a
+                  href="/products-invested"
+                  target="_self"
+                  rel="noopener noreferrer"
+                >
                   <Translate content="sidebar.invested_products" />
                 </a>
               </li>
               <li>
-                <a href="/products-applications" target="_self" rel="noopener noreferrer">
+                <Link to="/credit-request" rel="noopener noreferrer">
                   <Translate content="sidebar.credit_requested_products" />
-                </a>
+                </Link>
               </li>
             </ul>
           </li>

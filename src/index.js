@@ -41,6 +41,9 @@ import ViewApplication from './components/products/applications/View';
 import Notifications from './components/notifications/List';
 //Credit related
 import ListCreditRequest from './components/credits/ListCreditRequests';
+import DetailCreditRequest from './components/credits/DetailCreditRequest';
+
+//End of component import
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
 counterpart.setLocale(
@@ -136,7 +139,13 @@ ReactDOM.render(
             path="/notifications"
             component={RequireInvestorAuth(Notifications)}
           />
-          <Route path="/credit-request" component={ListCreditRequest} />
+          {/* Credit related route definition */}
+          <Route exact path="/credit-request" component={ListCreditRequest} />
+          <Route
+            exact
+            path="/credit-request/detail"
+            component={DetailCreditRequest}
+          />
           {/** --- End: Authenticated User's routes ___ */}
         </App>
         <Route component={NoMatch} />
