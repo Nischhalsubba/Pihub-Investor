@@ -6,16 +6,17 @@ import { PRODUCTS_LIST_ERROR, PRODUCTS_LIST, ERROR } from './types';
 export const getProductsList = () => async dispatch => {
   try {
     const response = await client.get(routes.products);
-    console.log(response.data.data);
+    console.log('axn', response.data.data);
     dispatch({
       type: PRODUCTS_LIST,
       payload: response.data
     });
   } catch (e) {
-    dispatch({
-      type: PRODUCTS_LIST_ERROR,
-      payload: `${e}.`
-    });
+    console.log(e.response);
+    // dispatch({
+    //   type: ERROR,
+    //   payload: e.response.data.message
+    // });
   }
 };
 

@@ -43,6 +43,7 @@ class ProductsList extends Component {
   };
 
   render() {
+    console.log('pr', this.props.data);
     return (
       <Fragment>
         <Subheader
