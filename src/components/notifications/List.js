@@ -1,28 +1,50 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { getNotificationList } from '../../actions/notification';
+import { getNotificationList, markAsRead } from '../../actions/notification';
 class Notifications extends Component {
+  state = { refresh: false };
   componentDidMount() {
     document.title = 'Notifications';
     this.props.getNotificationList(1);
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.refresh !== this.state.refresh) {
+      this.props.getNotificationList(1);
+    }
   }
   renderNotification = notifications => {
     if (notifications.length === 0) {
       return <span>You dont have any new notifications</span>;
     }
     return notifications.map((notification, index) => {
+      let color;
+      notification.is_read === 0 ? (color = 'sucess') : (color = 'wait');
       return (
-        <li className="notification-item d-flex flex-row align-items-top mb-3 pb-3">
-          <div className="status wait mr-4" />
-          <div className="title">
-            <p className="wait">
-              Your product "IT Information" needs more information
-            </p>
-            <div className="time">20 Minutes ago</div>
-          </div>
-        </li>
+        <Fragment key={index}>
+          <li
+            className="notification-item d-flex flex-row align-items-top mb-3 pb-3"
+            onClick={() =>
+              this.markAsRead(notification.id, notification.is_read)
+            }
+          >
+            <div className={`status ${color} mr-4`} />
+            <div className="title">
+              <p className="wait">{notification.notification}</p>
+              <div className="time">20 Minutes ago</div>
+            </div>
+          </li>
+        </Fragment>
       );
     });
+  };
+  markAsRead = (id, is_read) => {
+    if (is_read !== 0) {
+      return;
+    } else {
+      this.props.markAsRead(id, () => {
+        this.setState({ refresh: !this.state.refresh });
+      });
+    }
   };
   render() {
     if (this.props.list) {
@@ -66,5 +88,5 @@ function mapStateToProps(state) {
 }
 export default connect(
   mapStateToProps,
-  { getNotificationList }
+  { getNotificationList, markAsRead }
 )(Notifications);

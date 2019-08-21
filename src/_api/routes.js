@@ -6,5 +6,6 @@ export const routes = {
   addProduct: `${API_URL}/investor/product`,
   listCreditRequests: `${API_URL}/investor/credit-requested-products`,
   getNotificationList: `${API_URL}/me/notifications`,
-  countNotification: `${API_URL}/me/notification/count-new`
+  countNotification: `${API_URL}/me/notification/count-new`,
+  markAsRead: `${API_URL}/me/notification/read`
 };

@@ -32,3 +32,13 @@ export const getNotificationList = page => async dispatch => {
     });
   }
 };
+
+export const markAsRead = (id, callback) => async dispatch => {
+  try {
+    let ids = { notification_ids: [id] };
+    const response = await client.post(routes.markAsRead, ids);
+    if (response) {
+      callback();
+    }
+  } catch (e) {}
+};
