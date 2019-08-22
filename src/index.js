@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import counterpart from 'counterpart';
 import en from './_locale/en';
 import de from './_locale/de';
@@ -145,11 +145,7 @@ ReactDOM.render(
             path="/credit-request"
             component={RequireInvestorAuth(ListCreditRequest)}
           />
-          <Route
-            exact
-            path="/credit-request/detail"
-            component={RequireInvestorAuth(DetailCreditRequest)}
-          />
+          {/* <Redirect from="/credit-request/detail" to="/product" /> */}
           {/** --- End: Authenticated User's routes ___ */}
         </App>
         <Route component={NoMatch} />

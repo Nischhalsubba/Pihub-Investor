@@ -7,6 +7,7 @@ class ListCreditRequests extends Component {
   componentDidMount() {
     this.props.getCreditRequestList(1);
   }
+
   renderData = data => {
     if (data.length === 0) {
       return <span>You dont have any credit requests yet</span>;

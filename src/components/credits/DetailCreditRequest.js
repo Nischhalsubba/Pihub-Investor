@@ -1,3 +1,5 @@
+// Now the same view as product view is used **Do not delete this as we might have to separate the view later ** //
+
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Subheader from '../general/Subheader';
