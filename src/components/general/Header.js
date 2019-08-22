@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getNotificationCount } from '../../actions/notification';
+import { logout } from '../../actions/login';
 class Header extends Component {
   componentDidMount() {
     this.props.getNotificationCount();
@@ -25,6 +26,13 @@ class Header extends Component {
               <a className="header-user-dropdown">
                 <img src="/assets/img/user.png" alt="John Doe" />
                 <i className="bx bx-chevron-down" />
+                <span
+                  onClick={() =>
+                    this.props.logout(() => this.props.history.push('/login'))
+                  }
+                >
+                  logout
+                </span>
               </a>
             </li>
           </ul>
@@ -38,5 +46,5 @@ function mapStateToProps(state) {
 }
 export default connect(
   mapStateToProps,
-  { getNotificationCount }
-)(Header);
+  { getNotificationCount, logout }
+)(withRouter(Header));
