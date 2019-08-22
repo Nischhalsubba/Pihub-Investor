@@ -1,11 +1,6 @@
 import client from './index';
 import { routes } from './../_api/routes';
-import {
-  AUTH_ERROR,
-  AUTH_USER,
-  GET_NOTIFICATION_COUNT,
-  USER_DETAIL
-} from './types';
+import { AUTH_ERROR, AUTH_USER } from './types';
 export const signin = ({ email, password }, callback) => async dispatch => {
   try {
     const response = await client.post(routes.login, {
@@ -25,4 +20,13 @@ export const signin = ({ email, password }, callback) => async dispatch => {
       payload: `${e.response.data.error}.`
     });
   }
+};
+
+export const logout = callback => async dispatch => {
+  localStorage.removeItem('token');
+  dispatch({
+    type: AUTH_USER,
+    payload: undefined
+  });
+  callback();
 };
