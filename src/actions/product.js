@@ -1,7 +1,12 @@
 import client from './index';
 import clientWithForm from './formDataRequest';
 import { routes } from './../_api/routes';
-import { PRODUCTS_LIST_ERROR, PRODUCTS_LIST, ERROR } from './types';
+import {
+  PRODUCTS_LIST_ERROR,
+  PRODUCTS_LIST,
+  ERROR,
+  SINGLE_PRODUCT
+} from './types';
 
 export const getProductsList = () => async dispatch => {
   try {
@@ -20,8 +25,8 @@ export const getProductsList = () => async dispatch => {
 };
 
 export const addProduct = (details, callback) => async dispatch => {
+  // Once the data needed are finalized,need to refactor those codes below //
   try {
-    console.log(details);
     var body = new FormData();
     body.set('product_details', details.product_details);
     body.set('category_id', details.category_id.value);
@@ -50,5 +55,17 @@ export const addProduct = (details, callback) => async dispatch => {
         payload: 'Unable to add product now'
       });
     }
+  }
+};
+
+export const getProductById = id => async dispatch => {
+  try {
+    const response = await client.get(`${routes.getProductById}/${id}`);
+    dispatch({
+      type: SINGLE_PRODUCT,
+      payload: response.data.data
+    });
+  } catch (e) {
+    console.log(e);
   }
 };

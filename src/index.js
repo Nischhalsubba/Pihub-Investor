@@ -122,7 +122,7 @@ ReactDOM.render(
           />
           <Route
             exact
-            path="/product/"
+            path="/product"
             component={RequireInvestorAuth(ViewProduct)}
           />
           <Route

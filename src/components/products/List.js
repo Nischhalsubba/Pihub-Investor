@@ -14,13 +14,21 @@ class ProductsList extends Component {
     if (productsObject && productsObject.productsList.data.length > 0) {
       let products = productsObject.productsList.data;
       return products.map((product, index) => {
+        console.log(product);
         return (
           <tr key={product.id}>
             <td>
-              <Link to="/product/">{product.product_code}</Link>
+              <Link
+                to={{
+                  pathname: `/product`,
+                  state: { id: product.id }
+                }}
+              >
+                {product.product_code}
+              </Link>
             </td>
             <td>
-              <a href="">Health and personal care</a>
+              <a href="">{product.investor}</a>
             </td>
             <td>10%</td>
             <td>{product.min_credit_amount}</td>
