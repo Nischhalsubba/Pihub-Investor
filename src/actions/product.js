@@ -12,11 +12,10 @@ export const getProductsList = () => async dispatch => {
       payload: response.data
     });
   } catch (e) {
-    console.log(e.response);
-    // dispatch({
-    //   type: ERROR,
-    //   payload: e.response.data.message
-    // });
+    dispatch({
+      type: ERROR,
+      payload: e.response.data.message
+    });
   }
 };
 
