@@ -716,15 +716,6 @@ label {
   margin-bottom: 15px;
   color: #212529; }
 
-.form-check {
-  padding: 0; }
-  .form-check label {
-    font-size: 12px;
-    color: #495057;
-    padding-left: 10px; }
-  .form-check a {
-    text-decoration: underline; }
-
 #file_dropzone {
   min-height: 200px;
   cursor: pointer; }
