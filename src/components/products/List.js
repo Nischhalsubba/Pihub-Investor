@@ -14,7 +14,6 @@ class ProductsList extends Component {
     if (productsObject && productsObject.productsList.data.length > 0) {
       let products = productsObject.productsList.data;
       return products.map((product, index) => {
-        console.log(product);
         return (
           <tr key={product.id}>
             <td>

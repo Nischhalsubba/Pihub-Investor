@@ -1,37 +1,44 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Subheader from '../general/Subheader';
 import { getCreditRequestList } from '../../actions/credits';
 class ListCreditRequests extends Component {
   componentDidMount() {
     this.props.getCreditRequestList(1);
   }
-  componentDidUpdate(prevProps) {
-    if (prevProps.list !== this.props.list) {
-      console.log('data arrived', this.props.list.creditRequests.data);
-    }
-  }
   renderData = data => {
     if (data.length === 0) {
       return <span>You dont have any credit requests yet</span>;
     }
-    return (
-      <tr>
-        <td>
-          {' '}
-          <a href="">Reprehenderit Marshall</a>
-        </td>
-        <td>
-          <a href="">Health and personal care</a>
-        </td>
-        <td class="text-right-piehub-table">07/04/1927</td>
-        <td class="text-right-piehub-table">2</td>
-        <td class="text-right-piehub-table font-weight-bold">$238638</td>
-      </tr>
-    );
+    return data.map((product, index) => {
+      let date = new Date(product.requested_on);
+      return (
+        <tr key={index}>
+          <td>
+            {' '}
+            <Link to={{ pathname: '/product', state: { id: product.id } }}>
+              {product.product_name}
+            </Link>
+          </td>
+          <td>
+            <Link>{product.region_of_interest}</Link>
+          </td>
+          <td class="text-right-piehub-table">{`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`}</td>
+          <td class="text-right-piehub-table">{product.number_of_request}</td>
+          <td class="text-right-piehub-table font-weight-bold">
+            ${product.total_budget}
+          </td>
+        </tr>
+      );
+    });
   };
   render() {
     if (this.props.list) {
+      const {
+        creditRequests: { data }
+      } = this.props.list;
+
       return (
         <Fragment>
           <Subheader heading="Credit Request" />
@@ -76,9 +83,7 @@ class ListCreditRequests extends Component {
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                {this.renderData(this.props.list.creditRequests.data)}
-              </tbody>
+              <tbody>{this.renderData(data)}</tbody>
             </table>
           </div>
         </Fragment>
