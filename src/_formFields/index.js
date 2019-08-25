@@ -186,3 +186,28 @@ export const renderDropzoneField = ({
     </Fragment>
   );
 };
+
+export const radioButton = ({
+  input,
+  label,
+  type,
+  className,
+  id,
+  placeholder,
+  meta: { error, touched }
+}) => {
+  return (
+    <div>
+      <label>{label}</label>
+      <input
+        {...input}
+        type="radio"
+        color={'white'}
+        className={className}
+        id={id}
+        placeholder={placeholder}
+      />
+      <font color="red">{touched && error}</font>
+    </div>
+  );
+};

@@ -8,5 +8,6 @@ export const routes = {
   listCreditRequests: `${API_URL}/investor/credit-requested-products`,
   getNotificationList: `${API_URL}/me/notifications`,
   countNotification: `${API_URL}/me/notification/count-new`,
-  markAsRead: `${API_URL}/me/notification/read`
+  markAsRead: `${API_URL}/me/notification/read`,
+  changeStatusOfRequest: `${API_URL}/application`
 };

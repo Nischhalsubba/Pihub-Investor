@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getProductsList } from '../../actions/product';
+import { changeStatus } from '../../actions/changeStatus';
+
 class RequestedByList extends Component {
   state = { list: [] };
   componentDidMount() {
@@ -29,14 +31,23 @@ class RequestedByList extends Component {
             ${data.min_credit_amount}
           </td>
           <td class="text-right-piehub-table">
-            <a class="mr-1" href="">
+            <span
+              class="mr-1"
+              onClick={() => this.props.changeStatus(data.id, 'accepted')}
+            >
               <img src="assets/img/icons/bx-check-circle.svg" alt="accepted" />
-            </a>
-            <a href="">
+            </span>
+            <span onClick={() => this.props.changeStatus(data.id, 'rejected')}>
               {' '}
               <img src="assets/img/icons/bx-x-circle.svg" alt="rejected" />
-            </a>
+            </span>
           </td>
+          {this.props.errMsg ? (
+            <small>
+              <font />
+              {this.props.errMsg.error}
+            </small>
+          ) : null}
         </tr>
       );
     });
@@ -86,9 +97,9 @@ class RequestedByList extends Component {
   }
 }
 function mapStateToProps(state) {
-  return { data: state.productsList };
+  return { data: state.productsList, errMsg: state.error };
 }
 export default connect(
   mapStateToProps,
-  { getProductsList }
+  { getProductsList, changeStatus }
 )(RequestedByList);
