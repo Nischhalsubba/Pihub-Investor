@@ -197,18 +197,3 @@ input[type="range"] {
 		outline: none;
 	}
 }
-
-// Category
-.category {
-	position: relative;
-	display: inline-block;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-
-	&::after {
-		background-image: url("../../assets/img/icons/bx-chevron-down.svg");
-		right: 10px;
-		position: absolute;
-		pointer-events: none;
-	}
-}

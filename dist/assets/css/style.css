@@ -846,17 +846,6 @@ input[type="range"] {
   input[type="range"]:focus {
     outline: none; }
 
-.category {
-  position: relative;
-  display: inline-block;
-  -webkit-appearance: none;
-  -moz-appearance: none; }
-  .category::after {
-    background-image: url("../../assets/img/icons/bx-chevron-down.svg");
-    right: 10px;
-    position: absolute;
-    pointer-events: none; }
-
 .page-header {
   margin-bottom: 30px; }
   .page-header .page-title {
