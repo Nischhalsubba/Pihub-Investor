@@ -1,5 +1,3 @@
-$(document).ready(function(){if($("#file_dropzone").length){var e=document.querySelector("#tpl").innerHTML;$("div#file_dropzone").dropzone({url:"http://google.com",previewTemplate:e,previewsContainer:".file-upload-display",acceptedFiles:"accept"})}$('input[type="range"]').rangeslider({polyfill:!1,
-// Default CSS classes
-rangeClass:"rangeslider",disabledClass:"rangeslider--disabled",horizontalClass:"rangeslider--horizontal",fillClass:"rangeslider__fill",handleClass:"rangeslider__handle",onSlide:function(e,a){var l=$("input#"+this.$element.attr("id")+"-value"),i="";l.attr("data-prefix")&&(i=l.attr("data-prefix"));var r="";l.attr("data-sufix")&&(r=l.attr("data-sufix")),l.val(i+a+r)}}),
+$(document).ready(function(){if($("#file_dropzone").length){var e=document.querySelector("#tpl").innerHTML;$("div#file_dropzone").dropzone({url:"http://google.com",previewTemplate:e,previewsContainer:".file-upload-display",acceptedFiles:"accept"})}
 //hamburger action
 $("#hamburger").click(function(){window.innerWidth;$(this).toggleClass("open"),$(".sidebar").toggleClass("active")})});
