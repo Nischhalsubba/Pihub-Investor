@@ -1,0 +1,62 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include ../templates/head.pug
+        title Signup here
+    body
+        .container-full-width
+            .panel-container
+                .feature-container.feature-container--creditor--signup
+                    img(src="../assets/img/logo.png", alt="company logo",class="company-logo")
+                    .feature-sidebar
+                        .feature-ours
+                            h3.feature-ours__sub-title The Perfect Investment
+                            h2.feature-ours__title At Credit tech you can easily find creditor and make an invest
+
+                        .signup-quote
+                            h2.signup-quote__title Why Credit Tech?
+                            p.signup-quote__content At first I Invested little and by time pass I Invested to the sector I like and Credit Tech takes me right there
+                            p.signup-quote__name John Doe
+
+                            a.btn.btn-white What others say?
+                .main-container
+                    .signup-form-container
+                        header.page-header
+                            h1.page-title Sign Up to Credit Tech as an Investor 
+                            p.page-desc Enter your details below
+
+                        form.form-signup(action="signin.html")
+                            .row
+                                .col
+                                    .form-group
+                                        label(for="first-name") First Name
+                                        input(type="text", name="first-name" class="form-control")
+                                .col
+                                    .form-group
+                                        label(for="last-name") Last Name
+                                        input(type="text", name="last-name" class="form-control")
+                            .form-group
+                                label(for="company-name") Company Name
+                                input(type="text", name="company-name" class="form-control")
+                            .form-group
+                                label(for="email-address") Email Address
+                                input(type="email", name="email-address" class="form-control")
+                            .form-group
+                                label(for="password") Password
+                                input(type="password", name="password" class="form-control")
+                            .form-group
+                                label(for="confirm-password") Confirm Password
+                                input(type="password", name="confirm-password" class="form-control")
+                            .form-group
+                                label(for="phone-number") Phone Number
+                                .d-flex
+                                    select.form-control.col-2
+                                        option(value="") Select
+                                        option(value="NP") Nepal
+                                    input(type="tel", name="phone-number" class="form-control ml-4 col-10")
+                            .form-check
+                                input(type="checkbox", name="agreed-term" checked)
+                                label(for="phone-number") I agree to the 
+                                    a(href="") Terms & Conditions
+                            button.btn.btn-primary.btn-form(type="submit") Sign Up Now

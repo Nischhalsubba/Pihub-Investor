@@ -1,0 +1,66 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include ../templates/head.pug
+        title Search product
+    body
+        .container-full-height.ct-container
+            .sidebar
+                include ../components/creditor-nav-sidebar
+            .main-content.main-content--padded
+                include ../templates/site-header
+                .content-head
+                    .content-head-left
+                        h1.content-head__title Search 
+
+                .content-body
+                    form.form-signup(action="add-new-products-sucess.html")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label(for="first-name") Credit type
+                                    select.form-control.category
+                                        option(value=" ") Purchase financing / Finetrading
+                                        option(value="Purchase financing") Purchase financing
+                                        option(value="Finetrading") Finetrading
+                                        option(value="Purchase financing / Finetrading") Purchase financing / Finetrading
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label(for="amount") Amount
+                                    .d-flex.align-items-center
+                                        .slider-range.w-100
+                                            input.w-100(type="range", name="")
+                                        input.form-control.col-md-2.ml-2(type="text", name="",value="£ 30.000.000",placeholder="£ 30.000.000")
+
+
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    .row.align-items-end
+                                        .col.col-12
+                                            label(for="first-name") Industry
+                                            select.form-control.category
+                                                option(value=" ") Administration and office work
+                                                option(value="Administration") Administration
+                                                option(value="office work") office work
+                                                option(value="Administration and office work") Administration and office work
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    .row.align-items-end
+                                        .col.col-12
+                                            label(for="first-name") Deadline
+                                            input(type="date", name="product-title" class="form-control")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-6
+                                .form-group 
+                                    .row.align-items-end
+                                        .col.col-12
+                                            label(for='interest' class="d-block interest ") Time Duration (Months)
+                                            .d-flex.align-items-center
+                                                .slider-range.w-100
+                                                    input.w-100(type="range", name="")
+                                                input.form-control.col-md-1.ml-2.text-center(type="text", name="",placeholder="36")
+                        .row.mt-2
+                            .col
+                                button.btn.btn-primary.btn-form(type="submit") Search

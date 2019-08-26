@@ -43,3 +43,11 @@
 	-o-transition: $property $duration $easing;
 	transition: $property $duration $easing;
 }
+
+// apperances
+@mixin disable-apperance ($display) {
+	-ms-appearance: ($display);
+	-moz-appearance: ($display);
+	-o-appearance: ($display);
+	appearance: ($display);
+}

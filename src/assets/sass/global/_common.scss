@@ -30,29 +30,54 @@
 }
 
 .text-right-piehub-table {
-    text-align: right;
+    text-align: right !important;
 }
 
 .form-control {
     height: 45px !important;
 }
 
-.error{
+.error {
     border: 1px solid #FF8787;
 }
 
-.error-text{
-    color:#FF8787;
+.error-text {
+    color: #FF8787;
 }
 
-.green{
+.green {
     border: 1px solid $color-brand-success;
 }
 
-.green-text{
+.green-text {
     color: $color-brand-success;
 }
 
-.select2-container--default{
+.status-badge {
+    padding: 11px 14px;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    border-radius: 3px;
+}
+
+.status-badge-awaiting {
+    background-color: $color-status-awaiting;
+    color: $color-text-awaiting;
+}
+
+.status-badge-approved {
+    background-color: $color-status-approved;
+    color: $color-text-approved;
+    padding: 12px 41px;
+}
+
+.status-badge-rejected {
+    background-color: $color-status-rejected;
+    color: $color-text-rejected;
+    padding: 12px 44px;
+}
+
+.select2-container--default {
     width: 100% !important;
 }

@@ -20,15 +20,34 @@ html(lang="en")
                 .content-body.credit-request.mt-4
                     .row.justify-content-between.w-100
                         .col-lg-12.col-xl-8
-                            .sub-heading.clearfix.mb-4
-                                p.font-weight-bold.mb-2  Requested for
-                                h4.float-left IT Investment
-                                a.btn.btn-primary.float-right(href="") VIew Product
-                            p In computer programming, a placeholder is a character, word, or string of characters that may be used to take up space until such a time that the space is needed. For example, a programmer may know that she needs a certain number of values or variables, but doesn't yet know what to input. She can use a placeholder as a temporary solution until a proper value or variable can be assigned.
-                            p A placeholder in programming code may also be used to indicate where specific code needs to be added, but the programmer has not yet written the code. The placeholder reminds the programmer where to add the code, or it can be include to let other programmers know that additional code still needs to be added any programmer in general.
-
-                            p Placeholders may also be commented out to prevent the computer program from executing part of the code.Alternatively referred to as dummy text or filler text, placeholder text is text that temporarily "holds a place" in a document for the purpose of typesetting and layout. It may be used to preview fonts, spoof an e-mail spam filter, or reserve a specific place on a web page or other document for images, text, or some other object. For example, the designer of an online newsletter may have a template that they fill with dummy text so they can get an idea of how the layout of a page looks. One of the most common filler texts is lorem ipsum
-                            p Placeholders may also be commented out to prevent the computer program from executing part of the code.Alternatively referred to as dummy text or filler text, placeholder text is text that temporarily "holds a place" in a document for the purpose of typesetting and layout. It may be used to preview fonts, spoof an e-mail spam filter, or reserve a specific place on a web page or other document for images, text, or some other object. For example, the designer of an online newsletter may have a template that they fill with dummy text so they can get an idea of how the layout of a page looks. One of the most common filler texts is lorem ipsum
+                            .clearfix.mb-4
+                                .sub-heading.clearfix.float-left
+                                    p.font-weight-bold.mb-2  Requested for
+                                    h4.float-left IT Investment
+                                a.btn.btn-primary.float-right.mt-2(href="") Make an offer
+                            //- content
+                            .credit-information
+                                .row.pt-4
+                                    .col
+                                        h6 Service/Industy Expertise
+                                        span Customer Service
+                                    .col.text-right
+                                        h6 Financing Needs
+                                        span $25000
+                                    .col.text-right
+                                        h6 Collateral
+                                        span John Doe, $2522
+                                .row.pt-5
+                                    .col
+                                        h6 Deadline
+                                        span April 1, 2019
+                                    .col.text-right
+                                        h6 NDA Requirement
+                                        span 
+                                            a(href="http://", target="_blank", rel="noopener noreferrer")  NDA_piHub.pdf
+                                    .col.text-right
+                                        h6 Minimum Credit amount
+                                        span $4500
 
                         .col-lg-12.col-xl-4.rightbar
                             .amount
@@ -42,7 +61,7 @@ html(lang="en")
                             .date.mt-5
                                 h6 Request on
                                 a(href="#") Jan 23, 2019
-                    .attachments.mt-4.mb-5
+                    .attachments.mt-5.mb-5
                         h4 Attachments
                         .file.mb-2
                             span.file-name tax payer investment.docx

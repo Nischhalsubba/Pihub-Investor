@@ -272,7 +272,7 @@ h6 {
   color: #F03E3E; }
 
 .text-right-piehub-table {
-  text-align: right; }
+  text-align: right !important; }
 
 .form-control {
   height: 45px !important; }
@@ -288,6 +288,27 @@ h6 {
 
 .green-text {
   color: #8ce99a; }
+
+.status-badge {
+  padding: 11px 14px;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 3px; }
+
+.status-badge-awaiting {
+  background-color: #FFF3BF;
+  color: #E67700; }
+
+.status-badge-approved {
+  background-color: #D3F9D8;
+  color: #1E822C;
+  padding: 12px 41px; }
+
+.status-badge-rejected {
+  background-color: #fa5252;
+  color: #fff;
+  padding: 12px 44px; }
 
 .select2-container--default {
   width: 100% !important; }
@@ -716,15 +737,6 @@ label {
   margin-bottom: 15px;
   color: #212529; }
 
-.form-check {
-  padding: 0; }
-  .form-check label {
-    font-size: 12px;
-    color: #495057;
-    padding-left: 10px; }
-  .form-check a {
-    text-decoration: underline; }
-
 #file_dropzone {
   min-height: 200px;
   cursor: pointer; }
@@ -806,6 +818,24 @@ input[type="radio"]:checked + .label:after {
 
 .hidden {
   display: none; }
+
+input[type='date']::-webkit-inner-spin-button,
+input[type='date'] input::-webkit-clear-button {
+  display: none; }
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  content: url("../img/icons/bx-calender.svg");
+  opacity: 1; }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  background-color: #242a5a;
+  height: 4px; }
+  input[type="range"]:focus {
+    outline: none; }
 
 .page-header {
   margin-bottom: 30px; }
