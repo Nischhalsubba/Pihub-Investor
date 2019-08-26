@@ -19,17 +19,43 @@ html(lang="en")
 						.row.mt-4
 							.col-12.col-sm-12.col-md-6
 								.form-group
-									label(for="first-name") Product Title
+									label(for="product-title") Product Title
 									input(type="text", name="product-title" class="form-control")
 							.col-12.col-sm-12.col-md-6
 								.form-group
-									label(for="first-name") Geographical region of Interest
-									//- input(type="text", name="geographical-region" class="form-control")
-									select.form-control.regionof-interest
-										option(value=" ") Select region of interest
-										option(value="Advertisement/Online Marketing") Advertisement/Online Marketing
-										option(value="Advertisement/Marketing") Advertisement/Marketing
-										option(value="Advertisement/Offine Marketing") Advertisement/Offine Marketing
+									label(for="state") States
+									select.form-control.states
+										option(value="Baden-Württemberg") Baden-Württemberg
+										option(value="Bavaria") Bavaria
+										option(value="Berlin") Berlin
+						.row.mt-4
+							.col-12.col-sm-12.col-md-6
+								.form-group
+									label(for="credit-type") Credit Type
+									select.form-control
+										option(value="revolving-credit") Revolving Credit
+							.col-12.col-sm-12.col-md-6
+								.form-group
+									label(for="country") Country
+									select.form-control
+										option(value="argentina") Argentina
+										option(value="germany") Germany
+						.row.mt-4
+							.col-12.col-sm-12.col-md-6
+								.form-group
+									label(for="Industry") Industry
+									select.form-control
+										option(value="service-industry") Service Industry
+							.col-12.col-sm-12.col-md-6
+								.form-group
+									label(for='time-duration' class="d-block") Time Duraction (Months)
+									.row.align-items-end
+										.col.col-2
+											input(type='text' class="form-control" id="time-duration-min" value="1")
+										.col.col-8
+											input#time-duration.w-100(type="range")
+										.col.col-2
+											input(type='text' class="form-control" id="time-duration-max" value="12")
 
 						.row.mt-4
 							.col-12.col-sm-12.col-md-6
@@ -44,27 +70,86 @@ html(lang="en")
 								.form-group
 										.row.align-items-end
 											.col.col-10
-												label(for='interest' class="d-block interest mb-5") Interest
-												input#interest(type='range' class="w-100")
+												label(for='mincredit-amount' class="d-block mincredit-amount mb-5") Maximum Credit Amount
+												input#maxcredit-amount(type='range' class="w-100")
 											.col.col-2
-												input(type="text" class="form-control" id="interest-value" data-sufix="%")
+												input(type="text" class="form-control" id="maxcredit-amount-value" data-prefix="$")
+						.row.mt-4
+							.col
+								.form-group
+									label.d-block Rating for Credit
+									.form-check.form-check-inline
+										input.form-check-input(type="radio" name="rating-for-credit" id="rating-credit-yes" value="yes" checked)
+										label.form-check-label(for="rating-credit-yes") Yes
+									.form-check.form-check-inline
+										input.form-check-input(type="radio" name="rating-for-credit" id="rating-credit-no" value="no")
+										label.form-check-label(for="rating-credit-no") No
+								
 						.row.mt-4
 							.col-12.col-sm-12.col-md-6
-								.form-group 
-										.row.align-items-end
-											.col.col-10
-												label(for='credit-amount' class="d-block credit-amount mb-5") Credit Amount
-												input#credit-amount(type='range' class="w-100" min="0" max="999999" step="1" data-orientation="horizontal")
-											.col.col-2
-												input(type='text' class="form-control" id="credit-amount-value" data-prefix="$")
+								.row
+									.col-12.col-sm-12.col-md-6
+										.form-group
+											.row.align-items-center
+												.col
+													.form-check
+														input.form-check-input(type="checkbox" name="rating-for-credit" id="rating-credit-yes" checked)
+														label.form-check-label(for="rating-credit-yes") Creditform
+												.col
+													input.form-control(type="text", name="creditform" value="A-")
+									.col-12.col-sm-12.col-md-6
+										.form-group
+											.row.align-items-center
+												.col
+													.form-check
+														input.form-check-input(type="checkbox" name="rating-for-credit" id="euler-hermes")
+														label.form-check-label(for="euler-hermes") Euler Hermes
+												.col
+													input.form-control(type="text", name="euler-hermes" value="")
+						
+						.row.mt-4
 							.col-12.col-sm-12.col-md-6
-								.form-group
-									label(for="" class="") Tags
-									select.form-control#tags(multiple='multiple')
-										option(selected='selected' value='orange') Advertise						
-										option(selected='selected' value="Agency") Agency
-										option(selected='selected' value="ad") ad
-										option(selected='selected' value="fund") fund
+								.row
+									.col-12.col-sm-12.col-md-6
+										.form-group
+											.row.align-items-center
+												.col
+													.form-check
+														input.form-check-input(type="checkbox" name="rating-for-credit" id="fitch" checked)
+														label.form-check-label(for="fitch") Fitch
+												.col
+													input.form-control(type="text", name="fitch" value="")
+									.col-12.col-sm-12.col-md-6
+										.form-group
+											.row.align-items-center
+												.col
+													.form-check
+														input.form-check-input(type="checkbox" name="rating-for-credit" id="standar-poors")
+														label.form-check-label(for="standar-poors") Standard & Poors
+												.col
+													input.form-control(type="text", name="standerd-poors" value="A-")
+
+						.row.mt-4
+							.col-12.col-sm-12.col-md-6
+								.row
+									.col-12.col-sm-12.col-md-6
+										.form-group
+											.row.align-items-center
+												.col
+													.form-check
+														input.form-check-input(type="checkbox" name="rating-for-credit" id="moodys")
+														label.form-check-label(for="moodys") Moody's
+												.col
+													input.form-control(type="text", name="moodys" value="")
+									.col-12.col-sm-12.col-md-6
+										.form-group
+											.row.align-items-center
+												.col
+													.form-check
+														input.form-check-input(type="checkbox" name="rating-for-credit" id="bank-andere")
+														label.form-check-label(for="bank-andere") Bank/Andere
+												.col
+													input.form-control(type="text", name="bank-andere" value="A-")
 
 						.row.mt-4
 							.col
