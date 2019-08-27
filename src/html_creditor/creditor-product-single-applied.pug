@@ -1,0 +1,63 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include ../templates/head.pug
+        title Credit Request on IT investment
+    body
+        .container-full-height.ct-container
+            .sidebar
+                include ../components/creditor-nav-sidebar
+            .main-content.main-content--padded
+                include ../templates/site-header
+                .content-head
+                    .content-head-left
+                        h1.content-head__title Product: IT investment
+                    a.btn.btn-option(href="add-new-products.html") Applied
+                span.green.status-badge.text-left.status-badge-approved.pl-4.mb-4.mt-4.d-flex Thank you for applying. We will get back to you shortly   
+
+                .content-body.credit-request
+                    .row.justify-content-between
+                        .col-lg-12.col-xl-8
+                            p In computer programming, a placeholder is a character, word, or string of characters that may be used to take up space until such a time that the space is needed. For example, a programmer may know that she needs a certain number of values or variables, but doesn't yet know what to input. She can use a placeholder as a temporary solution until a proper value or variable can be assigned.
+                            p A placeholder in programming code may also be used to indicate where specific code needs to be added, but the programmer has not yet written the code. The placeholder reminds the programmer where to add the code, or it can be include to let other programmers know that additional code still needs to be added any programmer in general.
+
+                            p Placeholders may also be commented out to prevent the computer program from executing part of the code.Alternatively referred to as dummy text or filler text, placeholder text is text that temporarily "holds a place" in a document for the purpose of typesetting and layout. It may be used to preview fonts, spoof an e-mail spam filter, or reserve a specific place on a web page or other document for images, text, or some other object. For example, the designer of an online newsletter may have a template that they fill with dummy text so they can get an idea of how the layout of a page looks. One of the most common filler texts is lorem ipsum
+                            p Placeholders may also be commented out to prevent the computer program from executing part of the code.Alternatively referred to as dummy text or filler text, placeholder text is text that temporarily "holds a place" in a document for the purpose of typesetting and layout. It may be used to preview fonts, spoof an e-mail spam filter, or reserve a specific place on a web page or other document for images, text, or some other object. For example, the designer of an online newsletter may have a template that they fill with dummy text so they can get an idea of how the layout of a page looks. One of the most common filler texts is lorem ipsum
+
+                            .row.mt-5.credit-request-stat
+                                .col.col.md-4
+                                    h4 Interest
+                                    p 10%
+                                .col.col.md-4.stat-alignment-right
+                                    h4 Minimum Credit amount
+                                    p $4500
+                                .col.col.md-4.stat-alignment-right
+                                    h4 Region of interest
+                                    p Information Technology
+                        .col-lg-12.col-xl-4.rightbar
+                            .amount
+                                h6 Investment available of
+                                h2 $400,000
+                                p.font-italic taxes may apply as per country
+                            .investor.clearfix.mt-5
+                                h6 Investor
+                                .investor-profile.d-flex.align-items-center
+                                    img(src="../assets/img/investor-profile.jpg", alt="Investor profile picture")
+                                    a(href="#",class="ml-2") John Doe
+                            .date.date-created.mt-5
+                                h6 Created on
+                                a(href="#") Jan 23, 2019
+                            .date.date-expire.mt-5
+                                h6 Expies on
+                                a(href="#") April 1, 2019
+                    .attachments.mt-4
+                        h4 Attachments
+                        .file.mb-2
+                            span.file-name tax payer investment.docx
+                            span.ml-4.file-size 400.5kb
+                        .file
+                            span.file-name investment agreement.pdf
+                            span.ml-4.file-size 322.2kb
+                
+                    a.btn.btn-option.mt-5(href="add-new-products.html") Applied 

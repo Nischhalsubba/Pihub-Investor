@@ -1,0 +1,129 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include ../templates/head.pug
+        title Creditor Product view all
+    body
+        .container-full-height.ct-container
+            .sidebar
+                include ../components/creditor-nav-sidebar
+            .main-content.main-content--padded
+                include ../templates/site-header
+                .content-head
+                    .content-head-left
+                        h1.content-head__title All Products
+
+                    .content-head-right
+                            form.form-inline.my-2.my-lg-0
+                                input.form-control.mr-sm-2(type='search' placeholder='Search' aria-label='Search')
+                                a.btn.btn-primary(href="add-new-products.html") Search
+
+                .content-body
+                    table.table.tablesaw-stack(data-tablesaw-mode="stack" data-tablesaw-minimap)
+                        thead
+                            tr 
+                                th(data-tablesaw-sortable-col) Service
+                                th(data-tablesaw-sortable-col data-tablesaw-priority="persist" scope="col") Industry
+                                th(data-tablesaw-sortable-col scope="col") Started on
+                                th.text-right-piehub-table(data-tablesaw-sortable-col scope="col") Ends on
+                                th.text-right-piehub-table(data-tablesaw-sortable-col scope="col") Amount
+                        tbody
+                            tr
+                                td 
+                                    a(href="./creditor-product-single.html") Reprehenderit Marshall
+                                td
+                                    a(href="") Health and personal care
+                                td 12/02/2011
+                                td.text-right-piehub-table 07/04/1927
+                                td.text-right-piehub-table.font-weight-bold $238638
+                            tr
+                                td 
+                                    a(href="./creditor-product-single.html") Fugiat Valdez
+                                td
+                                    a(href="") Home and garden
+                                td 12/08/1906
+                                td.text-right-piehub-table 05/12/1983
+                                td.text-right-piehub-table.font-weight-bold $706045
+                            tr
+                                td 
+                                    a(href="./creditor-product-single.html") Excepteur Miles
+                                td
+                                    a(href="") Vehicle sales
+                                td 24/11/1922
+                                td.text-right-piehub-table 08/08/1921
+                                td.text-right-piehub-table.font-weight-bold $946652
+                            tr
+                                td 
+                                    a(href="./creditor-product-single.html") Tempor Barber
+                                td
+                                    a(href="") Computers, accessories, and services
+                                td 31/02/1914
+                                td.text-right-piehub-table 26/08/1949
+                                td.text-right-piehub-table.font-weight-bold $462551
+                            tr
+                                td 
+                                    a(href="./creditor-product-single.html") IT Investment
+                                td
+                                    a(href="") Health and personal care
+                                td 26/01/1944
+                                td.text-right-piehub-table 26/08/1949
+                                td.text-right-piehub-table.font-weight-bold $720742
+                            tr
+                                td 
+                                    a(href="./creditor-product-single.html") Officia Gamble
+                                td
+                                    a(href="") Education
+                                td 03/08/1906
+                                td.text-right-piehub-table 19/10/1992
+                                td.text-right-piehub-table.font-weight-bold $412816
+                            tr
+                                td 
+                                    a(href="./creditor-product-single.html") Consectetur Castaneda
+                                td
+                                    a(href="") Electronics and telecom
+                                td 25/10/1978
+                                td.text-right-piehub-table 01/02/1952
+                                td.text-right-piehub-table.font-weight-bold $531958
+                            tr
+                                td 
+                                    a(href="./creditor-product-single.html") Labore Ryan
+                                td
+                                    a(href="") Financial services and products
+                                td 16/05/1953
+                                td.text-right-piehub-table 05/12/1997
+                                td.text-right-piehub-table.font-weight-bold $671290
+                            tr
+                                td 
+                                    a(href="./creditor-product-single.html") Fugiat Hendricks
+                                td
+                                    a(href="") Gifts and flowers
+                                td 26/06/1915
+                                td.text-right-piehub-table 25/12/2012
+                                td.text-right-piehub-table.font-weight-bold $636436
+                            tr
+                                td 
+                                    a(href="./creditor-product-single.html") Tempor Kelly
+                                td
+                                    a(href="") Government
+                                td 12/08/1906
+                                td.text-right-piehub-table 17/09/1971
+                                td.text-right-piehub-table.font-weight-bold $238638
+
+                .content-footer
+                    nav.nav-content
+                        ul.pagination
+                            li.page-item
+                                a.page-link(href="")
+                                    i.bx.bx-chevron-left
+                            li.page-item.active
+                                a.page-link(href="") 1
+                            li.page-item
+                                a.page-link(href="") 2
+                            li.page-item
+                                a.page-link(href="") 3
+                            li.page-item
+                                a.page-link(href="") 4
+                            li.page-item
+                                a.page-link(href="")
+                                    i.bx.bx-chevron-right

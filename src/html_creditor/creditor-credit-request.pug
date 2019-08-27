@@ -1,0 +1,100 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include ../templates/head.pug
+        title Credit request
+    body
+        .container-full-height.ct-container
+            .sidebar
+                include ../components/creditor-nav-sidebar
+            .main-content.main-content--padded
+                include ../templates/site-header
+                .content-head
+                    .content-head-left
+                        h1.content-head__title Apply for IT investment
+
+                .content-body
+                    form.form-signup(action="signin.html")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label(for="first-name") Service/Industy Expertise
+                                    select.form-control
+                                        option(value=" ") Acquisition / Takeover financing
+                                        option(value="Advertisement/Online Marketing") Business services
+                                        option(value="Advertisement/Marketing") Communication services
+                                        option(value="Advertisement/Offine Marketing") Distribution services.
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label(for="first-name") Financing Needs
+                                    //- input(type="text", name="geographical-region" class="form-control")
+                                    input(type="text", name="financing-needs" class="form-control")
+
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label(for='mincredit-amount' class="d-block mincredit-amount") Collateral
+                                        .form-check.mt-3.radio
+                                            label.radio(for='Collateral-yes')
+                                                input#Collateral-yes.hidden(type='radio' name='Collateral' checked='')
+                                                span.label
+                                                | Yes
+                                            label.radio.ml-5(for='Collateral-no')
+                                                input#Collateral-no.hidden(type='radio' name='Collateral')
+                                                span.label
+                                                | No
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    .row.align-items-end
+                                        .col.col-12
+                                            label(for='interest' class="d-block interest ") Deadline
+                                            input#interest(type='date' class="w-100 form-control")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label(for='credit-amount' class="d-block credit-amount") NDA Requirement
+                                        .form-check.mt-3
+                                            label.radio(for='nda-yes')
+                                                input#nda-yes.hidden(type='radio' name='nda-requirement' value='yes' checked='checked')
+                                                span.label
+                                                | Yes
+                                            label.radio.ml-5(for='nda-no')
+                                                input#nda-no.hidden(type='radio' value='no' name='nda-requirement')
+                                                span.label
+                                                | No                         
+                        .row.mt-2
+                            .col.col-md-12
+                                label(for="nda-details") NDA Details
+                                input.form-control#nda-details(type="text", name="")
+
+                        .row.mt-4
+                            .col
+                                .form-group
+                                    label(for="" class="d-block") File Upload
+
+                                    #tpl.d-none
+                                        .dz-preview.dz-file-preview
+                                            .dz-progress
+                                                span.dz-upload(data-dz-uploadprogress='')
+                                            .dz-details
+                                                .dz-filename
+                                                span(data-dz-name='')
+                                                .dz-size(data-dz-size='')
+                                                img(src='removebutton.png' alt='X' data-dz-remove='')
+                                    .border-dotted
+                                        #file_dropzone.position-relative
+                                            .dz-message.needsclick.w-25.position-absolute
+                                                img(src="../assets/img/icons/bx-cloud-upload.png", alt="" class="d-block m-auto")
+                                                .text-center.mt-3
+                                                    a(href="" class="font-weight-bold") Add file 
+                                                    span
+                                                        | or drop files here
+                                                        input(type="file", name="" class="d-none")
+
+                                            .fallback
+                                                input(name='file', type='file', multiple='')
+
+                        .row.mt-4
+                            .col
+                                button.btn.btn-primary.btn-form(type="submit") Submit

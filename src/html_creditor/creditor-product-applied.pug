@@ -1,0 +1,137 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+	head
+		include ../templates/head.pug
+		title This is right
+	body
+		.container-full-height.ct-container
+			.sidebar
+				include ../components/nav-sidebar
+			.main-content.main-content--padded
+				include ../templates/site-header
+				.content-head
+					.content-head-left
+						h1.content-head__title Products I applied for
+					.content-head-right
+						form.form-inline.my-2.my-lg-0
+							input.form-control.mr-sm-2(type='search' placeholder='Search' aria-label='Search')
+							a.btn.btn-primary(href="add-new-products.html") Search
+
+				.content-body
+					table.table.tablesaw-stack(data-tablesaw-mode="stack" data-tablesaw-minimap)
+						thead
+							tr 
+								th(data-tablesaw-sortable-col) Name
+								th(data-tablesaw-sortable-col data-tablesaw-priority="persist" scope="col") Category
+								th(data-tablesaw-sortable-col scope="col") Region
+								th.text-right(data-tablesaw-sortable-col scope="col") Applied on
+								th.text-right(data-tablesaw-sortable-col scope="col") Applied Amount
+								th.text-right(data-tablesaw-sortable-col scope="col") Status
+						tbody
+							tr
+								td 
+									a(href="") Reprehenderit Marshall
+								td
+									a(href="") Health and personal care
+								td Massachusetts
+								td.text-right 12/02/2011
+								td.text-right.font-weight-bold $233456
+								td.text-right 
+									span.status-badge.status-badge-awaiting Awaiting Approval
+							tr
+								td  
+									a(href="") Fugiat Valdez
+								td
+									a(href="") Home and garden
+								td North Dakota
+								td.text-right 12/08/1906
+								td.text-right.font-weight-bold $233456
+								td.text-right
+									span.status-badge.status-badge-awaiting Awaiting Approval
+							tr
+								td 
+									a(href="") Excepteur Miles
+								td
+									a(href="") Vehicle sales
+								td American Samoa
+								td.text-right 24/11/1922
+								td.text-right.font-weight-bold $233456
+								td.text-right 
+									span.status-badge.status-badge-awaiting Awaiting Approval
+							tr
+								td 
+									a(href="") Tempor Barber
+								td
+									a(href="") Computers, accessories, and services
+								td Nebraska
+								td.text-right 31/02/1914
+								td.text-right.font-weight-bold $233456
+								td.text-right 
+									span.status-badge.status-badge-awaiting Awaiting Approval
+							tr
+								td 
+									a(href="") Officia Gamble
+								td
+									a(href="") Education
+								td Colorado
+								td.text-right 26/01/1944
+								td.text-right.font-weight-bold $233456
+								td.text-right 
+									span.status-badge.status-badge-awaiting Awaiting Approval
+							tr
+								td 
+									a(href="") Consectetur Castaneda
+								td
+									a(href="") Electronics and telecom
+								td Idaho
+								td.text-right 03/08/1906
+								td.text-right.font-weight-bold $233456
+								td.text-right 
+									span.status-badge.status-badge-awaiting Awaiting Approval
+							tr
+								td 
+									a(href="") Labore Ryan
+								td
+									a(href="") Financial services and products
+								td Maine
+								td.text-right 25/10/1978
+								td.text-right.font-weight-bold $233456
+								td.text-right 
+									span.status-badge.status-badge-approved Approved
+							tr
+								td 
+									a(href="") Fugiat Hendricks
+								td
+									a(href="") Gifts and flowers
+								td Connecticut
+								td.text-right 16/05/1953
+								td.text-right.font-weight-bold $233456 
+								td.text-right 
+									span.status-badge.status-badge-rejected Rejected
+							tr
+								td 
+									a(href="") Tempor Kelly
+								td
+									a(href="") Government
+								td Tennessee
+								td.text-right 26/06/1915
+								td.text-right.font-weight-bold $233456
+								td.text-right 
+									span.status-badge.status-badge-rejected Rejected									
+
+				.content-footer
+					nav.nav-content
+						ul.pagination
+							li.page-item
+								a.page-link(href="")
+									i.bx.bx-chevron-left
+							li.page-item.active
+								a.page-link(href="") 1
+							li.page-item
+								a.page-link(href="") 2
+							li.page-item
+								a.page-link(href="") 3
+							li.page-item
+								a.page-link(href="")
+									i.bx.bx-chevron-right
