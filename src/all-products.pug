@@ -13,8 +13,12 @@ html(lang="en")
 				.content-head
 					.content-head-left
 						h1.content-head__title All Products
-					.content-head-right
-						a.btn.btn-primary(href="add-new-products.html") Add New Product
+				.content-head
+					a.btn.btn-primary(href="add-new-products.html") Add New Product
+					
+					form.form-inline.my-2.my-lg-0
+						input.form-control.mr-sm-2(type='search' placeholder='Search' aria-label='Search')
+						a.btn.btn-primary(href="add-new-products.html") Search
 
 				.content-body
 					table.table.tablesaw-stack(data-tablesaw-mode="stack" data-tablesaw-minimap)
@@ -22,8 +26,8 @@ html(lang="en")
 							tr 
 								th(data-tablesaw-sortable-col) Services
 								th(data-tablesaw-sortable-col data-tablesaw-priority="persist" scope="col") Industry
-								th(data-tablesaw-sortable-col scope="col") Minimum Credit Amount
-								th(data-tablesaw-sortable-col scope="col") Available Credit Amount
+								th.text-right(data-tablesaw-sortable-col scope="col") Minimum Credit Amount
+								th.text-right(data-tablesaw-sortable-col scope="col") Available Credit Amount
 								th.text-right(data-tablesaw-sortable-col scope="col") Status
 						tbody
 							tr
@@ -31,8 +35,8 @@ html(lang="en")
 									a(href="") Corporate Loan
 								td
 									a(href="") Health and personal care
-								td $7186
-								td $233456
+								td.text-right $7186
+								td.text-right $233456
 								td.text-right 
 									span.status-badge.status-badge-awaiting Awaiting Approval
 							tr
@@ -40,8 +44,8 @@ html(lang="en")
 									a(href="") Purchase Finance
 								td
 									a(href="") Home and garden
-								td $7186
-								td $233456
+								td.text-right $7186
+								td.text-right $233456
 								td.text-right 
 									span.status-badge.status-badge-awaiting Awaiting Approval
 							tr
@@ -49,8 +53,8 @@ html(lang="en")
 									a(href="") Stock Trading
 								td
 									a(href="") Vehicle sales
-								td $7186
-								td $233456
+								td.text-right $7186
+								td.text-right $233456
 								td.text-right 
 									span.status-badge.status-badge-awaiting Awaiting Approval
 							tr
@@ -58,8 +62,8 @@ html(lang="en")
 									a(href="") Takeover financing
 								td
 									a(href="") Computers, accessories, and services
-								td $7186
-								td $233456
+								td.text-right $7186
+								td.text-right $233456
 								td.text-right 
 									span.status-badge.status-badge-awaiting Awaiting Approval
 							tr
@@ -67,8 +71,8 @@ html(lang="en")
 									a(href="") Project Financing
 								td
 									a(href="") Education
-								td $7186
-								td $233456
+								td.text-right $7186
+								td.text-right $233456
 								td.text-right 
 									span.status-badge.status-badge-approved Approved
 							tr
@@ -76,8 +80,8 @@ html(lang="en")
 									a(href="") Mezzanine Financing
 								td
 									a(href="") Electronics and telecom
-								td $7186
-								td $233456
+								td.text-right $7186
+								td.text-right $233456
 								td.text-right 
 									span.status-badge.status-badge-awaiting Awaiting Approval
 							tr
@@ -85,8 +89,8 @@ html(lang="en")
 									a(href="") Fine Trading
 								td
 									a(href="") Financial services and products
-								td $7186
-								td $233456
+								td.text-right $7186
+								td.text-right $233456
 								td.text-right 
 									span.status-badge.status-badge-awaiting Awaiting Approval
 							tr
@@ -94,8 +98,8 @@ html(lang="en")
 									a(href="") Acquisition
 								td
 									a(href="") Gifts and flowers
-								td $7186
-								td $233456
+								td.text-right $7186
+								td.text-right $233456
 								td.text-right 
 									span.status-badge.status-badge-rejected Rejected
 
