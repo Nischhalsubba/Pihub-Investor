@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Subheader from '../general/Subheader';
 import { getCreditRequestList } from '../../actions/credits';
+import Pagination from '../general/Pagination';
 class ListCreditRequests extends Component {
   componentDidMount() {
     this.props.getCreditRequestList(1);
@@ -86,6 +87,7 @@ class ListCreditRequests extends Component {
               </thead>
               <tbody>{this.renderData(data)}</tbody>
             </table>
+            <Pagination url="creditRequest" />
           </div>
         </Fragment>
       );

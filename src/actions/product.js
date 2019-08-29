@@ -5,17 +5,21 @@ import {
   PRODUCTS_LIST_ERROR,
   PRODUCTS_LIST,
   ERROR,
-  SINGLE_PRODUCT
+  SINGLE_PRODUCT,
+  PAGINATION
 } from './types';
 
-export const getProductsList = () => async dispatch => {
+export const getProductsList = (page) => async dispatch => {
   try {
-    const response = await client.get(routes.products);
-    console.log('axn', response.data.data);
+    const response = await client.get(`${routes.products}?page=${page}`);
     dispatch({
       type: PRODUCTS_LIST,
       payload: response.data
     });
+    dispatch({
+      type: PAGINATION,
+      payload: response.data.meta.last_page
+    })
   } catch (e) {
     dispatch({
       type: ERROR,

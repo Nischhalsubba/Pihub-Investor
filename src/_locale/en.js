@@ -3,7 +3,7 @@ export default {
         name: 'Name',
         category: 'Category',
         interest: 'Interest',
-        minimum_credit_amount: 'Minimum Cr. Amount',
+        minimum_credit_amount: 'Min Amount',
         available_credit_amount: 'Available Amount',
         status: 'Status'
     },

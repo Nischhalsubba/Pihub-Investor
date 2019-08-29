@@ -8,6 +8,7 @@ import creditRequests from './creditRequests';
 import notificationCount from './notificationCount';
 import notificationList from './notificationList';
 import errors from './errors';
+import pagination from './pagination';
 const rootReducer = combineReducers({
   user,
   auth,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   errors,
   notificationCount,
   notificationList,
+  pagination,
   form: formReducer
 });
 

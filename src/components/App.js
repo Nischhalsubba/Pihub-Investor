@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Sidebar from './general/Sidebar';
 import Header from './general/Header';
-import Pagination from './general/Pagination';
+// import Pagination from './general/Pagination';
 class App extends Component {
   render() {
     return (
@@ -10,7 +10,7 @@ class App extends Component {
         <div className="main-content main-content--padded">
           <Header />
           {this.props.children}
-          <Pagination />
+          {/* <Pagination /> */}
         </div>
       </div>
     );

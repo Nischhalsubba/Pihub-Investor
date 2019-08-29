@@ -4,7 +4,7 @@ import Translate from 'react-translate-component';
 import * as actions from '../../actions/product';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import Pagination from '../general/Pagination';
 class ProductsList extends Component {
   componentDidMount() {
     this.props.getProductsList();
@@ -55,7 +55,8 @@ class ProductsList extends Component {
   };
 
   render() {
-    console.log('pr', this.props.data);
+    console.log(this.props.data)
+    const { totalPage } = this.props.pagination;
     return (
       <Fragment>
         <Subheader
@@ -87,7 +88,7 @@ class ProductsList extends Component {
                   <Translate content="column.minimum_credit_amount" />
                 </th>
                 <th>
-                  Maximum Credit Amount
+                  Mindestbetrag
                 </th>
                 <th>
                   <Translate content="column.status" />
@@ -96,6 +97,7 @@ class ProductsList extends Component {
             </thead>
             <tbody>{this.renderList(this.props.data)}</tbody>
           </table>
+          <Pagination totalPage={totalPage} url={(page) => this.props.getProductsList(page)} />
         </div>
       </Fragment>
     );
@@ -103,7 +105,7 @@ class ProductsList extends Component {
 }
 
 function mapStateToProps(state) {
-  return { data: state.productsList };
+  return { data: state.productsList, pagination: state.pagination };
 }
 
 export default connect(

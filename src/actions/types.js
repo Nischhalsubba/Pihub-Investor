@@ -8,3 +8,4 @@ export const CREDIT_REQUESTS_LIST = 'credit_requests_list';
 export const LIST_NOTIFICATION = 'list_notification';
 export const NOTIFICATION_COUNT = 'notification_count';
 export const SINGLE_PRODUCT = 'single_product';
+export const PAGINATION = 'PAGINATION';
