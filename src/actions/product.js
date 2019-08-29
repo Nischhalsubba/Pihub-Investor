@@ -27,17 +27,19 @@ export const getProductsList = () => async dispatch => {
 export const addProduct = (details, callback) => async dispatch => {
   // Once the data needed are finalized,need to refactor those codes below //
   try {
+
     var body = new FormData();
-    body.set('product_details', details.product_details);
-    body.set('category_id', details.category_id.value);
+    body.set('product_title', details.product_title);
+    body.set('state_id', details.states.value);
+    body.set('county_id', details.Country.id);
+    body.set('industry_ids', 1);
+    body.set('service_id', 1);
+    body.set('time_duration', details.time_duration);
     body.set('min_credit_amount', details.min_credit_amount);
-    body.set('amount', details.amount);
-    body.set('interest_rate', details.interest_rate);
-    body.set('valid_from', '12.12.2019');
-    body.set('valid_until', '12.12.2222');
-    body.set('interested_domain', 'Health');
-    body.set('region_of_interest', 'IT');
-    body.set('tags', details.tags[0]);
+    body.set('max_credit_amount', details.max_credit_amount);
+    body.set('tags', 'Some tag');
+    body.set('rating_for_credit', details.credit === 'true');
+    body.set('ratings', "[]");
     body.append('files[0]', details.files[0]);
     const response = await clientWithForm.post(routes.addProduct, body);
     if (response) {

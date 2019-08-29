@@ -23,18 +23,23 @@ class ProductsList extends Component {
                   state: { id: product.id }
                 }}
               >
-                {product.product_code}
+                {product.product_title}
               </Link>
             </td>
             <td>
-              <a href="">{product.investor}</a>
+              {product.industries.map((industry, index) => {
+                return <span>{industry.name}</span>
+              })}
             </td>
-            <td>10%</td>
+            <td>{product.service}</td>
+            <td>{product.time_duration} Months</td>
+
             <td>{product.min_credit_amount}</td>
-            <td>{product.amount}</td>
+            <td>{product.max_credit_amount}</td>
             <td>
-              {' '}
-              <span className="badge badge-warning">{product.status}</span>
+              {product.status === 'aproved' ? <span className="badge badge-waiting">{product.status}</span> : <span className="badge badge-warning">{product.status}</span>
+
+              }
             </td>
           </tr>
         );
@@ -73,13 +78,16 @@ class ProductsList extends Component {
                   <Translate content="column.category" />
                 </th>
                 <th>
-                  <Translate content="column.interest" />
+                  Industries
+                </th>
+                <th>
+                  Duration
                 </th>
                 <th>
                   <Translate content="column.minimum_credit_amount" />
                 </th>
                 <th>
-                  <Translate content="column.available_credit_amount" />
+                  Maximum Credit Amount
                 </th>
                 <th>
                   <Translate content="column.status" />

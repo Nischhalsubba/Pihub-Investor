@@ -32,7 +32,6 @@ class AddProduct extends Component {
   state = { cities: [] };
   componentDidUpdate(prevProps) {
     if (this.props.states !== prevProps.states) {
-      console.log(this.props.states);
       this.setState({
         cities: city(this.props.states)
       });
@@ -43,37 +42,40 @@ class AddProduct extends Component {
     // this.props.addProduct(formProps, () => this.props.history.push('/'));
   };
   renderCredits = credits => {
-    return (
-      <div class="col-12 col-sm-12 col-md-6">
-        <div class="form-group">
-          <div class="row align-items-center">
-            <div class="col">
-              <div class="form-check">
-                <Field
-                  class="form-check-input"
-                  type="checkbox"
-                  name="rating-for-credit"
-                  id="moodys"
-                  component="input"
-                />
-                <label class="form-check-label" for="moodys">
-                  Moody's
-                </label>
+    return credits.map((credit, id) => {
+      return (
+        <div class="col-12 col-sm-12 col-md-6">
+          <div class="form-group">
+            <div class="row align-items-center">
+              <div class="col">
+                <div class="form-check">
+                  <Field
+                    class="form-check-input"
+                    type="checkbox"
+                    name={`rating[${id}]`}
+                    id="moodys"
+                    component="input"
+                  />
+                  <label class="form-check-label" for="moodys">
+                    {credit.name}
+                  </label>
+                </div>
               </div>
-            </div>
-            <div class="col">
-              <Field
-                component="input"
-                class="form-control"
-                type="text"
-                name="moodys"
-                value=""
-              />
+              <div class="col">
+                <Field
+                  component="input"
+                  class="form-control"
+                  type="text"
+                  name={`rating[${credit.name}]`}
+                  value=""
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    })
+
   };
   render() {
     const {
@@ -81,7 +83,9 @@ class AddProduct extends Component {
       min_creditValue,
       interestValue,
       credit_amountValue,
-      credit
+      credit,
+      time_duration,
+      max_credit_amount
     } = this.props;
     return (
       <Fragment>
@@ -92,7 +96,7 @@ class AddProduct extends Component {
               <div className="col">
                 <div className="form-group">
                   <Field
-                    name="product_details"
+                    name="product_title"
                     type="text"
                     component={inputField}
                     label="Product Title"
@@ -141,7 +145,7 @@ class AddProduct extends Component {
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
                   <Field
-                    name="industry"
+                    name="industry_ids"
                     component={dropDownField}
                     options={userOptions}
                     label="Industry"
@@ -166,7 +170,7 @@ class AddProduct extends Component {
                         className="form-control"
                         type="text"
                         id="mincredit-amount-value"
-                        value={min_creditValue}
+                        value={time_duration}
                         validate={validation.required}
                       />
                     </div>
@@ -203,7 +207,7 @@ class AddProduct extends Component {
                 <div className="form-group">
                   <div className="row align-items-end">
                     <Field
-                      name="interest_rate"
+                      name="max_credit_amount"
                       type="range"
                       className="w-100"
                       component={inputSlider}
@@ -217,7 +221,7 @@ class AddProduct extends Component {
                         className="form-control"
                         type="text"
                         id="amount"
-                        value={interestValue}
+                        value={max_credit_amount}
                         validate={validation.required}
                       />
                     </div>
@@ -233,7 +237,7 @@ class AddProduct extends Component {
                     <Field
                       type="radio"
                       component={radioButton}
-                      value="yes"
+                      value="true"
                       name="credit"
                       className="form-check-input"
                       id="credit"
@@ -246,7 +250,7 @@ class AddProduct extends Component {
                     <Field
                       type="radio"
                       component={radioButton}
-                      value="no"
+                      value="false"
                       name="credit"
                       className="form-check-input"
                       id="credit"
@@ -258,10 +262,10 @@ class AddProduct extends Component {
                 </div>
               </div>
             </div>
-            {credit === 'yes' ? (
+            {credit === 'true' ? (
               <div class="row mt-4">
                 <div class="col-12 col-sm-12 col-md-6">
-                  <div class="row">{this.renderCredits()}</div>
+                  <div class="row">{this.renderCredits([{ name: 'bhusan' }, { name: 'Panter' }])}</div>
                 </div>
               </div>
             ) : null}
@@ -309,17 +313,23 @@ AddProduct = reduxForm({
 
 const selector = formValueSelector('addProduct');
 AddProduct = connect(state => {
+  const time_duration = selector(state, 'time_duration');
   const states = selector(state, 'states');
   const credit = selector(state, 'credit');
   const min_creditValue = selector(state, 'min_credit_amount');
+  const max_credit_amount = selector(state, 'max_credit_amount');
+
   const interestValue = selector(state, 'interest_rate');
   const credit_amountValue = selector(state, 'amount');
+
   return {
     states,
     credit,
     min_creditValue,
     interestValue,
-    credit_amountValue
+    credit_amountValue,
+    time_duration,
+    max_credit_amount
   };
 })(AddProduct);
 export default connect(
