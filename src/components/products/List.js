@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Pagination from '../general/Pagination';
 class ProductsList extends Component {
-  state = { status: null }
+  state = { status: null, product_title: '' }
   componentDidMount() {
     this.props.getProductsList();
   }
@@ -14,7 +14,9 @@ class ProductsList extends Component {
     if (prevState.status !== this.state.status) {
       this.props.getProductsList(this.props.pagination.currentPage, this.state.status)
     }
+
   }
+
   renderList = productsObject => {
     if (productsObject && productsObject.productsList.data.length > 0) {
       let products = productsObject.productsList.data;
@@ -69,10 +71,9 @@ class ProductsList extends Component {
           link="/add-product"
         />
         <form class="form-inline my-2 my-lg-0">
-          {/* <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-          <button class="btn btn-primary">Search</button> */}
+
           <select className="form-control mr-sm-2" onChange={e => this.setState({ status: e.target.value })}>
-            <option >Search By Status</option>
+            <option value="" >All</option>
             <option value="approved">Approved</option>
             <option value="invested">Invested</option>
             <option value="requested">Requested</option>
@@ -81,6 +82,15 @@ class ProductsList extends Component {
             <option value="expired">Exprired</option>
 
           </select>
+          <input class="form-control mr-sm-2" placeholder="Search" aria-label="Search"
+            value={this.state.product_title}
+            onChange={e => this.setState({ product_title: e.target.value })}
+          />
+          <button class="btn btn-primary" onClick={(e) => {
+            e.preventDefault();
+            this.props.getProductsList(this.props.pagination.currentPage, this.state.status, this.state.product_title)
+          }
+          } type="submit">Search</button>
         </form>
         <div className="content-body">
           <table

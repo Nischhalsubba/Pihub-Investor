@@ -8,15 +8,21 @@ import {
   PAGINATION
 } from './types';
 
-export const getProductsList = (page, status) => async dispatch => {
+export const getProductsList = (page, status, product_title) => async dispatch => {
   try {
     let response;
-    if (status) {
+    if (status && product_title) {
+      response = await client.get(`${routes.products}?page=${page}&status=${status}&product_title=${product_title}`);
+
+    } else if (status) {
       response = await client.get(`${routes.products}?page=${page}&status=${status}`);
+    } else if (product_title) {
+      response = await client.get(`${routes.products}?page=${page}&product_title=${product_title}`);
 
     } else {
       response = await client.get(`${routes.products}?page=${page}`);
     }
+
     dispatch({
       type: PRODUCTS_LIST,
       payload: response.data
