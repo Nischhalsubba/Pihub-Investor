@@ -2,23 +2,28 @@ import client from './index';
 import clientWithForm from './formDataRequest';
 import { routes } from './../_api/routes';
 import {
-  PRODUCTS_LIST_ERROR,
   PRODUCTS_LIST,
   ERROR,
   SINGLE_PRODUCT,
   PAGINATION
 } from './types';
 
-export const getProductsList = (page) => async dispatch => {
+export const getProductsList = (page, status) => async dispatch => {
   try {
-    const response = await client.get(`${routes.products}?page=${page}`);
+    let response;
+    if (status) {
+      response = await client.get(`${routes.products}?page=${page}&status=${status}`);
+
+    } else {
+      response = await client.get(`${routes.products}?page=${page}`);
+    }
     dispatch({
       type: PRODUCTS_LIST,
       payload: response.data
     });
     dispatch({
       type: PAGINATION,
-      payload: response.data.meta.last_page
+      payload: response.data.meta
     })
   } catch (e) {
     dispatch({

@@ -6,10 +6,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Pagination from '../general/Pagination';
 class ProductsList extends Component {
+  state = { status: null }
   componentDidMount() {
     this.props.getProductsList();
   }
-
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.status !== this.state.status) {
+      this.props.getProductsList(this.props.pagination.currentPage, this.state.status)
+    }
+  }
   renderList = productsObject => {
     if (productsObject && productsObject.productsList.data.length > 0) {
       let products = productsObject.productsList.data;
@@ -63,7 +68,20 @@ class ProductsList extends Component {
           buttonLabel="Add New Product"
           link="/add-product"
         />
-        {/* <input type="text" onBlur={() => console.log('left')} /> */}
+        <form class="form-inline my-2 my-lg-0">
+          {/* <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+          <button class="btn btn-primary">Search</button> */}
+          <select className="form-control mr-sm-2" onChange={e => this.setState({ status: e.target.value })}>
+            <option >Search By Status</option>
+            <option value="approved">Approved</option>
+            <option value="invested">Invested</option>
+            <option value="requested">Requested</option>
+            <option value="suspended">Suspended</option>
+            <option value="canceled">Canceled</option>
+            <option value="expired">Exprired</option>
+
+          </select>
+        </form>
         <div className="content-body">
           <table
             className="table tablesaw-stack"
