@@ -55,7 +55,6 @@ class ProductsList extends Component {
   };
 
   render() {
-    console.log(this.props.data)
     const { totalPage } = this.props.pagination;
     return (
       <Fragment>
@@ -64,6 +63,7 @@ class ProductsList extends Component {
           buttonLabel="Add New Product"
           link="/add-product"
         />
+        {/* <input type="text" onBlur={() => console.log('left')} /> */}
         <div className="content-body">
           <table
             className="table tablesaw-stack"

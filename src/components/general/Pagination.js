@@ -5,14 +5,12 @@ class Pagination extends Component {
   state = { currentPage: 1 }
   componentDidUpdate(prevProps, prevState) {
     if (this.state.currentPage !== prevState.currentPage) {
-      // this.props.getProductsList(this.state.currentPage)
       this.props.url(this.state.currentPage)
     }
   }
   render() {
     const { totalPage } = this.props;
     const { currentPage } = this.state;
-    console.log('url', this.props.url)
     return (
       <div className="content-footer">
         <nav className="nav-content">
