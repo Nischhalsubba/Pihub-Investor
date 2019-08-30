@@ -6,4 +6,4 @@ pages:
   tags:
     - credittech-frontend-react
   only:
-    - staging
+    - develop
