@@ -12,145 +12,116 @@ html(lang="en")
 				include templates/site-header
 				.content-head
 					.content-head-left
-						h1.content-head__title All Products
+						h1.content-head__title Add New Product
 
 				.content-body
 					form.form-signup(action="add-new-products-sucess.html")
 						.row.mt-4
 							.col-12.col-sm-12.col-md-6
 								.form-group
-									label(for="product-title") Product Title
+									label Product Title
 									input(type="text", name="product-title" class="form-control")
 							.col-12.col-sm-12.col-md-6
 								.form-group
-									label(for="state") States
+									label States
 									select.form-control.states
-										option(value="Baden-Württemberg") Baden-Württemberg
-										option(value="Bavaria") Bavaria
-										option(value="Berlin") Berlin
+										option(value=" ") Select States
+										option(value="Advertisement/Online Marketing") Berlin
+										option(value="Advertisement/Marketing") Baden-Württemberg
+										option(value="Advertisement/Offine Marketing") Brandenburg
+
 						.row.mt-4
 							.col-12.col-sm-12.col-md-6
 								.form-group
-									label(for="credit-type") Credit Type
-									select.form-control
-										option(value="revolving-credit") Revolving Credit
+									label Credit type
+									select.form-control.states
+										option(value=" ") Select Credit type
+										option(value="Advertisement/Online Marketing") Revolving credit
 							.col-12.col-sm-12.col-md-6
 								.form-group
-									label(for="country") Country
-									select.form-control
-										option(value="argentina") Argentina
-										option(value="germany") Germany
+									label County
+									select.form-control.states
+										option(value=" ") Select County
+										option(value="Advertisement/Online Marketing") Camden
 						.row.mt-4
 							.col-12.col-sm-12.col-md-6
 								.form-group
 									label(for="Industry") Industry
-									select.form-control
-										option(value="service-industry") Service Industry
+									input.form-control(type="text", name="Industry")
+									.industry-list.clearfix
+										.d-flex.justify-content-between.flex-wrap
+											.industry-item
+												<input type="checkbox" name="industry" value=""> Administration and office work
+											.industry-item
+												<input type="checkbox" name="industry" value=""> Architecture and planning
+											.industry-item
+												<input type="checkbox" name="industry" value=""> Automotive 
+											.industry-item
+												<input type="checkbox" name="industry" value=""> Associations, organizations and institutions
+											.industry-item
+												<input type="checkbox" name="industry" value=""> Industry and mechanical engineering
+											.industry-item
+												<input type="checkbox" name="industry" value=""> Art, culture and entertainment	
+											.industry-item
+												<input type="checkbox" name="industry" value=""> Market Research
+											.industry-item
+												<input type="checkbox" name="industry" value=""> HR services		
+										input.float-right(type="submit", value="Save")
 							.col-12.col-sm-12.col-md-6
 								.form-group
-									label(for='time-duration' class="d-block") Time Duraction (Months)
-									.row.align-items-end
-										.col.col-2
-											input(type='text' class="form-control" id="time-duration-min" value="1")
-										.col.col-8
-											input#time-duration.w-100(type="range")
-										.col.col-2
-											input(type='text' class="form-control" id="time-duration-max" value="12")
-
+									label(for="time") Time Duration (Months)
+									.d-flex.align-items-center
+										input.form-control.col-md-2.mr-2.text-center(type="text", name="",value="1")
+										.demo.w-100
+											input.position-relative.w-100(type="range", name="")
+										input.form-control.col-md-2.ml-2.text-center(type="text", name="",value="36")
 						.row.mt-4
 							.col-12.col-sm-12.col-md-6
 								.form-group
-										.row.align-items-end
-											.col.col-10
-												label(for='mincredit-amount' class="d-block mincredit-amount mb-5") Minimum Credit Amount 
-												input#mincredit-amount.w-100(type='range')
-											.col.col-2
-												input(type='text' class="form-control" id="mincredit-amount-value" data-prefix="$")
+									label(for="amount") Minimum credit Amount
+									.d-flex.align-items-center
+										.demo.w-100
+											input.position-relative.w-100(type="range", name="")
+										input.form-control.col-md-2.ml-2.text-center(type="text", name="",value="£ 50.000")
 							.col-12.col-sm-12.col-md-6
 								.form-group
-										.row.align-items-end
-											.col.col-10
-												label(for='mincredit-amount' class="d-block mincredit-amount mb-5") Maximum Credit Amount
-												input#maxcredit-amount(type='range' class="w-100")
-											.col.col-2
-												input(type="text" class="form-control" id="maxcredit-amount-value" data-prefix="$")
+									label(for="amount") Maximum credit Amount
+									.d-flex.align-items-center
+										.demo.w-100
+											input.position-relative.w-100(type="range", name="")
+										input.form-control.col-md-2.ml-2.text-center(type="text", name="",value="£ 30.000.000")
 						.row.mt-4
-							.col
+							.col-12.col-sm-12.col-md-6
 								.form-group
-									label.d-block Rating for Credit
-									.form-check.form-check-inline
-										input.form-check-input(type="radio" name="rating-for-credit" id="rating-credit-yes" value="yes" checked)
-										label.form-check-label(for="rating-credit-yes") Yes
-									.form-check.form-check-inline
-										input.form-check-input(type="radio" name="rating-for-credit" id="rating-credit-no" value="no")
-										label.form-check-label(for="rating-credit-no") No
-								
-						.row.mt-4
-							.col-12.col-sm-12.col-md-6
-								.row
-									.col-12.col-sm-12.col-md-6
-										.form-group
-											.row.align-items-center
-												.col
-													.form-check
-														input.form-check-input(type="checkbox" name="rating-for-credit" id="rating-credit-yes" checked)
-														label.form-check-label(for="rating-credit-yes") Creditform
-												.col
-													input.form-control(type="text", name="creditform" value="A-")
-									.col-12.col-sm-12.col-md-6
-										.form-group
-											.row.align-items-center
-												.col
-													.form-check
-														input.form-check-input(type="checkbox" name="rating-for-credit" id="euler-hermes")
-														label.form-check-label(for="euler-hermes") Euler Hermes
-												.col
-													input.form-control(type="text", name="euler-hermes" value="")
-						
-						.row.mt-4
-							.col-12.col-sm-12.col-md-6
-								.row
-									.col-12.col-sm-12.col-md-6
-										.form-group
-											.row.align-items-center
-												.col
-													.form-check
-														input.form-check-input(type="checkbox" name="rating-for-credit" id="fitch" checked)
-														label.form-check-label(for="fitch") Fitch
-												.col
-													input.form-control(type="text", name="fitch" value="")
-									.col-12.col-sm-12.col-md-6
-										.form-group
-											.row.align-items-center
-												.col
-													.form-check
-														input.form-check-input(type="checkbox" name="rating-for-credit" id="standar-poors")
-														label.form-check-label(for="standar-poors") Standard & Poors
-												.col
-													input.form-control(type="text", name="standerd-poors" value="A-")
-
-						.row.mt-4
-							.col-12.col-sm-12.col-md-6
-								.row
-									.col-12.col-sm-12.col-md-6
-										.form-group
-											.row.align-items-center
-												.col
-													.form-check
-														input.form-check-input(type="checkbox" name="rating-for-credit" id="moodys")
-														label.form-check-label(for="moodys") Moody's
-												.col
-													input.form-control(type="text", name="moodys" value="")
-									.col-12.col-sm-12.col-md-6
-										.form-group
-											.row.align-items-center
-												.col
-													.form-check
-														input.form-check-input(type="checkbox" name="rating-for-credit" id="bank-andere")
-														label.form-check-label(for="bank-andere") Bank/Andere
-												.col
-													input.form-control(type="text", name="bank-andere" value="A-")
-
+									label(for="rating") Rating For Credit
+									.option
+										input(type="radio", name="rating",value="yes")/  Yes
+										input.ml-4(type="radio", name="rating", value="no")/  No
+										.rating.d-flex.justify-content-between.align-content-center.flex-wrap.mt-3
+											.rating-item
+												.col-10
+													input.mr-2(type="checkbox",name="industry",value="")/ Creditreform
+												input.col-2.form-control(type="text", name="")
+											.rating-item
+												.col-10
+													input.mr-2(type="checkbox",name="industry",value="")/ Euler Hermes
+												input.col-2.form-control(type="text", name="")
+											.rating-item
+												.col-10
+													input.mr-2(type="checkbox",name="industry",value="")/ Fitch
+												input.col-2.form-control(type="text", name="")
+											.rating-item
+												.col-10
+													input.mr-2(type="checkbox",name="industry",value="")/ Standard & Poors
+												input.col-2.form-control(type="text", name="")
+											.rating-item
+												.col-10
+													input.mr-2(type="checkbox",name="industry",value="")/ Moody’s
+												input.col-2.form-control(type="text", name="")
+											.rating-item
+												.col-10
+													input.mr-2(type="checkbox",name="industry",value="")/ Bank/Andere
+												input.col-2.form-control(type="text", name="")
 						.row.mt-4
 							.col
 								.form-group
@@ -169,9 +140,9 @@ html(lang="en")
 									.file-upload-display
 
 									//- .file-upload-display.mb-4 
-										//- .progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
-										//- .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')
-										
+									//- .progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
+									//- .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')
+
 									.border-dotted
 										#file_dropzone.position-relative
 											.dz-message.needsclick.w-25.position-absolute

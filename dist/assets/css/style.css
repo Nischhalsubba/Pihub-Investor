@@ -837,6 +837,22 @@ input[type="range"] {
   input[type="range"]:focus {
     outline: none; }
 
+.industry-list {
+  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+  padding: 25px 15px 15px 15px; }
+  .industry-list .industry-item {
+    margin-bottom: 10px; }
+
+input[type="checkbox"] {
+  margin-top: 10px; }
+
+.rating .rating-item {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  width: 50%;
+  margin-bottom: 1rem; }
+
 .page-header {
   margin-bottom: 30px; }
   .page-header .page-title {
@@ -941,7 +957,7 @@ input[type="range"] {
 
 .sidebar {
   background-color: #242a5a;
-  max-width: 340px;
+  max-width: 240px;
   flex: 1; }
   .sidebar .nav-sidebar {
     margin-top: 75px; }
