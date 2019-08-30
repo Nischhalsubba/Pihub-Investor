@@ -14,7 +14,7 @@ class Header extends Component {
         <div className="logo-container">
           <img src="/assets/img/logo.png" alt="Pinhub Logo" />
         </div>
-        <nav className="header-actions">
+        <nav class="header-actions">
           <ul>
             <li className="header-actions__item">
               <Link className="header-notification" to="/notifications">
@@ -35,6 +35,7 @@ class Header extends Component {
                 </span>
               </a>
             </li>
+
           </ul>
         </nav>
       </header>

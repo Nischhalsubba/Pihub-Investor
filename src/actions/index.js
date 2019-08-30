@@ -1,5 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+const API_HEADER_FROM = 'investor'
 
 let client;
 axios.interceptors.request.use(
@@ -12,7 +13,7 @@ axios.interceptors.request.use(
           `Bearer ` + localStorage.getItem('token');
       }
     }
-    config.headers.From = process.env.REACT_APP_API_HEADER_FROM;
+    config.headers.From = API_HEADER_FROM;
     config.headers['Content-Type'] = 'application/json';
 
     return config;
