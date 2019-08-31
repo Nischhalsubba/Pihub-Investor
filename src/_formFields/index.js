@@ -90,6 +90,8 @@ export const inputSlider = ({
   className,
   id,
   placeholder,
+  max,
+  min,
   meta: { error, touched }
 }) => {
   return (
@@ -104,9 +106,9 @@ export const inputSlider = ({
           id={id}
           placeholder={placeholder}
           type={type}
-          min="0"
-          max="999999"
-          step="1"
+          min={min}
+          max={max}
+          step="10"
           data-orientation="horizontal"
           styles={{ color: 'red' }}
         />
@@ -163,7 +165,7 @@ export const renderDropzoneField = ({
         maxSize={8000000}
       >
         {({ getRootProps, getInputProps }) => (
-          <div {...getRootProps()} className="border-dotted">
+          <div {...getRootProps() } className="border-dotted">
             <div className="position-relative" id="file_dropzone">
               <div className="dz-message needsclick w-25 position-absolute">
                 <img
@@ -178,7 +180,7 @@ export const renderDropzoneField = ({
               </div>
               <div className="fallback" />
             </div>
-            <input {...getInputProps()} />
+            <input {...getInputProps() } />
           </div>
         )}
       </Dropzone>

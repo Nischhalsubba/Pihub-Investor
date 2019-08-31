@@ -2,35 +2,62 @@ import React, { Component, Fragment } from 'react';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import { addProduct } from '../../actions/product';
+import { getIndustryList } from '../../actions/industry'
 import Subheader from '../general/Subheader';
 import * as validation from '../../_utils/validate';
 import germanStates from '../../_german_states';
 import city from '../../_german_states/city';
+import industries from '../../_utils/industries';
+import getIndustryId from '../../_utils/getIndustryId';
 import {
   inputField,
   dropDownField,
   inputSlider,
   renderDropzoneField,
-  radioButton
+  radioButton,
+  renderMultiselect
 } from '../../_formFields';
 
 const userOptions = [
-  {
-    label: 'Information Technology',
-    value: '1'
-  },
-  {
-    label: 'Construction',
-    value: '2'
-  },
-  {
-    label: 'Food and Wines',
-    value: '0'
-  }
+  'Corporate loan',
+  'Purchase financing / Finetrading',
+  'Stocktrading',
+  "Acquisition/ Takeover financing",
+  'Project financing',
+  'Mezzanine financing',
 ];
+const credits = [
+  {
+    "id": 1,
+    "name": "Creditreform"
+  },
+  {
+    "id": 2,
+    "name": "Fitch"
+  },
+  {
+    "id": 3,
+    "name": "Moody's"
+  },
+  {
+    "id": 4,
+    "name": "Euler Hermes"
+  },
+  {
+    "id": 5,
+    "name": "Standard & Poors"
+  },
+  {
+    "id": 6,
+    "name": "Bank/Andere"
+  }
+]
 class AddProduct extends Component {
-  state = { cities: [] };
-  componentDidUpdate(prevProps) {
+  state = { cities: [], ratings: [], rating_value: [], grade: '' };
+  componentDidMount() {
+    this.props.getIndustryList();
+  }
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.states !== prevProps.states) {
       this.setState({
         cities: city(this.props.states)
@@ -38,51 +65,49 @@ class AddProduct extends Component {
     }
   }
   onSubmit = formProps => {
-    console.log(formProps);
-    // this.props.addProduct(formProps, () => this.props.history.push('/'));
+    // To delete duplicate keys while adding credit ratings
+    const filteredArr = this.state.rating_value.reverse().reduce((acc, current) => {
+      const x = acc.find(item => item.id === current.id);
+      if (!x) {
+        return acc.concat([current]);
+      } else {
+        return acc;
+      }
+    }, []);
+    this.setState({ rating_value: filteredArr });
+    // console.log('r', getIndustryId(this.props.industry.list, formProps.undefined));
+    formProps.industry_id = getIndustryId(this.props.industry.list, formProps.undefined);
+    formProps.ratings = this.state.rating_value;
+    this.props.addProduct(formProps, () => this.props.history.push('/products'))
   };
-  renderCredits = credits => {
-    return credits.map((credit, id) => {
+
+  rC = (credits) => {
+    return credits.map((credit, index) => {
       return (
-        <div class="col-12 col-sm-12 col-md-6">
-          <div class="form-group">
-            <div class="row align-items-center">
-              <div class="col">
-                <div class="form-check">
-                  <Field
-                    class="form-check-input"
-                    type="checkbox"
-                    name={`rating[${id}]`}
-                    id="moodys"
-                    component="input"
-                  />
-                  <label class="form-check-label" for="moodys">
-                    {credit.name}
-                  </label>
-                </div>
-              </div>
-              <div class="col">
-                <Field
-                  component="input"
-                  class="form-control"
-                  type="text"
-                  name={`rating[${credit.name}]`}
-                  value=""
-                />
-              </div>
+        <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+          <div class="rating-item">
+            <div class="col-10">
+              <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
+              />{credit.name}
             </div>
+            <input pattern="[a-cA-C]{1}"
+              type="text" name={`rating_value[${credit.id}]`}
+              onChange={(e) => this.setState({
+                rating_value: [...this.state.rating_value, { id: credit.id, value: e.target.value }]
+              })
+              }
+              title="Grade must be either A,B or C"
+            />
           </div>
         </div>
-      );
+      )
     })
 
-  };
+  }
   render() {
     const {
       handleSubmit,
       min_creditValue,
-      interestValue,
-      credit_amountValue,
       credit,
       time_duration,
       max_credit_amount
@@ -123,8 +148,8 @@ class AddProduct extends Component {
                   <Field
                     name="credit_type"
                     component={dropDownField}
-                    options={userOptions}
-                    label="Credit Type"
+                    options={industries}
+                    label="Services"
                     validate={validation.required}
                   />
                 </div>
@@ -143,15 +168,12 @@ class AddProduct extends Component {
             </div>
             <div class="row mt-4">
               <div class="col-12 col-sm-12 col-md-6">
-                <div class="form-group">
-                  <Field
-                    name="industry_ids"
-                    component={dropDownField}
-                    options={userOptions}
-                    label="Industry"
-                    validate={validation.required}
-                  />
-                </div>
+
+                <Field
+                  component={renderMultiselect}
+                  label="Industry"
+                  data={userOptions}
+                  className="form-group" />
               </div>
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
@@ -162,8 +184,10 @@ class AddProduct extends Component {
                       className="w-100"
                       component={inputSlider}
                       label="Time Duration(Months)"
-                      id="mincredit-amount"
+                      id="time-duration"
                       validate={validation.required}
+                      max="60"
+                      min="3"
                     />
                     <div className="col col-2">
                       <input
@@ -178,6 +202,7 @@ class AddProduct extends Component {
                 </div>
               </div>
             </div>
+
             <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
@@ -190,6 +215,8 @@ class AddProduct extends Component {
                       label="Minimum Credit Amount"
                       id="mincredit-amount"
                       validate={validation.required}
+                      min="25000"
+                      max="5000000"
                     />
                     <div className="col col-2">
                       <input
@@ -215,6 +242,8 @@ class AddProduct extends Component {
                       id="mincredit-amount"
                       readOnly
                       validate={validation.required}
+                      min="25000"
+                      max="5000000"
                     />
                     <div className="col col-2">
                       <input
@@ -261,14 +290,13 @@ class AddProduct extends Component {
                   </div>
                 </div>
               </div>
-            </div>
-            {credit === 'true' ? (
-              <div class="row mt-4">
-                <div class="col-12 col-sm-12 col-md-6">
-                  <div class="row">{this.renderCredits([{ name: 'bhusan' }, { name: 'Panter' }])}</div>
+              {credit === 'true' ? (
+                <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+                  <div className="row">{this.rC(credits)}</div>
                 </div>
-              </div>
-            ) : null}
+              ) : null}
+            </div>
+
             <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
@@ -304,7 +332,7 @@ class AddProduct extends Component {
   }
 }
 function mapStateToProps(state) {
-  return { errMsg: state.errors };
+  return { errMsg: state.errors, industry: state.industryList };
 }
 
 AddProduct = reduxForm({
@@ -334,5 +362,5 @@ AddProduct = connect(state => {
 })(AddProduct);
 export default connect(
   mapStateToProps,
-  { addProduct }
+  { addProduct, getIndustryList }
 )(AddProduct);
