@@ -15,13 +15,16 @@ class ViewProduct extends Component {
       const {
         product: {
           investor,
-          product_code,
-          amount,
-          valid_from,
-          valid_until,
-          status
+        product_code,
+        max_credit_amount,
+        min_credit_amount,
+        industries,
+        status,
+        time_duration,
+        product_title
         }
       } = this.props.product;
+      console.log('detail', this.props.product)
       return (
         <Fragment>
           <Subheader heading={product_code} />
@@ -34,23 +37,26 @@ class ViewProduct extends Component {
                 </p>
                 <div class="row mt-5 credit-request-stat">
                   <div class="col col md-4">
-                    <h4>Interest</h4>
-                    <p>{amount}%</p>
+                    <h4>Product Title</h4>
+
+                    <p>{product_title}</p>
                   </div>
                   <div class="col col md-4 stat-alignment-right">
                     <h4>Minimum Credit amount</h4>
-                    <p>${amount}</p>
+                    <p>${min_credit_amount}</p>
                   </div>
                   <div class="col col md-4 stat-alignment-right">
                     <h4>Region of interest</h4>
-                    <p>Information Technology</p>
+                    {industries.map((industry, index) =>
+                      <p>{industry.name}</p>
+                    )}
                   </div>
                 </div>
               </div>
               <div class="col-lg-12 col-xl-4 rightbar">
                 <div class="amount">
                   <h6>Investment available of</h6>
-                  <h2>${amount}</h2>
+                  <h2>${max_credit_amount}</h2>
                   <p class="font-italic">taxes may apply as per country</p>
                 </div>
                 <div class="investor clearfix mt-5">
@@ -66,13 +72,13 @@ class ViewProduct extends Component {
                   </div>
                 </div>
                 <div class="date date-created mt-5">
-                  <h6>Created on</h6>
-                  <a href="#">{valid_from}</a>
+                  <h6>Time Duration</h6>
+                  <a href="#"><strong>{time_duration} Months</strong></a>
                 </div>
-                <div class="date date-expire mt-5">
+                {/* <div class="date date-expire mt-5">
                   <h6>Expires on</h6>
                   <a href="#">{valid_until}</a>
-                </div>
+                </div> */}
               </div>
             </div>
             <div class="attachments mt-4">
