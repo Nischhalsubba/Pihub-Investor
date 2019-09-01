@@ -195,7 +195,7 @@ class AddProduct extends Component {
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
                   <Field
-                    name="Country"
+                    name="County"
                     component={dropDownField}
                     options={this.state.cities}
                     label="Country"

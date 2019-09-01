@@ -167,7 +167,7 @@ class EditProduct extends Component {
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
                   <Field
-                    name="Country"
+                    name="County"
                     component={dropDownField}
                     options={this.state.cities}
                     label="Country"
@@ -226,8 +226,8 @@ class EditProduct extends Component {
                       label="Minimum Credit Amount"
                       id="mincredit-amount"
                       validate={validation.required}
-                      min="25000"
-                      max="5000000"
+                      min="1"
+                      max="100"
                     />
                     <div className="col col-2">
                       <input
@@ -236,7 +236,9 @@ class EditProduct extends Component {
                         id="mincredit-amount-value"
                         value={min_creditValue}
                         validate={validation.required}
+                        defaultValue={this.props.initialValues.min_credit_amount}
                         placeholder={this.props.initialValues.min_credit_amount}
+
                       />
                     </div>
                   </div>
@@ -262,9 +264,10 @@ class EditProduct extends Component {
                         className="form-control"
                         type="text"
                         id="amount"
-                        value={this.props.initialValues.max_credit_amount}
+                        value={max_credit_amount}
                         validate={validation.required}
-                      // placeholder={this.props.initialValues.max_credit_amount}
+                        defaultValue={this.props.initialValues.max_credit_amount}
+                        placeholder={this.props.initialValues.max_credit_amount}
                       />
                     </div>
                   </div>
@@ -363,15 +366,11 @@ EditProduct = connect(state => {
   const min_creditValue = selector(state, 'min_credit_amount');
   const max_credit_amount = selector(state, 'max_credit_amount');
 
-  const interestValue = selector(state, 'interest_rate');
-  const credit_amountValue = selector(state, 'amount');
-
   return {
     states,
     credit,
     min_creditValue,
-    interestValue,
-    credit_amountValue,
+
     time_duration,
     max_credit_amount
   };
