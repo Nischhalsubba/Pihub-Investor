@@ -19,12 +19,49 @@ import {
 } from '../../_formFields';
 
 const userOptions = [
-  'Corporate loan',
-  'Purchase financing / Finetrading',
-  'Stocktrading',
-  "Acquisition/ Takeover financing",
-  'Project financing',
-  'Mezzanine financing',
+  {
+    "value": 1,
+
+
+    "label": "Corporate loan",
+
+  },
+  {
+    "value": 2,
+
+
+    "label": "Purchase financing / Finetrading",
+
+  },
+  {
+    "value": 3,
+
+
+    "label": "Stocktrading",
+
+  },
+  {
+    "value": 4,
+
+
+    "label": "Acquisition / Takeover financing",
+
+
+  },
+  {
+    "value": 5,
+
+
+    "label": "Project financing",
+
+  },
+  {
+    "value": 6,
+
+
+    "label": "Mezzanine financing",
+
+  }
 ];
 const credits = [
   {
@@ -78,6 +115,7 @@ class AddProduct extends Component {
     // console.log('r', getIndustryId(this.props.industry.list, formProps.undefined));
     formProps.industry_id = getIndustryId(this.props.industry.list, formProps.undefined);
     formProps.ratings = this.state.rating_value;
+    // console.log('form', formProps)
     this.props.addProduct(formProps, () => this.props.history.push('/products'))
   };
 
@@ -146,9 +184,9 @@ class AddProduct extends Component {
               <div class="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
                   <Field
-                    name="credit_type"
+                    name="services"
                     component={dropDownField}
-                    options={industries}
+                    options={userOptions}
                     label="Services"
                     validate={validation.required}
                   />
@@ -172,7 +210,7 @@ class AddProduct extends Component {
                 <Field
                   component={renderMultiselect}
                   label="Industry"
-                  data={userOptions}
+                  data={industries}
                   className="form-group" />
               </div>
               <div class="col-12 col-sm-12 col-md-6">
@@ -196,6 +234,7 @@ class AddProduct extends Component {
                         id="mincredit-amount-value"
                         value={time_duration}
                         validate={validation.required}
+                        placeholder="3"
                       />
                     </div>
                   </div>
@@ -215,8 +254,9 @@ class AddProduct extends Component {
                       label="Minimum Credit Amount"
                       id="mincredit-amount"
                       validate={validation.required}
-                      min="25000"
-                      max="5000000"
+                      min="1"
+                      max="100"
+
                     />
                     <div className="col col-2">
                       <input
@@ -225,6 +265,7 @@ class AddProduct extends Component {
                         id="mincredit-amount-value"
                         value={min_creditValue}
                         validate={validation.required}
+                        placeholder="$0"
                       />
                     </div>
                   </div>
@@ -242,8 +283,8 @@ class AddProduct extends Component {
                       id="mincredit-amount"
                       readOnly
                       validate={validation.required}
-                      min="25000"
-                      max="5000000"
+                      min="1"
+                      max="100"
                     />
                     <div className="col col-2">
                       <input
@@ -252,6 +293,7 @@ class AddProduct extends Component {
                         id="amount"
                         value={max_credit_amount}
                         validate={validation.required}
+                        placeholder="$0"
                       />
                     </div>
                   </div>

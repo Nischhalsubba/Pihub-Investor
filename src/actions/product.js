@@ -45,9 +45,9 @@ export const addProduct = (details, callback) => async dispatch => {
     var body = new FormData();
     body.set('product_title', details.product_title);
     body.set('state_id', details.states.value);
-    body.set('county_ids', [details.Country.id]);
-    body.set('industry_ids', details.industry_id);
-    body.set('service_id', 2);
+    body.set('county_ids', details.Country.id);
+    body.append('industry_ids', details.industry_id);
+    body.set('service_id', details.services.value);
     body.set('time_duration', details.time_duration);
     body.set('min_credit_amount', details.min_credit_amount);
     body.set('max_credit_amount', details.max_credit_amount);
