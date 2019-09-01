@@ -48,6 +48,12 @@ class ProductsList extends Component {
 
               }
             </td>
+            <td>
+              <Link to={{
+                pathname: '/edit-product',
+                state: { id: product.id }
+              }}>Edit</Link>
+            </td>
           </tr>
         );
       });
@@ -120,6 +126,9 @@ class ProductsList extends Component {
                 </th>
                 <th>
                   <Translate content="column.status" />
+                </th>
+                <th>
+                  Edit
                 </th>
               </tr>
             </thead>

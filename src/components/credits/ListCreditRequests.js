@@ -20,16 +20,19 @@ class ListCreditRequests extends Component {
           <td>
             {' '}
             <Link to={{ pathname: '/product', state: { id: product.id } }}>
-              {product.product_name}
+              {product.product_title}
             </Link>
           </td>
           <td>
-            <Link>{product.region_of_interest}</Link>
+            {product.industries.map((industry, index) => {
+              return <span>{industry}</span>
+
+            })}
           </td>
-          <td class="text-right-piehub-table">{`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`}</td>
+          <td class="text-right-piehub-table">{`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}</td>
           <td class="text-right-piehub-table">{product.number_of_request}</td>
           <td class="text-right-piehub-table font-weight-bold">
-            ${product.total_budget}
+            ${product.max_credit_amount}
           </td>
         </tr>
       );
@@ -60,7 +63,7 @@ class ListCreditRequests extends Component {
                     data-tablesaw-priority="persist"
                     scope="col"
                   >
-                    Region of interest
+                    Industry
                   </th>
                   <th
                     class="text-right-piehub-table"
@@ -81,8 +84,7 @@ class ListCreditRequests extends Component {
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
-                    Total Budget
-                  </th>
+                    Max Credit Amount                  </th>
                 </tr>
               </thead>
               <tbody>{this.renderData(data)}</tbody>

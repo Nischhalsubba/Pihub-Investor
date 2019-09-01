@@ -1,42 +1,132 @@
 import React, { Component, Fragment } from 'react';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
-
+import { getProductById } from '../../actions/product';
+import { getIndustryList } from '../../actions/industry'
 import Subheader from '../general/Subheader';
+import * as validation from '../../_utils/validate';
+import germanStates from '../../_german_states';
+import city from '../../_german_states/city';
+import industries from '../../_utils/industries';
+import getIndustryId from '../../_utils/getIndustryId';
 import {
   inputField,
   dropDownField,
   inputSlider,
+  renderDropzoneField,
+  radioButton,
   renderMultiselect
 } from '../../_formFields';
 
 const userOptions = [
-  {
-    label: 'Erika',
-    value: '4e4cf51f-b406-413a-ae46-2cf06c7aabff'
-  },
-  {
-    label: 'Julia',
-    value: 'edad97c7-f2dc-4198-91a9-8f20c7bc67b2'
-  },
-  {
-    label: 'Sarah',
-    value: '57d3578a-3583-4290-8bae-596a4da81a8d'
-  }
+  'Corporate loan',
+  'Purchase financing / Finetrading',
+  'Stocktrading',
+  "Acquisition/ Takeover financing",
+  'Project financing',
+  'Mezzanine financing',
 ];
+const credits = [
+  {
+    "id": 1,
+    "name": "Creditreform"
+  },
+  {
+    "id": 2,
+    "name": "Fitch"
+  },
+  {
+    "id": 3,
+    "name": "Moody's"
+  },
+  {
+    "id": 4,
+    "name": "Euler Hermes"
+  },
+  {
+    "id": 5,
+    "name": "Standard & Poors"
+  },
+  {
+    "id": 6,
+    "name": "Bank/Andere"
+  }
+]
 class EditProduct extends Component {
+  state = { cities: [], ratings: [], rating_value: [], grade: '' };
+  componentDidMount() {
+    if (!this.props.location.state) {
+      // Redirect to list page if therer is no id of product to be fetched availabel
+      return this.props.history.push('/products')
+    }
+    this.props.getProductById(this.props.location.state.id)
+    this.props.getIndustryList();
+  }
+  componentDidUpdate(prevProps, prevState) {
+
+    if (this.props.states !== prevProps.states) {
+      this.setState({
+        cities: city(this.props.states)
+      });
+    }
+    if (this.props.initialValues !== prevProps.initialValues) {
+      console.log(this.props.initialValues);
+    }
+  }
+  onSubmit = formProps => {
+    // To delete duplicate keys while adding credit ratings
+    const filteredArr = this.state.rating_value.reverse().reduce((acc, current) => {
+      const x = acc.find(item => item.id === current.id);
+      if (!x) {
+        return acc.concat([current]);
+      } else {
+        return acc;
+      }
+    }, []);
+    this.setState({ rating_value: filteredArr });
+    formProps.industry_id = getIndustryId(this.props.industry.list, formProps.undefined);
+    formProps.ratings = this.state.rating_value;
+    this.props.addProduct(formProps, () => this.props.history.push('/products'))
+  };
+
+  rC = (credits) => {
+    return credits.map((credit, index) => {
+      return (
+        <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+          <div class="rating-item">
+            <div class="col-10">
+              <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
+              />{credit.name}
+            </div>
+            <input pattern="[a-cA-C]{1}"
+              type="text" name={`rating_value[${credit.id}]`}
+              onChange={(e) => this.setState({
+                rating_value: [...this.state.rating_value, { id: credit.id, value: e.target.value }]
+              })
+              }
+              title="Grade must be either A,B or C"
+            />
+          </div>
+        </div>
+      )
+    })
+
+  }
   render() {
     const {
       handleSubmit,
       min_creditValue,
-      interestValue,
-      credit_amountValue
+      credit,
+      time_duration,
+      max_credit_amount
     } = this.props;
     return (
       <Fragment>
         <Subheader heading="Edit Product" />
         <div className="content-body">
-          <form className="form-signup" action="signin.html">
+          <form className="form-signup"
+            onSubmit={handleSubmit(this.onSubmit)}
+          >
             <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
@@ -46,31 +136,98 @@ class EditProduct extends Component {
                     component={inputField}
                     label="Product Title"
                     className="form-control"
+                    validate={validation.required}
                   />
                 </div>
               </div>
               <div className="col">
                 <div className="form-group">
                   <Field
-                    name="geographical_interest"
+                    name="states"
                     component={dropDownField}
-                    options={userOptions}
-                    label="Geographical region of Interest"
+                    options={germanStates}
+                    label="States"
+                    validate={validation.required}
                   />
                 </div>
               </div>
             </div>
             <div className="row mt-4">
+              <div class="col-12 col-sm-12 col-md-6">
+                <div className="form-group">
+                  <Field
+                    name="credit_type"
+                    component={dropDownField}
+                    options={industries}
+                    label="Services"
+                    validate={validation.required}
+                  />
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <Field
+                    name="Country"
+                    component={dropDownField}
+                    options={this.state.cities}
+                    label="Country"
+                    validate={validation.required}
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-12 col-sm-12 col-md-6">
+
+                <Field
+                  component={renderMultiselect}
+                  label="Industry"
+                  data={userOptions}
+                  className="form-group" />
+              </div>
+              <div class="col-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <div className="row align-items-end">
+                    <Field
+                      name="time_duration"
+                      type="range"
+                      className="w-100"
+                      component={inputSlider}
+                      label="Time Duration(Months)"
+                      id="time-duration"
+                      validate={validation.required}
+                      max="60"
+                      min="3"
+                    />
+                    <div className="col col-2">
+                      <input
+                        className="form-control"
+                        type="text"
+                        id="mincredit-amount-value"
+                        value={time_duration}
+                        validate={validation.required}
+                        placeholder={this.props.initialValues.time_duration}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
                   <div className="row align-items-end">
                     <Field
-                      name="min_credit"
+                      name="min_credit_amount"
                       type="range"
                       className="w-100"
                       component={inputSlider}
                       label="Minimum Credit Amount"
                       id="mincredit-amount"
+                      validate={validation.required}
+                      min="25000"
+                      max="5000000"
                     />
                     <div className="col col-2">
                       <input
@@ -78,6 +235,8 @@ class EditProduct extends Component {
                         type="text"
                         id="mincredit-amount-value"
                         value={min_creditValue}
+                        validate={validation.required}
+                        placeholder={this.props.initialValues.min_credit_amount}
                       />
                     </div>
                   </div>
@@ -87,149 +246,137 @@ class EditProduct extends Component {
                 <div className="form-group">
                   <div className="row align-items-end">
                     <Field
-                      name="interest"
+                      name="max_credit_amount"
                       type="range"
                       className="w-100"
                       component={inputSlider}
-                      label="Interest"
+                      label="Maximum Credit Amount"
                       id="mincredit-amount"
                       readOnly
+                      validate={validation.required}
+                      min="25000"
+                      max="5000000"
                     />
                     <div className="col col-2">
                       <input
                         className="form-control"
                         type="text"
-                        id="mincredit-amount-value"
-                        value={interestValue}
+                        id="amount"
+                        value={this.props.initialValues.max_credit_amount}
+                        validate={validation.required}
+                      // placeholder={this.props.initialValues.max_credit_amount}
                       />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="row mt-4">
-              <div className="col">
-                <div className="form-group">
-                  <div className="row align-items-end">
+            <div class="row mt-4">
+              <div class="col">
+                <div class="form-group">
+                  <label class="d-block">Rating for Credit</label>
+                  <div class="form-check form-check-inline">
                     <Field
-                      name="credit_amount"
-                      type="range"
-                      className="w-100"
-                      component={inputSlider}
-                      label="Credit Amount"
-                      id="credit-amount"
-                      readOnly
+                      type="radio"
+                      component={radioButton}
+                      value="true"
+                      name="credit"
+                      className="form-check-input"
+                      id="credit"
                     />
-                    <div className="col col-2">
-                      <input
-                        className="form-control"
-                        type="text"
-                        id="credit-amount-value"
-                        data-prefix="$"
-                        value={credit_amountValue}
-                      />
-                    </div>
+                    <label class="form-check-label" for="rating-credit-yes">
+                      Yes
+                      </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <Field
+                      type="radio"
+                      component={radioButton}
+                      value="false"
+                      name="credit"
+                      className="form-check-input"
+                      id="credit"
+                    />
+                    <label class="form-check-label" for="rating-credit-no">
+                      No
+                      </label>
                   </div>
                 </div>
               </div>
-              <div className="col">
-                <div className="form-group">
-                  <Field
-                    name="tags"
-                    component={renderMultiselect}
-                    data={['Guitar', 'Cycling', 'Hiking']}
-                    label="Tags"
-                    className="form-control"
-                    id="tags"
-                  />
+              {credit === 'true' ? (
+                <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+                  <div className="row">{this.rC(credits)}</div>
                 </div>
-              </div>
+              ) : null}
             </div>
+
             <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
                   <label className="d-block" for="">
                     File Upload
-                  </label>
-                  <div className="d-none" id="tpl">
-                    <div className="dz-preview dz-file-preview">
-                      <div className="dz-progress">
-                        <span className="dz-upload" data-dz-uploadprogress="" />
-                      </div>
-                      <div className="dz-details">
-                        <div className="dz-filename" />
-                        <span data-dz-name="" />
-                        <div className="dz-size" data-dz-size="" />
-                        <img src="removebutton.png" alt="X" data-dz-remove="" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="file-upload-display" />
-                  <div className="border-dotted">
-                    <div className="position-relative" id="file_dropzone">
-                      <div className="dz-message needsclick w-25 position-absolute">
-                        <img
-                          className="d-block m-auto"
-                          src="/assets/img/icons/bx-cloud-upload.png"
-                          alt=""
-                        />
-                        <div className="text-center mt-3">
-                          <a className="font-weight-bold" href="">
-                            Add file{' '}
-                          </a>
-                          <span>
-                            or drop files here
-                            {/* <input className="d-none" type="file" name="" /> */}
-                            {/* <Field
-                              name="profile_pic"
-                              component="input"
-                              type="file"
-                            /> */}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="fallback">
-                        {/* <input name="file" type="file" multiple="" /> */}
-                        <Field
-                          name="profile_pic"
-                          component="input"
-                          type="file"
-                        />
-                      </div>
-                    </div>
-                  </div>
+                    </label>
+                  <Field
+                    name="files"
+                    component={renderDropzoneField}
+                    type="file"
+                    validate={validation.required}
+                  />
                 </div>
               </div>
             </div>
+
+            {this.props.errMsg ? (
+              <small>
+                <font color="red">{this.props.errMsg.errors}</font>
+              </small>
+            ) : null}
             <div className="row mt-4">
               <div className="col">
                 <button className="btn btn-primary btn-form" type="submit">
-                  Update
-                </button>
+                  Submit
+                  </button>
               </div>
             </div>
           </form>
         </div>
       </Fragment>
     );
+
+
   }
+}
+function mapStateToProps(state) {
+  return { errMsg: state.errors, industry: state.industryList, initialValues: state.singleProduct.product };
 }
 
 EditProduct = reduxForm({
-  form: 'EditProduct'
+  form: 'editProduct',
+  enableReinitialize: true
 })(EditProduct);
 
 const selector = formValueSelector('EditProduct');
 EditProduct = connect(state => {
-  const min_creditValue = selector(state, 'min_credit');
-  const interestValue = selector(state, 'interest');
-  const credit_amountValue = selector(state, 'credit_amount');
+  const time_duration = selector(state, 'time_duration');
+  const states = selector(state, 'states');
+  const credit = selector(state, 'credit');
+  const min_creditValue = selector(state, 'min_credit_amount');
+  const max_credit_amount = selector(state, 'max_credit_amount');
+
+  const interestValue = selector(state, 'interest_rate');
+  const credit_amountValue = selector(state, 'amount');
 
   return {
+    states,
+    credit,
     min_creditValue,
     interestValue,
-    credit_amountValue
+    credit_amountValue,
+    time_duration,
+    max_credit_amount
   };
 })(EditProduct);
-
-export default EditProduct;
+export default connect(
+  mapStateToProps,
+  { getProductById, getIndustryList }
+)(EditProduct);

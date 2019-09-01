@@ -1,30 +1,30 @@
 import React, { Component, Fragment } from 'react';
 import Subheader from '../general/Subheader';
 class InvestedList extends Component {
-  render() {
-    return (
-      <Fragment>
-        <Subheader heading="Invested Products" buttonLabel="Add New Product" />        
-            <div className="content-body">
-                <table className="table tablesaw-stack" data-tablesaw-mode="stack"
-                    data-tablesaw-minimap="data-tablesaw-minimap">
-                    <thead>
-                        <tr>
-                            <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">Name</th>
-                            <th data-tablesaw-sortable-col="data-tablesaw-sortable-col" data-tablesaw-priority="persist"
-                                scope="col">Region of interest</th>
-                            <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                scope="col">Interest</th>
-                            <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                scope="col">Creditor</th>
-                            <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                scope="col">Invested on</th>
-                            <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                scope="col">Invested Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
+    render() {
+        return (
+            <Fragment>
+                <Subheader heading="Invested Products" buttonLabel="Add New Product" />
+                <div className="content-body">
+                    <table className="table tablesaw-stack" data-tablesaw-mode="stack"
+                        data-tablesaw-minimap="data-tablesaw-minimap">
+                        <thead>
+                            <tr>
+                                <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">Name</th>
+                                <th data-tablesaw-sortable-col="data-tablesaw-sortable-col" data-tablesaw-priority="persist"
+                                    scope="col">Region of interest</th>
+                                <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                                    scope="col">Interest</th>
+                                <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                                    scope="col">Creditor</th>
+                                <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                                    scope="col">Invested on</th>
+                                <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                                    scope="col">Invested Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* <tr>
                             <td> <a href="">Reprehenderit Marshall</a></td>
                             <td><a href="">Health and personal care</a></td>
                             <td className="text-right-piehub-table">10%</td>
@@ -103,13 +103,14 @@ class InvestedList extends Component {
                             <td className="text-right-piehub-table">Roughies</td>
                             <td className="text-right-piehub-table">17/09/1971</td>
                             <td className="font-weight-bold text-right-piehub-table">$636436</td>
-                        </tr>
+                        </tr> */}
+                            You haven't invested on any products yet.
                     </tbody>
-                </table>
-            </div>            
-      </Fragment>
-    );
-  }
+                    </table>
+                </div>
+            </Fragment>
+        );
+    }
 }
 
 export default InvestedList;

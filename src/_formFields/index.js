@@ -108,7 +108,7 @@ export const inputSlider = ({
           type={type}
           min={min}
           max={max}
-          step="10"
+          step="1"
           data-orientation="horizontal"
           styles={{ color: 'red' }}
         />

@@ -10,6 +10,29 @@ class ViewProduct extends Component {
     }
     this.props.getProductById(this.props.location.state.id);
   }
+  listIndustries = industries => {
+    return industries.map((industry, index) => {
+      return (
+        <a class="mb-1" href="#">{industry.name}</a>
+
+      );
+    })
+  }
+  listRating = ratings => {
+    if (ratings.length === 0) {
+      return <span>**No ratings available for this product</span>
+    } else {
+      return ratings.map((rating, index) => {
+        return (
+          <div class="col-3 p-0">
+            <h6>Creditrre form</h6>
+            <span>AAA</span>
+          </div>
+
+        );
+      })
+    }
+  }
   render() {
     if (this.props.product) {
       const {
@@ -21,67 +44,65 @@ class ViewProduct extends Component {
         industries,
         status,
         time_duration,
-        product_title
+        product_title,
+        service,
+        state,
+        ratings
         }
       } = this.props.product;
       console.log('detail', this.props.product)
       return (
         <Fragment>
           <Subheader heading={product_code} />
-          <div class="content-body credit-request">
-            <div class="row justify-content-between w-100">
-              <div class="col-lg-12 col-xl-8">
-                <p>
-                  Some text ** No description in response so this is just a
-                  placeholder **
-                </p>
-                <div class="row mt-5 credit-request-stat">
-                  <div class="col col md-4">
-                    <h4>Product Title</h4>
 
-                    <p>{product_title}</p>
+          <div class="content-body credit-request">
+            <div class="d-flex">
+              <div class="col-lg-12 col-xl-8">
+                <div class="row justify-content-between w-100">
+                  <div class="col-3 p-0">
+                    <h6>Product Title</h6>
+                    <a href="#">{product_title}</a>
                   </div>
-                  <div class="col col md-4 stat-alignment-right">
-                    <h4>Minimum Credit amount</h4>
-                    <p>${min_credit_amount}</p>
+                  <div class="col-3 p-0">
+                    <h6>Service</h6>
+                    <a href="#">{service} </a>
                   </div>
-                  <div class="col col md-4 stat-alignment-right">
-                    <h4>Region of interest</h4>
-                    {industries.map((industry, index) =>
-                      <p>{industry.name}</p>
-                    )}
+                  <div class="col-3 p-0">
+                    <h6>State</h6>
+                    <a href="#">{state}</a>
                   </div>
+                  <div class="col-3 p-0">
+                    <h6>Industries</h6>
+                    <div class="d-flex flex-wrap justify-content-between flex-column">
+                      {industries ? this.listIndustries(industries) : null}
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row justify-content-between w-100 mt-3">
+                  {ratings ? this.listRating(ratings) : null}
                 </div>
               </div>
               <div class="col-lg-12 col-xl-4 rightbar">
                 <div class="amount">
-                  <h6>Investment available of</h6>
+                  <h6>Max Credit Amount</h6>
                   <h2>${max_credit_amount}</h2>
-                  <p class="font-italic">taxes may apply as per country</p>
                 </div>
                 <div class="investor clearfix mt-5">
                   <h6>Investor</h6>
                   <div class="investor-profile d-flex align-items-center">
-                    <img
-                      src="assets/img/investor-profile.jpg"
-                      alt="Investor profile picture"
-                    />
-                    <a class="ml-2" href="#">
-                      {investor}
-                    </a>
+                    <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" />
+                    <a class="ml-2" href="#">{investor}</a>
                   </div>
                 </div>
-                <div class="date date-created mt-5">
+                <div class="date mt-5">
                   <h6>Time Duration</h6>
-                  <a href="#"><strong>{time_duration} Months</strong></a>
+                  <a href="#">{time_duration}Months </a>
                 </div>
-                {/* <div class="date date-expire mt-5">
-                  <h6>Expires on</h6>
-                  <a href="#">{valid_until}</a>
-                </div> */}
               </div>
             </div>
-            <div class="attachments mt-4">
+            <div class="attachments">
               <h4>Attachments</h4>
               <div class="file mb-2">
                 <span class="file-name">tax payer investment.docx</span>
