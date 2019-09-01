@@ -1,20 +1,21 @@
-import React, {Component} from 'react';
-import {reduxForm, Field} from 'redux-form';
+import React, { Component } from 'react';
+import { reduxForm, Field } from 'redux-form';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import {inputField} from '../../_formFields';
+import { Link } from 'react-router-dom';
+import { inputField } from '../../_formFields';
 import * as validation from '../../_utils/validate';
 import * as actions from '../../actions/login';
 
 class Login extends Component {
     onSubmit = formProps => {
-      this.props.signin(formProps, () => {
-        this.props.history.push('/');
-      });
+        this.props.signin(formProps, () => {
+            this.props.history.push('/');
+        });
     };
 
     render() {
-        const {handleSubmit} = this.props;
+        const { handleSubmit } = this.props;
 
         return (
             <div className="container-fluid container-full-height">
@@ -59,6 +60,9 @@ class Login extends Component {
                                     Login{' '}
                                 </button>
                             </form>
+                            <br />
+                            If you dont have account you can sign up <Link to="/signup">here</Link>
+
                         </div>
                     </div>
                     <div className="signin-banner-container col-md-6">

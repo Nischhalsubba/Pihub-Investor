@@ -6,7 +6,6 @@ import * as validation from '../../_utils/validate';
 import { signup } from '../../actions/signup';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-
 class Signup extends Component {
   onSubmit = formProps => {
     this.props.signup(formProps, () => {
@@ -135,10 +134,12 @@ class Signup extends Component {
                   Sign Up Now
                 </button>
               </form>
+              <br />
+              Already have an account ? <Link to="/login">Login</Link>
             </div>
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }
