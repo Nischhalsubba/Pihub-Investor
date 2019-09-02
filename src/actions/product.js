@@ -46,7 +46,7 @@ export const addProduct = (details, callback) => async dispatch => {
     body.set('product_title', details.product_title);
     body.set('state_id', details.states.value);
     body.set('county_ids', details.County.id);
-    body.append('industry_ids', details.industry_id);
+    body.append('industry_ids', details.industry_id.toString());
     body.set('service_id', details.services.value);
     body.set('time_duration', details.time_duration);
     body.set('min_credit_amount', details.min_credit_amount);
