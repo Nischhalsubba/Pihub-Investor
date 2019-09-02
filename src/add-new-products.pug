@@ -48,25 +48,25 @@ html(lang="en")
 								.form-group
 									label(for="Industry") Industry
 									input.form-control(type="text", name="Industry")
-									.industry-list.clearfix
-										.d-flex.justify-content-between.flex-wrap
-											.industry-item
-												<input type="checkbox" name="industry" value=""> Administration and office work
-											.industry-item
-												<input type="checkbox" name="industry" value=""> Architecture and planning
-											.industry-item
-												<input type="checkbox" name="industry" value=""> Automotive 
-											.industry-item
-												<input type="checkbox" name="industry" value=""> Associations, organizations and institutions
-											.industry-item
-												<input type="checkbox" name="industry" value=""> Industry and mechanical engineering
-											.industry-item
-												<input type="checkbox" name="industry" value=""> Art, culture and entertainment	
-											.industry-item
-												<input type="checkbox" name="industry" value=""> Market Research
-											.industry-item
-												<input type="checkbox" name="industry" value=""> HR services		
-										input.float-right(type="submit", value="Save")
+									//- .industry-list.clearfix
+									//- 	.d-flex.justify-content-between.flex-wrap
+									//- 		.industry-item
+									//- 			<input type="checkbox" name="industry" value=""> Administration and office work
+									//- 		.industry-item
+									//- 			<input type="checkbox" name="industry" value=""> Architecture and planning
+									//- 		.industry-item
+									//- 			<input type="checkbox" name="industry" value=""> Automotive 
+									//- 		.industry-item
+									//- 			<input type="checkbox" name="industry" value=""> Associations, organizations and institutions
+									//- 		.industry-item
+									//- 			<input type="checkbox" name="industry" value=""> Industry and mechanical engineering
+									//- 		.industry-item
+									//- 			<input type="checkbox" name="industry" value=""> Art, culture and entertainment	
+									//- 		.industry-item
+									//- 			<input type="checkbox" name="industry" value=""> Market Research
+									//- 		.industry-item
+									//- 			<input type="checkbox" name="industry" value=""> HR services		
+									//- 	input.float-right(type="submit", value="Save")
 							.col-12.col-sm-12.col-md-6
 								.form-group
 									label(for="time") Time Duration (Months)
@@ -80,16 +80,16 @@ html(lang="en")
 								.form-group
 									label(for="amount") Minimum credit Amount
 									.d-flex.align-items-center
-										.demo.w-100
+										.demo.col-md-9.col-sm-8.col-8
 											input.position-relative.w-100(type="range", name="")
-										input.form-control.col-md-2.ml-2.text-center(type="text", name="",value="£ 50.000")
+										input.form-control.col-md-3.col-sm-4.col-4.ml-2.text-center(type="text", name="",value="£ 50.000")
 							.col-12.col-sm-12.col-md-6
 								.form-group
 									label(for="amount") Maximum credit Amount
 									.d-flex.align-items-center
-										.demo.w-100
+										.demo.col-md-9.col-sm-8.col-8
 											input.position-relative.w-100(type="range", name="")
-										input.form-control.col-md-2.ml-2.text-center(type="text", name="",value="£ 30.000.000")
+										input.form-control.col-md-3.col-sm-4.col-4.ml-2.text-center(type="text", name="",value="£ 30.000.000")
 						.row.mt-4
 							.col-12.col-sm-12.col-md-6
 								.form-group
@@ -99,29 +99,29 @@ html(lang="en")
 										input.ml-4(type="radio", name="rating", value="no")/  No
 										.rating.d-flex.justify-content-between.align-content-center.flex-wrap.mt-3
 											.rating-item
-												.col-10
+												.col-9.p-0
 													input.mr-2(type="checkbox",name="industry",value="")/ Creditreform
-												input.col-2.form-control(type="text", name="")
+												input.col-3.form-control.text-center(type="text", name="")
 											.rating-item
-												.col-10
+												.col-9
 													input.mr-2(type="checkbox",name="industry",value="")/ Euler Hermes
-												input.col-2.form-control(type="text", name="")
+												input.col-3.form-control.text-center(type="text", name="")
 											.rating-item
-												.col-10
+												.col-9.p-0
 													input.mr-2(type="checkbox",name="industry",value="")/ Fitch
-												input.col-2.form-control(type="text", name="")
+												input.col-3.form-control.text-center(type="text", name="")
 											.rating-item
-												.col-10
+												.col-9
 													input.mr-2(type="checkbox",name="industry",value="")/ Standard & Poors
-												input.col-2.form-control(type="text", name="")
+												input.col-3.form-control.text-center(type="text", name="")
 											.rating-item
-												.col-10
+												.col-9.p-0
 													input.mr-2(type="checkbox",name="industry",value="")/ Moody’s
-												input.col-2.form-control(type="text", name="")
+												input.col-3.form-control.text-center(type="text", name="")
 											.rating-item
-												.col-10
+												.col-9
 													input.mr-2(type="checkbox",name="industry",value="")/ Bank/Andere
-												input.col-2.form-control(type="text", name="")
+												input.col-3.form-control.text-center(type="text", name="")
 						.row.mt-4
 							.col
 								.form-group
