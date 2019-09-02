@@ -11,5 +11,6 @@ export const routes = {
   countNotification: `${API_URL}/me/notification/count-new`,
   markAsRead: `${API_URL}/me/notification/read`,
   changeStatusOfRequest: `${API_URL}/application`,
-  getIndustryList: `${API_URL}/industries`
+  getIndustryList: `${API_URL}/industries`,
+  getApplicationList: `${API_URL}/investor/products`
 };

@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getProductsList } from '../../actions/product';
+import { getApplicationList } from '../../actions/application';
 import { changeStatus } from '../../actions/changeStatus';
 
 class RequestedByList extends Component {
   state = { list: [] };
   componentDidMount() {
-    this.props.getProductsList();
+    this.props.getApplicationList(this.props.id);
   }
   componentDidUpdate(prevProps) {
     if (prevProps.data !== this.props.data) {
-      this.setState({ list: this.props.data.productsList.data });
+      this.setState({ list: this.props.data.list.data });
     }
   }
   renderListOfRequester = list => {
@@ -22,13 +22,16 @@ class RequestedByList extends Component {
         <tr key={index}>
           <td>
             {' '}
-            <a href="">{data.investor}</a>
+            <a href="">{data.application_code}</a>
           </td>
           <td>
-            <a href="">{data.valid_from}</a>
+            <span>{data.deadline}</span>
+          </td>
+          <td>
+            <span>{data.time_duration} Months</span>
           </td>
           <td class="text-right-piehub-table font-weight-bold">
-            ${data.min_credit_amount}
+            ${data.amount}
           </td>
           <td class="text-right-piehub-table">
             <span
@@ -65,15 +68,22 @@ class RequestedByList extends Component {
           <thead>
             <tr>
               <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
-                Requested By
+                Application Code
               </th>
               <th
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 data-tablesaw-priority="persist"
                 scope="col"
               >
-                Requested On
-              </th>
+                DeadLine
+             </th>
+              <th
+                data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                data-tablesaw-priority="persist"
+                scope="col"
+              >
+                Time Duration
+             </th>
               <th
                 class="text-right-piehub-table"
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
@@ -97,9 +107,9 @@ class RequestedByList extends Component {
   }
 }
 function mapStateToProps(state) {
-  return { data: state.productsList, errMsg: state.error };
+  return { data: state.applicationList, errMsg: state.error };
 }
 export default connect(
   mapStateToProps,
-  { getProductsList, changeStatus }
+  { getApplicationList, changeStatus }
 )(RequestedByList);

@@ -9,4 +9,5 @@ export const LIST_NOTIFICATION = 'list_notification';
 export const NOTIFICATION_COUNT = 'notification_count';
 export const SINGLE_PRODUCT = 'single_product';
 export const PAGINATION = 'pagination';
-export const GET_INDUSTRY = 'get_industry'
+export const GET_INDUSTRY = 'get_industry';
+export const GET_APPLICATION_LIST = 'get_application_list';

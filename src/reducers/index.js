@@ -10,6 +10,7 @@ import notificationList from './notificationList';
 import errors from './errors';
 import pagination from './pagination';
 import industryList from './industryList';
+import applicationList from './applicationList';
 const rootReducer = combineReducers({
   user,
   auth,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   notificationList,
   pagination,
   industryList,
+  applicationList,
   form: formReducer
 });
 

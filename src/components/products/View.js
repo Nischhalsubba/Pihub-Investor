@@ -37,7 +37,8 @@ class ViewProduct extends Component {
     if (this.props.product) {
       const {
         product: {
-          investor,
+          id,
+        investor,
         product_code,
         max_credit_amount,
         min_credit_amount,
@@ -50,7 +51,7 @@ class ViewProduct extends Component {
         ratings
         }
       } = this.props.product;
-      console.log('detail', this.props.product)
+      console.log('detail', this.props.product.product.id)
       return (
         <Fragment>
           <Subheader heading={product_code} />
@@ -113,7 +114,7 @@ class ViewProduct extends Component {
                 <span class="ml-4 file-size">322.2kb</span>
               </div>
             </div>
-            <RequestedByList />
+            {id ? <RequestedByList id={id} /> : null}
           </div>
         </Fragment>
       );
