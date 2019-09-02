@@ -4,7 +4,7 @@ import { ERROR } from './types';
 
 export const confirmEmail = (token, callback) => async dispatch => {
   try {
-    const response = await client.post(routes.emailConfirmation, { confirmation: token });
+    const response = await client.post(routes.emailVerification, { token });
     if (response) {
       callback();
     }
