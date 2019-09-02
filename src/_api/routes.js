@@ -14,5 +14,6 @@ export const routes = {
   getIndustryList: `${API_URL}/industries`,
   getApplicationList: `${API_URL}/investor/products`, // few of the routes look the same but dont delete them yet
   getApplicationDetail: `${API_URL}/investor/products`,
-  investedList: `${API_URL}/investor/invested-products`
+  investedList: `${API_URL}/investor/invested-products`,
+  emailConfirmation: `${API_URL}/email-confirmation`
 };
