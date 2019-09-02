@@ -90,7 +90,7 @@ ReactDOM.render(
         {/** Logged in (there should be a token) and unconfirmed accounts only*/}
         <Route path="/signup/confirmation" exact component={Confirmation} />{' '}
         {/** Logged in (there should be a token) and unconfirmed accounts only*/}
-        <Route path="/signup/confirm/:hash" exact component={Approval} />{' '}
+        <Route path="/confirm/:hash" exact component={Approval} />{' '}
         {/** Logged in (there should be a token) - confirmed but waiting to e approved accounts only*/}
         {/** --- End: signup protected routes ___ */}
         <App>
