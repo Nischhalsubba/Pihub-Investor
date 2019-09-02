@@ -9,7 +9,6 @@ class InvestedList extends Component {
     }
     componentDidUpdate(prevProps) {
         if (prevProps.investments !== this.props.investments) {
-            console.log('%%', this.props.investments);
             this.setState({ investments: this.props.investments.list })
         }
     }

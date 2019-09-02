@@ -6,7 +6,6 @@ export const getInvestedList = page => async dispatch => {
     const response = await client.get(
       `${routes.investedList}?page=${page}`
     );
-    console.log('investment', response.data.data);
     dispatch({
       type: INVESTED_LIST,
       payload: response.data.data
