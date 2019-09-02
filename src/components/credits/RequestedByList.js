@@ -13,7 +13,7 @@ class RequestedByList extends Component {
       this.setState({ list: this.props.data.list.data });
     }
   }
-  renderListOfRequester = list => {
+  renderListOfRequester = (list, name) => {
     if (list.length === 0) {
       return <span>No one has place in any kind of requests yet</span>;
     }
@@ -24,7 +24,7 @@ class RequestedByList extends Component {
             {' '}
             <Link to={{
               pathname: '/application',
-              state: { pId: this.props.id, aId: data.id }
+              state: { pId: this.props.id, aId: data.id, product: name }
             }}>{data.application_code}</Link>
           </td>
           <td>
@@ -103,7 +103,7 @@ class RequestedByList extends Component {
               </th>
             </tr>
           </thead>
-          <tbody>{this.renderListOfRequester(this.state.list)}</tbody>
+          <tbody>{this.renderListOfRequester(this.state.list, this.props.name)}</tbody>
         </table>
       </div>
     );

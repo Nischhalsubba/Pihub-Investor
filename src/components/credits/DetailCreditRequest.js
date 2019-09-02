@@ -18,28 +18,45 @@ class DetailCreditRequest extends Component {
       this.setState({ detail: this.props.data.detail })
     }
   }
+  renderDocs = docs => {
+    if (docs.length === 0) {
+      return <span>No attachments available</span>
+    } else {
+      return docs.map((doc, index) => {
+        return (
+          <div class="file mb-2">
+            <span class="file-name">tax payer investment.docx</span>
+            <span class="ml-4 file-size">400.5kb</span>
+          </div>
+        );
+      })
+    }
+  }
   render() {
     if (this.state.detail) {
-      const { requested_by, requested_on, requested_amount, deadline, description, duration, status } = this.state.detail;
+      const { requested_by, requested_on, requested_amount, deadline, description, duration, status, documents } = this.state.detail;
       var requestedDate = new Date(requested_on);
       return (
         <Fragment>
-          <Subheader heading="Credit Request on IT investment" />
+          <Subheader heading={this.props.location.state.product} />
+          {status === 'rejected' ? <div class="alert alert-rejected">You rejected this Investment</div> : null}
+
+
           <div class="content-body credit-request">
             <div class="d-flex">
               <div class="col-lg-12 col-xl-8">
                 <div class="row justify-content-between w-100">
                   <div class="col-3 p-0">
                     <h6>States</h6>
-                    <a href="#">Berlin</a>
+                    <span>Berlin</span>
                   </div>
                   <div class="col-3 p-0">
                     <h6>Credit Type</h6>
-                    <a href="#">Resolving credit </a>
+                    <span>Resolving credit </span>
                   </div>
                   <div class="col-3 p-0">
                     <h6>County</h6>
-                    <a href="#">Germany</a>
+                    <span>Germany</span>
                   </div>
                   <div class="col-3 p-0">
                     <h6>Industres</h6>
@@ -53,7 +70,7 @@ class DetailCreditRequest extends Component {
                     </div>
                   </div>
                 </div>
-                <div class="row justify-content-between w-100 mt-3">
+                {/* <div class="row justify-content-between w-100 mt-3">
                   <div class="col-3 p-0">
                     <h6>Creditrre form</h6>
                     <span>AAA</span>
@@ -70,7 +87,7 @@ class DetailCreditRequest extends Component {
                     <h6>Bank/Andere</h6>
                     <span>AAA+</span>
                   </div>
-                </div>
+                </div> */}
               </div>
               <div class="col-lg-12 col-xl-4 rightbar">
                 <div class="amount">
@@ -88,18 +105,16 @@ class DetailCreditRequest extends Component {
                   <h6>Request on</h6>
                   <span>{`${requestedDate.getDate()} - ${requestedDate.getMonth() + 1} - ${requestedDate.getFullYear()}`}</span>
                 </div>
+                <div class="date mt-5">
+                  <h6>Time Duration</h6>
+                  <span>{duration} Months</span>
+                </div>
               </div>
             </div>
             <div class="attachments mt-5 mb-5">
               <h4>Attachments</h4>
-              <div class="file mb-2">
-                <span class="file-name">tax payer investment.docx</span>
-                <span class="ml-4 file-size">400.5kb</span>
-              </div>
-              <div class="file">
-                <span class="file-name">investment agreement.pdf</span>
-                <span class="ml-4 file-size">322.2kb</span>
-              </div>
+
+              {this.renderDocs(documents)}
             </div>
             {/* <span class="mt-3">
             <a class="btn btn-option" href="#">Accepted</a>

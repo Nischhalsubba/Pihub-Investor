@@ -114,7 +114,7 @@ class ViewProduct extends Component {
                 <span class="ml-4 file-size">322.2kb</span>
               </div>
             </div>
-            {id ? <RequestedByList id={id} /> : null}
+            {id ? <RequestedByList id={id} name={product_title} /> : null}
           </div>
         </Fragment>
       );
