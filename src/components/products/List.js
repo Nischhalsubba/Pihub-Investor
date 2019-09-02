@@ -44,9 +44,10 @@ class ProductsList extends Component {
             <td>{product.min_credit_amount}</td>
             <td>{product.max_credit_amount}</td>
             <td>
-              {product.status === 'aproved' ? <span className="badge badge-waiting">{product.status}</span> : <span className="badge badge-warning">{product.status}</span>
-
-              }
+              {product.status === 'requested' ? <span className="status-badge status-badge-awaiting">{product.status}</span> : null}
+              {product.status === 'approved' ? <span className="status-badge status-badge-approved">{product.status}</span> : null}
+              {product.status === 'rejected' ? <span className="status-badge status-badge-rejected">{product.status}</span> : null}
+              {product.status === 'invested' ? <span className="status-badge status-badge-awaiting">{product.status}</span> : null}
             </td>
             <td>
               <Link to={{
