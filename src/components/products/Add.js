@@ -115,7 +115,7 @@ class AddProduct extends Component {
     // console.log('r', getIndustryId(this.props.industry.list, formProps.undefined));
     formProps.industry_id = getIndustryId(this.props.industry.list, formProps.undefined);
     formProps.ratings = this.state.rating_value;
-    // console.log('form', formProps)
+    console.log('form', formProps)
     this.props.addProduct(formProps, () => this.props.history.push('/products'))
   };
 
@@ -198,7 +198,7 @@ class AddProduct extends Component {
                     name="County"
                     component={dropDownField}
                     options={this.state.cities}
-                    label="Country"
+                    label="County"
                     validate={validation.required}
                   />
                 </div>

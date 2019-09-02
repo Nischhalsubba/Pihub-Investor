@@ -12,5 +12,6 @@ export const routes = {
   markAsRead: `${API_URL}/me/notification/read`,
   changeStatusOfRequest: `${API_URL}/application`,
   getIndustryList: `${API_URL}/industries`,
-  getApplicationList: `${API_URL}/investor/products`
+  getApplicationList: `${API_URL}/investor/products`, // few of the routes look the same but dont delete them yet
+  getApplicationDetail: `${API_URL}/investor/products`
 };

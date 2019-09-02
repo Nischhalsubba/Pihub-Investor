@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getApplicationList } from '../../actions/application';
 import { changeStatus } from '../../actions/changeStatus';
-
+import { Link } from 'react-router-dom';
 class RequestedByList extends Component {
   state = { list: [] };
   componentDidMount() {
@@ -22,7 +22,10 @@ class RequestedByList extends Component {
         <tr key={index}>
           <td>
             {' '}
-            <a href="">{data.application_code}</a>
+            <Link to={{
+              pathname: '/application',
+              state: { pId: this.props.id, aId: data.id }
+            }}>{data.application_code}</Link>
           </td>
           <td>
             <span>{data.deadline}</span>

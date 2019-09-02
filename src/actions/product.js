@@ -45,7 +45,7 @@ export const addProduct = (details, callback) => async dispatch => {
     var body = new FormData();
     body.set('product_title', details.product_title);
     body.set('state_id', details.states.value);
-    body.set('county_ids', details.Country.id);
+    body.set('county_ids', details.County.id);
     body.append('industry_ids', details.industry_id);
     body.set('service_id', details.services.value);
     body.set('time_duration', details.time_duration);

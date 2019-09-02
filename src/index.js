@@ -132,7 +132,7 @@ ReactDOM.render(
           />
           <Route
             path="/application"
-            component={RequireInvestorAuth(ViewApplication)}
+            component={RequireInvestorAuth(DetailCreditRequest)}
           />
           <Route
             exact
