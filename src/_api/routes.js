@@ -10,8 +10,9 @@ export const routes = {
   getNotificationList: `${API_URL}/me/notifications`,
   countNotification: `${API_URL}/me/notification/count-new`,
   markAsRead: `${API_URL}/me/notification/read`,
-  changeStatusOfRequest: `${API_URL}/application`,
+  changeStatusOfRequest: `${API_URL}/investor/products`,
   getIndustryList: `${API_URL}/industries`,
   getApplicationList: `${API_URL}/investor/products`, // few of the routes look the same but dont delete them yet
-  getApplicationDetail: `${API_URL}/investor/products`
+  getApplicationDetail: `${API_URL}/investor/products`,
+  investedList: `${API_URL}/investor/invested-products`
 };

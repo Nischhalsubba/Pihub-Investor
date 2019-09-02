@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getApplicationList } from '../../actions/application';
 import { changeStatus } from '../../actions/changeStatus';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 class RequestedByList extends Component {
   state = { list: [] };
   componentDidMount() {
+    console.log('this', this.props.id)
     this.props.getApplicationList(this.props.id);
   }
   componentDidUpdate(prevProps) {
@@ -36,25 +37,30 @@ class RequestedByList extends Component {
           <td class="text-right-piehub-table font-weight-bold">
             ${data.amount}
           </td>
+          <td class="text-right-piehub-table font-weight-bold">
+            {data.status === 'rejected' ? <span className="badge badge-warning">{data.status}</span> : <span className="badge badge-success">{data.status}</span>}
+          </td>
           <td class="text-right-piehub-table">
             <span
               class="mr-1"
-              onClick={() => this.props.changeStatus(data.id, 'accepted')}
+              onClick={() => this.props.changeStatus(this.props.id, data.id, 'accepted')}
             >
               <img src="assets/img/icons/bx-check-circle.svg" alt="accepted" />
             </span>
-            <span onClick={() => this.props.changeStatus(data.id, 'rejected')}>
+            <span onClick={() => this.props.changeStatus(this.props.id, data.id, 'rejected', this.props.history.push({ pathname: '/application', state: { pId: this.props.id, aId: data.id, product: name } }))}>
               {' '}
               <img src="assets/img/icons/bx-x-circle.svg" alt="rejected" />
             </span>
           </td>
-          {this.props.errMsg ? (
-            <small>
-              <font />
-              {this.props.errMsg.error}
-            </small>
-          ) : null}
-        </tr>
+          {
+            this.props.errMsg ? (
+              <small>
+                <font />
+                {this.props.errMsg.error}
+              </small>
+            ) : null
+          }
+        </tr >
       );
     });
   };
@@ -99,6 +105,13 @@ class RequestedByList extends Component {
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 scope="col"
               >
+                Status
+              </th>
+              <th
+                class="text-right-piehub-table"
+                data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                scope="col"
+              >
                 Accept/Decline
               </th>
             </tr>
@@ -115,4 +128,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   { getApplicationList, changeStatus }
-)(RequestedByList);
+)(withRouter(RequestedByList));

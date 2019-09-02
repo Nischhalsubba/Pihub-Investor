@@ -12,6 +12,7 @@ import pagination from './pagination';
 import industryList from './industryList';
 import applicationList from './applicationList';
 import applicationDetail from './applicationDetail';
+import investment from './investment';
 const rootReducer = combineReducers({
   user,
   auth,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   industryList,
   applicationList,
   applicationDetail,
+  investment,
   form: formReducer
 });
 

@@ -2,14 +2,14 @@ import client from './index';
 import { routes } from './../_api/routes';
 import { ERROR } from './types';
 
-export const changeStatus = (id, status, callback) => async dispatch => {
+export const changeStatus = (pId, aId, status, callback) => async dispatch => {
   try {
     const response = await client.put(
-      `${routes.changeStatusOfRequest}/${id}/change-status`,
+      `${routes.changeStatusOfRequest}/${pId}/applications/${aId}`,
       { status }
     );
     if (response) {
-      console.log(response);
+      callback();
     }
   } catch (e) {
     dispatch({
