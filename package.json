@@ -15,8 +15,12 @@
     "stylelint-config-standard": "^18.3.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
     "gulp-autoprefixer": "^6.1.0",
+    "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.2.0",
+    "gulp-plumber": "^1.2.1",
     "stylelint": "^10.1.0"
   },
   "scripts": {
