@@ -3,7 +3,7 @@
 html(lang="en")
 	head
 		include templates/head.pug
-		title Edit Product
+		title Add New Product
 	body
 		.container-full-height.ct-container
 			.sidebar
@@ -12,60 +12,124 @@ html(lang="en")
 				include templates/site-header
 				.content-head
 					.content-head-left
-						h1.content-head__title Edit: IT Investment
+						h1.content-head__title Add New Product
 
 				.content-body
-					form.form-signup(action="signin.html")
+					form.form-signup(action="add-new-products-sucess.html")
 						.row.mt-4
-							.col-12.col-xs-12
+							.col-12.col-sm-12.col-md-6
 								.form-group
-									label(for="first-name") Product Title
+									label Product Title
 									input(type="text", name="product-title" class="form-control")
-							.col-12.col-xs-12
+							.col-12.col-sm-12.col-md-6
 								.form-group
-									label(for="first-name") Geographical region of Interest
-									//- input(type="text", name="geographical-region" class="form-control")
-									select.form-control.regionof-interest
-										option(value=" ") Select region of interest
-										option(value="Advertisement/Online Marketing") Advertisement/Online Marketing
-										option(value="Advertisement/Marketing") Advertisement/Marketing
-										option(value="Advertisement/Offine Marketing") Advertisement/Offine Marketing
+									label States
+									select.form-control.states
+										option(value=" ") Select States
+										option(value="Advertisement/Online Marketing") Berlin
+										option(value="Advertisement/Marketing") Baden-Württemberg
+										option(value="Advertisement/Offine Marketing") Brandenburg
 
 						.row.mt-4
-							.col-12.col-md-6
+							.col-12.col-sm-12.col-md-6
 								.form-group
-										.row.align-items-end
-											.col.col-10
-												label(for='mincredit-amount' class="d-block mincredit-amount mb-5") Minimum Credit Amount 
-												input#mincredit-amount.w-100(type='range')
-											.col.col-2
-												input(type='text' class="form-control" id="mincredit-amount-value" data-prefix="$")
-							.col-12.col-md-6
+									label Credit type
+									select.form-control.states
+										option(value=" ") Select Credit type
+										option(value="Advertisement/Online Marketing") Revolving credit
+							.col-12.col-sm-12.col-md-6
 								.form-group
-										.row.align-items-end
-											.col.col-10.col-md-10
-												label(for='interest' class="d-block interest mb-5") Interest
-												input#interest(type='range' class="w-100")
-											.col.col-2.col-md-2
-												input(type="text" class="form-control" id="interest-value" data-sufix="%")
+									label County
+									select.form-control.states
+										option(value=" ") Select County
+										option(value="Advertisement/Online Marketing") Camden
 						.row.mt-4
-							.col-12.col-md-6
-								.form-group 
-										.row.align-items-end
-											.col-10.col-md-8.col-lg-10
-												label(for='credit-amount' class="d-block credit-amount mb-5") Credit Amount
-												input#credit-amount(type='range' class="w-100" min="0" max="999999" step="1" data-orientation="horizontal")
-											.col-2.col-md-4.col-lg-2
-												input(type='text' class="form-control" id="credit-amount-value" data-prefix="$")
-							.col-12.col-md-6
-								.form-group.d-flex.flex-column
-									label(for="" class="") Tags
-									select.form-control.w-100#tags(multiple='multiple')
-										option(selected='selected' value='orange') Advertise						
-										option(selected='selected' value="Agency") Agency
-										option(selected='selected' value="ad") ad
-										option(selected='selected' value="fund") fund
+							.col-12.col-sm-12.col-md-6
 
+								.form-group
+									label(for='choices-multiple-remove-button') With remove button
+									select#choices-multiple-remove-button.form-control(name='choices-multiple-remove-button', placeholder='This is a placeholder', multiple='')
+									option(value='Dropdown item 1', selected='') Dropdown item 1
+									option(value='Dropdown item 2') Dropdown item 2
+									option(value='Dropdown item 3') Dropdown item 3
+									option(value='Dropdown item 4') Dropdown item 4
+								//- .form-group
+								//- 	label(for="Industry") Industry
+								//- 	input.form-control(type="text", name="Industry")
+								//- 	.industry-list.clearfix
+								//- 		.d-flex.justify-content-between.flex-wrap
+								//- 			.industry-item
+								//- 				<input type="checkbox" name="industry" value=""> Administration and office work
+								//- 			.industry-item
+								//- 				<input type="checkbox" name="industry" value=""> Architecture and planning
+								//- 			.industry-item
+								//- 				<input type="checkbox" name="industry" value=""> Automotive 
+								//- 			.industry-item
+								//- 				<input type="checkbox" name="industry" value=""> Associations, organizations and institutions
+								//- 			.industry-item
+								//- 				<input type="checkbox" name="industry" value=""> Industry and mechanical engineering
+								//- 			.industry-item
+								//- 				<input type="checkbox" name="industry" value=""> Art, culture and entertainment	
+								//- 			.industry-item
+								//- 				<input type="checkbox" name="industry" value=""> Market Research
+								//- 			.industry-item
+								//- 				<input type="checkbox" name="industry" value=""> HR services		
+								//- 		input.float-right(type="submit", value="Save")
+							.col-12.col-sm-12.col-md-6
+								.form-group
+									label(for="time") Time Duration (Months)
+									.d-flex.align-items-center
+										input.form-control.col-md-2.mr-2.text-center(type="text", name="",value="1")
+										.demo.w-100
+											input.position-relative.w-100(type="range", name="")
+										input.form-control.col-md-2.ml-2.text-center(type="text", name="",value="36")
+						.row.mt-4
+							.col-12.col-sm-12.col-md-6
+								.form-group
+									label(for="amount") Minimum credit Amount
+									.d-flex.align-items-center
+										.demo.w-100
+											input.position-relative.w-100(type="range", name="")
+										input.form-control.col-md-2.ml-2.text-center(type="text", name="",value="£ 50.000")
+							.col-12.col-sm-12.col-md-6
+								.form-group
+									label(for="amount") Maximum credit Amount
+									.d-flex.align-items-center
+										.demo.w-100
+											input.position-relative.w-100(type="range", name="")
+										input.form-control.col-md-2.ml-2.text-center(type="text", name="",value="£ 30.000.000")
+						.row.mt-4
+							.col-12.col-sm-12.col-md-6
+								.form-group
+									label(for="rating") Rating For Credit
+									.option
+										input(type="radio", name="rating",value="yes")/  Yes
+										input.ml-4(type="radio", name="rating", value="no")/  No
+										.rating.d-flex.justify-content-between.align-content-center.flex-wrap.mt-3
+											.rating-item
+												.col-10
+													input.mr-2(type="checkbox",name="industry",value="")/ Creditreform
+												input.col-2.form-control(type="text", name="")
+											.rating-item
+												.col-10
+													input.mr-2(type="checkbox",name="industry",value="")/ Euler Hermes
+												input.col-2.form-control(type="text", name="")
+											.rating-item
+												.col-10
+													input.mr-2(type="checkbox",name="industry",value="")/ Fitch
+												input.col-2.form-control(type="text", name="")
+											.rating-item
+												.col-10
+													input.mr-2(type="checkbox",name="industry",value="")/ Standard & Poors
+												input.col-2.form-control(type="text", name="")
+											.rating-item
+												.col-10
+													input.mr-2(type="checkbox",name="industry",value="")/ Moody’s
+												input.col-2.form-control(type="text", name="")
+											.rating-item
+												.col-10
+													input.mr-2(type="checkbox",name="industry",value="")/ Bank/Andere
+												input.col-2.form-control(type="text", name="")
 						.row.mt-4
 							.col
 								.form-group
@@ -81,10 +145,9 @@ html(lang="en")
 												.dz-size(data-dz-size='')
 												img(src='removebutton.png' alt='X' data-dz-remove='')
 
-									.file-upload-display.dz-preview.mb-4 
-										//- .progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
-										//- .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')
-										
+									.file-upload-display
+
+
 									.border-dotted
 										#file_dropzone.position-relative
 											.dz-message.needsclick.w-25.position-absolute
@@ -100,4 +163,4 @@ html(lang="en")
 
 						.row.mt-4
 							.col
-								button.btn.btn-primary.btn-form(type="submit") UPDATE
+								button.btn.btn-primary.btn-form(type="submit") Update

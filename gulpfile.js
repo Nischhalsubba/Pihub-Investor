@@ -6,6 +6,9 @@ var autoprefixer = require('gulp-autoprefixer');
 var imagemin = require('gulp-imagemin');
 var uglify = require('gulp-uglify');
 var clean = require('gulp-clean-css');
+var babel = require('gulp-babel');
+var plumber = require('gulp-plumber');
+
 
 // Paths and directories
 var paths = {
@@ -82,6 +85,14 @@ gulp.task('minifyImg', function(){
 gulp.task('minifyJs', function() {
 	return gulp
 		.src(paths.js.src)
+		.pipe(plumber())
+		.pipe(babel({
+			presets: [
+			  ['@babel/env', {
+				modules: false
+			  }]
+			]
+		  }))
 		.pipe(uglify({
 			output: {
 				comments: true
