@@ -6,11 +6,18 @@ import * as validation from '../../_utils/validate';
 import { signup } from '../../actions/signup';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import ReactPhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/dist/style.css'
 class Signup extends Component {
+  state = { phone: 'a' }
   onSubmit = formProps => {
+
     this.props.signup(formProps, () => {
       this.props.history.push('/signup/confirm-email');
     });
+  };
+  handleOnChange = (value) => {
+    this.setState({ phone: value })
   };
   render() {
     const { handleSubmit } = this.props;
@@ -116,13 +123,20 @@ class Signup extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <Field
+                  {/* <Field
                     name="phone_number"
                     type="text"
-                    component={inputField}
+                    component={phoneInput}
                     label="Phone Number"
                     className="form-control"
-                  />
+                  /> */}
+                  <label>Phone Number</label>
+                  <ReactPhoneInput defaultCountry={'de'} regions={'europe'} value={this.state.phone} onChange={(value) => this.setState({ phone: value })} inputExtraProps={{
+                    name: 'phone',
+                    required: true,
+                    autoFocus: true
+                  }} />
+
                 </div>
 
                 <Field

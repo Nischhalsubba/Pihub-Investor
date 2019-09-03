@@ -148,7 +148,7 @@ ReactDOM.render(
           {/* <Redirect from="/credit-request/detail" to="/product" /> */}
           {/** --- End: Authenticated User's routes ___ */}
         </App>
-        <Route component={NoMatch} />
+        {/* <Route component={NoMatch} /> */}
       </Switch>
     </BrowserRouter>
   </Provider>,

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Subheader from '../general/Subheader';
 import { getCreditRequestList } from '../../actions/credits';
 import Pagination from '../general/Pagination';
+import Spinner from '../general/Spinner';
 class ListCreditRequests extends Component {
   componentDidMount() {
     this.props.getCreditRequestList(1);
@@ -94,7 +95,7 @@ class ListCreditRequests extends Component {
         </Fragment>
       );
     } else {
-      return <span>Just a second</span>;
+      return <Spinner />
     }
   }
 }

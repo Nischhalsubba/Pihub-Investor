@@ -5,6 +5,7 @@ import Multiselect from 'react-widgets/lib/Multiselect';
 import 'react-widgets/dist/css/react-widgets.css';
 import Dropzone from 'react-dropzone';
 
+
 export const inputField = ({
   input,
   label,
@@ -49,6 +50,7 @@ export const checkBox = ({
         id={id}
         placeholder={placeholder}
       />
+
       <label className="form-check-label">
         I agree to the <Link to="/terms"> Terms and Conditions</Link>
       </label>
@@ -213,3 +215,29 @@ export const radioButton = ({
     </div>
   );
 };
+
+
+// export const phoneInput = ({
+//   input,
+//   label,
+//   type,
+//   className,
+//   id,
+//   placeholder,
+//   meta: { error, touched }
+// }) => {
+//   return (
+//     <div>
+//       <label>{label}</label>
+//       <ReactPhoneInput
+//         {...input}
+//         type={type}
+//         color={'white'}
+//         className={className}
+//         id={id}
+//         placeholder={placeholder}
+//       />
+//       <font color="red">{touched && error}</font>
+//     </div>
+//   );
+// };

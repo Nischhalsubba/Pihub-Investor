@@ -6,10 +6,12 @@ import { Link, withRouter } from 'react-router-dom';
 class RequestedByList extends Component {
   state = { list: [] };
   componentDidMount() {
-    console.log('this', this.props.id)
     this.props.getApplicationList(this.props.id);
   }
   componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) {
+      this.props.getApplicationList(this.props.id);
+    }
     if (prevProps.data !== this.props.data) {
       this.setState({ list: this.props.data.list.data });
     }
@@ -43,7 +45,7 @@ class RequestedByList extends Component {
           <td class="text-right-piehub-table">
             <span
               class="mr-1"
-              onClick={() => this.props.changeStatus(this.props.id, data.id, 'accepted')}
+              onClick={() => this.props.changeStatus(this.props.id, data.id, 'accepted', this.props.history.push({ pathname: '/application', state: { pId: this.props.id, aId: data.id, product: name } }))}
             >
               <img src="assets/img/icons/bx-check-circle.svg" alt="accepted" />
             </span>

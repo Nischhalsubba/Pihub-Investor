@@ -2,8 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { getInvestedList } from '../../actions/invested';
 import Subheader from '../general/Subheader';
+import Spinner from '../general/Spinner';
 class InvestedList extends Component {
-    state = { investments: [] }
+    state = { investments: null }
     componentDidMount() {
         this.props.getInvestedList()
     }
@@ -60,7 +61,7 @@ class InvestedList extends Component {
                         </thead>
                         <tbody>
 
-                            {this.renderList(this.state.investments)}
+                            {this.state.investments ? this.renderList(this.state.investments) : <Spinner />}
                         </tbody>
                     </table>
                 </div>
