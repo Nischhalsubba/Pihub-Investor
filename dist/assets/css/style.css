@@ -296,6 +296,11 @@ h6 {
   white-space: nowrap;
   border-radius: 3px; }
 
+.status-badge-primary {
+  background-color: #242a5a;
+  color: #fff;
+  font-size: 10px !important; }
+
 .status-badge-awaiting {
   background-color: #FFF3BF;
   color: #E67700; }
@@ -312,6 +317,11 @@ h6 {
 
 .select2-container--default {
   width: 100% !important; }
+
+.verify {
+  position: absolute;
+  bottom: 0;
+  right: 10px; }
 
 .credit-request p {
   line-height: 26px; }
@@ -680,6 +690,11 @@ input[type="submit"] {
 
 .btn-form {
   margin-top: 20px; }
+
+.btn-outline-light {
+  border: 2px solid #F4F7FC;
+  background: transparent;
+  color: #6E8398; }
 
 input[type="text"],
 input[type="email"],

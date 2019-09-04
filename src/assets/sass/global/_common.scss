@@ -61,6 +61,13 @@
     border-radius: 3px;
 }
 
+.status-badge-primary{
+    background-color: $color-primary;
+    color: $color-white;
+    
+    font-size: 10px !important;
+}
+
 .status-badge-awaiting {
     background-color: $color-status-awaiting;
     color: $color-text-awaiting;
@@ -80,4 +87,10 @@
 
 .select2-container--default {
     width: 100% !important;
+}
+
+.verify{
+    position: absolute;
+    bottom: 0;
+    right: 10px;
 }

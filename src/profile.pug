@@ -1,0 +1,44 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include templates/head.pug
+        title Credit Request on IT investment
+    body
+        .container-full-height.ct-container
+            .sidebar
+                include components/nav-sidebar
+            .main-content.main-content--padded
+                include templates/site-header
+                .content-head
+                    .content-head-left
+                        .row
+                            .col-2.position-relative
+                                img(src="/assets/img/profile-picture.png", alt="alt")
+                                img.verify(src="/assets/img/verify.png", alt="alt")
+                            .col-10
+                                h2 Dino Hwang
+                                    span.status-badge-primary.p-2.rounded.ml-2 Verified
+                                span.mt-2 Darmstadth, Germany
+                                p.mt-2 Born in small family, worked my way to this point, now an entrepreneur helping startup touch the sky
+
+                    .content-head-right
+                        a.btn.btn-primary(href="add-new-products.html") Edit Profile   
+                .content-body.mt-5
+                    .d-flex
+                        img(src="./assets/img/bx-briefcase.png", alt="")
+                        span.ml-3.font-weight-bold Droomwave Home Appliances 
+                    .d-flex.mt-4
+                        img(src="./assets/img/bx-map.png", alt="")
+                        span.ml-3.font-weight-bold Darmstadth, Germany
+                    .d-flex.mt-4
+                        img(src="./assets/img/bx-phone.png", alt="")
+                        span.ml-3.font-weight-bold 098 76 543210
+                            span.status-badge-primary.p-2.rounded.ml-2.mb-2 Hidden
+                    .d-flex.mt-4
+                        img(src="./assets/img/bx-envelope.png", alt="")
+                        span.ml-3.font-weight-bold dinohwang@gmail.com
+                            span.status-badge-primary.p-2.rounded.ml-2.mb-2 Hidden
+                    .d-flex.mt-4
+                        img(src="./assets/img/bx-street.png", alt="")
+                        span.ml-3.font-weight-bold Millbrook Lea Street , 64283
