@@ -111,10 +111,10 @@ class ProductsList extends Component {
                   <Translate content="column.name" />
                 </th>
                 <th>
-                  Sevices
+                  Industry
                 </th>
                 <th>
-                  Industries
+                  Service
                 </th>
                 <th>
                   Duration
