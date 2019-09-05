@@ -49,7 +49,7 @@ class RequestedByList extends Component {
             ${data.requested_amount}
           </td>
           <td class="text-right-piehub-table font-weight-bold">
-            {data.status === 'rejected' ? <span className="badge badge-warning">{data.status}</span> : <span className="badge badge-success">{data.status}</span>}
+            {data.status === 'rejected' ? <span className="badge badge-warning">Abgelehnt</span> : <span className="badge badge-success">In Bearbeitung</span>}
           </td>
 
           {

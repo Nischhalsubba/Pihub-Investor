@@ -83,11 +83,11 @@ class ViewProduct extends Component {
                   </div>
                   <div class="col-3 p-0">
                     <Translate content='label.service' component="h6" />
-                    <a href="#">{service} </a>
+                    <a >{service} </a>
                   </div>
                   <div class="col-3 p-0">
                     <Translate content='label.state' component="h6" />
-                    <a href="#">{state}</a>
+                    <a >{state}</a>
                   </div>
                   <div class="col-3 p-0">
                     <Translate content='label.industries' component="h6" />
@@ -95,6 +95,7 @@ class ViewProduct extends Component {
                       {industries ? this.listIndustries(industries) : null}
                     </div>
                   </div>
+
                 </div>
 
 
@@ -107,6 +108,12 @@ class ViewProduct extends Component {
                   {/* <h6>Max Credit Amount</h6> */}
                   <Translate content='label.maxcredit' component="h6" />
                   <h2>${max_credit_amount}</h2>
+                </div>
+                <div class="amount">
+                  {/* <h6>Max Credit Amount</h6> */}
+                  <h6>Mindestkreditbetrag</h6>
+
+                  <h2>${min_credit_amount}</h2>
                 </div>
                 <div class="investor clearfix mt-5">
                   {/* <h6>Investor</h6> */}

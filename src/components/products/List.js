@@ -33,16 +33,17 @@ class ProductsList extends Component {
                 {product.product_title}
               </Link>
             </td>
+            <td>{product.service}</td>
+
             <td>
               {product.industries.map((industry, index) => {
                 return <span>{industry.name}</span>
               })}
             </td>
-            <td>{product.service}</td>
-            <td>{product.time_duration} Months</td>
+            <td>{product.time_duration} Monate</td>
 
-            <td>{product.min_credit_amount}</td>
-            <td>{product.max_credit_amount}</td>
+            <td>${product.min_credit_amount}</td>
+            <td>${product.max_credit_amount}</td>
             <td>
               {product.status === 'requested' ? <span className="status-badge status-badge-awaiting"><Translate content='label.requested' /></span> : null}
               {product.status === 'approved' ? <span className="status-badge status-badge-approved"><Translate content='label.approved' /></span> : null}
@@ -112,7 +113,7 @@ class ProductsList extends Component {
                   <Translate content="column.name" />
                 </th>
                 <th>
-                  <Translate content="column.services" />
+                  <Translate content="label.service" />
                 </th>
                 <th>
                   <Translate content="label.industries" />

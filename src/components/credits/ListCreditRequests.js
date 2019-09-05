@@ -38,11 +38,11 @@ class ListCreditRequests extends Component {
             ${product.max_credit_amount || 100000}
           </td>
           <td className="text-right-piehub-table font-weight-bold">
-            {product.status === 'offer_sent' ? <span className="status-badge status-badge-awaiting">Offer Sent</span>
+            {product.status === 'offer_sent' ? <span className="status-badge status-badge-awaiting">Angebot Erstellt</span>
               : null}
-            {product.status === 'rejected' ? <span className="status-badge status-badge-rejected">Rejected</span>
+            {product.status === 'rejected' ? <span className="status-badge status-badge-rejected">Abgelehnt</span>
               : null}
-            {product.status === 'open' ? <span className="status-badge status-badge-approved">Open</span>
+            {product.status === 'open' ? <span className="status-badge status-badge-approved">Zu Bearbeiten</span>
               : null}
           </td>
         </tr>
@@ -54,7 +54,6 @@ class ListCreditRequests extends Component {
       const {
         creditRequests: { data }
       } = this.props.list;
-      console.log(this.props.list)
       return (
         <Fragment>
           <Subheader heading={<Translate content='label.creditrequests' />} />

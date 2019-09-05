@@ -32,17 +32,20 @@ class InvestedList extends Component {
                             }}> {investment.creditor_name}</Link>
                         </td>
                         <td>
-                            {/* {investment.industries.map((industry, index) => {
-                                return <span key={index}>{industry}</span>
-                            })} */}
+                            <Link to={{
+                                pathname: '/product',
+                                state: { id: investment.product_id }
+                            }}>  {investment.product_title}</Link>
                         </td>
-                        <td className="text-right-piehub-table">{investment.service}</td>
+                        {/* <td className="text-right-piehub-table">{investment.service}</td> */}
                         <td className="text-right-piehub-table">
                             {investedDate.getDate()}-{investedDate.getMonth() + 1}-{investedDate.getFullYear()}
                         </td>
 
                         <td className="font-weight-bold text-right-piehub-table">${investment.invested_amount}</td>
+                        <td className="font-weight-bold text-right-piehub-table">${investment.duration} Monate</td>
                     </tr>
+
                 );
             })
         }
@@ -62,12 +65,20 @@ class InvestedList extends Component {
                                     {/* <Translate content='column.industry' /> */}
                                     Product Titel
                                     </th>
+                                {/* <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                                    scope="col"><Translate content='column.services' /></th> */}
                                 <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                    scope="col"><Translate content='column.services' /></th>
+                                    scope="col"><Translate content='column.approvedon' /></th>
                                 <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                    scope="col"><Translate content='column.investedon' /></th>
+                                    scope="col">
+                                    {/* <Translate content='column.investedamount' /> */}
+                                    Kreditbetrag
+                                    </th>
                                 <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                    scope="col"><Translate content='column.investedamount' /></th>
+                                    scope="col">
+                                    <Translate content='column.duration' />
+
+                                </th>
                             </tr>
                         </thead>
                         <tbody>

@@ -273,7 +273,7 @@ class AddProduct extends Component {
 
                 <Field
                   component={renderMultiselect}
-                  label={<Translate content='column.industry' />}
+                  label={<Translate content='label.industries' />}
                   data={industries}
                   className="form-group" />
               </div>
