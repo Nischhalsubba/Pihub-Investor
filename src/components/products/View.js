@@ -58,7 +58,7 @@ class ViewProduct extends Component {
         <Fragment>
           <div className="content-head">
             <div className="content-head-left">
-              <h1 className="content-head__title">Product Detail</h1>
+              <h1 className="content-head__title">Produktdetail</h1>
             </div>
             <div className="content-head-right">
               <Link to={{
@@ -67,7 +67,8 @@ class ViewProduct extends Component {
               }}
                 className="btn btn-primary"
               >
-                Edit Product
+                Produkt bearbeiten
+
           </Link>
             </div>
           </div>
@@ -77,19 +78,19 @@ class ViewProduct extends Component {
                 <div class="row justify-content-between w-100">
                   <div class="col-3 p-0">
                     {/* <h6>Product Title</h6> */}
-                    <Translate content='label.producttitle' component="h6"/>
+                    <Translate content='label.producttitle' component="h6" />
                     <a href="#">{product_title}</a>
                   </div>
                   <div class="col-3 p-0">
-                  <Translate content='label.service' component="h6"/>
+                    <Translate content='label.service' component="h6" />
                     <a href="#">{service} </a>
                   </div>
                   <div class="col-3 p-0">
-                  <Translate content='label.state' component="h6"/>
+                    <Translate content='label.state' component="h6" />
                     <a href="#">{state}</a>
                   </div>
                   <div class="col-3 p-0">
-                  <Translate content='label.industries' component="h6"/>
+                    <Translate content='label.industries' component="h6" />
                     <div class="d-flex flex-wrap justify-content-between flex-column">
                       {industries ? this.listIndustries(industries) : null}
                     </div>
@@ -104,12 +105,12 @@ class ViewProduct extends Component {
               <div class="col-lg-12 col-xl-4 rightbar">
                 <div class="amount">
                   {/* <h6>Max Credit Amount</h6> */}
-                  <Translate content='label.maxcredit' component="h6"/>
+                  <Translate content='label.maxcredit' component="h6" />
                   <h2>${max_credit_amount}</h2>
                 </div>
                 <div class="investor clearfix mt-5">
                   {/* <h6>Investor</h6> */}
-                  <Translate content='label.investor' component="h6"/>
+                  <Translate content='label.investor' component="h6" />
                   <div class="investor-profile d-flex align-items-center">
                     <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" />
                     <a class="ml-2" href="#">{investor}</a>
@@ -117,14 +118,14 @@ class ViewProduct extends Component {
                 </div>
                 <div class="date mt-5">
                   {/* <h6>Time Duration</h6> */}
-                  <Translate content='label.timeduration' component="h6"/>
+                  <Translate content='label.timeduration' component="h6" />
                   <a href="#">{time_duration}Months </a>
                 </div>
               </div>
             </div>
             <div class="attachments">
               {/* <h4>Attachments</h4> */}
-              <Translate content='label.attachments' component="h6"/>
+              <Translate content='label.attachments' component="h6" />
               <div class="file mb-2">
                 <span class="file-name">tax payer investment.docx</span>
                 <span class="ml-4 file-size">400.5kb</span>

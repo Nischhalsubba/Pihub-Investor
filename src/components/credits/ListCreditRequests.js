@@ -13,7 +13,7 @@ class ListCreditRequests extends Component {
 
   renderData = data => {
     if (data.length === 0) {
-      return <span>You dont have any credit requests yet</span>;
+      return <span>Es wurde noch keine Kreditanfrage gestellt</span>;
     }
     return data.map((product, index) => {
       let date = new Date(product.created_on);

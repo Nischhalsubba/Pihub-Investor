@@ -48,18 +48,18 @@ class CreditorDetail extends Component {
                 <div class="row justify-content-between w-100">
                   <div class="col-3 p-0">
                     {/* <h6>States</h6> */}
-                    <Translate content='label.state' />
+                    <Translate content='label.state' component="h6" />
                     <br />
                     <span>{state.name}</span>
                   </div>
                   <div class="col-3 p-0">
                     {/* <Translate content='label.credittype' /> */}
-                    County <br />
+                    <h6> County </h6><br />
                     <span>{county.name} </span>
                   </div>
                   <div class="col-3 p-0">
                     {/* <Translate content='label.country' /> */}
-                    Collateral
+                    <h6>Collateral</h6>
                     <br />
                     {collatorals.map((c, index) => {
                       return <span key={index}>{c.name}</span>
@@ -67,7 +67,7 @@ class CreditorDetail extends Component {
                     })}
                   </div>
                   <div class="col-3 p-0">
-                    <Translate content='label.industries' />
+                    <Translate content='label.industries' component="h6" />
                     <div class="d-flex flex-wrap justify-content-between flex-column">
                       {industries.map((i, index) => {
                         return <span class="mb-1">{i.name}</span>
