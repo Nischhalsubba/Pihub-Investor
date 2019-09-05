@@ -27,7 +27,8 @@ class ListCreditRequests extends Component {
             </Link>
           </td>
           <td>
-            {product.product_title}
+
+            <Link to={{ pathname: '/product', state: { id: product.product_id } }}> {product.product_title}</Link>
           </td>
           <td class="text-right-piehub-table">{`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}</td>
           <td class="text-right-piehub-table">{product.number_of_request}</td>
