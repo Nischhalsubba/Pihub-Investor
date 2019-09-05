@@ -21,7 +21,6 @@ class RequestedByList extends Component {
       return <span>No one has place in any kind of requests yet</span>;
     }
     return list.map((data, index) => {
-      console.log('data', data)
       return (
         <tr key={index}>
           <td>
