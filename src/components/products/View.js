@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getProductById } from '../../actions/product';
-import Subheader from '../general/Subheader';
+// import Subheader from '../general/Subheader';
 import RequestedByList from '../credits/RequestedByList';
 class ViewProduct extends Component {
   componentDidMount() {
@@ -51,11 +52,24 @@ class ViewProduct extends Component {
         ratings
         }
       } = this.props.product;
-      console.log('detail', this.props.product.product.id)
+      console.log('detail', this.props.product.product)
       return (
         <Fragment>
-          <Subheader heading={product_code} />
-
+          <div className="content-head">
+            <div className="content-head-left">
+              <h1 className="content-head__title">Product Detail</h1>
+            </div>
+            <div className="content-head-right">
+              <Link to={{
+                pathname: '/edit-product',
+                state: { id: id }
+              }}
+                className="btn btn-primary"
+              >
+                Edit Product
+          </Link>
+            </div>
+          </div>
           <div class="content-body credit-request">
             <div class="d-flex">
               <div class="col-lg-12 col-xl-8">

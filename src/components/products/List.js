@@ -49,12 +49,7 @@ class ProductsList extends Component {
               {product.status === 'rejected' ? <span className="status-badge status-badge-rejected">{product.status}</span> : null}
               {product.status === 'invested' ? <span className="status-badge status-badge-awaiting">{product.status}</span> : null}
             </td>
-            <td>
-              <Link to={{
-                pathname: '/edit-product',
-                state: { id: product.id }
-              }}>Edit</Link>
-            </td>
+
           </tr>
         );
       });
@@ -128,9 +123,7 @@ class ProductsList extends Component {
                 <th>
                   <Translate content="column.status" />
                 </th>
-                <th>
-                  Edit
-                </th>
+
               </tr>
             </thead>
             <tbody>{this.renderList(this.props.data)}</tbody>
