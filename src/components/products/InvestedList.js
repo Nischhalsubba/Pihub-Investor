@@ -58,7 +58,10 @@ class InvestedList extends Component {
                             <tr>
                                 <th data-tablesaw-sortable-col="data-tablesaw-sortable-col"><Translate content='column.creditorsname' /></th>
                                 <th data-tablesaw-sortable-col="data-tablesaw-sortable-col" data-tablesaw-priority="persist"
-                                    scope="col"><Translate content='column.industry' /></th>
+                                    scope="col">
+                                    {/* <Translate content='column.industry' /> */}
+                                    Product Titel
+                                    </th>
                                 <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                                     scope="col"><Translate content='column.services' /></th>
                                 <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"

@@ -16,7 +16,7 @@ export default {
         investedon: 'Investiert am',
         investedamount: 'Investierter Betrag',
         numberofrequest: 'Nummer der Anfrage',
-        createdon: 'erstellt am',
+        createdon: 'Erstelit',
         productname: 'Produktname',
         requeston: 'Anfrage am',
         requestedby: 'Angefordert von',
