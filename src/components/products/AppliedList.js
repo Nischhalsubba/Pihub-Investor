@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import Subheader from './../general/Subheader';
+import Translate from 'react-translate-component'
 class AppliedList extends Component {
   render() {
     return (
       <Fragment>
-        <Subheader heading="Products with Application"/>
+        <Subheader heading={<Translate content='label.productswithapplication' />}/>
         <div className="content-body">
           <table
             className="table tablesaw-stack"
@@ -13,12 +14,12 @@ class AppliedList extends Component {
           >
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Interest</th>
-                <th>Minimum Credit Amount</th>
-                <th>Available Credit Amount</th>
-                <th>Status</th>
+                <th><Translate content='column.name' /></th>
+                <th><Translate content='column.category' /></th>
+                <th><Translate content='column.interest' /></th>
+                <th><Translate content='label.mincredit' /></th>
+                <th><Translate content='column.available_credit_amount' /></th>
+                <th><Translate content='column.status' /></th>
               </tr>
             </thead>
             <tbody>

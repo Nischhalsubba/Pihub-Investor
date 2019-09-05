@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { confirmEmail } from '../../../actions/confirmEmail';
 import { withRouter, Link } from 'react-router-dom';
+import Translate from 'react-translate-component'
 class Approval extends Component {
     state = { invalid: false }
     componentDidMount() {
@@ -23,23 +24,29 @@ class Approval extends Component {
                                 <span className="line"></span>
                                 <div className="indicator-container d-flex flex-column align-items-center">
                                     <div className="indicator d-flex justify-content-center align-items-center connect"><span>1</span></div>
-                                    <span className="mt-3">Confirm Email</span>
+                                    {/* <span className="mt-3">Confirm Email</span> */}
+                                    <Translate content='label.confirmemail' component="span" className="mt-3" />
                                     <hr />
                                 </div>
                                 <div className="indicator-container d-flex flex-column align-items-center">
                                     <div className="indicator active d-flex justify-content-center align-items-center"><span>2</span></div>
-                                    <span className="mt-3">Admin Approval</span>
+                                    {/* <span className="mt-3">Admin Approval</span> */}
+                                    <Translate content='label.adminapproval' component="span" className="mt-3" />
                                 </div>
                                 <div className="indicator-container d-flex flex-column align-items-center">
-                                    <div className="indicator d-flex justify-content-center align-items-center"><span>3</span></div><span
-                                        className="mt-3">Activation </span>
+                                    <div className="indicator d-flex justify-content-center align-items-center"><span>3</span></div>
+                                    {/* <span
+                                        className="mt-3">Activation </span> */}
+                                        <Translate content='label.activation' component="span" className="mt-3" />
                                 </div>
                             </div>
                             <div className="email-content text-center m-auto"> <img src="/assets/img/icons/admin-approval.png"
                                 alt="Mail icon" />
-                                <h3>Just one more step, Admin Approval</h3>
-                                <p className="w-75 m-auto">Our admin needs to confirm the account first. We will send you an Email when its
-                                done</p>
+                                {/* <h3>Just one more step, Admin Approval</h3> */}
+                                <Translate content='label.justonemore' component="h3" />
+                                {/* <p className="w-75 m-auto">Our admin needs to confirm the account first. We will send you an Email when its
+                                done</p> */}
+                                <Translate content='label.ouradminneed' component="p" className="w-75 m-auto" />
                             </div>
                         </div>
                     </div>
@@ -60,8 +67,11 @@ class Approval extends Component {
                             </div> */}
                             <div className="email-content text-center m-auto"> <img src="/assets/img/icons/admin-approval.png"
                                 alt="Mail icon" />
-                                <h3>We cant verify your email address.</h3>
-                                <p className="w-75 m-auto">The confirmation link has expired. </p><p>You can ask for a new validation link here.</p>
+                                {/* <h3>We cant verify your email address.</h3> */}
+                                <Translate content='label.wecant' component="h3" />
+                                {/* <p className="w-75 m-auto">The confirmation link has expired. </p><p>You can ask for a new validation link here.</p> */}
+                                <Translate content='label.theconfirm' component="p" className="w-75 m-auto" />
+                                <Translate content='label.youcanask' component="p" />
                             </div>
                         </div>
                     </div>

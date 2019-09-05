@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getNotificationCount } from '../../actions/notification';
 import { logout } from '../../actions/login';
+import Translate from 'react-translate-component'
 class Header extends Component {
   componentDidMount() {
     this.props.getNotificationCount();
@@ -26,13 +27,16 @@ class Header extends Component {
               <a className="header-user-dropdown">
                 <img src="/assets/img/user.png" alt="John Doe" />
                 <i className="bx bx-chevron-down" />
-                <span
+                {/* <span
                   onClick={() =>
                     this.props.logout(() => this.props.history.push('/login'))
                   }
                 >
                   logout
-                </span>
+                </span> */}
+                <Translate content='label.logout' component="span"  onClick={() =>
+                    this.props.logout(() => this.props.history.push('/login'))
+                  } />
               </a>
             </li>
 

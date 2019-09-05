@@ -10,6 +10,7 @@ import germanStates from '../../_german_states';
 import city from '../../_german_states/city';
 import industries from '../../_utils/industries';
 import getIndustryId from '../../_utils/getIndustryId';
+import Translate from 'react-translate-component'
 import { extractNames, extractId } from '../../_utils/misc';
 
 import {
@@ -211,7 +212,7 @@ class AddProduct extends Component {
 
     return (
       <Fragment>
-        <Subheader heading="Add Product" />
+        <Subheader heading={<Translate content='button.addnewproduct' />} />
         <div className="content-body">
           <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
             <div className="row mt-4">
@@ -221,7 +222,7 @@ class AddProduct extends Component {
                     name="product_title"
                     type="text"
                     component={inputField}
-                    label="Product Title"
+                    label={<Translate content='label.producttitle' />}
                     className="form-control"
                     validate={validation.required}
                   />
@@ -233,7 +234,7 @@ class AddProduct extends Component {
                     name="states"
                     component={dropDownField}
                     options={germanStates}
-                    label="States"
+                    label={<Translate content='label.state' />}
                     validate={validation.required}
                   />
                 </div>
@@ -246,7 +247,7 @@ class AddProduct extends Component {
                     name="services"
                     component={dropDownField}
                     options={userOptions}
-                    label="Services"
+                    label={<Translate content='label.service' />}
                     validate={validation.required}
                   />
                 </div>
@@ -257,7 +258,7 @@ class AddProduct extends Component {
                     name="County"
                     component={renderMultiselect}
                     data={this.state.cityNames}
-                    label="County"
+                    label={<Translate content='label.country' />}
                     validate={validation.required}
                   />
                 </div>
@@ -268,7 +269,7 @@ class AddProduct extends Component {
 
                 <Field
                   component={renderMultiselect}
-                  label="Industry"
+                  label={<Translate content='column.industry' />}
                   data={industries}
                   className="form-group" />
               </div>
@@ -280,7 +281,7 @@ class AddProduct extends Component {
                       type="range"
                       className="w-100"
                       component={inputSlider}
-                      label="Time Duration(Months)"
+                      label={<Translate content='label.timeduration' />}
                       id="time-duration"
                       validate={validation.required}
                       max="60"
@@ -310,7 +311,7 @@ class AddProduct extends Component {
                       type="range"
                       className="w-100"
                       component={inputSlider}
-                      label="Minimum Credit Amount"
+                      label={<Translate content='label.mincredit' />}
                       id="mincredit-amount"
                       validate={validation.required}
                       min="1"
@@ -338,7 +339,7 @@ class AddProduct extends Component {
                       type="range"
                       className="w-100"
                       component={inputSlider}
-                      label="Maximum Credit Amount"
+                      label={<Translate content='label.maxcredit' />}
                       id="mincredit-amount"
                       readOnly
                       validate={validation.required}
@@ -363,7 +364,8 @@ class AddProduct extends Component {
             <div class="row mt-4">
               <div class="col">
                 <div class="form-group">
-                  <label class="d-block">Rating for Credit</label>
+                  {/* <label class="d-block">Rating for Credit</label> */}
+                  <Translate content='label.rating' component="label" class="d-block" />
                   <div class="form-check form-check-inline">
                     <Field
                       type="radio"
@@ -373,9 +375,7 @@ class AddProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <label class="form-check-label" for="rating-credit-yes">
-                      Yes
-                    </label>
+                    <Translate content='label.yes' component='label' class="form-check-label" for="rating-credit-yes" />
                   </div>
                   <div class="form-check form-check-inline">
                     <Field
@@ -386,9 +386,7 @@ class AddProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <label class="form-check-label" for="rating-credit-no">
-                      No
-                    </label>
+                    <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
                   </div>
                 </div>
               </div>
@@ -445,9 +443,7 @@ class AddProduct extends Component {
             <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
-                  <label className="d-block" for="">
-                    File Upload
-                  </label>
+                <Translate content='label.fileupload' component="label" className="d-block" />
                   <Field
                     name="files"
                     component={renderDropzoneField}
@@ -465,9 +461,7 @@ class AddProduct extends Component {
             ) : null}
             <div className="row mt-4">
               <div className="col">
-                <button className="btn btn-primary btn-form" type="submit">
-                  Submit
-                </button>
+                <Translate content='button.submit' component="button"  className="btn btn-primary btn-form" type="submit" />
               </div>
             </div>
           </form>

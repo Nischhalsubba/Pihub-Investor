@@ -44,10 +44,10 @@ class ProductsList extends Component {
             <td>{product.min_credit_amount}</td>
             <td>{product.max_credit_amount}</td>
             <td>
-              {product.status === 'requested' ? <span className="status-badge status-badge-awaiting">{product.status}</span> : null}
-              {product.status === 'approved' ? <span className="status-badge status-badge-approved">{product.status}</span> : null}
-              {product.status === 'rejected' ? <span className="status-badge status-badge-rejected">{product.status}</span> : null}
-              {product.status === 'invested' ? <span className="status-badge status-badge-awaiting">{product.status}</span> : null}
+              {product.status === 'requested' ? <span className="status-badge status-badge-awaiting"><Translate content='label.requested' /></span> : null}
+              {product.status === 'approved' ? <span className="status-badge status-badge-approved"><Translate content='label.approved' /></span> : null}
+              {product.status === 'rejected' ? <span className="status-badge status-badge-rejected"><Translate content='label.rejected' /></span> : null}
+              {product.status === 'invested' ? <span className="status-badge status-badge-awaiting"><Translate content='label.invested' /></span> : null}
             </td>
 
           </tr>
@@ -57,7 +57,10 @@ class ProductsList extends Component {
       /*@todo handle empty conditions properly with designed layout*/
       return (
         <tr>
-          <td>You do not have any products yet!</td>
+          <td>
+            {/* You do not have any products yet! */}
+            <Translate content='label.youdonot' />
+          </td>
         </tr>
       );
     }
@@ -68,8 +71,8 @@ class ProductsList extends Component {
     return (
       <Fragment>
         <Subheader
-          heading="All Products"
-          buttonLabel="Add New Product"
+          heading={<Translate content='label.allproducts' />}
+          buttonLabel={<Translate content='button.addnewproduct' />}
           link="/add-product"
         />
         <form class="form-inline my-2 my-lg-0">
@@ -88,11 +91,12 @@ class ProductsList extends Component {
             value={this.state.product_title}
             onChange={e => this.setState({ product_title: e.target.value })}
           />
-          <button class="btn btn-primary" onClick={(e) => {
+          {/* <button >Search</button> */}
+          <Translate content='button.search' class="btn btn-primary" onClick={(e) => {
             e.preventDefault();
             this.props.getProductsList(this.props.pagination.currentPage, this.state.status, this.state.product_title)
           }
-          } type="submit">Search</button>
+          } type="submit" />
         </form>
         <div className="content-body">
           <table
@@ -106,24 +110,27 @@ class ProductsList extends Component {
                   <Translate content="column.name" />
                 </th>
                 <th>
-                  Industry
+                  <Translate content="column.services" />
                 </th>
                 <th>
-                  Service
+                  <Translate content="label.industries" />
                 </th>
                 <th>
-                  Duration
+                  <Translate content="column.duration" />
                 </th>
                 <th>
                   <Translate content="column.minimum_credit_amount" />
                 </th>
                 <th>
-                  Mindestbetrag
+                
+                  <Translate content="column.mindestbetrag" />
                 </th>
                 <th>
                   <Translate content="column.status" />
                 </th>
-
+                <th>
+                <Translate content="column.edit" />
+                </th>
               </tr>
             </thead>
             <tbody>{this.renderList(this.props.data)}</tbody>

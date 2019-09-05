@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getInvestedList } from '../../actions/invested';
 import Subheader from '../general/Subheader';
 import Spinner from '../general/Spinner';
+import Translate from 'react-translate-component';
 class InvestedList extends Component {
     state = { investments: null }
     componentDidMount() {
@@ -42,21 +43,21 @@ class InvestedList extends Component {
     render() {
         return (
             <Fragment>
-                <Subheader heading="Invested Products" />
+                <Subheader heading={<Translate content='sidebar.invested_products' />} />
                 <div className="content-body">
                     <table className="table tablesaw-stack" data-tablesaw-mode="stack"
                         data-tablesaw-minimap="data-tablesaw-minimap">
                         <thead>
                             <tr>
-                                <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">Creditor Name</th>
+                                <th data-tablesaw-sortable-col="data-tablesaw-sortable-col"><Translate content='column.creditorsname' /></th>
                                 <th data-tablesaw-sortable-col="data-tablesaw-sortable-col" data-tablesaw-priority="persist"
-                                    scope="col">Industry</th>
+                                    scope="col"><Translate content='column.industry' /></th>
                                 <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                    scope="col">Service</th>
+                                    scope="col"><Translate content='column.services' /></th>
                                 <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                    scope="col">Invested On</th>
+                                    scope="col"><Translate content='column.investedon' /></th>
                                 <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                    scope="col">Invested Amount</th>
+                                    scope="col"><Translate content='column.investedamount' /></th>
                             </tr>
                         </thead>
                         <tbody>

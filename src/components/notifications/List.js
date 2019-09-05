@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { getNotificationList, markAsRead } from '../../actions/notification';
+import Translate from 'react-translate-component'
 class Notifications extends Component {
   state = { refresh: false };
   componentDidMount() {
@@ -52,7 +53,8 @@ class Notifications extends Component {
         <Fragment>
           <div className="content-head">
             <div className="content-head-left">
-              <h1 className="content-head__title">Notifications</h1>
+              {/* <h1 className="content-head__title">Notifications</h1> */}
+              <Translate content='label.notifications' component="h1" className="content-head__title" />
             </div>
           </div>
           <div className="content-body mt-2">
@@ -69,7 +71,7 @@ class Notifications extends Component {
         <Fragment>
           <div className="content-head">
             <div className="content-head-left">
-              <h1 className="content-head__title">Notifications</h1>
+            <Translate content='label.notifications' component="h1" className="content-head__title" />
             </div>
           </div>
           <div className="content-body mt-2">
