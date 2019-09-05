@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
+
 import { connect } from 'react-redux';
 import { addProduct } from '../../actions/product';
 import { getIndustryList } from '../../actions/industry'
@@ -9,6 +10,8 @@ import germanStates from '../../_german_states';
 import city from '../../_german_states/city';
 import industries from '../../_utils/industries';
 import getIndustryId from '../../_utils/getIndustryId';
+import { extractNames, extractId } from '../../_utils/misc';
+
 import {
   inputField,
   dropDownField,
@@ -17,6 +20,7 @@ import {
   radioButton,
   renderMultiselect
 } from '../../_formFields';
+import { NONAME } from 'dns';
 
 const userOptions = [
   {
@@ -90,7 +94,7 @@ const credits = [
   }
 ]
 class AddProduct extends Component {
-  state = { cities: [], ratings: [], rating_value: [], grade: '' };
+  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [] };
   componentDidMount() {
     this.props.getIndustryList();
   }
@@ -98,9 +102,59 @@ class AddProduct extends Component {
     if (this.props.states !== prevProps.states) {
       this.setState({
         cities: city(this.props.states)
-      });
+      }, () => {
+        var c = extractNames(this.state.cities)
+        console.log('c', c);
+        this.setState({ cityNames: c });
+      }
+      )
     }
   }
+  renderColatoral = ({ fields, meta: { touched, error, submitFailed } }) => (
+
+    <ul>
+      <li >
+        <a type="button" onClick={() => fields.push({})}>Add Collateral</a>
+        {(touched || submitFailed) && error && <span>{error}</span>}
+      </li>
+      {fields.map((member, index) =>
+        <li key={index} className="col-12">
+          {/* <button
+            type="button"
+            title="Remove Member"
+            onClick={() => fields.remove(index)} /> */}
+          <h4>Colatoral #{index + 1}</h4>
+          <div className='row'>
+            <div className="col-6">
+              <Field
+                name={`${member}.name`}
+                type="text"
+                component={inputField}
+                label="Colatoral"
+                className="form-control"
+
+              />
+            </div>
+            <div className="col-6">
+              <Field
+                name={`${member}.value`}
+                type="text"
+                component={inputField}
+                label="Value"
+                className="form-control"
+
+              />
+            </div>
+          </div>
+
+
+        </li>
+
+      )}
+    </ul>
+    //   </div>
+    // </div>
+  )
   onSubmit = formProps => {
     // To delete duplicate keys while adding credit ratings
     const filteredArr = this.state.rating_value.reverse().reduce((acc, current) => {
@@ -111,33 +165,36 @@ class AddProduct extends Component {
         return acc;
       }
     }, []);
+    console.log(extractId(formProps.County, this.state.cities))
     this.setState({ rating_value: filteredArr });
     // console.log('r', getIndustryId(this.props.industry.list, formProps.undefined));
     formProps.industry_id = getIndustryId(this.props.industry.list, formProps.undefined);
     formProps.ratings = this.state.rating_value;
-    console.log('form', formProps)
+    formProps.county_ids = extractId(formProps.County, this.state.cities);
+    // console.log('form', formProps)
     this.props.addProduct(formProps, () => this.props.history.push('/products'))
   };
 
-  rC = (credits) => {
+  creditRatings = (credits) => {
     return credits.map((credit, index) => {
       return (
-        <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
-          <div class="rating-item">
-            <div class="col-10">
-              <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
-              />{credit.name}
-            </div>
-            <input pattern="[a-cA-C]{1}"
-              type="text" name={`rating_value[${credit.id}]`}
-              onChange={(e) => this.setState({
-                rating_value: [...this.state.rating_value, { id: credit.id, value: e.target.value }]
-              })
-              }
-              title="Grade must be either A,B or C"
-            />
+        // <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+        <div class="rating-item">
+          <div class="col-9">
+            <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
+            />{credit.name}
           </div>
+          <input pattern="[a-cA-C]{1}"
+            type="text" name={`rating_value[${credit.id}]`}
+            onChange={(e) => this.setState({
+              rating_value: [...this.state.rating_value, { id: credit.id, value: e.target.value }]
+            })
+            }
+            title="Grade must be either A,B or C"
+            class="col-3 form-control text-center"
+          />
         </div>
+        // </div>
       )
     })
 
@@ -148,8 +205,10 @@ class AddProduct extends Component {
       min_creditValue,
       credit,
       time_duration,
-      max_credit_amount
+      max_credit_amount,
+      colatoral
     } = this.props;
+
     return (
       <Fragment>
         <Subheader heading="Add Product" />
@@ -196,8 +255,8 @@ class AddProduct extends Component {
                 <div class="form-group">
                   <Field
                     name="County"
-                    component={dropDownField}
-                    options={this.state.cities}
+                    component={renderMultiselect}
+                    data={this.state.cityNames}
                     label="County"
                     validate={validation.required}
                   />
@@ -300,6 +359,7 @@ class AddProduct extends Component {
                 </div>
               </div>
             </div>
+
             <div class="row mt-4">
               <div class="col">
                 <div class="form-group">
@@ -334,9 +394,52 @@ class AddProduct extends Component {
               </div>
               {credit === 'true' ? (
                 <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
-                  <div className="row">{this.rC(credits)}</div>
+                  <div className="row">{this.creditRatings(credits)}</div>
                 </div>
               ) : null}
+            </div>
+
+            <div class="row mt-4">
+              <div class="col">
+                <div class="form-group">
+                  <label class="d-block">Collateral</label>
+                  <div class="form-check form-check-inline">
+                    <Field
+                      type="radio"
+                      component={radioButton}
+                      value="true"
+                      name="colatoral"
+                      className="form-check-input"
+                      id="credit"
+                    />
+                    <label class="form-check-label" for="rating-credit-yes">
+                      Yes
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <Field
+                      type="radio"
+                      component={radioButton}
+                      value="false"
+                      name="colatoral"
+                      className="form-check-input"
+                      id="credit"
+                    />
+                    <label class="form-check-label" for="rating-credit-no">
+                      No
+                    </label>
+                  </div>
+                </div>
+                {colatoral === 'true' ? (
+                  <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+                    <div className="row">
+                      {
+                        <FieldArray name="collatorals" component={this.renderColatoral} />
+                      }</div>
+                  </div>
+                ) : null}
+              </div>
+
             </div>
 
             <div className="row mt-4">
@@ -388,7 +491,7 @@ AddProduct = connect(state => {
   const credit = selector(state, 'credit');
   const min_creditValue = selector(state, 'min_credit_amount');
   const max_credit_amount = selector(state, 'max_credit_amount');
-
+  const colatoral = selector(state, 'colatoral');
   const interestValue = selector(state, 'interest_rate');
   const credit_amountValue = selector(state, 'amount');
 
@@ -399,7 +502,8 @@ AddProduct = connect(state => {
     interestValue,
     credit_amountValue,
     time_duration,
-    max_credit_amount
+    max_credit_amount,
+    colatoral
   };
 })(AddProduct);
 export default connect(
