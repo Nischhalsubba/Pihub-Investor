@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getInvestedList } from '../../actions/invested';
 import Subheader from '../general/Subheader';
 import Spinner from '../general/Spinner';
@@ -11,6 +12,7 @@ class InvestedList extends Component {
     }
     componentDidUpdate(prevProps) {
         if (prevProps.investments !== this.props.investments) {
+            console.log(this.props.investments)
             this.setState({ investments: this.props.investments.list })
         }
     }
@@ -23,7 +25,12 @@ class InvestedList extends Component {
                 var investedDate = new Date(investment.invested_on);
                 return (
                     <tr key={index}>
-                        <td> {investment.creditor_name}</td>
+                        <td>
+                            <Link to={{
+                                pathname: '/creditor/detail',
+                                state: { id: investment.creditor_id }
+                            }}> {investment.creditor_name}</Link>
+                        </td>
                         <td>
                             {/* {investment.industries.map((industry, index) => {
                                 return <span key={index}>{industry}</span>

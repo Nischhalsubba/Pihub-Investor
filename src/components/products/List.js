@@ -78,7 +78,7 @@ class ProductsList extends Component {
         <form class="form-inline my-2 my-lg-0">
 
           <select className="form-control mr-sm-2" onChange={e => this.setState({ status: e.target.value })}>
-            <option value="" >All</option>
+            <option value="" >Alles</option>
             <option value="approved">Approved</option>
             <option value="invested">Invested</option>
             <option value="requested">Requested</option>
@@ -87,16 +87,18 @@ class ProductsList extends Component {
             <option value="expired">Exprired</option>
 
           </select>
-          <input class="form-control mr-sm-2" placeholder="Search" aria-label="Search"
+          <input class="form-control mr-sm-2" placeholder="Suche" aria-label="Search"
             value={this.state.product_title}
             onChange={e => this.setState({ product_title: e.target.value })}
           />
           {/* <button >Search</button> */}
-          <Translate content='button.search' class="btn btn-primary" onClick={(e) => {
+          <button className="btn btn-primary mr-sm-2" onClick={(e) => {
             e.preventDefault();
             this.props.getProductsList(this.props.pagination.currentPage, this.state.status, this.state.product_title)
           }
-          } type="submit" />
+          } >
+            Suche
+          </button>
         </form>
         <div className="content-body">
           <table

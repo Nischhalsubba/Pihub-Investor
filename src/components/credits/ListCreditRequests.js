@@ -22,7 +22,7 @@ class ListCreditRequests extends Component {
         <tr key={index}>
           <td>
             {' '}
-            <Link to={{ pathname: '/product', state: { id: product.id } }}>
+            <Link to={{ pathname: '/creditor/detail', state: { id: product.creditor_id } }}>
               {product.creditor_name}
             </Link>
           </td>
@@ -44,7 +44,7 @@ class ListCreditRequests extends Component {
       const {
         creditRequests: { data }
       } = this.props.list;
-
+      console.log(this.props.list)
       return (
         <Fragment>
           <Subheader heading={<Translate content='label.creditrequests' />} />
