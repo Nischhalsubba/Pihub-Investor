@@ -290,11 +290,14 @@ h6 {
   color: #8ce99a; }
 
 .status-badge {
-  padding: 11px 14px;
+  display: block;
+  padding: 11px 10px;
   font-weight: 400;
   text-align: center;
   white-space: nowrap;
-  border-radius: 3px; }
+  border-radius: 3px;
+  width: 80%;
+  float: right; }
 
 .status-badge-primary {
   background-color: #242a5a;
@@ -305,15 +308,22 @@ h6 {
   background-color: #FFF3BF;
   color: #E67700; }
 
+.status-badge-deleted {
+  background-color: #fff;
+  color: #242a5a;
+  border: 1px solid #242a5a; }
+
+.status-badge-suspended {
+  background-color: #f8f9fa;
+  color: #242a5a; }
+
 .status-badge-approved {
   background-color: #D3F9D8;
-  color: #1E822C;
-  padding: 12px 41px; }
+  color: #1E822C; }
 
 .status-badge-rejected {
   background-color: #fa5252;
-  color: #fff;
-  padding: 12px 44px; }
+  color: #fff; }
 
 .select2-container--default {
   width: 100% !important; }
@@ -926,6 +936,22 @@ input[type="checkbox"] {
   margin-bottom: 10px; }
   .content-head__title {
     font-size: 26px; }
+
+.dropdown {
+  position: relative; }
+  .dropdown .dropdown-container {
+    display: none;
+    width: 50px;
+    position: absolute;
+    top: 15px;
+    padding: 10px 0; }
+  .dropdown span.lang__select-btn {
+    cursor: pointer; }
+  .dropdown:hover .dropdown-container {
+    display: block; }
+
+.lang__select span {
+  cursor: pointer; }
 
 .container-full-width {
   width: 100%; }

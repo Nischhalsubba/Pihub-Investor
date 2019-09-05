@@ -53,18 +53,21 @@
     color: $color-brand-success;
 }
 
+
 .status-badge {
-    padding: 11px 14px;
+    display:block;
+    padding: 11px 10px;
     font-weight: 400;
     text-align: center;
     white-space: nowrap;
     border-radius: 3px;
+    width:80%;
+    float: right;
 }
 
-.status-badge-primary{
+.status-badge-primary {
     background-color: $color-primary;
     color: $color-white;
-    
     font-size: 10px !important;
 }
 
@@ -73,23 +76,34 @@
     color: $color-text-awaiting;
 }
 
+.status-badge-deleted{
+    background-color: $color-white;
+    color: $color-primary;
+    border: 1px solid $color-primary;
+}
+
+.status-badge-suspended{
+    background-color: $color-gray-0;
+    color: $color-primary;
+}
+
 .status-badge-approved {
     background-color: $color-status-approved;
     color: $color-text-approved;
-    padding: 12px 41px;
+    // padding: 12px 41px;
 }
 
 .status-badge-rejected {
     background-color: $color-status-rejected;
     color: $color-text-rejected;
-    padding: 12px 44px;
+    // padding: 12px 44px;
 }
 
 .select2-container--default {
     width: 100% !important;
 }
 
-.verify{
+.verify {
     position: absolute;
     bottom: 0;
     right: 10px;
