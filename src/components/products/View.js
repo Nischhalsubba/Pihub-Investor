@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getProductById } from '../../actions/product';
 import Subheader from '../general/Subheader';
 import RequestedByList from '../credits/RequestedByList';
+import Translate from 'react-translate-component'
 class ViewProduct extends Component {
   componentDidMount() {
     if (!this.props.location.state) {
@@ -61,19 +62,20 @@ class ViewProduct extends Component {
               <div class="col-lg-12 col-xl-8">
                 <div class="row justify-content-between w-100">
                   <div class="col-3 p-0">
-                    <h6>Product Title</h6>
+                    {/* <h6>Product Title</h6> */}
+                    <Translate content='label.producttitle' component="h6"/>
                     <a href="#">{product_title}</a>
                   </div>
                   <div class="col-3 p-0">
-                    <h6>Service</h6>
+                  <Translate content='label.service' component="h6"/>
                     <a href="#">{service} </a>
                   </div>
                   <div class="col-3 p-0">
-                    <h6>State</h6>
+                  <Translate content='label.state' component="h6"/>
                     <a href="#">{state}</a>
                   </div>
                   <div class="col-3 p-0">
-                    <h6>Industries</h6>
+                  <Translate content='label.industries' component="h6"/>
                     <div class="d-flex flex-wrap justify-content-between flex-column">
                       {industries ? this.listIndustries(industries) : null}
                     </div>
@@ -87,24 +89,28 @@ class ViewProduct extends Component {
               </div>
               <div class="col-lg-12 col-xl-4 rightbar">
                 <div class="amount">
-                  <h6>Max Credit Amount</h6>
+                  {/* <h6>Max Credit Amount</h6> */}
+                  <Translate content='label.maxcredit' component="h6"/>
                   <h2>${max_credit_amount}</h2>
                 </div>
                 <div class="investor clearfix mt-5">
-                  <h6>Investor</h6>
+                  {/* <h6>Investor</h6> */}
+                  <Translate content='label.investor' component="h6"/>
                   <div class="investor-profile d-flex align-items-center">
                     <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" />
                     <a class="ml-2" href="#">{investor}</a>
                   </div>
                 </div>
                 <div class="date mt-5">
-                  <h6>Time Duration</h6>
+                  {/* <h6>Time Duration</h6> */}
+                  <Translate content='label.timeduration' component="h6"/>
                   <a href="#">{time_duration}Months </a>
                 </div>
               </div>
             </div>
             <div class="attachments">
-              <h4>Attachments</h4>
+              {/* <h4>Attachments</h4> */}
+              <Translate content='label.attachments' component="h6"/>
               <div class="file mb-2">
                 <span class="file-name">tax payer investment.docx</span>
                 <span class="ml-4 file-size">400.5kb</span>

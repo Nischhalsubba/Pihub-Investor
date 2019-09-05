@@ -5,6 +5,7 @@ import Subheader from '../general/Subheader';
 import { getCreditRequestList } from '../../actions/credits';
 import Pagination from '../general/Pagination';
 import Spinner from '../general/Spinner';
+import Translate from 'react-translate-component'
 class ListCreditRequests extends Component {
   componentDidMount() {
     this.props.getCreditRequestList(1);
@@ -47,7 +48,7 @@ class ListCreditRequests extends Component {
 
       return (
         <Fragment>
-          <Subheader heading="Credit Request" />
+          <Subheader heading={<Translate content='label.creditrequests' />} />
           <div class="content-body">
             <table
               class="table tablesaw-stack"
@@ -57,35 +58,35 @@ class ListCreditRequests extends Component {
               <thead>
                 <tr>
                   <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
-                    Product Name
+                    <Translate content='column.productname' />
                   </th>
                   <th
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     data-tablesaw-priority="persist"
                     scope="col"
                   >
-                    Industry
+                    <Translate content='column.industry' />
                   </th>
                   <th
                     class="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
-                    Created on
+                    <Translate content='column.createdon' />
                   </th>
                   <th
                     class="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
-                    Numbers of Request
+                   <Translate content='column.numberofrequest' />
                   </th>
                   <th
                     class="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
-                    Max Credit Amount                  </th>
+                    <Translate content='label.maxcredit' />                  </th>
                 </tr>
               </thead>
               <tbody>{this.renderData(data)}</tbody>

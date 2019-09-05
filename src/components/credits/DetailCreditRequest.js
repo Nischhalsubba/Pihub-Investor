@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Subheader from '../general/Subheader';
 import { getApplicationDetail } from '../../actions/application';
+import Translate from 'react-translate-component';
 class DetailCreditRequest extends Component {
   state = { detail: null }
   componentDidMount() {
@@ -39,7 +40,11 @@ class DetailCreditRequest extends Component {
       return (
         <Fragment>
           <Subheader heading={this.props.location.state.product} />
-          {status === 'rejected' ? <div class="alert alert-rejected">You rejected this Investment</div> : null}
+          {status === 'rejected' ?
+          //  <div class="alert alert-rejected">You rejected this Investment
+          <Translate content='label.yourejected' component="div" className="alert alert-rejected"/>
+          // </div> 
+          : null}
 
 
           <div class="content-body credit-request">
@@ -47,19 +52,20 @@ class DetailCreditRequest extends Component {
               <div class="col-lg-12 col-xl-8">
                 <div class="row justify-content-between w-100">
                   <div class="col-3 p-0">
-                    <h6>States</h6>
+                    {/* <h6>States</h6> */}
+                    <Translate content='label.state' />
                     <span>Berlin</span>
                   </div>
                   <div class="col-3 p-0">
-                    <h6>Credit Type</h6>
+                  <Translate content='label.credittype' />
                     <span>Resolving credit </span>
                   </div>
                   <div class="col-3 p-0">
-                    <h6>County</h6>
+                  <Translate content='label.country' />
                     <span>Germany</span>
                   </div>
                   <div class="col-3 p-0">
-                    <h6>Industres</h6>
+                  <Translate content='label.industries' />
                     <div class="d-flex flex-wrap justify-content-between flex-column">
                       <a class="mb-1" href="#">Service Industry</a>
                       <a class="mb-1" href="#">Administration and office work</a>
@@ -91,29 +97,33 @@ class DetailCreditRequest extends Component {
               </div>
               <div class="col-lg-12 col-xl-4 rightbar">
                 <div class="amount">
-                  <h6>Requested amount of</h6>
+                  {/* <h6>Requested amount of</h6> */}
+                  <Translate content='label.requestedamount' />
                   <h2>${requested_amount}</h2>
                 </div>
                 <div class="investor clearfix mt-5">
-                  <h6>Requested By</h6>
+                  {/* <h6>Requested By</h6> */}
+                  <Translate content='label.requestedby' />
                   <div class="investor-profile d-flex align-items-center">
                     <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" />
                     <a class="ml-2" href="#">{requested_by}</a>
                   </div>
                 </div>
                 <div class="date mt-5">
-                  <h6>Request on</h6>
+                  {/* <h6>Request on</h6> */}
+                  <Translate content='label.requeston' />
                   <span>{`${requestedDate.getDate()} - ${requestedDate.getMonth() + 1} - ${requestedDate.getFullYear()}`}</span>
                 </div>
                 <div class="date mt-5">
-                  <h6>Time Duration</h6>
+                  {/* <h6>Time Duration</h6> */}
+                  <Translate content='label.time' />
                   <span>{duration} Months</span>
                 </div>
               </div>
             </div>
             <div class="attachments mt-5 mb-5">
-              <h4>Attachments</h4>
-
+              {/* <h4>Attachments</h4> */}
+              <Translate content='label.attachments' />
               {this.renderDocs(documents)}
             </div>
             {/* <span class="mt-3">

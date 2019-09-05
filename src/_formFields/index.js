@@ -4,7 +4,7 @@ import Select from 'react-select';
 import Multiselect from 'react-widgets/lib/Multiselect';
 import 'react-widgets/dist/css/react-widgets.css';
 import Dropzone from 'react-dropzone';
-
+import Translate from 'react-translate-component'
 
 export const inputField = ({
   input,
@@ -52,7 +52,8 @@ export const checkBox = ({
       />
 
       <label className="form-check-label">
-        I agree to the <Link to="/terms"> Terms and Conditions</Link>
+        {/* I agree to the  */}
+        <Translate content='label.iagree' /><Link to="/terms"> <Translate content='label.terms' /></Link>
       </label>
 
       <font color="red">{touched && error}</font>
@@ -176,8 +177,10 @@ export const renderDropzoneField = ({
                   alt=""
                 />
                 <div className="text-center mt-3">
-                  <a className="font-weight-bold">Add file </a>
-                  <span>or drop files here</span>
+                  {/* <a className="font-weight-bold">Add file </a> */}
+                  <Translate content='label.addfile' component="a" className="font-weight-bold" />
+                  {/* <span>or drop files here</span> */}
+                  <Translate content='label.ordrop' />
                 </div>
               </div>
               <div className="fallback" />

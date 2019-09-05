@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getApplicationList } from '../../actions/application';
 import { changeStatus } from '../../actions/changeStatus';
 import { Link, withRouter } from 'react-router-dom';
+import Translate from 'react-translate-component'
 class RequestedByList extends Component {
   state = { list: [] };
   componentDidMount() {
@@ -24,7 +25,6 @@ class RequestedByList extends Component {
       return (
         <tr key={index}>
           <td>
-            {' '}
             <Link to={{
               pathname: '/application',
               state: { pId: this.props.id, aId: data.id, product: name }
@@ -69,7 +69,8 @@ class RequestedByList extends Component {
   render() {
     return (
       <div class="requests mt-5">
-        <h4>Credit Requests</h4>
+        {/* <h4>Credit Requests</h4> */}
+        <Translate content='label.creditrequests' component="h4" />
         <hr />
         <table
           class="table tablesaw-stack"
@@ -79,42 +80,42 @@ class RequestedByList extends Component {
           <thead>
             <tr>
               <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
-                Application Code
+                <Translate content='label.applicationcode'/>
               </th>
               <th
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 data-tablesaw-priority="persist"
                 scope="col"
               >
-                DeadLine
+                <Translate content='label.deadline'/>
              </th>
               <th
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 data-tablesaw-priority="persist"
                 scope="col"
               >
-                Time Duration
+                <Translate content='label.time'/>
              </th>
               <th
                 class="text-right-piehub-table"
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 scope="col"
               >
-                Requested Amount
+                <Translate content='label.requestedamount'/>
               </th>
               <th
                 class="text-right-piehub-table"
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 scope="col"
               >
-                Status
+                <Translate content='column.status'/>
               </th>
               <th
                 class="text-right-piehub-table"
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 scope="col"
               >
-                Accept/Decline
+                <Translate content='label.accept'/>
               </th>
             </tr>
           </thead>

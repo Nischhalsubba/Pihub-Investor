@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ReactPhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/dist/style.css'
+import Translate from 'react-translate-component';
 class Signup extends Component {
   state = { phone: 'a' }
   onSubmit = formProps => {
@@ -28,23 +29,28 @@ class Signup extends Component {
           <div className="feature-container feature-container--signup">
             <div className="feature-sidebar">
               <div className="feature-ours">
-                <h3 className="feature-ours__sub-title">
+                {/* <h3 className="feature-ours__sub-title">
                   The Perfect Investment
-                </h3>
-                <h2 className="feature-ours__title">
+                </h3> */}
+                <Translate content='label.theperfect' component="h3" className="feature-ours__sub-title" />
+                <Translate content='label.atcredittech' component="h2" className="feature-ours__title" />
+                {/* <h2 className="feature-ours__title">
                   At Credittech you can easily find creditor and make an
                   investment
-                </h2>
+                </h2> */}
               </div>
               <div className="signup-quote">
-                <h2 className="signup-quote__title">Why Credit Tech?</h2>
-                <p className="signup-quote__content">
+                {/* <h2 className="signup-quote__title">Why Credit Tech?</h2> */}
+                <Translate content='label.whycredittech' component="h2" className="signup-quote__title" />
+                {/* <p className="signup-quote__content">
                   At first I Invested little and by time pass I Invested to the
                   sector I like and Credit Tech takes me right there
-                </p>
+                </p> */}
+                <Translate content='label.atfirst' component="p" className="signup-quote__content" />
                 <p className="signup-quote__name">John Doe</p>
                 <Link to="/login" className="btn btn-white">
-                  What others say?
+                  {/* What others say? */}
+                  <Translate content='label.whatothers' />
                 </Link>
               </div>
             </div>
@@ -52,10 +58,12 @@ class Signup extends Component {
           <div className="main-container">
             <div className="signup-form-container">
               <header className="page-header">
-                <h1 className="page-title">
-                  Sign Up to Credit Tech as an Investor{' '}
-                </h1>
-                <p className="page-desc">Enter your details below</p>
+                {/* <h1 className="page-title">
+                  Sign Up to Credit Tech as an Investor
+                </h1> */}
+                <Translate content='label.signupto' component="h1" className="page-title"/>
+                {/* <p className="page-desc">Enter your details below</p> */}
+                <Translate content='label.enteryourdetails' component="p" className="page-desc" />
               </header>
               <form
                 className="form-signup"
@@ -68,7 +76,7 @@ class Signup extends Component {
                         name="fname"
                         type="text"
                         component={inputField}
-                        label="First Name"
+                        label={<Translate content='label.firstname' />}
                         className="form-control"
                       />
                     </div>
@@ -80,7 +88,7 @@ class Signup extends Component {
                         name="lname"
                         type="text"
                         component={inputField}
-                        label="Last Name"
+                        label={<Translate content='label.lastname' />}
                         className="form-control"
                       />
                     </div>
@@ -91,7 +99,7 @@ class Signup extends Component {
                     name="company_name"
                     type="text"
                     component={inputField}
-                    label="Company Name"
+                    label={<Translate content='label.companyname' />}
                     className="form-control"
                   />
                 </div>
@@ -100,7 +108,7 @@ class Signup extends Component {
                     name="email"
                     type="email"
                     component={inputField}
-                    label="Email Address"
+                    label={<Translate content='label.emailaddress' />}
                     className="form-control"
                   />
                 </div>
@@ -109,7 +117,7 @@ class Signup extends Component {
                     name="password"
                     type="password"
                     component={inputField}
-                    label="Password"
+                    label={<Translate content='label.password' />}
                     className="form-control"
                   />
                 </div>
@@ -118,7 +126,7 @@ class Signup extends Component {
                     name="password_confirmation"
                     type="password"
                     component={inputField}
-                    label="Confirm Password"
+                    label={<Translate content='label.confirmpassword' />}
                     className="form-control"
                   />
                 </div>
@@ -130,7 +138,7 @@ class Signup extends Component {
                     label="Phone Number"
                     className="form-control"
                   /> */}
-                  <label>Phone Number</label>
+                  <Translate content='label.phonenumber' component="label" />
                   <ReactPhoneInput defaultCountry={'de'} regions={'europe'} value={this.state.phone} onChange={(value) => this.setState({ phone: value })} inputExtraProps={{
                     name: 'phone',
                     required: true,
@@ -144,12 +152,14 @@ class Signup extends Component {
                   component={checkBox}
                   type="checkbox"
                 />
-                <button className="btn btn-primary btn-form" type="submit">
+                {/* <button className="btn btn-primary btn-form" type="submit">
                   Sign Up Now
-                </button>
+                </button> */}
+                <Translate content='button.signup' className="btn btn-primary btn-form" type="submit" component="button" />
               </form>
               <br />
-              Already have an account ? <Link to="/login">Login</Link>
+              {/* Already have an account ?  */}
+              <Translate content="label.alreadyhaveanaccount" /><Link to="/login"><Translate content="label.login" /></Link>
             </div>
           </div>
         </div>
