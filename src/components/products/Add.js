@@ -114,24 +114,21 @@ class AddProduct extends Component {
   renderColatoral = ({ fields, meta: { touched, error, submitFailed } }) => (
 
     <ul>
-      <li >
-        <a type="button" onClick={() => fields.push({})}>Add Collateral</a>
-        {(touched || submitFailed) && error && <span>{error}</span>}
-      </li>
+
       {fields.map((member, index) =>
         <li key={index} className="col-12">
           {/* <button
             type="button"
             title="Remove Member"
             onClick={() => fields.remove(index)} /> */}
-          <h4>Colatoral #{index + 1}</h4>
+          <h4>Sicherheiten #{index + 1}</h4>
           <div className='row'>
             <div className="col-6">
               <Field
                 name={`${member}.name`}
                 type="text"
                 component={inputField}
-                label="Colatoral"
+                label="Sicherhetian"
                 className="form-control"
 
               />
@@ -141,7 +138,7 @@ class AddProduct extends Component {
                 name={`${member}.value`}
                 type="text"
                 component={inputField}
-                label="Value"
+                label="Wert"
                 className="form-control"
 
               />
@@ -152,6 +149,10 @@ class AddProduct extends Component {
         </li>
 
       )}
+      <li >
+        <a type="button" onClick={() => fields.push({})}>Sicherheiten hinzufügen</a>
+        {(touched || submitFailed) && error && <span>{error}</span>}
+      </li>
     </ul>
     //   </div>
     // </div>
@@ -182,9 +183,12 @@ class AddProduct extends Component {
         // <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
         <div class="rating-item">
           <div class="col-9">
+            <label>Ratingagentur</label>
+            <br />
             <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
             />{credit.name}
           </div>
+          {/* <label>Kreditrating</label><br /> */}
           <input pattern="[a-cA-C]{1}"
             type="text" name={`rating_value[${credit.id}]`}
             onChange={(e) => this.setState({
@@ -400,7 +404,7 @@ class AddProduct extends Component {
             <div class="row mt-4">
               <div class="col">
                 <div class="form-group">
-                  <label class="d-block">Collateral</label>
+                  <label class="d-block">Sicherheiten</label>
                   <div class="form-check form-check-inline">
                     <Field
                       type="radio"
@@ -411,7 +415,7 @@ class AddProduct extends Component {
                       id="credit"
                     />
                     <label class="form-check-label" for="rating-credit-yes">
-                      Yes
+                      Ja
                     </label>
                   </div>
                   <div class="form-check form-check-inline">
@@ -424,7 +428,7 @@ class AddProduct extends Component {
                       id="credit"
                     />
                     <label class="form-check-label" for="rating-credit-no">
-                      No
+                      Nein
                     </label>
                   </div>
                 </div>
@@ -443,7 +447,7 @@ class AddProduct extends Component {
             <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
-                <Translate content='label.fileupload' component="label" className="d-block" />
+                  <Translate content='label.fileupload' component="label" className="d-block" />
                   <Field
                     name="files"
                     component={renderDropzoneField}
@@ -461,7 +465,7 @@ class AddProduct extends Component {
             ) : null}
             <div className="row mt-4">
               <div className="col">
-                <Translate content='button.submit' component="button"  className="btn btn-primary btn-form" type="submit" />
+                <Translate content='button.submit' component="button" className="btn btn-primary btn-form" type="submit" />
               </div>
             </div>
           </form>

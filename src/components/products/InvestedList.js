@@ -25,9 +25,9 @@ class InvestedList extends Component {
                     <tr key={index}>
                         <td> {investment.creditor_name}</td>
                         <td>
-                            {investment.industries.map((industry, index) => {
+                            {/* {investment.industries.map((industry, index) => {
                                 return <span key={index}>{industry}</span>
-                            })}
+                            })} */}
                         </td>
                         <td className="text-right-piehub-table">{investment.service}</td>
                         <td className="text-right-piehub-table">

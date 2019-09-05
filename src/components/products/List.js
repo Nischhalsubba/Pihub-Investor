@@ -122,15 +122,15 @@ class ProductsList extends Component {
                   <Translate content="column.minimum_credit_amount" />
                 </th>
                 <th>
-                
+
                   <Translate content="column.mindestbetrag" />
                 </th>
                 <th>
                   <Translate content="column.status" />
                 </th>
-                <th>
+                {/* <th>
                 <Translate content="column.edit" />
-                </th>
+                </th> */}
               </tr>
             </thead>
             <tbody>{this.renderList(this.props.data)}</tbody>

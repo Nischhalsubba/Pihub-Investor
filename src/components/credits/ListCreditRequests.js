@@ -16,26 +16,25 @@ class ListCreditRequests extends Component {
       return <span>You dont have any credit requests yet</span>;
     }
     return data.map((product, index) => {
-      let date = new Date(product.requested_on);
+      let date = new Date(product.created_on);
+      let deadline = new Date(product.deadline);
       return (
         <tr key={index}>
           <td>
             {' '}
             <Link to={{ pathname: '/product', state: { id: product.id } }}>
-              {product.product_title}
+              {product.creditor_name}
             </Link>
           </td>
           <td>
-            {product.industries.map((industry, index) => {
-              return <span>{industry}</span>
-
-            })}
+            {product.product_title}
           </td>
           <td class="text-right-piehub-table">{`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}</td>
           <td class="text-right-piehub-table">{product.number_of_request}</td>
           <td class="text-right-piehub-table font-weight-bold">
             ${product.max_credit_amount}
           </td>
+          <td class="text-right-piehub-table">{`${deadline.getDate()}-${deadline.getMonth() + 1}-${deadline.getFullYear()}`}</td>
         </tr>
       );
     });
@@ -58,35 +57,48 @@ class ListCreditRequests extends Component {
               <thead>
                 <tr>
                   <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
-                    <Translate content='column.productname' />
+                    {/* <Translate content='column.productname' /> */}
+                    Kreditnehmer
                   </th>
                   <th
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     data-tablesaw-priority="persist"
                     scope="col"
                   >
-                    <Translate content='column.industry' />
+                    {/* <Translate content='column.industry' /> */}
+                    <Translate content='column.productname' />
+
                   </th>
                   <th
                     class="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
-                    <Translate content='column.createdon' />
+                    {/* <Translate content='column.createdon' /> */}
+                    Bestätigt am
                   </th>
                   <th
                     class="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
-                   <Translate content='column.numberofrequest' />
+                    {/* <Translate content='column.numberofrequest' /> */}
                   </th>
                   <th
                     class="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
-                    <Translate content='label.maxcredit' />                  </th>
+                    {/* <Translate content='label.maxcredit' /> */}
+                    Kreditbetrag
+                  </th>
+                  <th
+                    class="text-right-piehub-table"
+                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                    scope="col"
+                  >
+                    Laufzelt
+                </th>
                 </tr>
               </thead>
               <tbody>{this.renderData(data)}</tbody>
