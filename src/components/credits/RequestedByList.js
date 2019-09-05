@@ -22,6 +22,7 @@ class RequestedByList extends Component {
       return <span>No one has place in any kind of requests yet</span>;
     }
     return list.map((data, index) => {
+      console.log('data', data)
       return (
         <tr key={index}>
           <td>
@@ -31,29 +32,26 @@ class RequestedByList extends Component {
             }}>{data.application_code}</Link>
           </td>
           <td>
+            <Link to={{
+              pathname: '/application',
+              state: { pId: this.props.id, aId: data.id, product: name }
+            }}>
+              {data.requested_by}
+            </Link>
+          </td>
+          <td>
             <span>{data.deadline}</span>
           </td>
           <td>
             <span>{data.time_duration} Months</span>
           </td>
           <td class="text-right-piehub-table font-weight-bold">
-            ${data.amount}
+            ${data.requested_amount}
           </td>
           <td class="text-right-piehub-table font-weight-bold">
             {data.status === 'rejected' ? <span className="badge badge-warning">{data.status}</span> : <span className="badge badge-success">{data.status}</span>}
           </td>
-          <td class="text-right-piehub-table">
-            <span
-              class="mr-1"
-              onClick={() => this.props.changeStatus(this.props.id, data.id, 'accepted', this.props.history.push({ pathname: '/application', state: { pId: this.props.id, aId: data.id, product: name } }))}
-            >
-              <img src="assets/img/icons/bx-check-circle.svg" alt="accepted" />
-            </span>
-            <span onClick={() => this.props.changeStatus(this.props.id, data.id, 'rejected', this.props.history.push({ pathname: '/application', state: { pId: this.props.id, aId: data.id, product: name } }))}>
-              {' '}
-              <img src="assets/img/icons/bx-x-circle.svg" alt="rejected" />
-            </span>
-          </td>
+
           {
             this.props.errMsg ? (
               <small>
@@ -79,9 +77,13 @@ class RequestedByList extends Component {
         >
           <thead>
             <tr>
+
               <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
                 <Translate content='label.applicationcode'/>
               </th>
+              <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
+                Requested By
+               </th>
               <th
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 data-tablesaw-priority="persist"

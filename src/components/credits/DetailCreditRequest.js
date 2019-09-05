@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import Subheader from '../general/Subheader';
 import { getApplicationDetail } from '../../actions/application';
 import Translate from 'react-translate-component';
+import { changeStatus } from '../../actions/changeStatus';
 class DetailCreditRequest extends Component {
-  state = { detail: null }
+  state = { detail: null, refresh: false }
   componentDidMount() {
     if (!this.props.location.state) {
       return this.props.history.push('/products')
@@ -17,6 +18,10 @@ class DetailCreditRequest extends Component {
     if (this.props.data !== prevProps.data) {
       console.log('here', this.props.data)
       this.setState({ detail: this.props.data.detail })
+    }
+    if (this.state.refresh !== prevState.refresh) {
+      const { pId, aId } = this.props.location.state;
+      this.props.getApplicationDetail(pId, aId);
     }
   }
   renderDocs = docs => {
@@ -33,6 +38,11 @@ class DetailCreditRequest extends Component {
       })
     }
   }
+  changeStatus = status => {
+    const { pId, aId } = this.props.location.state;
+
+    this.props.changeStatus(pId, aId, status, () => this.setState({ refresh: !this.state.refresh }))
+  }
   render() {
     if (this.state.detail) {
       const { requested_by, requested_on, requested_amount, deadline, description, duration, status, documents } = this.state.detail;
@@ -47,6 +57,7 @@ class DetailCreditRequest extends Component {
           : null}
 
 
+          {status === 'accepted' ? <div class="alert alert-success">Sie haben diese Bewerbung angenommen</div> : null}
           <div class="content-body credit-request">
             <div class="d-flex">
               <div class="col-lg-12 col-xl-8">
@@ -126,9 +137,15 @@ class DetailCreditRequest extends Component {
               <Translate content='label.attachments' />
               {this.renderDocs(documents)}
             </div>
-            {/* <span class="mt-3">
-            <a class="btn btn-option" href="#">Accepted</a>
-          </span> */}
+            <span class="mt-3">
+              <button class="btn btn-success mr-2" disabled={status === 'accepted'}
+                onClick={() => this.changeStatus('accepted')}
+              >Akzeptieren</button>
+              <button class="btn btn-danger" disabled={status === 'rejected'}
+                onClick={() => this.changeStatus('rejected')}
+
+              >Ablehnen</button>
+            </span>
           </div>
         </Fragment>
       );
@@ -141,4 +158,4 @@ class DetailCreditRequest extends Component {
 function mapStateToProps(state) {
   return { data: state.applicationDetail }
 }
-export default connect(mapStateToProps, { getApplicationDetail })(DetailCreditRequest);
+export default connect(mapStateToProps, { getApplicationDetail, changeStatus })(DetailCreditRequest);

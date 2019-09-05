@@ -45,19 +45,24 @@ export const addProduct = (details, callback) => async dispatch => {
     var body = new FormData();
     body.set('product_title', details.product_title);
     body.set('state_id', details.states.value);
-    body.set('county_ids', details.County.id);
+    body.set('county_ids', details.county_ids.toString());
     body.append('industry_ids', details.industry_id.toString());
     body.set('service_id', details.services.value);
     body.set('time_duration', details.time_duration);
     body.set('min_credit_amount', details.min_credit_amount);
     body.set('max_credit_amount', details.max_credit_amount);
+    if (details.colatoral === 'true') {
+      body.set('collatoral', 1)
+    } else {
+      body.set('collatoral', 0);
+    }
     if (details.credit === 'true') {
       body.set('rating_for_credit', 1)
     } else {
       body.set('rating_for_credit', 0)
 
     }
-    // body.set('rating_for_credit', details.credit === 'true');
+    body.set('collatorals', details.collatorals);
     body.set('ratings', details.ratings);
     body.append('files[0]', details.files[0]);
     const response = await clientWithForm.post(routes.addProduct, body);
