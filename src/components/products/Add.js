@@ -199,18 +199,18 @@ class AddProduct extends Component {
             />{credit.name}
           </div>
           <div class="col-9">
-          {/* <label>Kreditrating</label> */}
-          <Translate content='label.Kreditrating' component="label" />
+            {/* <label>Kreditrating</label> */}
+            <Translate content='label.Kreditrating' component="label" />
             <br />
-          <input pattern="[a-cA-C]{1}"
-            type="text" name={`rating_value[${credit.id}]`}
-            onChange={(e) => this.setState({
-              rating_value: [...this.state.rating_value, { id: credit.id, value: e.target.value }]
-            })
-            }
-            title="Grade must be either A,B or C"
-            class="col-3 form-control text-center"
-          /></div>
+            <input pattern="[a-cA-C]{1}"
+              type="text" name={`rating_value[${credit.id}]`}
+              onChange={(e) => this.setState({
+                rating_value: [...this.state.rating_value, { id: credit.id, value: e.target.value }]
+              })
+              }
+              title="Grade must be either A,B or C"
+              class="col-3 form-control text-center"
+            /></div>
         </div>
         // </div>
       )
@@ -445,7 +445,7 @@ class AddProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                     <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
+                    <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
                   </div>
                 </div>
                 {/* {colatoral === 'true' ? (
