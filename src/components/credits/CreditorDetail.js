@@ -1,14 +1,14 @@
 
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import Subheader from '../general/Subheader';
 import {uploadFile} from '../../actions/uploadFile'
 import { getCreditor } from '../../actions/creditor';
 import Translate from 'react-translate-component';
 import Spinner from '../general/Spinner'
 import * as validation from '../../_utils/validate';
-import {renderDropzoneField} from '../../_formFields';
+import { renderDropzoneField } from '../../_formFields';
 class CreditorDetail extends Component {
   state = { detail: null }
   componentDidMount() {
@@ -166,6 +166,6 @@ function mapStateToProps(state) {
   return { data: state.creditorDetail }
 }
 CreditorDetail = reduxForm({
-  form:'creditorDetail'
+  form: 'creditorDetail'
 })(CreditorDetail);
 export default connect(mapStateToProps, { getCreditor, uploadFile })(CreditorDetail);
