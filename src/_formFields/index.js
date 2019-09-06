@@ -150,7 +150,7 @@ export const renderMultiselect = ({
         textField={textField}
         className={className}
         id={id}
-        placeholder="Select Tags"
+        placeholder={placeholder}
       />
       <font color="red">{touched && error}</font>
     </Fragment>
