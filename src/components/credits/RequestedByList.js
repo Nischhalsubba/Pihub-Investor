@@ -81,23 +81,23 @@ class RequestedByList extends Component {
                 <Translate content='label.applicationcode' />
               </th>
               <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
-                Kreditorname
+                <Translate content='label.Kreditorname' />
                </th>
               <th
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 data-tablesaw-priority="persist"
                 scope="col"
               >
-                {/* <Translate content='label.deadline' /> */}
-                Fristablauf
+                <Translate content='label.deadline' />
+                {/* Fristablauf */}
               </th>
               <th
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 data-tablesaw-priority="persist"
                 scope="col"
               >
-                {/* <Translate content='label.time' /> */}
-                Laufzeil
+                <Translate content='label.timeduration' />
+                {/* Laufzeil */}
               </th>
               <th
                 class="text-right-piehub-table"

@@ -61,13 +61,13 @@ class InvestedList extends Component {
                             <tr>
                                 <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
 
-                                    Kreditnehmer
-                                {/* <Translate content='column.creditorsname' /> */}
+                                    {/* Kreditnehmer */}
+                                <Translate content='column.creditorsname' />
                                 </th>
                                 <th data-tablesaw-sortable-col="data-tablesaw-sortable-col" data-tablesaw-priority="persist"
                                     scope="col">
-                                    {/* <Translate content='column.industry' /> */}
-                                    Produktname
+                                    <Translate content='column.productname' />
+                                    {/* Produktname */}
                                     </th>
                                 {/* <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                                     scope="col"><Translate content='column.services' /></th> */}
@@ -75,8 +75,8 @@ class InvestedList extends Component {
                                     scope="col"><Translate content='column.approvedon' /></th>
                                 <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                                     scope="col">
-                                    {/* <Translate content='column.investedamount' /> */}
-                                    Kreditbetrag
+                                    <Translate content='column.investedamount' />
+                                    {/* Kreditbetrag */}
                                     </th>
                                 <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                                     scope="col">

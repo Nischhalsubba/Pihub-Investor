@@ -13,4 +13,5 @@ export const GET_INDUSTRY = 'get_industry';
 export const GET_APPLICATION_LIST = 'get_application_list';
 export const GET_APPLICATION_DETAIL = 'get_application_detail';
 export const INVESTED_LIST = 'get_invested_list';
+export const CHANGE_LANGUAGE = 'change_language';
 export const GET_CREDITOR_DETAIL = 'get_creditor_detail';

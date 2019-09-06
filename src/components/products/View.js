@@ -58,7 +58,8 @@ class ViewProduct extends Component {
         <Fragment>
           <div className="content-head">
             <div className="content-head-left">
-              <h1 className="content-head__title">Produktdetail</h1>
+              {/* <h1 className="content-head__title">Produktdetail</h1> */}
+              <Translate content='label.Produktdetail' component="h1" className="content-head__title" />
             </div>
             <div className="content-head-right">
               <Link to={{
@@ -67,7 +68,7 @@ class ViewProduct extends Component {
               }}
                 className="btn btn-primary"
               >
-                Produkt bearbeiten
+               <Translate content='button.Produktbearbeiten' />
 
           </Link>
             </div>
@@ -111,7 +112,8 @@ class ViewProduct extends Component {
                 </div>
                 <div class="amount">
                   {/* <h6>Max Credit Amount</h6> */}
-                  <h6>Mindestkreditbetrag</h6>
+                  {/* <h6>Mindestkreditbetrag</h6> */}
+                  <Translate content='column.minimum_credit_amount' component="h6" />
 
                   <h2>€{min_credit_amount}</h2>
                 </div>

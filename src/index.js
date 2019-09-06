@@ -46,8 +46,8 @@ import CreditorDetail from './components/credits/CreditorDetail';
 //End of component import
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
-counterpart.setLocale('de'
-  // localStorage.getItem('language') || 'de' || navigator.language.split('-')[0]
+counterpart.setLocale(
+  'de'|| localStorage.getItem('language') || navigator.language.split('-')[0]
 );
 
 const store = createStore(

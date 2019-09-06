@@ -38,11 +38,11 @@ class ListCreditRequests extends Component {
             €{product.max_credit_amount || 100000}
           </td>
           <td className="text-right-piehub-table font-weight-bold">
-            {product.status === 'offer_sent' ? <span className="status-badge status-badge-awaiting">Angebot Erstellt</span>
+            {product.status === 'offer_sent' ? <span className="status-badge status-badge-awaiting"><Translate content='label.AngebotErstellt' /></span>
               : null}
-            {product.status === 'rejected' ? <span className="status-badge status-badge-rejected">Abgelehnt</span>
+            {product.status === 'rejected' ? <span className="status-badge status-badge-rejected"><Translate content='label.rejected' /></span>
               : null}
-            {product.status === 'open' ? <span className="status-badge status-badge-approved">Zu Bearbeiten</span>
+            {product.status === 'open' ? <span className="status-badge status-badge-approved"><Translate content='label.ZuBearbeiten' /></span>
               : null}
           </td>
         </tr>
@@ -66,8 +66,8 @@ class ListCreditRequests extends Component {
               <thead>
                 <tr>
                   <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
-                    {/* <Translate content='column.productname' /> */}
-                    Kreditnehmer
+                    <Translate content='column.creditorsname' />
+                    {/* Kreditnehmer */}
                   </th>
                   <th
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
@@ -83,8 +83,8 @@ class ListCreditRequests extends Component {
                     data-tablesaw-priority="persist"
                     scope="col"
                   >
-                    {/* <Translate content='column.industry' /> */}
-                    Kreditart
+                    <Translate content='column.services' />
+                    {/* Kreditart */}
                   </th>
                   <th
                     class="text-right-piehub-table"
@@ -98,23 +98,23 @@ class ListCreditRequests extends Component {
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
-                    Fristablauf
-                    {/* <Translate content='column.numberofrequest' /> */}
+                    {/* Fristablauf */}
+                    <Translate content='label.deadline' />
                   </th>
                   <th
                     class="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
-                    {/* <Translate content='label.maxcredit' /> */}
-                    Kreditbetrag
+                    <Translate content='column.investedamount' />
+                    {/* Kreditbetrag */}
                   </th>
                   <th
                     class="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
-                    Status
+                    <Translate content='column.status' />
                 </th>
                 </tr>
               </thead>
