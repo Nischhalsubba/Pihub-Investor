@@ -12,7 +12,7 @@ import de from '../../_locale/de';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
 counterpart.setLocale(
-  de||localStorage.getItem('language')||navigator.language.split('-')[0]
+  'de'||localStorage.getItem('language')||navigator.language.split('-')[0]
 );
 class Header extends Component {
   onChange = e=>{
@@ -32,25 +32,38 @@ class Header extends Component {
         </div>
         <nav class="header-actions">
           <ul>
+            {/* <li class="d-flex lang__select dropdown">
+              <span class="lang__select-btn">EN</span>
+              <ul class="dropdown-container">
+                <li>
+                  <span>DE</span>
+                </li>
+              </ul>
+              <i class="bx bx-chevron-down"></i>
+            </li> */}
             <li className="header-actions__item">
+
               <Link className="header-notification" to="/notifications">
                 <i className="bx bx-bell" />
                 <span className="notification-count">{this.props.count}</span>
               </Link>
             </li>
-            <li>
+            <li class="d-flex lang__select dropdown">
+            
               <select
-              className="header-dropdown"
+              className="dropdown-container"
               name=""
               id=""
               onChange={this.onChange}
               >
-                <option value="en">en</option>
+                <option  value="en">en</option>
                 <option
                 value="de"
                 selected={counterpart.getLocale()==='de'}
                 >de</option>
+                
               </select>
+              
             </li>
             <li className="header-dropdown">
               <a className="header-user-dropdown">
@@ -63,9 +76,9 @@ class Header extends Component {
                 >
                   logout
                 </span> */}
-                <Translate content='label.logout' component="span"  onClick={() =>
-                    this.props.logout(() => this.props.history.push('/login'))
-                  } />
+                <Translate content='label.logout' component="span" onClick={() =>
+                  this.props.logout(() => this.props.history.push('/login'))
+                } />
               </a>
             </li>
 

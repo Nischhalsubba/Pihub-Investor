@@ -15,7 +15,8 @@ class Notifications extends Component {
   }
   renderNotification = notifications => {
     if (notifications.length === 0) {
-      return <span>You dont have any new notifications</span>;
+      return <Translate content='label.youdont' />
+      //  <span>You dont have any new notifications</span>;
     }
     return notifications.map((notification, index) => {
       let color;

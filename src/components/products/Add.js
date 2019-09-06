@@ -28,28 +28,28 @@ const userOptions = [
     "value": 1,
 
 
-    "label": "Corporate loan",
+    "label": <Translate content='label.Corporateloan' />,
 
   },
   {
     "value": 2,
 
 
-    "label": "Purchase financing / Finetrading",
+    "label": <Translate content='label.purchase' />,
 
   },
   {
     "value": 3,
 
 
-    "label": "Stocktrading",
+    "label": <Translate content='label.stocktrading' />,
 
   },
   {
     "value": 4,
 
 
-    "label": "Acquisition / Takeover financing",
+    "label": <Translate content='label.acquisition' />,
 
 
   },
@@ -57,14 +57,14 @@ const userOptions = [
     "value": 5,
 
 
-    "label": "Project financing",
+    "label": <Translate content='label.project' />,
 
   },
   {
     "value": 6,
 
 
-    "label": "Mezzanine financing",
+    "label": <Translate content='label.mezzanine' />,
 
   }
 ];
@@ -114,24 +114,21 @@ class AddProduct extends Component {
   renderColatoral = ({ fields, meta: { touched, error, submitFailed } }) => (
 
     <ul>
-      <li >
-        <a type="button" onClick={() => fields.push({})}>Add Collateral</a>
-        {(touched || submitFailed) && error && <span>{error}</span>}
-      </li>
+
       {fields.map((member, index) =>
         <li key={index} className="col-12">
           {/* <button
             type="button"
             title="Remove Member"
             onClick={() => fields.remove(index)} /> */}
-          <h4>Colatoral #{index + 1}</h4>
+          <h4>Sicherheiten #{index + 1}</h4>
           <div className='row'>
             <div className="col-6">
               <Field
                 name={`${member}.name`}
                 type="text"
                 component={inputField}
-                label="Colatoral"
+                label="Sicherhetian"
                 className="form-control"
 
               />
@@ -141,7 +138,7 @@ class AddProduct extends Component {
                 name={`${member}.value`}
                 type="text"
                 component={inputField}
-                label="Value"
+                label="Wert"
                 className="form-control"
 
               />
@@ -152,6 +149,10 @@ class AddProduct extends Component {
         </li>
 
       )}
+      <li >
+        <a type="button" onClick={() => fields.push({})}>Sicherheiten hinzufügen</a>
+        {(touched || submitFailed) && error && <span>{error}</span>}
+      </li>
     </ul>
     //   </div>
     // </div>
@@ -166,12 +167,21 @@ class AddProduct extends Component {
         return acc;
       }
     }, []);
-    console.log(extractId(formProps.County, this.state.cities))
+    // console.log(extractId(formProps.County, this.state.cities))
     this.setState({ rating_value: filteredArr });
-    // console.log('r', getIndustryId(this.props.industry.list, formProps.undefined));
-    formProps.industry_id = getIndustryId(this.props.industry.list, formProps.undefined);
+    if (formProps.undefined[0] === 'Select All') {
+      formProps.industry_id = getIndustryId(this.props.industry.list, null);
+    } else {
+      formProps.industry_id = getIndustryId(this.props.industry.list, formProps.undefined);
+    }
+
     formProps.ratings = this.state.rating_value;
-    formProps.county_ids = extractId(formProps.County, this.state.cities);
+    if (formProps.County[0] === 'Select All') {
+      formProps.county_ids = extractId(null, this.state.cities);
+    } else {
+      formProps.county_ids = extractId(formProps.County, this.state.cities);
+
+    }
     // console.log('form', formProps)
     this.props.addProduct(formProps, () => this.props.history.push('/products'))
   };
@@ -182,9 +192,16 @@ class AddProduct extends Component {
         // <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
         <div class="rating-item">
           <div class="col-9">
+            {/* <label>Ratingagentur</label> */}
+            <Translate content='label.Ratingagentur' component="label" />
+            <br />
             <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
             />{credit.name}
           </div>
+          <div class="col-9">
+          {/* <label>Kreditrating</label> */}
+          <Translate content='label.Kreditrating' component="label" />
+            <br />
           <input pattern="[a-cA-C]{1}"
             type="text" name={`rating_value[${credit.id}]`}
             onChange={(e) => this.setState({
@@ -193,7 +210,7 @@ class AddProduct extends Component {
             }
             title="Grade must be either A,B or C"
             class="col-3 form-control text-center"
-          />
+          /></div>
         </div>
         // </div>
       )
@@ -236,6 +253,7 @@ class AddProduct extends Component {
                     options={germanStates}
                     label={<Translate content='label.state' />}
                     validate={validation.required}
+                    placeholder={<Translate content='placeholder.select' />}
                   />
                 </div>
               </div>
@@ -249,6 +267,7 @@ class AddProduct extends Component {
                     options={userOptions}
                     label={<Translate content='label.service' />}
                     validate={validation.required}
+                    placeholder={<Translate content='placeholder.select' />}
                   />
                 </div>
               </div>
@@ -260,6 +279,7 @@ class AddProduct extends Component {
                     data={this.state.cityNames}
                     label={<Translate content='label.country' />}
                     validate={validation.required}
+                    placeholder={<Translate content='placeholder.select' />}
                   />
                 </div>
               </div>
@@ -269,9 +289,11 @@ class AddProduct extends Component {
 
                 <Field
                   component={renderMultiselect}
-                  label={<Translate content='column.industry' />}
+                  label={<Translate content='label.industries' />}
                   data={industries}
-                  className="form-group" />
+                  className="form-group"
+                  placeholder={<Translate content='placeholder.select' />}
+                  attributees={{placeholder:'placeholder.select'}} />
               </div>
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
@@ -394,13 +416,15 @@ class AddProduct extends Component {
                 <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
                   <div className="row">{this.creditRatings(credits)}</div>
                 </div>
+                // </div>
               ) : null}
             </div>
 
             <div class="row mt-4">
               <div class="col">
                 <div class="form-group">
-                  <label class="d-block">Collateral</label>
+                  {/* <label class="d-block">Sicherheiten</label> */}
+                  <Translate content='label.Sicherheiten' component='label' className="d-block" />
                   <div class="form-check form-check-inline">
                     <Field
                       type="radio"
@@ -410,9 +434,7 @@ class AddProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <label class="form-check-label" for="rating-credit-yes">
-                      Yes
-                    </label>
+                    <Translate content='label.yes' component='label' class="form-check-label" for="rating-credit-yes" />
                   </div>
                   <div class="form-check form-check-inline">
                     <Field
@@ -423,19 +445,17 @@ class AddProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <label class="form-check-label" for="rating-credit-no">
-                      No
-                    </label>
+                     <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
                   </div>
                 </div>
-                {colatoral === 'true' ? (
+                {/* {colatoral === 'true' ? (
                   <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
                     <div className="row">
                       {
                         <FieldArray name="collatorals" component={this.renderColatoral} />
                       }</div>
                   </div>
-                ) : null}
+                ) : null} */}
               </div>
 
             </div>
@@ -443,7 +463,7 @@ class AddProduct extends Component {
             <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
-                <Translate content='label.fileupload' component="label" className="d-block" />
+                  <Translate content='label.fileupload' component="label" className="d-block" />
                   <Field
                     name="files"
                     component={renderDropzoneField}
@@ -461,7 +481,7 @@ class AddProduct extends Component {
             ) : null}
             <div className="row mt-4">
               <div className="col">
-                <Translate content='button.submit' component="button"  className="btn btn-primary btn-form" type="submit" />
+                <Translate content='button.submit' component="button" className="btn btn-primary btn-form" type="submit" />
               </div>
             </div>
           </form>

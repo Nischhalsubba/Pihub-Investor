@@ -42,7 +42,7 @@ import Notifications from './components/notifications/List';
 //Credit related
 import ListCreditRequest from './components/credits/ListCreditRequests';
 import DetailCreditRequest from './components/credits/DetailCreditRequest';
-
+import CreditorDetail from './components/credits/CreditorDetail';
 //End of component import
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
@@ -140,6 +140,7 @@ ReactDOM.render(
             component={RequireInvestorAuth(Notifications)}
           />
           {/* Credit requests related route definition */}
+          <Route path="/creditor/detail" component={RequireInvestorAuth(CreditorDetail)} />
           <Route
             exact
             path="/credit-request"

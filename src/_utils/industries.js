@@ -184,6 +184,7 @@
 
 
 export default [
+  "Select All",
 
   "Telecommunication",
   "Textile industry",

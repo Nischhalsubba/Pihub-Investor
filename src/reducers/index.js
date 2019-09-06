@@ -14,6 +14,7 @@ import applicationList from './applicationList';
 import applicationDetail from './applicationDetail';
 import investment from './investment';
 import language from './language';
+import creditorDetail from './creditorDetail';
 const rootReducer = combineReducers({
   user,
   auth,
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   applicationList,
   applicationDetail,
   investment,
+  creditorDetail,
   form: formReducer
 });
 

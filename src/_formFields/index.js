@@ -80,6 +80,8 @@ export const dropDownField = ({
         onBlur={() => input.onBlur(input.value)}
         options={options}
         className={className}
+        placeholder={placeholder}
+        attributes={{placeholder:'placeholder.select'}}
       />
       <font color="red">{touched && error}</font>
     </div>
@@ -134,13 +136,15 @@ export const renderMultiselect = ({
   valueField,
   textField
 }) => {
+  console.log(input.value === ['Select All']);
   return (
     <Fragment>
       <label for="">{label}</label>
       <Multiselect
         {...input}
         onBlur={() => input.onBlur()}
-        value={input.value || []}
+        // value={input.value === 'Select All' ? { data } : input.value || []}
+        value={input.value[0] === 'Select All' ? data : input.value || []}
         data={data}
         valueField={valueField}
         textField={textField}
@@ -178,9 +182,9 @@ export const renderDropzoneField = ({
                 />
                 <div className="text-center mt-3">
                   {/* <a className="font-weight-bold">Add file </a> */}
-                  <Translate content='label.addfile' component="a" className="font-weight-bold" />
+                  <Translate content='column.addfile' component="a" className="font-weight-bold mr-1" />
                   {/* <span>or drop files here</span> */}
-                  <Translate content='label.ordrop' />
+                  <Translate content='column.ordrop' />
                 </div>
               </div>
               <div className="fallback" />

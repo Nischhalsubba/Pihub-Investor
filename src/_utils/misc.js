@@ -9,12 +9,20 @@ export const extractNames = (list) => {
 
 export const extractId = (list, mainList) => {
   var r = [];
-  list.map((name) => {
-    return mainList.map((main) => {
-      if (name === main.label) {
-        r.push(main.id)
-      }
+
+  if (list) {
+    list.map((name) => {
+      return mainList.map((main) => {
+        if (name === main.label) {
+          r.push(main.id)
+        }
+      })
     })
-  })
+  } else {
+    return mainList.map((m) => {
+      r.push(m.id)
+    })
+  }
+
   return r;
 }

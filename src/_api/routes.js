@@ -15,5 +15,6 @@ export const routes = {
   getApplicationList: `${API_URL}/investor/products`, // few of the routes look the same but dont delete them yet
   getApplicationDetail: `${API_URL}/investor/products`,
   investedList: `${API_URL}/investor/invested-products`,
-  emailVerification: `${API_URL}/email-verification`
+  emailVerification: `${API_URL}/email-verification`,
+  getCreditorDetail: `${API_URL}/investor/creditor-detail`
 };

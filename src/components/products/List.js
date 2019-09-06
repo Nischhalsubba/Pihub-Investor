@@ -33,16 +33,17 @@ class ProductsList extends Component {
                 {product.product_title}
               </Link>
             </td>
+            <td>{product.service}</td>
+
             <td>
               {product.industries.map((industry, index) => {
                 return <span>{industry.name}</span>
               })}
             </td>
-            <td>{product.service}</td>
-            <td>{product.time_duration} Months</td>
+            <td>{product.time_duration} Monate</td>
 
-            <td>{product.min_credit_amount}</td>
-            <td>{product.max_credit_amount}</td>
+            <td>${product.min_credit_amount}</td>
+            <td>${product.max_credit_amount}</td>
             <td>
               {product.status === 'requested' ? <span className="status-badge status-badge-awaiting"><Translate content='label.requested' /></span> : null}
               {product.status === 'approved' ? <span className="status-badge status-badge-approved"><Translate content='label.approved' /></span> : null}
@@ -78,7 +79,7 @@ class ProductsList extends Component {
         <form class="form-inline my-2 my-lg-0">
 
           <select className="form-control mr-sm-2" onChange={e => this.setState({ status: e.target.value })}>
-            <option value="" >All</option>
+            <option value="" >Alles</option>
             <option value="approved">Approved</option>
             <option value="invested">Invested</option>
             <option value="requested">Requested</option>
@@ -87,16 +88,18 @@ class ProductsList extends Component {
             <option value="expired">Exprired</option>
 
           </select>
-          <input class="form-control mr-sm-2" placeholder="Search" aria-label="Search"
+          <input class="form-control mr-sm-2" placeholder="Suche" aria-label="Search"
             value={this.state.product_title}
             onChange={e => this.setState({ product_title: e.target.value })}
           />
           {/* <button >Search</button> */}
-          <Translate content='button.search' class="btn btn-primary" onClick={(e) => {
+          <button className="btn btn-primary mr-sm-2" onClick={(e) => {
             e.preventDefault();
             this.props.getProductsList(this.props.pagination.currentPage, this.state.status, this.state.product_title)
           }
-          } type="submit" />
+          } >
+            Suche
+          </button>
         </form>
         <div className="content-body">
           <table
@@ -110,7 +113,7 @@ class ProductsList extends Component {
                   <Translate content="column.name" />
                 </th>
                 <th>
-                  <Translate content="column.services" />
+                  <Translate content="label.service" />
                 </th>
                 <th>
                   <Translate content="label.industries" />
@@ -122,15 +125,15 @@ class ProductsList extends Component {
                   <Translate content="column.minimum_credit_amount" />
                 </th>
                 <th>
-                
+
                   <Translate content="column.mindestbetrag" />
                 </th>
                 <th>
                   <Translate content="column.status" />
                 </th>
-                <th>
+                {/* <th>
                 <Translate content="column.edit" />
-                </th>
+                </th> */}
               </tr>
             </thead>
             <tbody>{this.renderList(this.props.data)}</tbody>

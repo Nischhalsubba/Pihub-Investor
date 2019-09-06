@@ -19,10 +19,11 @@ export default props => {
                 </Link>
               </li>
               <li>
-                <a href="/add-product" target="_self" rel="noopener noreferrer">
-                  <Translate content="sidebar.new_product" />
-                </a>
+                <Link to="/credit-request" rel="noopener noreferrer">
+                  <Translate content="sidebar.credit_requested_products" />
+                </Link>
               </li>
+
               <li>
                 <a
                   href="/products-invested"
@@ -33,10 +34,11 @@ export default props => {
                 </a>
               </li>
               <li>
-                <Link to="/credit-request" rel="noopener noreferrer">
-                  <Translate content="sidebar.credit_requested_products" />
-                </Link>
+                <a href="/add-product" target="_self" rel="noopener noreferrer">
+                  <Translate content="sidebar.new_product" />
+                </a>
               </li>
+
             </ul>
           </li>
         </ul>

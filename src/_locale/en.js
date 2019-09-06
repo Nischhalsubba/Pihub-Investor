@@ -1,3 +1,5 @@
+import { placeholder } from "@babel/types";
+
 export default {
     column: {
         name: 'Name',
@@ -26,6 +28,7 @@ export default {
         terms:'terms and conditions',
         addfile:'Add files',
         ordrop:'or drop files here',
+        approvedon:'Approved on'
     },
     sidebar: {
         product: 'Product',
@@ -35,7 +38,12 @@ export default {
         credit_requested_products: 'Credit Request'
     },
     label:{
+        Produktdetail:'Product detail',
+        AngebotErstellt:'Offer sent',
         theperfect:'The Perfect Investment',
+        Sicherheiten:'Collateral',
+        Ratingagentur:'Rating agency',
+        Kreditrating:'credit rating',
         atcredittech:'At Credittech you can easily find creditor and make an investment',
         whycredittech:'Why Credit Tech?',
         atfirst:'At first I Invested little and by time pass I Invested to the sector I like and Credit Tech takes me right there',
@@ -53,6 +61,7 @@ export default {
         login:'Login',
         lorem:'Lorem ipsum dolor sit amet, tempor labore sadipscing over the years, sed diam tempor sed ut labore et dolore magna per month.',
         ifyoudont:'If you dont have account you can sign up ',
+        ypudont:'You dont have any new notifications',
         enteryouremail:'Enter your email address and password',
         here:'here',
         sendit:'Send it again',
@@ -80,6 +89,7 @@ export default {
         requested:'Requested',
         approved:'Approved',
         rejected:'Rejected',
+        ZuBearbeiten:'To edit',
         invested:'Invested',
         allproducts:'All Products',
         fileupload:'File Upload',
@@ -99,12 +109,23 @@ export default {
         time:'Time duration',
         deadline:'Deadline',
         applicationcode:'Application code',
-        creditrequests:'Credit requests'
+        creditrequests:'Credit requests',
+        Kreditorname:'Lender',
+        Corporateloan:'Corporate loan ',
+        purchase:'Purchase financing / Finetrading',
+        stocktrading:'Stocktrading',
+        acquisition:'Acquisition / Takeover financing',
+        project:'Project financing',
+        mezzanine:'Mezzanine financing'
     },
     button:{
+        Produktbearbeiten:'Edit Product',
         signup:'Sign up Now',
         search:'Search',
         addnewproduct:'Add new products',
         submit:'Submit'
+    },
+    placeholder:{
+        select:'Select'
     }
 };

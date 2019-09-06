@@ -22,7 +22,7 @@ class RequestedByList extends Component {
       return <span>No one has place in any kind of requests yet</span>;
     }
     return list.map((data, index) => {
-      console.log('data', data)
+      console.log('b', data)
       return (
         <tr key={index}>
           <td>
@@ -43,13 +43,13 @@ class RequestedByList extends Component {
             <span>{data.deadline}</span>
           </td>
           <td>
-            <span>{data.time_duration} Months</span>
+            <span>{data.duration} Months</span>
           </td>
           <td class="text-right-piehub-table font-weight-bold">
             ${data.requested_amount}
           </td>
           <td class="text-right-piehub-table font-weight-bold">
-            {data.status === 'rejected' ? <span className="badge badge-warning">{data.status}</span> : <span className="badge badge-success">{data.status}</span>}
+            {data.status === 'rejected' ? <span className="badge badge-warning">Abgelehnt</span> : <span className="badge badge-success">In Bearbeitung</span>}
           </td>
 
           {
@@ -79,46 +79,49 @@ class RequestedByList extends Component {
             <tr>
 
               <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
-                <Translate content='label.applicationcode'/>
+                <Translate content='label.applicationcode' />
               </th>
               <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
-                Requested By
+                <Translate content='label.Kreditorname' />
                </th>
               <th
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 data-tablesaw-priority="persist"
                 scope="col"
               >
-                <Translate content='label.deadline'/>
-             </th>
+                <Translate content='label.deadline' />
+                {/* Fristablauf */}
+              </th>
               <th
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 data-tablesaw-priority="persist"
                 scope="col"
               >
-                <Translate content='label.time'/>
-             </th>
-              <th
-                class="text-right-piehub-table"
-                data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                scope="col"
-              >
-                <Translate content='label.requestedamount'/>
+                <Translate content='label.timeduration' />
+                {/* Laufzeil */}
               </th>
               <th
                 class="text-right-piehub-table"
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 scope="col"
               >
-                <Translate content='column.status'/>
+                {/* <Translate content='label.requestedamount' /> */}
+                Kreditbetrag
               </th>
               <th
+                class="text-right-piehub-table"
+                data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                scope="col"
+              >
+                <Translate content='column.status' />
+              </th>
+              {/* <th
                 class="text-right-piehub-table"
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 scope="col"
               >
                 <Translate content='label.accept'/>
-              </th>
+              </th> */}
             </tr>
           </thead>
           <tbody>{this.renderListOfRequester(this.state.list, this.props.name)}</tbody>

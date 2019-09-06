@@ -13,28 +13,37 @@ class ListCreditRequests extends Component {
 
   renderData = data => {
     if (data.length === 0) {
-      return <span>You dont have any credit requests yet</span>;
+      return <span>Es wurde noch keine Kreditanfrage gestellt</span>;
     }
     return data.map((product, index) => {
-      let date = new Date(product.requested_on);
+      let date = new Date(product.created_on);
+      let deadline = new Date(product.deadline);
       return (
         <tr key={index}>
           <td>
             {' '}
-            <Link to={{ pathname: '/product', state: { id: product.id } }}>
-              {product.product_title}
+            <Link to={{ pathname: '/creditor/detail', state: { id: product.creditor_id } }}>
+              {product.creditor_name}
             </Link>
           </td>
           <td>
-            {product.industries.map((industry, index) => {
-              return <span>{industry}</span>
 
-            })}
+            <Link to={{ pathname: '/product', state: { id: product.product_id } }}> {product.product_title}</Link>
           </td>
+          <td>{product.service}</td>
           <td class="text-right-piehub-table">{`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}</td>
-          <td class="text-right-piehub-table">{product.number_of_request}</td>
+          {/* <td class="text-right-piehub-table">{product.number_of_request}</td> */}
+          <td class="text-right-piehub-table">{`${deadline.getDate()}-${deadline.getMonth() + 1}-${deadline.getFullYear()}`}</td>
           <td class="text-right-piehub-table font-weight-bold">
-            ${product.max_credit_amount}
+            ${product.max_credit_amount || 100000}
+          </td>
+          <td className="text-right-piehub-table font-weight-bold">
+            {product.status === 'offer_sent' ? <span className="status-badge status-badge-awaiting"><Translate content='label.AngebotErstellt' /></span>
+              : null}
+            {product.status === 'rejected' ? <span className="status-badge status-badge-rejected"><Translate content='label.rejected' /></span>
+              : null}
+            {product.status === 'open' ? <span className="status-badge status-badge-approved"><Translate content='label.ZuBearbeiten' /></span>
+              : null}
           </td>
         </tr>
       );
@@ -45,7 +54,6 @@ class ListCreditRequests extends Component {
       const {
         creditRequests: { data }
       } = this.props.list;
-
       return (
         <Fragment>
           <Subheader heading={<Translate content='label.creditrequests' />} />
@@ -58,14 +66,25 @@ class ListCreditRequests extends Component {
               <thead>
                 <tr>
                   <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
-                    <Translate content='column.productname' />
+                    <Translate content='column.creditorsname' />
+                    {/* Kreditnehmer */}
                   </th>
                   <th
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     data-tablesaw-priority="persist"
                     scope="col"
                   >
-                    <Translate content='column.industry' />
+                    {/* <Translate content='column.industry' /> */}
+                    <Translate content='column.productname' />
+
+                  </th>
+                  <th
+                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                    data-tablesaw-priority="persist"
+                    scope="col"
+                  >
+                    <Translate content='column.services' />
+                    {/* Kreditart */}
                   </th>
                   <th
                     class="text-right-piehub-table"
@@ -79,14 +98,24 @@ class ListCreditRequests extends Component {
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
-                   <Translate content='column.numberofrequest' />
+                    {/* Fristablauf */}
+                    <Translate content='label.deadline' />
                   </th>
                   <th
                     class="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
-                    <Translate content='label.maxcredit' />                  </th>
+                    <Translate content='column.investedamount' />
+                    {/* Kreditbetrag */}
+                  </th>
+                  <th
+                    class="text-right-piehub-table"
+                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                    scope="col"
+                  >
+                    <Translate content='column.status' />
+                </th>
                 </tr>
               </thead>
               <tbody>{this.renderData(data)}</tbody>

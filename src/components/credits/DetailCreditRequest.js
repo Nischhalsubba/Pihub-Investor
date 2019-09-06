@@ -50,12 +50,13 @@ class DetailCreditRequest extends Component {
       return (
         <Fragment>
           <Subheader heading={this.props.location.state.product} />
-          {status === 'rejected' ?
-          //  <div class="alert alert-rejected">You rejected this Investment
-          <Translate content='label.yourejected' component="div" className="alert alert-rejected"/>
-          // </div> 
-          : null}
+          {/* {status === 'rejected' ?
+            //  <div class="alert alert-rejected">You rejected this Investment
+            <Translate content='label.yourejected' component="div" className="alert alert-rejected" />
+            // </div> 
+            : null} */}
 
+          {status === 'rejected' ? <div class="alert alert-rejected">SSie haben diesen Antrag abgelehnt</div> : null}
 
           {status === 'accepted' ? <div class="alert alert-success">Sie haben diese Bewerbung angenommen</div> : null}
           <div class="content-body credit-request">
@@ -68,15 +69,15 @@ class DetailCreditRequest extends Component {
                     <span>Berlin</span>
                   </div>
                   <div class="col-3 p-0">
-                  <Translate content='label.credittype' />
+                    <Translate content='label.credittype' />
                     <span>Resolving credit </span>
                   </div>
                   <div class="col-3 p-0">
-                  <Translate content='label.country' />
+                    <Translate content='label.country' />
                     <span>Germany</span>
                   </div>
                   <div class="col-3 p-0">
-                  <Translate content='label.industries' />
+                    <Translate content='label.industries' />
                     <div class="d-flex flex-wrap justify-content-between flex-column">
                       <a class="mb-1" href="#">Service Industry</a>
                       <a class="mb-1" href="#">Administration and office work</a>
@@ -87,24 +88,7 @@ class DetailCreditRequest extends Component {
                     </div>
                   </div>
                 </div>
-                {/* <div class="row justify-content-between w-100 mt-3">
-                  <div class="col-3 p-0">
-                    <h6>Creditrre form</h6>
-                    <span>AAA</span>
-                  </div>
-                  <div class="col-3 p-0">
-                    <h6>Standard & Poors</h6>
-                    <span>A+</span>
-                  </div>
-                  <div class="col-3 p-0">
-                    <h6>Bank/Andere</h6>
-                    <span>AAA+</span>
-                  </div>
-                  <div class="col-3 p-0">
-                    <h6>Bank/Andere</h6>
-                    <span>AAA+</span>
-                  </div>
-                </div> */}
+
               </div>
               <div class="col-lg-12 col-xl-4 rightbar">
                 <div class="amount">
