@@ -16,5 +16,6 @@ export const routes = {
   getApplicationDetail: `${API_URL}/investor/products`,
   investedList: `${API_URL}/investor/invested-products`,
   emailVerification: `${API_URL}/email-verification`,
-  getCreditorDetail: `${API_URL}/investor/creditor-detail`
+  getCreditorDetail: `${API_URL}/investor/creditor-detail`,
+  uploadFile: `${API_URL}/investor/products`
 };
