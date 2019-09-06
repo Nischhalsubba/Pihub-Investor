@@ -294,7 +294,8 @@ h6 {
   font-weight: 400;
   text-align: center;
   white-space: nowrap;
-  border-radius: 3px; }
+  border-radius: 3px;
+  width: 100%; }
 
 .status-badge-awaiting {
   background-color: #FFF3BF;
@@ -405,6 +406,24 @@ li.header-actions__item .dropdown-menu {
     .header-actions__item .dropdown-menu.dropdown-menu-user li:last-child {
       margin: 0 !important;
       border: none; }
+
+.badge {
+  padding: 10px 15px;
+  font-weight: 400;
+  font-size: 12px;
+  width: 100%; }
+
+.badge-success {
+  background-color: #8ce99a;
+  color: #1b8e2c; }
+
+.badge-warning {
+  background-color: #ffe066;
+  color: #997a00; }
+
+.badge-danger {
+  background-color: #fa5252;
+  color: #7c0404; }
 
 .company-logo-email {
   position: absolute;
