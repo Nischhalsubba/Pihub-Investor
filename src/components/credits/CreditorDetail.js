@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
 import Subheader from '../general/Subheader';
+import {uploadFile} from '../../actions/uploadFile'
 import { getCreditor } from '../../actions/creditor';
 import Translate from 'react-translate-component';
 import Spinner from '../general/Spinner'
@@ -23,6 +24,11 @@ class CreditorDetail extends Component {
     }
 
   }
+  onSubmit = formProps => {
+    
+    console.log('form', formProps)
+    
+  };
   renderDocs = docs => {
     if (docs.length === 0) {
       return <span>**No attachments available</span>
@@ -41,11 +47,13 @@ class CreditorDetail extends Component {
   render() {
     if (this.state.detail) {
       console.log('here', this.state.detail)
-      const { creditor, collatorals, county, email, files, financial_needs, industries, nda_requirement, phone_number, rating_for_credit, state, street_address, zip_code } = this.state.detail;
+      const {creditor, collatorals, county, email, files, financial_needs, industries, nda_requirement, phone_number, rating_for_credit, state, street_address, zip_code } = this.state.detail;
+      const {handleSubmit}=this.props;
       return (
         <Fragment>
 
           <div class="content-body credit-request">
+          <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
             <div class="d-flex">
               <div class="col-lg-12 col-xl-8">
                 <div class="row justify-content-between w-100">
@@ -131,7 +139,17 @@ class CreditorDetail extends Component {
                 </div>
               </div>
             </div>
-
+            {this.props.errMsg ? (
+              <small>
+                <font color="red">{this.props.errMsg.errors}</font>
+              </small>
+            ) : null}
+            <div className="row mt-4">
+              <div className="col">
+                <Translate content='button.submit' component="button" className="btn btn-primary btn-form" type="submit" />
+              </div>
+            </div>
+            </form>      
           </div>
         </Fragment>
       );
@@ -150,4 +168,4 @@ function mapStateToProps(state) {
 CreditorDetail = reduxForm({
   form:'creditorDetail'
 })(CreditorDetail);
-export default connect(mapStateToProps, { getCreditor })(CreditorDetail);
+export default connect(mapStateToProps, { getCreditor, uploadFile })(CreditorDetail);
