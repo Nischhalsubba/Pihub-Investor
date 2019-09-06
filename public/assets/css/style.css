@@ -290,8 +290,11 @@ h6 {
   color: #8ce99a; }
 
 .status-badge {
-  padding: 11px 14px;
+  width: 100%;
+  display: inline-block;
+  padding: 8px 10px;
   font-weight: 400;
+  font-size: 12px;
   text-align: center;
   white-space: nowrap;
   border-radius: 3px; }

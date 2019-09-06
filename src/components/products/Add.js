@@ -278,7 +278,7 @@ class AddProduct extends Component {
                     component={renderMultiselect}
                     data={this.state.cityNames}
                     label={<Translate content='label.country' />}
-                    validate={validation.required}
+                  // validate={validation.required}
                     placeholder="select tags"
                   />
                 </div>
