@@ -17,7 +17,17 @@ class Header extends Component {
         </div>
         <nav class="header-actions">
           <ul>
+            <li class="d-flex lang__select dropdown">
+              <span class="lang__select-btn">EN</span>
+              <ul class="dropdown-container">
+                <li>
+                  <span>DE</span>
+                </li>
+              </ul>
+              <i class="bx bx-chevron-down"></i>
+            </li>
             <li className="header-actions__item">
+
               <Link className="header-notification" to="/notifications">
                 <i className="bx bx-bell" />
                 <span className="notification-count">{this.props.count}</span>
@@ -34,9 +44,9 @@ class Header extends Component {
                 >
                   logout
                 </span> */}
-                <Translate content='label.logout' component="span"  onClick={() =>
-                    this.props.logout(() => this.props.history.push('/login'))
-                  } />
+                <Translate content='label.logout' component="span" onClick={() =>
+                  this.props.logout(() => this.props.history.push('/login'))
+                } />
               </a>
             </li>
 

@@ -59,11 +59,15 @@ class InvestedList extends Component {
                         data-tablesaw-minimap="data-tablesaw-minimap">
                         <thead>
                             <tr>
-                                <th data-tablesaw-sortable-col="data-tablesaw-sortable-col"><Translate content='column.creditorsname' /></th>
+                                <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
+
+                                    Kreditnehmer
+                                {/* <Translate content='column.creditorsname' /> */}
+                                </th>
                                 <th data-tablesaw-sortable-col="data-tablesaw-sortable-col" data-tablesaw-priority="persist"
                                     scope="col">
                                     {/* <Translate content='column.industry' /> */}
-                                    Product Titel
+                                    Produktname
                                     </th>
                                 {/* <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                                     scope="col"><Translate content='column.services' /></th> */}
