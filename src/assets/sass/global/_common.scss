@@ -52,32 +52,3 @@
 .green-text {
     color: $color-brand-success;
 }
-
-.status-badge {
-    padding: 11px 14px;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    border-radius: 3px;
-}
-
-.status-badge-awaiting {
-    background-color: $color-status-awaiting;
-    color: $color-text-awaiting;
-}
-
-.status-badge-approved {
-    background-color: $color-status-approved;
-    color: $color-text-approved;
-    padding: 12px 41px;
-}
-
-.status-badge-rejected {
-    background-color: $color-status-rejected;
-    color: $color-text-rejected;
-    padding: 12px 44px;
-}
-
-.select2-container--default {
-    width: 100% !important;
-}
