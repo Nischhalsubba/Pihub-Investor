@@ -1,10 +1,13 @@
 
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
 import Subheader from '../general/Subheader';
 import { getCreditor } from '../../actions/creditor';
 import Translate from 'react-translate-component';
 import Spinner from '../general/Spinner'
+import * as validation from '../../_utils/validate';
+import {renderDropzoneField} from '../../_formFields';
 class CreditorDetail extends Component {
   state = { detail: null }
   componentDidMount() {
@@ -115,6 +118,19 @@ class CreditorDetail extends Component {
               <h4> <Translate content='label.attachments' /></h4>
               {this.renderDocs(files)}
             </div>
+            <div className="row mt-4">
+              <div className="col">
+                <div className="form-group">
+                  <Translate content='label.fileupload' component="label" className="d-block" />
+                  <Field
+                    name="files"
+                    component={renderDropzoneField}
+                    type="file"
+                    validate={validation.required}
+                  />
+                </div>
+              </div>
+            </div>
 
           </div>
         </Fragment>
@@ -127,7 +143,11 @@ class CreditorDetail extends Component {
 
 
 }
+
 function mapStateToProps(state) {
   return { data: state.creditorDetail }
 }
+CreditorDetail = reduxForm({
+  form:'creditorDetail'
+})(CreditorDetail);
 export default connect(mapStateToProps, { getCreditor })(CreditorDetail);

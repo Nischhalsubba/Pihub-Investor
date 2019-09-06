@@ -149,7 +149,8 @@ export const renderMultiselect = ({
         textField={textField}
         className={className}
         id={id}
-        placeholder="Wählen Sie Branchen"
+        // placeholder="Wählen Sie Branchen"
+        placeholder="Auswählen eii"
       />
       <font color="red">{touched && error}</font>
     </Fragment>
