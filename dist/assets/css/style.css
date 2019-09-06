@@ -284,34 +284,10 @@ h6 {
   color: #FF8787; }
 
 .green {
-  border: 1px solid #8ce99a; }
+  border: 1px solid #1e822c; }
 
 .green-text {
-  color: #8ce99a; }
-
-.status-badge {
-  padding: 11px 14px;
-  font-weight: 400;
-  text-align: center;
-  white-space: nowrap;
-  border-radius: 3px; }
-
-.status-badge-awaiting {
-  background-color: #FFF3BF;
-  color: #E67700; }
-
-.status-badge-approved {
-  background-color: #D3F9D8;
-  color: #1E822C;
-  padding: 12px 41px; }
-
-.status-badge-rejected {
-  background-color: #fa5252;
-  color: #fff;
-  padding: 12px 44px; }
-
-.select2-container--default {
-  width: 100% !important; }
+  color: #1e822c; }
 
 .credit-request p {
   line-height: 26px; }
@@ -345,7 +321,7 @@ h6 {
     height: 26px;
     border-radius: 50%; }
   .notification .notification-item .status.wait {
-    background-color: #ffe066;
+    background-color: #fff3bf;
     margin-top: 3px; }
   .notification .notification-item .status.sucess {
     background-color: #D3F9D8;
@@ -405,6 +381,24 @@ li.header-actions__item .dropdown-menu {
     .header-actions__item .dropdown-menu.dropdown-menu-user li:last-child {
       margin: 0 !important;
       border: none; }
+
+.badge {
+  padding: 10px 15px;
+  font-weight: 400;
+  font-size: 12px;
+  width: 100%; }
+
+.badge-success {
+  background-color: #1e822c;
+  color: black; }
+
+.badge-warning {
+  background-color: #fff3bf;
+  color: #f2c500; }
+
+.badge-danger {
+  background-color: #fa5252;
+  color: #7c0404; }
 
 .company-logo-email {
   position: absolute;
