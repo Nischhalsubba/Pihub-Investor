@@ -84,7 +84,7 @@ class CreditorDetail extends Component {
                   {/* <h6>Requested amount of</h6> */}
                   {/* <Translate content='label.requestedamount' /> */}
                   <label>Finanzbedar</label>
-                  <h2>${financial_needs}</h2>
+                  <h2>€{financial_needs}</h2>
                 </div>
                 <div class="investor clearfix mt-5">
                   {/* <h6>Requested By</h6> */}

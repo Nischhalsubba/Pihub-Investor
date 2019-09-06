@@ -107,13 +107,13 @@ class ViewProduct extends Component {
                 <div class="amount">
                   {/* <h6>Max Credit Amount</h6> */}
                   <Translate content='label.maxcredit' component="h6" />
-                  <h2>${max_credit_amount}</h2>
+                  <h2>€{max_credit_amount}</h2>
                 </div>
                 <div class="amount">
                   {/* <h6>Max Credit Amount</h6> */}
                   <h6>Mindestkreditbetrag</h6>
 
-                  <h2>${min_credit_amount}</h2>
+                  <h2>€{min_credit_amount}</h2>
                 </div>
                 <div class="investor clearfix mt-5">
                   {/* <h6>Investor</h6> */}

@@ -35,7 +35,7 @@ class ListCreditRequests extends Component {
           {/* <td class="text-right-piehub-table">{product.number_of_request}</td> */}
           <td class="text-right-piehub-table">{`${deadline.getDate()}-${deadline.getMonth() + 1}-${deadline.getFullYear()}`}</td>
           <td class="text-right-piehub-table font-weight-bold">
-            ${product.max_credit_amount || 100000}
+            €{product.max_credit_amount || 100000}
           </td>
           <td className="text-right-piehub-table font-weight-bold">
             {product.status === 'offer_sent' ? <span className="status-badge status-badge-awaiting">Angebot Erstellt</span>
