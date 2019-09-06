@@ -28,28 +28,28 @@ const userOptions = [
     "value": 1,
 
 
-    "label": <Translate content='label.Corporateloan' />,
+    "label": "Corporate loan",
 
   },
   {
     "value": 2,
 
 
-    "label": <Translate content='label.purchase' />,
+    "label": "Purchase financing / Finetrading",
 
   },
   {
     "value": 3,
 
 
-    "label": <Translate content='label.stocktrading' />,
+    "label": "Stocktrading",
 
   },
   {
     "value": 4,
 
 
-    "label": <Translate content='label.acquisition' />,
+    "label": "Acquisition / Takeover financing",
 
 
   },
@@ -57,14 +57,14 @@ const userOptions = [
     "value": 5,
 
 
-    "label": <Translate content='label.project' />,
+    "label": "Project financing",
 
   },
   {
     "value": 6,
 
 
-    "label": <Translate content='label.mezzanine' />,
+    "label": "Mezzanine financing",
 
   }
 ];
@@ -279,6 +279,7 @@ class AddProduct extends Component {
                     data={this.state.cityNames}
                     label={<Translate content='label.country' />}
                   // validate={validation.required}
+                    placeholder="select tags"
                   />
                 </div>
               </div>
@@ -291,8 +292,8 @@ class AddProduct extends Component {
                   label={<Translate content='label.industries' />}
                   data={industries}
                   className="form-group"
-                  placeholder={<Translate content='placeholder.select' />}
-                  attributees={{ placeholder: 'placeholder.select' }} />
+                  placeholder="select tags"
+                  />
               </div>
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
