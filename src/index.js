@@ -47,7 +47,7 @@ import DetailCreditRequest from './components/credits/DetailCreditRequest';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
 counterpart.setLocale(
-  localStorage.getItem('language') || navigator.language.split('-')[0] || 'de'
+  'de'|| localStorage.getItem('language') || navigator.language.split('-')[0]
 );
 
 const store = createStore(

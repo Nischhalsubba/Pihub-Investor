@@ -13,9 +13,11 @@ import industryList from './industryList';
 import applicationList from './applicationList';
 import applicationDetail from './applicationDetail';
 import investment from './investment';
+import language from './language';
 const rootReducer = combineReducers({
   user,
   auth,
+  language,
   productsList,
   singleProduct,
   creditRequests,

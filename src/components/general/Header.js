@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import counterpart from 'counterpart';
 import { getNotificationCount } from '../../actions/notification';
+import {changeLanguage} from '../../actions/changeLanguage';
 import { logout } from '../../actions/login';
-import Translate from 'react-translate-component'
+import Translate from 'react-translate-component';
+import en from '../../_locale/en';
+import de from '../../_locale/de';
+
+counterpart.registerTranslations('en', en);
+counterpart.registerTranslations('de', de);
+counterpart.setLocale(
+  de||localStorage.getItem('language')||navigator.language.split('-')[0]
+);
 class Header extends Component {
+  onChange = e=>{
+    let language = e.target.value;
+    counterpart.setLocale(e.target.value);
+    this.props.changeLanguage(language);
+  }
   componentDidMount() {
     this.props.getNotificationCount();
   }
@@ -22,6 +37,20 @@ class Header extends Component {
                 <i className="bx bx-bell" />
                 <span className="notification-count">{this.props.count}</span>
               </Link>
+            </li>
+            <li>
+              <select
+              className="header-dropdown"
+              name=""
+              id=""
+              onChange={this.onChange}
+              >
+                <option value="en">en</option>
+                <option
+                value="de"
+                selected={counterpart.getLocale()==='de'}
+                >de</option>
+              </select>
             </li>
             <li className="header-dropdown">
               <a className="header-user-dropdown">
@@ -47,9 +76,9 @@ class Header extends Component {
   }
 }
 function mapStateToProps(state) {
-  return { count: state.notificationCount };
+  return { count: state.notificationCount, language:state.language };
 }
 export default connect(
   mapStateToProps,
-  { getNotificationCount, logout }
+  { getNotificationCount, logout, changeLanguage }
 )(withRouter(Header));
