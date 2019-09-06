@@ -22,7 +22,6 @@ class RequestedByList extends Component {
       return <span>No one has place in any kind of requests yet</span>;
     }
     return list.map((data, index) => {
-      console.log('b', data)
       return (
         <tr key={index}>
           <td>
@@ -46,7 +45,7 @@ class RequestedByList extends Component {
             <span>{data.duration} Months</span>
           </td>
           <td class="text-right-piehub-table font-weight-bold">
-            ${data.requested_amount}
+            €{data.requested_amount}
           </td>
           <td class="text-right-piehub-table font-weight-bold">
             {data.status === 'rejected' ? <span className="badge badge-warning">Abgelehnt</span> : <span className="badge badge-success">In Bearbeitung</span>}
