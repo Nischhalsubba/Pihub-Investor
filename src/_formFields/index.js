@@ -81,7 +81,7 @@ export const dropDownField = ({
         options={options}
         className={className}
         placeholder={placeholder}
-        attributes={{placeholder:'placeholder.select'}}
+        attributes={{ placeholder: 'placeholder.select' }}
       />
       <font color="red">{touched && error}</font>
     </div>
@@ -136,7 +136,6 @@ export const renderMultiselect = ({
   valueField,
   textField
 }) => {
-  console.log(input.value === ['Select All']);
   return (
     <Fragment>
       <label for="">{label}</label>
@@ -150,7 +149,7 @@ export const renderMultiselect = ({
         textField={textField}
         className={className}
         id={id}
-        placeholder="Select Tags"
+        placeholder="Wählen Sie Branchen"
       />
       <font color="red">{touched && error}</font>
     </Fragment>

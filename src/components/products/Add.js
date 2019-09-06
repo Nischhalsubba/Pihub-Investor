@@ -28,28 +28,28 @@ const userOptions = [
     "value": 1,
 
 
-    "label": <Translate content='label.Corporateloan' />,
+    "label": "Corporate loan",
 
   },
   {
     "value": 2,
 
 
-    "label": <Translate content='label.purchase' />,
+    "label": "Purchase financing / Finetrading",
 
   },
   {
     "value": 3,
 
 
-    "label": <Translate content='label.stocktrading' />,
+    "label": "Stocktrading",
 
   },
   {
     "value": 4,
 
 
-    "label": <Translate content='label.acquisition' />,
+    "label": "Acquisition / Takeover financing",
 
 
   },
@@ -57,14 +57,14 @@ const userOptions = [
     "value": 5,
 
 
-    "label": <Translate content='label.project' />,
+    "label": "Project financing",
 
   },
   {
     "value": 6,
 
 
-    "label": <Translate content='label.mezzanine' />,
+    "label": "Mezzanine financing",
 
   }
 ];
@@ -199,18 +199,18 @@ class AddProduct extends Component {
             />{credit.name}
           </div>
           <div class="col-9">
-          {/* <label>Kreditrating</label> */}
-          <Translate content='label.Kreditrating' component="label" />
+            {/* <label>Kreditrating</label> */}
+            <Translate content='label.Kreditrating' component="label" />
             <br />
-          <input pattern="[a-cA-C]{1}"
-            type="text" name={`rating_value[${credit.id}]`}
-            onChange={(e) => this.setState({
-              rating_value: [...this.state.rating_value, { id: credit.id, value: e.target.value }]
-            })
-            }
-            title="Grade must be either A,B or C"
-            class="col-3 form-control text-center"
-          /></div>
+            <input pattern="[a-cA-C]{1}"
+              type="text" name={`rating_value[${credit.id}]`}
+              onChange={(e) => this.setState({
+                rating_value: [...this.state.rating_value, { id: credit.id, value: e.target.value }]
+              })
+              }
+              title="Grade must be either A,B or C"
+              class="col-3 form-control text-center"
+            /></div>
         </div>
         // </div>
       )
@@ -278,12 +278,8 @@ class AddProduct extends Component {
                     component={renderMultiselect}
                     data={this.state.cityNames}
                     label={<Translate content='label.country' />}
-<<<<<<< HEAD
                   // validate={validation.required}
-=======
-                    validate={validation.required}
-                    placeholder={<Translate content='placeholder.select' />}
->>>>>>> 3fbf9cbafff4cdc87db64e7b6491aea3a001d677
+                    placeholder="select tags"
                   />
                 </div>
               </div>
@@ -296,8 +292,8 @@ class AddProduct extends Component {
                   label={<Translate content='label.industries' />}
                   data={industries}
                   className="form-group"
-                  placeholder={<Translate content='placeholder.select' />}
-                  attributees={{placeholder:'placeholder.select'}} />
+                  placeholder="select tags"
+                  />
               </div>
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
@@ -449,7 +445,7 @@ class AddProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                     <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
+                    <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
                   </div>
                 </div>
                 {/* {colatoral === 'true' ? (
