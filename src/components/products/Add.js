@@ -167,12 +167,21 @@ class AddProduct extends Component {
         return acc;
       }
     }, []);
-    console.log(extractId(formProps.County, this.state.cities))
+    // console.log(extractId(formProps.County, this.state.cities))
     this.setState({ rating_value: filteredArr });
-    // console.log('r', getIndustryId(this.props.industry.list, formProps.undefined));
-    formProps.industry_id = getIndustryId(this.props.industry.list, formProps.undefined);
+    if (formProps.undefined[0] === 'Select All') {
+      formProps.industry_id = getIndustryId(this.props.industry.list, null);
+    } else {
+      formProps.industry_id = getIndustryId(this.props.industry.list, formProps.undefined);
+    }
+
     formProps.ratings = this.state.rating_value;
-    formProps.county_ids = extractId(formProps.County, this.state.cities);
+    if (formProps.County[0] === 'Select All') {
+      formProps.county_ids = extractId(null, this.state.cities);
+    } else {
+      formProps.county_ids = extractId(formProps.County, this.state.cities);
+
+    }
     // console.log('form', formProps)
     this.props.addProduct(formProps, () => this.props.history.push('/products'))
   };
