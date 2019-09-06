@@ -79,7 +79,7 @@ class ProductsList extends Component {
         <form class="form-inline my-2 my-lg-0">
 
           <select className="form-control mr-sm-2" onChange={e => this.setState({ status: e.target.value })}>
-            <option value="" >Alles</option>
+            <option value="" >Alle</option>
             <option value="approved">Approved</option>
             <option value="invested">Invested</option>
             <option value="requested">Requested</option>

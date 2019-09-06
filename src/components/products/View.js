@@ -117,14 +117,14 @@ class ViewProduct extends Component {
 
                   <h2>€{min_credit_amount}</h2>
                 </div>
-                <div class="investor clearfix mt-5">
+                {/* <div class="investor clearfix mt-5"> */}
                   {/* <h6>Investor</h6> */}
-                  <Translate content='label.investor' component="h6" />
+                  {/* <Translate content='label.investor' component="h6" />
                   <div class="investor-profile d-flex align-items-center">
                     <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" />
                     <a class="ml-2" href="#">{investor}</a>
                   </div>
-                </div>
+                </div> */}
                 <div class="date mt-5">
                   {/* <h6>Time Duration</h6> */}
                   <Translate content='label.timeduration' component="h6" />
