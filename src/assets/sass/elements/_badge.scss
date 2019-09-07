@@ -1,0 +1,21 @@
+.badge {
+	padding: 10px 15px;
+	font-weight: 400;
+	font-size: $font-size-small;
+	width: 100%;
+}
+
+.badge-success {
+	background-color: $color-brand-success;
+	color: darken($color-brand-success, 40);
+}
+
+.badge-warning {
+	background-color: $color-brand-warning;
+	color: darken($color-brand-warning, 40);
+}
+
+.badge-danger {
+	background-color: $color-brand-danger;
+	color: darken($color-brand-danger, 40);
+}
