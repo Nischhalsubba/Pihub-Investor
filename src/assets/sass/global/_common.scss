@@ -46,15 +46,15 @@
 }
 
 .green {
-    border: 1px solid $color-brand-success;
+    border: 1px solid $color-success;
 }
 
 .green-text {
-    color: $color-brand-success;
+    color: $color-success;
 }
 
 
-.status-badge {
+.badge {
     display:block;
     padding: 11px 10px;
     font-weight: 400;
@@ -65,42 +65,37 @@
     float: right;
 }
 
-.status-badge-primary {
+.badge-primary {
     background-color: $color-primary;
     color: $color-white;
     font-size: 10px !important;
 }
 
-.status-badge-awaiting {
-    background-color: $color-status-awaiting;
-    color: $color-text-awaiting;
+.badge-warning{
+    background-color: $color-awaiting;
+    color: darken($color-awaiting, $amount: 60);
 }
 
-.status-badge-deleted{
+.badge-deleted{
     background-color: $color-white;
     color: $color-primary;
     border: 1px solid $color-primary;
 }
 
-.status-badge-suspended{
+.badge-suspended{
     background-color: $color-gray-0;
     color: $color-primary;
 }
 
-.status-badge-approved {
-    background-color: $color-status-approved;
-    color: $color-text-approved;
+.badge-success {
+    background-color: $color-success;
+    color: $color-white;
     // padding: 12px 41px;
 }
 
-.status-badge-rejected {
-    background-color: $color-status-rejected;
-    color: $color-text-rejected;
-    // padding: 12px 44px;
-}
-
-.select2-container--default {
-    width: 100% !important;
+.badge-danger {
+    background-color: $color-rejected;
+    color: $color-white;
 }
 
 .verify {
