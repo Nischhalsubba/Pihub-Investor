@@ -1,0 +1,114 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include templates/head.pug
+        title Credit Request on IT investment
+    body
+        .container-full-height.ct-container
+            .sidebar
+                include components/nav-sidebar
+            .main-content.main-content--padded
+                include templates/site-header
+                .content-head
+                    .content-head-left.w-100
+                        .row.align-items-center
+                            .col-1.position-relative
+                                img(src="/assets/img/profile-picture.png", alt="alt")
+                                img.verify(src="/assets/img/verify.png", alt="alt")
+                            .col-11
+                                a.btn.btn-outline-light(href="") Change profile picture
+                .content-body
+                    form.form-signup(action="add-new-products-sucess.html")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label First Name
+                                    input(type="text", name="first-name" class="form-control" placeholder="Dino")
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label Last Name
+                                    input(type="text", name="last-name" class="form-control" placeholder="Hwang")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label Headquarter
+                                    input(type="text", name="company-name" class="form-control" placeholder="Millbrook Lea Street , 64283")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label Company Name
+                                    input(type="text", name="company-name" class="form-control" placeholder="Droomwave Home Appliances")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label Email Address
+                                    input(type="email", name="email" class="form-control" placeholder="dinohwang@gmail.com")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label old password
+                                    input.mb-2(type="password", name="email" class="form-control" placeholder="unchanged")
+                                    a(href="#") Click here to change password
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label New Password
+                                    input(type="password", name="email" class="form-control" placeholder="New password")
+
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label Confirm Password
+                                    input(type="password", name="email" class="form-control" placeholder="Confirm password")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label Phone Number
+                                    .row
+                                        .col-1
+                                            select.form-control.states
+                                                option(value=" ") DE
+                                                option(value="Advertisement/Online Marketing") US
+                                                option(value="Advertisement/Marketing") UK
+                                                option(value="Advertisement/Offine Marketing") AUS
+
+                                        .col-11
+                                            input(type="number", name="email" class="form-control" placeholder="+49 123 456 789")
+                        .row.mt-4
+                            .col-4.col-sm-12.col-md-4
+                                label(for="") Contact Person
+                                .form-group
+                                    input.mb-2(type="text", name="full-name" class="form-control" placeholder="Ria Quirin")                                    
+                                    input.mb-2(type="email", name="email" class="form-control" placeholder="Ria@yahoo.com")
+                                    input(type="number", name="email" class="form-control" placeholder="+49 123 456 789")
+                            .col-4.col-sm-12.col-md-4
+                                label(for="") Contact Person
+                                .form-group
+                                    input.mb-2(type="text", name="full-name" class="form-control" placeholder="Meine Ferdi ")                                    
+                                    input.mb-2(type="email", name="email" class="form-control" placeholder="Meine@yahoo.com")
+                                    input(type="number", name="email" class="form-control" placeholder="+49 9877458547")
+                            .col-4.col-sm-12.col-md-4
+                                label(for="") Contact Person
+                                .form-group
+                                    input.mb-2(type="text", name="full-name" class="form-control" placeholder="Rosa Renata")                                    
+                                    input.mb-2(type="email", name="email" class="form-control" placeholder="Rosa@yahoo.com")
+                                    input(type="number", name="email" class="form-control" placeholder="+49 123 456 789")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                label(for="") Social Media
+                                .form-group.d-flex.align-items-center
+                                    label.m-0(for="") Facebook
+                                    input.ml-2(type="text", name="company-name" class="form-control" placeholder="https://www.facebook.com/officialdino")
+                                .form-group.d-flex.align-items-center
+                                    label.m-0(for="") Twitter
+                                    input.ml-4(type="text", name="company-name" class="form-control" placeholder="https://www.twitter.com/officialdino")
+                                .form-group.d-flex.align-items-center
+                                    label.m-0(for="") Linkedin
+                                    input.ml-3(type="text", name="company-name" class="form-control" placeholder="https://www.linkedin.com/officialdino")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label Your short info
+                                    textarea(name="", cols="30", rows="5" , placeholder="Born in small family, worked my way to this point, now an entrepreneur helping startup touch the sky")
+                        button.btn.btn-primary(type="submit") Update

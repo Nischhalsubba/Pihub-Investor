@@ -46,9 +46,60 @@
 }
 
 .green {
-    border: 1px solid $color-brand-success;
+    border: 1px solid $color-success;
 }
 
 .green-text {
-    color: $color-brand-success;
+    color: $color-success;
+}
+
+
+.badge {
+    display:block;
+    padding: 11px 10px;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    border-radius: 3px;
+    width:80%;
+    float: right;
+}
+
+.badge-primary {
+    background-color: $color-primary;
+    color: $color-white;
+    font-size: 10px !important;
+}
+
+.badge-warning{
+    background-color: $color-awaiting;
+    color: darken($color-awaiting, $amount: 60);
+}
+
+.badge-deleted{
+    background-color: $color-white;
+    color: $color-primary;
+    border: 1px solid $color-primary;
+}
+
+.badge-suspended{
+    background-color: $color-gray-0;
+    color: $color-primary;
+}
+
+.badge-success {
+    background-color: $color-success;
+    color: $color-white;
+    // padding: 12px 41px;
+}
+
+.badge-danger {
+    background-color: $color-rejected;
+    color: $color-white;
+}
+
+.verify {
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
 }
