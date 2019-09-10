@@ -15,3 +15,20 @@ export const number = value =>
 
 export const same = (value1, value2) =>
   value1 === value2 ? 'Password Mismatch' : undefined;
+var strongRegex = new RegExp(
+  '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
+);
+export const password = value =>
+  value && !strongRegex.test(value)
+    ? `Password must contain atleast one Capital letter, one small letter, one numeric value and must be 8 digit long`
+    : undefined;
+
+var pattern = new RegExp(
+  '^(https?:\\/\\/)?' +
+  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
+  '((\\d{1,3}\\.){3}\\d{1,3}))' +
+  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
+  '(\\?[;&a-z\\d%_.~+=-]*)?' +
+  '(\\#[-a-z\\d_]*)?$',
+  'i'
+);

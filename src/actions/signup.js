@@ -4,7 +4,7 @@ import {
   AUTH_ERROR,
   AUTH_USER,
   GET_NOTIFICATION_COUNT,
-  USER_DETAIL
+  ERROR
 } from './types';
 
 export const signup = (detail, callback) => async dispatch => {
@@ -22,10 +22,9 @@ export const signup = (detail, callback) => async dispatch => {
       callback();
     }
   } catch (e) {
-    console.log(e);
-    // dispatch({
-    //   type: AUTH_ERROR,
-    //   payload:
-    // });
+    dispatch({
+      type: ERROR,
+      payload: e.response.data.errors
+    });
   }
 };

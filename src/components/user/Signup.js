@@ -10,7 +10,13 @@ import ReactPhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/dist/style.css'
 import Translate from 'react-translate-component';
 class Signup extends Component {
+
   state = { phone: 'a' }
+  componentDidUpdate(prevProps) {
+    if (this.props.errMsg !== prevProps.errMsg) {
+      console.log(this.props.errMsg)
+    }
+  }
   onSubmit = formProps => {
 
     this.props.signup(formProps, () => {
@@ -20,9 +26,20 @@ class Signup extends Component {
   handleOnChange = (value) => {
     this.setState({ phone: value })
   };
+  displayErrors = errors => {
+    return errors.map((err, index) => {
+      return (
+        <li class="d-flex mb-1" key={index}>
+          <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
+          <span class="pl-2 green-text">{err}</span>
+        </li>
+
+
+      );
+    })
+  }
   render() {
     const { handleSubmit } = this.props;
-
     return (
       <div className="container-full-width">
         <div className="panel-container">
@@ -61,7 +78,7 @@ class Signup extends Component {
                 {/* <h1 className="page-title">
                   Sign Up to Credit Tech as an Investor
                 </h1> */}
-                <Translate content='label.signupto' component="h1" className="page-title"/>
+                <Translate content='label.signupto' component="h1" className="page-title" />
                 {/* <p className="page-desc">Enter your details below</p> */}
                 <Translate content='label.enteryourdetails' component="p" className="page-desc" />
               </header>
@@ -152,6 +169,7 @@ class Signup extends Component {
                   component={checkBox}
                   type="checkbox"
                 />
+                {this.props.errMsg ? <ul class="p-0 mt-2">{this.displayErrors(this.props.errMsg)}</ul> : null}
                 {/* <button className="btn btn-primary btn-form" type="submit">
                   Sign Up Now
                 </button> */}
@@ -169,18 +187,19 @@ class Signup extends Component {
 }
 function validate(values) {
   const errors = {};
-  errors.first_name = validation.required(values.fname);
-  errors.last_name = validation.required(values.lname);
+  errors.fname = validation.required(values.fname);
+  errors.lname = validation.required(values.lname);
   // errors.company_name = validation.required(values.company_name);
-  errors.email_address = validation.email(values.email);
+  errors.email = validation.email(values.email);
 
   if (!values.email) {
-    errors.email_address = '* Required';
+    errors.email = '* Required';
   }
   errors.password = validation.required(values.password);
+  errors.password = validation.password(values.password)
   errors.confirm_password = validation.required(values.password_confirmation);
   if (values.password !== values.password_confirmation) {
-    errors.confirm_password = '* Password Mismatch';
+    errors.password_confirmation = '* Password Mismatch';
   }
   errors.phone_number = validation.phoneNumber(values.phone_number);
   if (!values.agreed_term) {
@@ -188,10 +207,12 @@ function validate(values) {
   }
   return errors;
 }
-
+function mapStateToProps(state) {
+  return { errMsg: state.errors }
+}
 export default compose(
   connect(
-    null,
+    mapStateToProps,
     { signup }
   ),
   reduxForm({
