@@ -1,0 +1,12 @@
+mixin creditor-list(creditor, productname, service, createdon, deadline, maxamount, statuscss, status)
+	tr
+		td
+			a(href="")= creditor
+		td
+			a(href="")= productname
+		td= service
+		td.text-md-right.text-left= createdon
+		td.text-md-right.text-left= deadline
+		td.text-md-right.font-weight-bold.text-left= maxamount
+		td
+			span.badge(class=statuscss)= status

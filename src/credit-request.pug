@@ -18,93 +18,22 @@ html(lang="en")
                     table.table.tablesaw-stack(data-tablesaw-mode="stack" data-tablesaw-minimap)
                         thead
                             tr 
-                                th(data-tablesaw-sortable-col) Services
-                                th(data-tablesaw-sortable-col data-tablesaw-priority="persist" scope="col") Industry
-                                th.text-right-piehub-table(data-tablesaw-sortable-col scope="col") Created on
-                                th.text-right-piehub-table(data-tablesaw-sortable-col scope="col") Numbers of Request
-                                th.text-right-piehub-table(data-tablesaw-sortable-col scope="col") Total Budget
+                                th(data-tablesaw-sortable-col) Creditor
+                                th(data-tablesaw-sortable-col) Product Name
+                                th(data-tablesaw-sortable-col data-tablesaw-priority="persist" scope="col") Service
+                                th.text-md-right.text-left(data-tablesaw-sortable-col scope="col") Created on
+                                th.text-md-right.text-left(data-tablesaw-sortable-col scope="col") Deadline
+                                th.text-md-right.text-left(data-tablesaw-sortable-col scope="col") Max Amount
+                                th.text-md-right.text-left(data-tablesaw-sortable-col scope="col") Status
                         tbody
-                            tr
-                                td 
-                                    a(href="") Acquisition
-                                td
-                                    a(href="") Health and personal care
-                                td.text-right-piehub-table 07/04/1927
-                                td.text-right-piehub-table
-                                    a(href="") 2
-                                td.text-right-piehub-table.font-weight-bold $238638
-                            tr
-                                td 
-                                    a(href="") Fine Trading
-                                td
-                                    a(href="") Home and garden
-                                td.text-right-piehub-table 05/12/1983
-                                td.text-right-piehub-table
-                                    a(href="") 3
-                                td.text-right-piehub-table.font-weight-bold $706045
-                            tr
-                                td 
-                                    a(href="") Mezzanine Financing
-                                td
-                                    a(href="") Vehicle sales
-                                td.text-right-piehub-table 08/08/1921
-                                td.text-right-piehub-table
-                                    a(href="") 1
-                                td.text-right-piehub-table.font-weight-bold $946652
-                            tr
-                                td 
-                                    a(href="") Project Financing
-                                td
-                                    a(href="") Computers, accessories, and services
-                                td.text-right-piehub-table 26/08/1949
-                                td.text-right-piehub-table
-                                    a(href="") 2
-                                td.text-right-piehub-table.font-weight-bold $462551
-                            tr
-                                td 
-                                    a(href="") Takeover Financing
-                                td
-                                    a(href="") Health and personal care
-                                td.text-right-piehub-table 26/08/1949
-                                td.text-right-piehub-table
-                                    a(href="") 5
-                                td.text-right-piehub-table.font-weight-bold $720742
-                            tr
-                                td 
-                                    a(href="") Stock Trading
-                                td
-                                    a(href="") Education
-                                td.text-right-piehub-table 19/10/1992
-                                td.text-right-piehub-table
-                                    a(href="") 4
-                                td.text-right-piehub-table.font-weight-bold $412816
-                            tr
-                                td 
-                                    a(href="") Purchase Finance
-                                td
-                                    a(href="") Electronics and telecom
-                                td.text-right-piehub-table 01/02/1952
-                                td.text-right-piehub-table
-                                    a(href="") 1
-                                td.text-right-piehub-table.font-weight-bold $531958
-                            tr
-                                td 
-                                    a(href="") Purchase Finance
-                                td
-                                    a(href="") Financial services and products
-                                td.text-right-piehub-table 05/12/1997
-                                td.text-right-piehub-table
-                                    a(href="") 1
-                                td.text-right-piehub-table.font-weight-bold $671290
-                            tr
-                                td 
-                                    a(href="") Stock Trading
-                                td
-                                    a(href="") Gifts and flowers
-                                td.text-right-piehub-table 25/12/2012
-                                td.text-right-piehub-table
-                                    a(href="") 1
-                                td.text-right-piehub-table.font-weight-bold $636436
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
 
                 .content-footer
                     nav.nav-content
