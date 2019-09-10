@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux';
-import { getProfile } from '../../../actions/profile'
+import { getProfile, editProfile } from '../../../actions/profile'
 
 import Subheader from '../../general/Subheader'
 import { inputField } from '../../../_formFields/'
@@ -10,10 +10,9 @@ class EditProfile extends Component {
     this.props.getProfile();
   }
   onSubmit = formProps => {
-    console.log(formProps)
+    this.props.editProfile(formProps, () => this.props.history.push('/user/profile'))
   }
   render() {
-    console.log('edit', this.props.initialValues);
     const { handleSubmit } = this.props;
 
     return (
@@ -170,26 +169,17 @@ class EditProfile extends Component {
     );
   }
 }
-// function mapStateToProps(state) {
-//   return { initialValues: state.profile }
-// }
-// export default reduxForm({
-//   form: 'editProfile',
-//   enableReinitialize: true
-
-// })(connect(mapStateToProps, { getProfile })(EditProfile));
 
 
 EditProfile = reduxForm({
-  form: 'editProfile' // a unique identifier for this form
+  form: 'editProfile'
 })(EditProfile)
 
-// You have to connect() to any reducers that you wish to connect to yourself
 EditProfile = connect(
   state => ({
-    initialValues: state.profile // pull initial values from account reducer
+    initialValues: state.profile
   }),
-  { getProfile } // bind account loading action creator
+  { getProfile, editProfile }
 )(EditProfile)
 
 export default EditProfile

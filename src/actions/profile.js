@@ -13,3 +13,14 @@ export const getProfile = id => async dispatch => {
   }
 };
 
+export const editProfile = (details, callback) => async dispatch => {
+  try {
+    console.log(details)
+    const response = await client.put(routes.getProfile, details);
+    if (response) {
+      callback();
+    }
+  } catch (e) {
+    console.log(e)
+  }
+}
