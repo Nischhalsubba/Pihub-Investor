@@ -10,6 +10,16 @@ header.site-header.align-items-center
 		img(src="/assets/img/logo.png", alt="Pinhub Logo")
 	nav.header-actions
 		ul
+			li.d-flex.lang__select.dropdown
+				//- label(for="langCheck") EN
+				//- input#langCheck.d-none(type="checkbox")
+				span.lang__select-btn EN
+				ul.dropdown-container
+					li
+						span DE
+				i.bx.bx-chevron-down
+
+
 			li.header-actions__item.dropdown.notification
 				a.header-notification#dropDownnMenuNotificaiton(href="",data-toggle="dropdown",aria-haspopup="true",aria-expanded="false")
 					i.bx.bx-bell
