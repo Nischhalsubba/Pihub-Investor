@@ -43,11 +43,14 @@ import Notifications from './components/notifications/List';
 import ListCreditRequest from './components/credits/ListCreditRequests';
 import DetailCreditRequest from './components/credits/DetailCreditRequest';
 import CreditorDetail from './components/credits/CreditorDetail';
+//Profile
+import ViewProfile from './components/user/profile/ViewProfile';
+
 //End of component import
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
 counterpart.setLocale(
-  'de'|| localStorage.getItem('language') || navigator.language.split('-')[0]
+  'de' || localStorage.getItem('language') || navigator.language.split('-')[0]
 );
 
 const store = createStore(
@@ -146,6 +149,8 @@ ReactDOM.render(
             path="/credit-request"
             component={RequireInvestorAuth(ListCreditRequest)}
           />
+          {/* Profile */}
+          <Route path='/user/profile' component={RequireInvestorAuth(ViewProfile)} />
           {/* <Redirect from="/credit-request/detail" to="/product" /> */}
           {/** --- End: Authenticated User's routes ___ */}
         </App>

@@ -28,7 +28,7 @@ class InvestedList extends Component {
                         <td>
                             <Link to={{
                                 pathname: '/creditor/detail',
-                                state: { id: investment.creditor_id }
+                                state: { id: investment.creditor_id, pId: investment.product_id }
                             }}> {investment.creditor_name}</Link>
                         </td>
                         <td>
@@ -62,13 +62,13 @@ class InvestedList extends Component {
                                 <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
 
                                     {/* Kreditnehmer */}
-                                <Translate content='column.creditorsname' />
+                                    <Translate content='column.creditorsname' />
                                 </th>
                                 <th data-tablesaw-sortable-col="data-tablesaw-sortable-col" data-tablesaw-priority="persist"
                                     scope="col">
                                     <Translate content='column.productname' />
                                     {/* Produktname */}
-                                    </th>
+                                </th>
                                 {/* <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                                     scope="col"><Translate content='column.services' /></th> */}
                                 <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
@@ -77,7 +77,7 @@ class InvestedList extends Component {
                                     scope="col">
                                     <Translate content='column.investedamount' />
                                     {/* Kreditbetrag */}
-                                    </th>
+                                </th>
                                 <th className="text-right-piehub-table" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                                     scope="col">
                                     <Translate content='column.duration' />
