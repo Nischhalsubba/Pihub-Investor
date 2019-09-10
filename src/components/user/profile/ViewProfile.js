@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getProfile } from '../../../actions/profile';
 import Spinner from '../../general/Spinner';
 class ViewProfile extends Component {
@@ -28,7 +29,7 @@ class ViewProfile extends Component {
                 </div>
               </div>
             </div>
-            <div class="content-head-right"><a class="btn btn-primary" href="add-new-products.html">Edit Profile   </a></div>
+            <div class="content-head-right"><Link to='user/edit-profile' class="btn btn-primary" href="add-new-products.html">Edit Profile   </Link></div>
           </div>
           <div class="content-body mt-5">
             <div class="d-flex"><img src="./assets/img/bx-briefcase.png" alt="" /><span class="ml-3 font-weight-bold">{company_name} </span></div>

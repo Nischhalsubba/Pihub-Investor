@@ -45,7 +45,7 @@ import DetailCreditRequest from './components/credits/DetailCreditRequest';
 import CreditorDetail from './components/credits/CreditorDetail';
 //Profile
 import ViewProfile from './components/user/profile/ViewProfile';
-
+import EditProfile from './components/user/profile/EditProfile';
 //End of component import
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
@@ -151,6 +151,8 @@ ReactDOM.render(
           />
           {/* Profile */}
           <Route path='/user/profile' component={RequireInvestorAuth(ViewProfile)} />
+          <Route path='/user/edit-profile' component={RequireInvestorAuth(EditProfile)} />
+
           {/* <Redirect from="/credit-request/detail" to="/product" /> */}
           {/** --- End: Authenticated User's routes ___ */}
         </App>
