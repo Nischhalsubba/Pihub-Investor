@@ -109,12 +109,7 @@ export default {
         deadline: 'Fristablauf',
         applicationcode: 'Anwendungscode',
         creditrequests: 'Kreditanträge',
-        Corporateloan:'',
-        purchase:'',
-        stocktrading:'',
-        acquisition:'',
-        project:'',
-        mezzanine:''
+        youdonot:'Sie haben noch keine Artikel!'
     },
     button: {
         Produktbearbeiten:'Produkt bearbeiten',

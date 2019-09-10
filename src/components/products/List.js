@@ -93,13 +93,12 @@ class ProductsList extends Component {
             onChange={e => this.setState({ product_title: e.target.value })}
           />
           {/* <button >Search</button> */}
-          <button className="btn btn-primary mr-sm-2" onClick={(e) => {
+          
+          <Translate content='button.search' component="button" className="btn btn-primary mr-sm-2" onClick={(e) => {
             e.preventDefault();
             this.props.getProductsList(this.props.pagination.currentPage, this.state.status, this.state.product_title)
           }
-          } >
-            Suche
-          </button>
+          } />
         </form>
         <div className="content-body">
           <table

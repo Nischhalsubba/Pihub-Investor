@@ -115,7 +115,8 @@ export default {
         stocktrading: 'Stocktrading',
         acquisition: 'Acquisition / Takeover financing',
         project: 'Project financing',
-        mezzanine: 'Mezzanine financing'
+        mezzanine: 'Mezzanine financing',
+        youdonot:'You do not have any products yet! '
     },
     button: {
         Produktbearbeiten: 'Edit Product',
