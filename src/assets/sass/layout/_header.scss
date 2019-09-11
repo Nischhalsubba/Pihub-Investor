@@ -76,22 +76,3 @@
 	}
 }
 
-.dropdown{
-	position:relative;
-	.dropdown-container{
-		display:none;
-		width:50px;
-		position: absolute;
-		top:15px;
-		padding:10px 0;
-	}
-	span.lang__select-btn{cursor: pointer;}
-
-	&:hover .dropdown-container{
-		display:block;
-	}
-}
-
-.lang__select span{
-	cursor: pointer;
-}

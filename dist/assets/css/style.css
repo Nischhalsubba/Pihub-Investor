@@ -953,22 +953,6 @@ input[type="checkbox"] {
   .content-head__title {
     font-size: 26px; }
 
-.dropdown {
-  position: relative; }
-  .dropdown .dropdown-container {
-    display: none;
-    width: 50px;
-    position: absolute;
-    top: 15px;
-    padding: 10px 0; }
-  .dropdown span.lang__select-btn {
-    cursor: pointer; }
-  .dropdown:hover .dropdown-container {
-    display: block; }
-
-.lang__select span {
-  cursor: pointer; }
-
 .container-full-width {
   width: 100%; }
 
