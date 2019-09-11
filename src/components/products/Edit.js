@@ -1,15 +1,20 @@
+
 import React, { Component, Fragment } from 'react';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
+
 import { connect } from 'react-redux';
+import { updateProduct } from '../../actions/product';
 import { getProductById } from '../../actions/product';
-import { getIndustryList } from '../../actions/industry'
+import { getIndustryList } from '../../actions/industry';
+
+import { getServiceList } from '../../actions/service';
 import Subheader from '../general/Subheader';
 import * as validation from '../../_utils/validate';
 import germanStates from '../../_german_states';
 import city from '../../_german_states/city';
-import industries from '../../_utils/industries';
-import getIndustryId from '../../_utils/getIndustryId';
 import Translate from 'react-translate-component'
+import { extractNames, extractId, getId } from '../../_utils/misc';
+
 import {
   inputField,
   dropDownField,
@@ -19,14 +24,7 @@ import {
   renderMultiselect
 } from '../../_formFields';
 
-const userOptions = [
-  'Corporate loan',
-  'Purchase financing / Finetrading',
-  'Stocktrading',
-  "Acquisition/ Takeover financing",
-  'Project financing',
-  'Mezzanine financing',
-];
+
 const credits = [
   {
     "id": 1,
@@ -54,7 +52,7 @@ const credits = [
   }
 ]
 class EditProduct extends Component {
-  state = { cities: [], ratings: [], rating_value: [], grade: '' };
+  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [] };
   componentDidMount() {
     if (!this.props.location.state) {
       // Redirect to list page if therer is no id of product to be fetched availabel
@@ -62,18 +60,29 @@ class EditProduct extends Component {
     }
     this.props.getProductById(this.props.location.state.id)
     this.props.getIndustryList();
+    this.props.getServiceList();
+    this.setState({
+      states: extractNames(germanStates)
+    })
   }
   componentDidUpdate(prevProps, prevState) {
-
     if (this.props.states !== prevProps.states) {
       this.setState({
         cities: city(this.props.states)
-      });
-    }
-    if (this.props.initialValues !== prevProps.initialValues) {
-      console.log(this.props.initialValues);
+      }, () => {
+        var c = extractNames(this.state.cities)
+        this.setState({ cityNames: c });
+      }
+      )
+    };
+    if (this.props.service !== prevProps.service) {
+      this.setState({ services: this.props.service })
+    };
+    if (this.props.industry !== prevProps.industry) {
+      this.setState({ industries: this.props.industry })
     }
   }
+
   onSubmit = formProps => {
     // To delete duplicate keys while adding credit ratings
     const filteredArr = this.state.rating_value.reverse().reduce((acc, current) => {
@@ -85,20 +94,45 @@ class EditProduct extends Component {
       }
     }, []);
     this.setState({ rating_value: filteredArr });
-    formProps.industry_id = getIndustryId(this.props.industry.list, formProps.undefined);
+    if (formProps.undefined[0] === 'Select All') {
+      formProps.industry_id = getId(this.props.industry.list, null);
+    } else {
+      formProps.industry_id = getId(this.props.industry.list, formProps.undefined, this.props.language);
+    }
+
     formProps.ratings = this.state.rating_value;
-    this.props.addProduct(formProps, () => this.props.history.push('/products'))
+    if (formProps.County[0] === 'Select All') {
+      formProps.county_ids = extractId(null, this.state.cities);
+    } else {
+      formProps.county_ids = extractId(formProps.County, this.state.cities);
+
+    }
+    if (formProps.states === 'Select All') {
+      formProps.state_ids = extractId(null, germanStates);
+    } else {
+      formProps.state_ids = extractId(formProps.states, germanStates);
+
+    }
+    console.log(formProps)
+    this.props.updateProduct(formProps, this.props.location.state.id, () => this.props.history.push({ pathname: '/product', state: { id: this.props.location.state.id } }))
   };
 
-  rC = (credits) => {
+  creditRatings = (credits) => {
     return credits.map((credit, index) => {
       return (
-        <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
-          <div class="rating-item">
-            <div class="col-10">
-              <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
-              />{credit.name}
-            </div>
+        // <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+        <div class="rating-item">
+          <div class="col-9">
+            {/* <label>Ratingagentur</label> */}
+            <Translate content='label.Ratingagentur' component="label" />
+            <br />
+            <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
+            />{credit.name}
+          </div>
+          <div class="col-9">
+            {/* <label>Kreditrating</label> */}
+            <Translate content='label.Kreditrating' component="label" />
+            <br />
             <input pattern="[a-cA-C]{1}"
               type="text" name={`rating_value[${credit.id}]`}
               onChange={(e) => this.setState({
@@ -106,9 +140,10 @@ class EditProduct extends Component {
               })
               }
               title="Grade must be either A,B or C"
-            />
-          </div>
+              class="col-3 form-control text-center"
+            /></div>
         </div>
+        // </div>
       )
     })
 
@@ -119,15 +154,17 @@ class EditProduct extends Component {
       min_creditValue,
       credit,
       time_duration,
-      max_credit_amount
+      max_credit_amount,
+      min_sales_creditor,
+      files
     } = this.props;
+    console.log(this.props.initialValues);
+    console.log(min_sales_creditor)
     return (
       <Fragment>
-        <Subheader heading={<Translate content='label.editproducts' />}/>
+        <Subheader heading={<Translate content='button.addnewproduct' />} />
         <div className="content-body">
-          <form className="form-signup"
-            onSubmit={handleSubmit(this.onSubmit)}
-          >
+          <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
             <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
@@ -145,10 +182,11 @@ class EditProduct extends Component {
                 <div className="form-group">
                   <Field
                     name="states"
-                    component={dropDownField}
-                    options={germanStates}
+                    component={renderMultiselect}
+                    data={this.state.states}
                     label={<Translate content='label.state' />}
                     validate={validation.required}
+                    placeholder={<Translate content='placeholder.select' />}
                   />
                 </div>
               </div>
@@ -157,11 +195,12 @@ class EditProduct extends Component {
               <div class="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
                   <Field
-                    name="credit_type"
+                    name="services"
                     component={dropDownField}
-                    options={industries}
+                    options={this.state.services[`${this.props.language}`]}
                     label={<Translate content='label.service' />}
                     validate={validation.required}
+                    placeholder={<Translate content='placeholder.select' />}
                   />
                 </div>
               </div>
@@ -169,10 +208,11 @@ class EditProduct extends Component {
                 <div class="form-group">
                   <Field
                     name="County"
-                    component={dropDownField}
-                    options={this.state.cities}
+                    component={renderMultiselect}
+                    data={this.state.cityNames}
                     label={<Translate content='label.country' />}
-                    validate={validation.required}
+                    // validate={validation.required}
+                    placeholder="select tags"
                   />
                 </div>
               </div>
@@ -182,9 +222,11 @@ class EditProduct extends Component {
 
                 <Field
                   component={renderMultiselect}
-                  label={<Translate content='column.industry' />}
-                  data={userOptions}
-                  className="form-group" />
+                  label={<Translate content='label.industries' />}
+                  data={this.state.industries.names ? this.state.industries.names[`${this.props.language}`] : []}
+                  className="form-group"
+                  placeholder="select tags"
+                />
               </div>
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
@@ -207,7 +249,6 @@ class EditProduct extends Component {
                         id="mincredit-amount-value"
                         value={time_duration}
                         validate={validation.required}
-                        placeholder={this.props.initialValues.time_duration}
                       />
                     </div>
                   </div>
@@ -229,6 +270,7 @@ class EditProduct extends Component {
                       validate={validation.required}
                       min="1"
                       max="100"
+
                     />
                     <div className="col col-2">
                       <input
@@ -237,9 +279,6 @@ class EditProduct extends Component {
                         id="mincredit-amount-value"
                         value={min_creditValue}
                         validate={validation.required}
-                        defaultValue={this.props.initialValues.min_credit_amount}
-                        placeholder={this.props.initialValues.min_credit_amount}
-
                       />
                     </div>
                   </div>
@@ -257,8 +296,8 @@ class EditProduct extends Component {
                       id="mincredit-amount"
                       readOnly
                       validate={validation.required}
-                      min="25000"
-                      max="5000000"
+                      min="1"
+                      max="100"
                     />
                     <div className="col col-2">
                       <input
@@ -267,19 +306,81 @@ class EditProduct extends Component {
                         id="amount"
                         value={max_credit_amount}
                         validate={validation.required}
-                        defaultValue={this.props.initialValues.max_credit_amount}
-                        placeholder={this.props.initialValues.max_credit_amount}
                       />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            <div className="row mt-4">
+
+
+            </div>
+            <div class="row mt-4">
+              <div class="col">
+                <div class="form-group">
+                  {/* <label class="d-block">Sicherheiten</label> */}
+                  <Translate content='label.Sicherheiten' component='label' className="d-block" />
+                  <div class="form-check form-check-inline">
+                    <Field
+                      type="radio"
+                      component={radioButton}
+                      value="true"
+                      name="colatoral"
+                      className="form-check-input"
+                      id="credit"
+                    />
+                    <Translate content='label.yes' component='label' class="form-check-label" for="rating-credit-yes" />
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <Field
+                      type="radio"
+                      component={radioButton}
+                      value="false"
+                      name="colatoral"
+                      className="form-check-input"
+                      id="credit"
+                    />
+                    <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
+                  </div>
+                </div>
+
+              </div>
+              <div className="col">
+                <div className="form-group">
+                  <div className="row align-items-end">
+                    <Field
+                      name="min_sales_creditor"
+                      type="range"
+                      className="w-100"
+                      component={inputSlider}
+                      label='Minimum Sales Creditor'
+                      id="mincredit-amount"
+                      validate={validation.required}
+                      min="1"
+                      max="100"
+
+                    />
+                    <div className="col col-2">
+                      <input
+                        className="form-control"
+                        type="text"
+                        id="mincredit-amount-value"
+                        value={min_sales_creditor}
+                        validate={validation.required}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
             <div class="row mt-4">
               <div class="col">
                 <div class="form-group">
                   {/* <label class="d-block">Rating for Credit</label> */}
-                  {<Translate content='label.rating' component="label" className="d-block" />}
+                  <Translate content='label.rating' component="label" class="d-block" />
                   <div class="form-check form-check-inline">
                     <Field
                       type="radio"
@@ -289,10 +390,7 @@ class EditProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    {/* <label class="form-check-label" for="rating-credit-yes">
-                      Yes
-                      </label> */}
-                      <Translate content='label.yes' component='label' class="form-check-label" for="rating-credit-yes" />
+                    <Translate content='label.yes' component='label' class="form-check-label" for="rating-credit-yes" />
                   </div>
                   <div class="form-check form-check-inline">
                     <Field
@@ -303,60 +401,57 @@ class EditProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    {/* <label class="form-check-label" for="rating-credit-no">
-                      No
-                      </label> */}
-                      <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
+                    <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
                   </div>
                 </div>
               </div>
               {credit === 'true' ? (
                 <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
-                  <div className="row">{this.rC(credits)}</div>
+                  <div className="row">{this.creditRatings(credits)}</div>
                 </div>
+                // </div>
               ) : null}
+
+
             </div>
+
+
 
             <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
-                  {/* <label className="d-block" for="">
-                    File Upload
-                    </label> */}
-                    <Translate content='label.fileupload' component="label" className="d-block" />
+                  <Translate content='label.fileupload' component="label" className="d-block" />
                   <Field
                     name="files"
                     component={renderDropzoneField}
                     type="file"
                     validate={validation.required}
                   />
+                  {files ? <strong>Filename: {files[0].name}</strong> : null}
                 </div>
               </div>
             </div>
 
             {this.props.errMsg ? (
-              <small>
-                <font color="red">{this.props.errMsg.errors}</font>
-              </small>
+              <li class="d-flex mb-1" >
+                <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
+                <span class="pl-2 green-text">{this.props.errMsg}</span>
+              </li>
+
             ) : null}
             <div className="row mt-4">
               <div className="col">
-                {/* <button className="btn btn-primary btn-form" type="submit">
-                  Submit
-                  </button> */}
-                  <Translate content='button.submit' component="button"  className="btn btn-primary btn-form" type="submit" />
+                <Translate content='button.submit' component="button" className="btn btn-primary btn-form" type="submit" />
               </div>
             </div>
           </form>
         </div>
       </Fragment>
     );
-
-
   }
 }
 function mapStateToProps(state) {
-  return { errMsg: state.errors, industry: state.industryList, initialValues: state.singleProduct.product };
+  return { errMsg: state.errors, industry: state.industryList, service: state.service, language: state.language, initialValues: state.singleProduct.product };
 }
 
 EditProduct = reduxForm({
@@ -364,24 +459,32 @@ EditProduct = reduxForm({
   enableReinitialize: true
 })(EditProduct);
 
-const selector = formValueSelector('EditProduct');
+const selector = formValueSelector('editProduct');
 EditProduct = connect(state => {
   const time_duration = selector(state, 'time_duration');
   const states = selector(state, 'states');
   const credit = selector(state, 'credit');
   const min_creditValue = selector(state, 'min_credit_amount');
   const max_credit_amount = selector(state, 'max_credit_amount');
-
+  const colatoral = selector(state, 'colatoral');
+  const interestValue = selector(state, 'interest_rate');
+  const credit_amountValue = selector(state, 'amount');
+  const min_sales_creditor = selector(state, 'min_sales_creditor')
+  const files = selector(state, 'files')
   return {
     states,
     credit,
     min_creditValue,
-
+    interestValue,
+    credit_amountValue,
     time_duration,
-    max_credit_amount
+    max_credit_amount,
+    min_sales_creditor,
+    colatoral,
+    files
   };
 })(EditProduct);
 export default connect(
   mapStateToProps,
-  { getProductById, getIndustryList }
+  { updateProduct, getIndustryList, getServiceList, getProductById }
 )(EditProduct);
