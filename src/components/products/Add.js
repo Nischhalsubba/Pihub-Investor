@@ -9,10 +9,8 @@ import Subheader from '../general/Subheader';
 import * as validation from '../../_utils/validate';
 import germanStates from '../../_german_states';
 import city from '../../_german_states/city';
-import industries from '../../_utils/industries';
-import getIndustryId from '../../_utils/getIndustryId';
 import Translate from 'react-translate-component'
-import { extractNames, extractId } from '../../_utils/misc';
+import { extractNames, extractId, getId } from '../../_utils/misc';
 
 import {
   inputField,
@@ -51,10 +49,13 @@ const credits = [
   }
 ]
 class AddProduct extends Component {
-  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [] };
+  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [] };
   componentDidMount() {
     this.props.getIndustryList();
     this.props.getServiceList();
+    this.setState({
+      states: extractNames(germanStates)
+    })
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.props.states !== prevProps.states) {
@@ -84,12 +85,11 @@ class AddProduct extends Component {
         return acc;
       }
     }, []);
-    // console.log(extractId(formProps.County, this.state.cities))
     this.setState({ rating_value: filteredArr });
     if (formProps.undefined[0] === 'Select All') {
-      formProps.industry_id = getIndustryId(this.props.industry.list, null);
+      formProps.industry_id = getId(this.props.industry.list, null);
     } else {
-      formProps.industry_id = getIndustryId(this.props.industry.list, formProps.undefined);
+      formProps.industry_id = getId(this.props.industry.list, formProps.undefined, this.props.language);
     }
 
     formProps.ratings = this.state.rating_value;
@@ -99,7 +99,13 @@ class AddProduct extends Component {
       formProps.county_ids = extractId(formProps.County, this.state.cities);
 
     }
-    // console.log('form', formProps)
+    if (formProps.states === 'Select All') {
+      formProps.state_ids = extractId(null, germanStates);
+    } else {
+      formProps.state_ids = extractId(formProps.states, germanStates);
+
+    }
+    console.log('form', formProps)
     this.props.addProduct(formProps, () => this.props.history.push('/products'))
   };
 
@@ -141,9 +147,10 @@ class AddProduct extends Component {
       credit,
       time_duration,
       max_credit_amount,
-      industry
+      min_sales_creditor,
+      files
     } = this.props;
-    console.log(this.state.industries.names)
+    console.log(this.state.states)
     return (
       <Fragment>
         <Subheader heading={<Translate content='button.addnewproduct' />} />
@@ -166,8 +173,8 @@ class AddProduct extends Component {
                 <div className="form-group">
                   <Field
                     name="states"
-                    component={dropDownField}
-                    options={germanStates}
+                    component={renderMultiselect}
+                    data={this.state.states}
                     label={<Translate content='label.state' />}
                     validate={validation.required}
                     placeholder={<Translate content='placeholder.select' />}
@@ -300,6 +307,70 @@ class AddProduct extends Component {
               </div>
             </div>
 
+            <div className="row mt-4">
+
+
+            </div>
+            <div class="row mt-4">
+              <div class="col">
+                <div class="form-group">
+                  {/* <label class="d-block">Sicherheiten</label> */}
+                  <Translate content='label.Sicherheiten' component='label' className="d-block" />
+                  <div class="form-check form-check-inline">
+                    <Field
+                      type="radio"
+                      component={radioButton}
+                      value="true"
+                      name="colatoral"
+                      className="form-check-input"
+                      id="credit"
+                    />
+                    <Translate content='label.yes' component='label' class="form-check-label" for="rating-credit-yes" />
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <Field
+                      type="radio"
+                      component={radioButton}
+                      value="false"
+                      name="colatoral"
+                      className="form-check-input"
+                      id="credit"
+                    />
+                    <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
+                  </div>
+                </div>
+
+              </div>
+              <div className="col">
+                <div className="form-group">
+                  <div className="row align-items-end">
+                    <Field
+                      name="min_sales_creditor"
+                      type="range"
+                      className="w-100"
+                      component={inputSlider}
+                      label='Minimum Sales Creditor'
+                      id="mincredit-amount"
+                      validate={validation.required}
+                      min="1"
+                      max="100"
+
+                    />
+                    <div className="col col-2">
+                      <input
+                        className="form-control"
+                        type="text"
+                        id="mincredit-amount-value"
+                        value={min_sales_creditor}
+                        validate={validation.required}
+                        placeholder="$0"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
             <div class="row mt-4">
               <div class="col">
                 <div class="form-group">
@@ -335,40 +406,11 @@ class AddProduct extends Component {
                 </div>
                 // </div>
               ) : null}
-            </div>
 
-            <div class="row mt-4">
-              <div class="col">
-                <div class="form-group">
-                  {/* <label class="d-block">Sicherheiten</label> */}
-                  <Translate content='label.Sicherheiten' component='label' className="d-block" />
-                  <div class="form-check form-check-inline">
-                    <Field
-                      type="radio"
-                      component={radioButton}
-                      value="true"
-                      name="colatoral"
-                      className="form-check-input"
-                      id="credit"
-                    />
-                    <Translate content='label.yes' component='label' class="form-check-label" for="rating-credit-yes" />
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <Field
-                      type="radio"
-                      component={radioButton}
-                      value="false"
-                      name="colatoral"
-                      className="form-check-input"
-                      id="credit"
-                    />
-                    <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
-                  </div>
-                </div>
-
-              </div>
 
             </div>
+
+
 
             <div className="row mt-4">
               <div className="col">
@@ -380,14 +422,17 @@ class AddProduct extends Component {
                     type="file"
                     validate={validation.required}
                   />
+                  {files ? <strong>Filename: {files[0].name}</strong> : null}
                 </div>
               </div>
             </div>
 
             {this.props.errMsg ? (
-              <small>
-                <font color="red">{this.props.errMsg.errors}</font>
-              </small>
+              <li class="d-flex mb-1" >
+                <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
+                <span class="pl-2 green-text">{this.props.errMsg}</span>
+              </li>
+
             ) : null}
             <div className="row mt-4">
               <div className="col">
@@ -418,7 +463,8 @@ AddProduct = connect(state => {
   const colatoral = selector(state, 'colatoral');
   const interestValue = selector(state, 'interest_rate');
   const credit_amountValue = selector(state, 'amount');
-
+  const min_sales_creditor = selector(state, 'min_sales_creditor')
+  const files = selector(state, 'files')
   return {
     states,
     credit,
@@ -427,7 +473,9 @@ AddProduct = connect(state => {
     credit_amountValue,
     time_duration,
     max_credit_amount,
-    colatoral
+    min_sales_creditor,
+    colatoral,
+    files
   };
 })(AddProduct);
 export default connect(

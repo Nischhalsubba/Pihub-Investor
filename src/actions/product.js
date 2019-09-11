@@ -42,16 +42,16 @@ export const getProductsList = (page, status, product_title) => async dispatch =
 export const addProduct = (details, callback) => async dispatch => {
   // Once the data needed are finalized,need to refactor those codes below //
   try {
-    console.log(details)
     var body = new FormData();
     body.set('product_title', details.product_title);
-    body.set('state_id', details.states.value);
+    body.set('state_ids', details.state_ids.toString());
     body.set('county_ids', details.county_ids.toString());
     body.append('industry_ids', details.industry_id.toString());
     body.set('service_id', details.services.value);
     body.set('time_duration', details.time_duration);
     body.set('min_credit_amount', details.min_credit_amount);
     body.set('max_credit_amount', details.max_credit_amount);
+    body.set('min_sales_creditor', details.min_sales_creditor)
     if (details.colatoral === 'true') {
       body.set('collatoral', 1)
     } else {
@@ -92,6 +92,9 @@ export const getProductById = id => async dispatch => {
       payload: response.data.data
     });
   } catch (e) {
-    console.log(e);
+    dispatch({
+      type: ERROR,
+      payload: e.response.data.errors
+    });
   }
 };

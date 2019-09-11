@@ -12,9 +12,16 @@ export const extractId = (list, mainList) => {
   if (list) {
     list.map((name) => {
       return mainList.map((main) => {
-        if (name === main.label) {
-          r.push(main.id)
+        if (main.id) {
+          if (name === main.label) {
+            r.push(main.id)
+          }
+        } else if (main.value) {
+          if (name === main.label) {
+            r.push(main.value)
+          }
         }
+
       })
     })
   } else {
@@ -51,5 +58,25 @@ export const splitIndustries = (array) => {
     german.push(arr.name.de);
   });
   var result = { en: english, de: german };
+  return result;
+}
+
+export const getId = (mainList, list, language) => {
+
+  var result = [];
+  if (list) {
+    list.map(m => {
+      return mainList.map(ml => {
+        if (ml.name[`${language}`] === m) {
+          result.push(ml.id);
+        }
+      })
+    })
+  } else {
+    return mainList.map(ml => {
+      result.push(ml.id)
+    })
+  }
+  console.log(result);
   return result;
 }
