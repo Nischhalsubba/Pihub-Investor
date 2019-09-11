@@ -19,7 +19,10 @@ export const extractId = (list, mainList) => {
     })
   } else {
     return mainList.map((m) => {
-      r.push(m.id)
+      if (m.id !== 'undefined') {
+        return r.push(m.id)
+
+      }
     })
   }
 

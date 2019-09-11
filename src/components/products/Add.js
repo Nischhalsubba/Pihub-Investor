@@ -23,51 +23,7 @@ import {
   renderMultiselect
 } from '../../_formFields';
 
-const userOptions = [
-  {
-    "value": 1,
 
-
-    "label": "Corporate loan",
-
-  },
-  {
-    "value": 2,
-
-
-    "label": "Purchase financing / Finetrading",
-
-  },
-  {
-    "value": 3,
-
-
-    "label": "Stocktrading",
-
-  },
-  {
-    "value": 4,
-
-
-    "label": "Acquisition / Takeover financing",
-
-
-  },
-  {
-    "value": 5,
-
-
-    "label": "Project financing",
-
-  },
-  {
-    "value": 6,
-
-
-    "label": "Mezzanine financing",
-
-  }
-];
 const credits = [
   {
     "id": 1,

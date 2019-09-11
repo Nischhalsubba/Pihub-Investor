@@ -42,6 +42,7 @@ export const getProductsList = (page, status, product_title) => async dispatch =
 export const addProduct = (details, callback) => async dispatch => {
   // Once the data needed are finalized,need to refactor those codes below //
   try {
+    console.log(details)
     var body = new FormData();
     body.set('product_title', details.product_title);
     body.set('state_id', details.states.value);
@@ -62,7 +63,6 @@ export const addProduct = (details, callback) => async dispatch => {
       body.set('rating_for_credit', 0)
 
     }
-    body.set('collatorals', details.collatorals);
     body.set('ratings', details.ratings);
     body.append('files[0]', details.files[0]);
     const response = await clientWithForm.post(routes.addProduct, body);
