@@ -505,7 +505,14 @@ table {
     border-top: none; }
   .table td,
   .table th {
-    padding: 20px 0; }
+    padding: 15px;
+    vertical-align: middle; }
+    .table td:first-child,
+    .table th:first-child {
+      padding-left: 0; }
+    .table td:last-child,
+    .table th:last-child {
+      padding-right: 0; }
 
 a {
   color: #05101a; }
