@@ -29,7 +29,7 @@ export const extractId = (list, mainList) => {
   return r;
 }
 
-export const splitService = (array, lang) => {
+export const splitService = (array) => {
   var english = [];
   var german = [];
   array.map((arr) => {
@@ -41,4 +41,15 @@ export const splitService = (array, lang) => {
   var result = { en: english, de: german };
   return result;
 
+}
+
+export const splitIndustries = (array) => {
+  var english = [];
+  var german = [];
+  array.map(arr => {
+    english.push(arr.name.en);
+    german.push(arr.name.de);
+  });
+  var result = { en: english, de: german };
+  return result;
 }

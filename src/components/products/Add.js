@@ -51,7 +51,7 @@ const credits = [
   }
 ]
 class AddProduct extends Component {
-  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [] };
+  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [] };
   componentDidMount() {
     this.props.getIndustryList();
     this.props.getServiceList();
@@ -68,6 +68,9 @@ class AddProduct extends Component {
     };
     if (this.props.service !== prevProps.service) {
       this.setState({ services: this.props.service })
+    };
+    if (this.props.industry !== prevProps.industry) {
+      this.setState({ industries: this.props.industry })
     }
   }
 
@@ -138,8 +141,9 @@ class AddProduct extends Component {
       credit,
       time_duration,
       max_credit_amount,
+      industry
     } = this.props;
-
+    console.log(this.state.industries.names)
     return (
       <Fragment>
         <Subheader heading={<Translate content='button.addnewproduct' />} />
@@ -177,7 +181,6 @@ class AddProduct extends Component {
                   <Field
                     name="services"
                     component={dropDownField}
-                    // options={userOptions}
                     options={this.state.services[`${this.props.language}`]}
                     label={<Translate content='label.service' />}
                     validate={validation.required}
@@ -204,7 +207,7 @@ class AddProduct extends Component {
                 <Field
                   component={renderMultiselect}
                   label={<Translate content='label.industries' />}
-                  data={industries}
+                  data={this.state.industries.names ? this.state.industries.names[`${this.props.language}`] : []}
                   className="form-group"
                   placeholder="select tags"
                 />
@@ -362,14 +365,7 @@ class AddProduct extends Component {
                     <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
                   </div>
                 </div>
-                {/* {colatoral === 'true' ? (
-                  <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
-                    <div className="row">
-                      {
-                        <FieldArray name="collatorals" component={this.renderColatoral} />
-                      }</div>
-                  </div>
-                ) : null} */}
+
               </div>
 
             </div>
