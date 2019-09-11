@@ -11,17 +11,16 @@ html(lang="en")
             .main-content.main-content--padded
                 include templates/site-header
                 .content-head
-                    .content-head-left
+                    .content-head-left.w-50
                         .row
                             .col-2.position-relative
-                                img(src="/assets/img/profile-picture.png", alt="alt")
+                                img(src="/assets/img/vw.png", alt="alt",width="120px",height="120px")
                                 img.verify(src="/assets/img/verify.png", alt="alt")
                             .col-10
-                                h2 Dino Hwang
+                                h2 Volkswagen Group
                                     span.badge-primary.p-2.rounded.ml-2 Verified
-                                span.mt-2 Darmstadth, Germany
-                                p.mt-2 Born in small family, worked my way to this point, now an entrepreneur helping startup touch the sky
-                                .d-flex.social-media
+                                span Wolfsburg, Germany
+                                .d-flex.social-media.mt-2
                                     a(href="#", target="_blank", rel="noopener noreferrer")
                                         img.mr-3(src="/assets/img/icons/facebook.png", alt="alt", width="25px", height="25px")
                                     a(href="#", target="_blank", rel="noopener noreferrer")
@@ -34,21 +33,17 @@ html(lang="en")
                 .content-body.mt-5
                     .d-flex
                         img(src="./assets/img/bx-briefcase.png", alt="")
-                        span.ml-3.font-weight-bold Droomwave Home Appliances 
+                        span.ml-3.font-weight-bold Sparkasse
                     .d-flex.mt-4
                         img(src="./assets/img/bx-map.png", alt="")
                         span.ml-3.font-weight-bold Darmstadth, Germany
-                    .d-flex.mt-4
+                    .d-flex.mt-4.phone
                         img(src="./assets/img/bx-phone.png", alt="")
-                        span.ml-3.font-weight-bold 098 76 543210
-                            span.badge-primary.p-2.rounded.ml-2.mb-2 Hidden
-                    .d-flex.mt-4
-                        img(src="./assets/img/bx-envelope.png", alt="")
-                        span.ml-3.font-weight-bold dinohwang@gmail.com
-                            span.badge-primary.p-2.rounded.ml-2.mb-2 Hidden
-                    .d-flex.mt-4
-                        img(src="./assets/img/icons/headquarter.png", alt="")
-                        span.ml-3.font-weight-bold Millbrook Lea Street , 64283
+                        .d-flex.flex-column
+                            span.ml-3.font-weight-bold Rosa Renata
+                                //- span.badge-primary.p-2.rounded.ml-2.mb-2 Hidden 
+                            span.ml-3.font-weight-bold Rosa@yahoo.com
+                            span.ml-3.font-weight-bold +49 9877458547
                     .d-flex.mt-4
                         img(src="./assets/img/icons/contact-person.png", alt="",width="20px")
                         span.ml-3.font-weight-bold Contact Person
@@ -60,8 +55,4 @@ html(lang="en")
                         .item.ml-4.d-flex.flex-column
                             h4 Meine Ferdi 
                             span.mb-2 Meine@yahoo.com
-                            span +49 9877458547
-                        .item.ml-4.d-flex.flex-column
-                            h4 Rosa Renata 
-                            span.mb-2 Rosa@yahoo.com
                             span +49 9877458547
