@@ -18,5 +18,6 @@ export const routes = {
   emailVerification: `${API_URL}/email-verification`,
   getCreditorDetail: `${API_URL}/investor/creditor-detail`,
   uploadFile: `${API_URL}/investor/products`,
-  getProfile: `${API_URL}/me`
+  getProfile: `${API_URL}/me`,
+  getService: `${API_URL}/services`
 };

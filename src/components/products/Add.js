@@ -3,7 +3,8 @@ import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
 
 import { connect } from 'react-redux';
 import { addProduct } from '../../actions/product';
-import { getIndustryList } from '../../actions/industry'
+import { getIndustryList } from '../../actions/industry';
+import { getServiceList } from '../../actions/service';
 import Subheader from '../general/Subheader';
 import * as validation from '../../_utils/validate';
 import germanStates from '../../_german_states';
@@ -21,7 +22,6 @@ import {
   radioButton,
   renderMultiselect
 } from '../../_formFields';
-import { NONAME } from 'dns';
 
 const userOptions = [
   {
@@ -95,9 +95,10 @@ const credits = [
   }
 ]
 class AddProduct extends Component {
-  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [] };
+  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [] };
   componentDidMount() {
     this.props.getIndustryList();
+    this.props.getServiceList();
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.props.states !== prevProps.states) {
@@ -105,58 +106,15 @@ class AddProduct extends Component {
         cities: city(this.props.states)
       }, () => {
         var c = extractNames(this.state.cities)
-        console.log('c', c);
         this.setState({ cityNames: c });
       }
       )
+    };
+    if (this.props.service !== prevProps.service) {
+      this.setState({ services: this.props.service })
     }
   }
-  renderColatoral = ({ fields, meta: { touched, error, submitFailed } }) => (
 
-    <ul>
-
-      {fields.map((member, index) =>
-        <li key={index} className="col-12">
-          {/* <button
-            type="button"
-            title="Remove Member"
-            onClick={() => fields.remove(index)} /> */}
-          <h4>Sicherheiten #{index + 1}</h4>
-          <div className='row'>
-            <div className="col-6">
-              <Field
-                name={`${member}.name`}
-                type="text"
-                component={inputField}
-                label="Sicherhetian"
-                className="form-control"
-
-              />
-            </div>
-            <div className="col-6">
-              <Field
-                name={`${member}.value`}
-                type="text"
-                component={inputField}
-                label="Wert"
-                className="form-control"
-
-              />
-            </div>
-          </div>
-
-
-        </li>
-
-      )}
-      <li >
-        <a type="button" onClick={() => fields.push({})}>Sicherheiten hinzufügen</a>
-        {(touched || submitFailed) && error && <span>{error}</span>}
-      </li>
-    </ul>
-    //   </div>
-    // </div>
-  )
   onSubmit = formProps => {
     // To delete duplicate keys while adding credit ratings
     const filteredArr = this.state.rating_value.reverse().reduce((acc, current) => {
@@ -224,7 +182,6 @@ class AddProduct extends Component {
       credit,
       time_duration,
       max_credit_amount,
-      colatoral
     } = this.props;
 
     return (
@@ -264,7 +221,8 @@ class AddProduct extends Component {
                   <Field
                     name="services"
                     component={dropDownField}
-                    options={userOptions}
+                    // options={userOptions}
+                    options={this.state.services[`${this.props.language}`]}
                     label={<Translate content='label.service' />}
                     validate={validation.required}
                     placeholder={<Translate content='placeholder.select' />}
@@ -278,7 +236,7 @@ class AddProduct extends Component {
                     component={renderMultiselect}
                     data={this.state.cityNames}
                     label={<Translate content='label.country' />}
-                  // validate={validation.required}
+                    // validate={validation.required}
                     placeholder="select tags"
                   />
                 </div>
@@ -293,7 +251,7 @@ class AddProduct extends Component {
                   data={industries}
                   className="form-group"
                   placeholder="select tags"
-                  />
+                />
               </div>
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
@@ -491,7 +449,7 @@ class AddProduct extends Component {
   }
 }
 function mapStateToProps(state) {
-  return { errMsg: state.errors, industry: state.industryList };
+  return { errMsg: state.errors, industry: state.industryList, service: state.service, language: state.language };
 }
 
 AddProduct = reduxForm({
@@ -522,5 +480,5 @@ AddProduct = connect(state => {
 })(AddProduct);
 export default connect(
   mapStateToProps,
-  { addProduct, getIndustryList }
+  { addProduct, getIndustryList, getServiceList }
 )(AddProduct);

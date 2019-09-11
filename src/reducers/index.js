@@ -16,6 +16,7 @@ import investment from './investment';
 import language from './language';
 import creditorDetail from './creditorDetail';
 import profile from './profile';
+import service from './service';
 const rootReducer = combineReducers({
   user,
   auth,
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   investment,
   creditorDetail,
   profile,
+  service,
   form: formReducer
 });
 

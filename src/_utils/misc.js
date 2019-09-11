@@ -1,5 +1,4 @@
 export const extractNames = (list) => {
-  console.log(list);
   var r = [];
   list.map(l => {
     r.push(l.label);
@@ -25,4 +24,18 @@ export const extractId = (list, mainList) => {
   }
 
   return r;
+}
+
+export const splitService = (array, lang) => {
+  var english = [];
+  var german = [];
+  array.map((arr) => {
+    var en = { value: arr.id, label: arr.name.en };
+    var de = { value: arr.id, label: arr.name.de };
+    english.push(en);
+    german.push(de);
+  });
+  var result = { en: english, de: german };
+  return result;
+
 }

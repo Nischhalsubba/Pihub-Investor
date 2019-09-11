@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import counterpart from 'counterpart';
 import { getNotificationCount } from '../../actions/notification';
-import {changeLanguage} from '../../actions/changeLanguage';
+import { changeLanguage } from '../../actions/changeLanguage';
 import { logout } from '../../actions/login';
 import Translate from 'react-translate-component';
 import en from '../../_locale/en';
@@ -12,13 +12,16 @@ import de from '../../_locale/de';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
 counterpart.setLocale(
-  'de'||localStorage.getItem('language')||navigator.language.split('-')[0]
+  'de' || localStorage.getItem('language') || navigator.language.split('-')[0]
 );
 class Header extends Component {
-  onChange = e=>{
-    let language = e.target.value;
-    counterpart.setLocale(e.target.value);
-    this.props.changeLanguage(language);
+  state = { language: localStorage.getItem('language') || 'de' }
+  onChange = e => {
+
+    // let language = e.target.value;
+    counterpart.setLocale(e);
+    this.setState({ language: e })
+    this.props.changeLanguage(e);
   }
   componentDidMount() {
     this.props.getNotificationCount();
@@ -32,15 +35,15 @@ class Header extends Component {
         </div>
         <nav class="header-actions">
           <ul>
-            {/* <li class="d-flex lang__select dropdown">
-              <span class="lang__select-btn">EN</span>
+            <li class="d-flex lang__select dropdown">
+              <span onClick={() => this.onChange('en')}>EN</span>
               <ul class="dropdown-container">
                 <li>
-                  <span>DE</span>
+                  <span className='lang__select-btn' onClick={() => this.onChange('de')}>DE</span>
                 </li>
               </ul>
               <i class="bx bx-chevron-down"></i>
-            </li> */}
+            </li>
             <li className="header-actions__item">
 
               <Link className="header-notification" to="/notifications">
@@ -48,23 +51,7 @@ class Header extends Component {
                 <span className="notification-count">{this.props.count}</span>
               </Link>
             </li>
-            <li class="d-flex lang__select dropdown">
-            
-              <select
-              className="dropdown-container"
-              name=""
-              id=""
-              onChange={this.onChange}
-              >
-                <option  value="en">en</option>
-                <option
-                value="de"
-                selected={counterpart.getLocale()==='de'}
-                >de</option>
-                
-              </select>
-              
-            </li>
+
             <li className="header-dropdown">
               <a className="header-user-dropdown">
                 <img src="/assets/img/user.png" alt="John Doe" />
@@ -89,7 +76,7 @@ class Header extends Component {
   }
 }
 function mapStateToProps(state) {
-  return { count: state.notificationCount, language:state.language };
+  return { count: state.notificationCount, language: state.language };
 }
 export default connect(
   mapStateToProps,
