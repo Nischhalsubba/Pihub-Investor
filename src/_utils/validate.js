@@ -23,12 +23,3 @@ export const password = value =>
     ? `Password must contain atleast one Capital letter, one small letter, one numeric value and must be 8 digit long`
     : undefined;
 
-var pattern = new RegExp(
-  '^(https?:\\/\\/)?' +
-  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
-  '((\\d{1,3}\\.){3}\\d{1,3}))' +
-  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
-  '(\\?[;&a-z\\d%_.~+=-]*)?' +
-  '(\\#[-a-z\\d_]*)?$',
-  'i'
-);
