@@ -63,7 +63,10 @@ html(lang="en")
 									label(for="amount") Minimum credit Amount
 									.form-group-ranger
 										input.range-slider(type="range", name="")
-										input.form-control(type="text", name="",value="£ 50.000")
+										.input-group
+											.input-group-prepend
+												span.input-group-text €
+											input.form-control(type="text", name="",value="£ 50.000")
 							.col-12.col-sm-12.col-md-6
 								.form-group
 									label(for="amount") Maximum credit Amount

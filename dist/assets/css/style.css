@@ -870,9 +870,9 @@ input[type="checkbox"] {
       top: -8px; }
       .form-group-ranger .range-slider.noUi-horizontal .noUi-handle::before, .form-group-ranger .range-slider.noUi-horizontal .noUi-handle::after {
         content: none; }
-  .form-group-ranger .form-control {
-    width: 100px; }
-    .form-group-ranger .form-control:last-child {
+  .form-group-ranger .input-group {
+    width: 200px; }
+    .form-group-ranger .input-group:last-child {
       margin-left: 15px; }
 
 .page-header {
