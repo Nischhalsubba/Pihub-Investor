@@ -14,40 +14,44 @@ html(lang="en")
                     .content-head-left.w-100
                         .row.align-items-center
                             .col-1.position-relative
-                                img(src="/assets/img/profile-picture.png", alt="alt")
+                                img(src="/assets/img/vw.png", alt="alt",width="120px",height="120px")
                                 img.verify(src="/assets/img/verify.png", alt="alt")
                             .col-11
                                 a.btn.btn-outline-light(href="") Change profile picture
                 .content-body
                     form.form-signup(action="add-new-products-sucess.html")
                         .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label Company Name
+                                    input(type="text", name="company-name" class="form-control" placeholder="Volkswagen Group")
+                        .row.mt-4
                             .col-12.col-sm-12.col-md-6
                                 .form-group
                                     label First Name
-                                    input(type="text", name="first-name" class="form-control" placeholder="Dino")
+                                    input(type="text", name="first-name" class="form-control" placeholder="Rosa")
                             .col-12.col-sm-12.col-md-6
                                 .form-group
                                     label Last Name
-                                    input(type="text", name="last-name" class="form-control" placeholder="Hwang")
+                                    input(type="text", name="last-name" class="form-control" placeholder="Renata")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label Email Address
+                                    input(type="email", name="first-name" class="form-control" placeholder="Rosa@yahoo.com")
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label Phone Number
+                                    input(type="number", name="last-name" class="form-control" placeholder="+49 9877458547")
                         .row.mt-4
                             .col-12.col-sm-12.col-md-12
                                 .form-group
-                                    label Headquarter
+                                    label Headquarter Address
                                     input(type="text", name="company-name" class="form-control" placeholder="Millbrook Lea Street , 64283")
                         .row.mt-4
                             .col-12.col-sm-12.col-md-12
                                 .form-group
-                                    label Company Name
-                                    input(type="text", name="company-name" class="form-control" placeholder="Droomwave Home Appliances")
-                        .row.mt-4
-                            .col-12.col-sm-12.col-md-12
-                                .form-group
-                                    label Email Address
-                                    input(type="email", name="email" class="form-control" placeholder="dinohwang@gmail.com")
-                        .row.mt-4
-                            .col-12.col-sm-12.col-md-12
-                                .form-group
-                                    label old password
+                                    label Old password
                                     input.mb-2(type="password", name="email" class="form-control" placeholder="unchanged")
                                     a(href="#") Click here to change password
                         .row.mt-4
@@ -61,39 +65,20 @@ html(lang="en")
                                 .form-group
                                     label Confirm Password
                                     input(type="password", name="email" class="form-control" placeholder="Confirm password")
-                        .row.mt-4
-                            .col-12.col-sm-12.col-md-12
-                                .form-group
-                                    label Phone Number
-                                    .row
-                                        .col-1
-                                            select.form-control.states
-                                                option(value=" ") DE
-                                                option(value="Advertisement/Online Marketing") US
-                                                option(value="Advertisement/Marketing") UK
-                                                option(value="Advertisement/Offine Marketing") AUS
 
-                                        .col-11
-                                            input(type="number", name="email" class="form-control" placeholder="+49 123 456 789")
                         .row.mt-4
-                            .col-4.col-sm-12.col-md-4
-                                label(for="") Contact Person
-                                .form-group
-                                    input.mb-2(type="text", name="full-name" class="form-control" placeholder="Ria Quirin")                                    
-                                    input.mb-2(type="email", name="email" class="form-control" placeholder="Ria@yahoo.com")
-                                    input(type="number", name="email" class="form-control" placeholder="+49 123 456 789")
-                            .col-4.col-sm-12.col-md-4
+                            .col-6.col-sm-12.col-md-6
                                 label(for="") Contact Person
                                 .form-group
                                     input.mb-2(type="text", name="full-name" class="form-control" placeholder="Meine Ferdi ")                                    
                                     input.mb-2(type="email", name="email" class="form-control" placeholder="Meine@yahoo.com")
                                     input(type="number", name="email" class="form-control" placeholder="+49 9877458547")
-                            .col-4.col-sm-12.col-md-4
+                            .col-6.col-sm-12.col-md-6
                                 label(for="") Contact Person
                                 .form-group
-                                    input.mb-2(type="text", name="full-name" class="form-control" placeholder="Rosa Renata")                                    
-                                    input.mb-2(type="email", name="email" class="form-control" placeholder="Rosa@yahoo.com")
-                                    input(type="number", name="email" class="form-control" placeholder="+49 123 456 789")
+                                    input.mb-2(type="text", name="full-name" class="form-control" placeholder="Ria Quirin ")                                    
+                                    input.mb-2(type="email", name="email" class="form-control" placeholder="Ria@yahoo.com")
+                                    input(type="number", name="email" class="form-control" placeholder="+49 301234567")
                         .row.mt-4
                             .col-12.col-sm-12.col-md-12
                                 label(for="") Social Media
@@ -109,6 +94,13 @@ html(lang="en")
                         .row.mt-4
                             .col-12.col-sm-12.col-md-12
                                 .form-group
-                                    label Your short info
-                                    textarea(name="", cols="30", rows="5" , placeholder="Born in small family, worked my way to this point, now an entrepreneur helping startup touch the sky")
+                                    label(for="" class="d-block") File Upload
+                                    .border-dotted
+                                        .border-dotted-center.w-25.position-absolute
+                                            img(src="./assets/img/icons/bx-cloud-upload.png", alt="" class="d-block m-auto")
+                                            .text-center.mt-3
+                                                a(href="" class="font-weight-bold") Add file 
+                                                span
+                                                    | or drop files here
+                                                    input(type="file", name="" class="d-none")
                         button.btn.btn-primary(type="submit") Update

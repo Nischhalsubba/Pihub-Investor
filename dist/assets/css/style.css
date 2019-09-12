@@ -247,7 +247,8 @@ h6 {
   font-size: 16px; }
 
 .border-dotted {
-  border: 2px dashed #7e91e5; }
+  border: 2px dashed #7e91e5;
+  height: 200px; }
 
 .btn-accept {
   background-color: #40C057;
@@ -329,6 +330,9 @@ h6 {
   position: absolute;
   right: 5px;
   bottom: 15px; }
+
+.company-image .col {
+  width: 120px !important; }
 
 .credit-request p {
   line-height: 26px; }
@@ -799,7 +803,7 @@ label {
 .dz-size {
   margin-left: 2rem; }
 
-.dz-message {
+.border-dotted-center {
   left: 35%;
   top: 35%; }
 

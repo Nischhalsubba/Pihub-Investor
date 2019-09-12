@@ -1,5 +1,6 @@
 .border-dotted {
     border: 2px dashed $color-secondary;
+    height: 200px;
 }
 
 .btn-accept {
@@ -101,4 +102,8 @@
     position: absolute;
     right: 5px;
     bottom: 15px;
+}
+
+.company-image .col{
+    width: 120px !important;
 }
