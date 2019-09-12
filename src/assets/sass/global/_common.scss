@@ -1,105 +1,44 @@
 .border-dotted {
-    border: 2px dashed $color-secondary;
+	border: 2px dashed $color-secondary;
 }
 
 .btn-accept {
-    background-color: #40C057;
-    color: $color-white;
+	background-color: #40c057;
+	color: $color-white;
 }
 
 .btn-reject {
-    background-color: $color-brand-danger;
-    color: $color-white;
+	background-color: $color-brand-danger;
+	color: $color-white;
 }
 
 .btn-option {
-    background-color: #DDE2EB;
-    color: #BEC6D6;
+	background-color: #dde2eb;
+	color: #bec6d6;
 }
 
 .alert-sucess {
-    background-color: #E2FCE6;
-    border: 1px solid #91BF97;
-    color: #358444;
+	background-color: #e2fce6;
+	border: 1px solid #91bf97;
+	color: #358444;
 }
 
 .alert-rejected {
-    background-color: #FFE3E3;
-    border: 1px solid #FF6B6B;
-    color: #F03E3E;
+	background-color: #ffe3e3;
+	border: 1px solid #ff6b6b;
+	color: #f03e3e;
 }
 
 .text-right-piehub-table {
-    text-align: right !important;
+	text-align: right !important;
 }
 
 .form-control {
-    height: 45px !important;
-}
-
-.error {
-    border: 1px solid #FF8787;
-}
-
-.error-text {
-    color: #FF8787;
-}
-
-.green {
-    border: 1px solid $color-success;
-}
-
-.green-text {
-    color: $color-success;
-}
-
-
-.badge {
-    display:block;
-    padding: 11px 10px;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    border-radius: 3px;
-    width:80%;
-    float: right;
-}
-
-.badge-primary {
-    background-color: $color-primary;
-    color: $color-white;
-    font-size: 10px !important;
-}
-
-.badge-warning{
-    background-color: $color-awaiting;
-    color: darken($color-awaiting, $amount: 60);
-}
-
-.badge-deleted{
-    background-color: $color-white;
-    color: $color-primary;
-    border: 1px solid $color-primary;
-}
-
-.badge-suspended{
-    background-color: $color-gray-0;
-    color: $color-primary;
-}
-
-.badge-success {
-    background-color: $color-success;
-    color: $color-white;
-    // padding: 12px 41px;
-}
-
-.badge-danger {
-    background-color: $color-rejected;
-    color: $color-white;
+	height: 45px !important;
 }
 
 .verify {
-    position: absolute;
-    bottom: 20px;
-    right: 10px;
+	position: absolute;
+	bottom: 20px;
+	right: 10px;
 }
