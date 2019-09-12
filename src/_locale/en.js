@@ -38,6 +38,7 @@ export default {
     },
     label: {
         Produktdetail: 'Product detail',
+        processing: 'Processing',
         AngebotErstellt: 'Offer sent',
         theperfect: 'The Perfect Investment',
         Sicherheiten: 'Collateral',

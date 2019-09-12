@@ -39,6 +39,7 @@ export default {
         Produktdetail: 'Produktdetails',
         AngebotErstellt: 'Angebot Erstellt',
         ZuBearbeiten: 'Zu Bearbeiten',
+        processing: 'Zu Bearbeiten',
         Kreditorname: 'Kreditorname',
         theperfect: 'Die perfekte Investition',
         atcredittech: 'Bei Credittech können Sie leicht einen Gläubiger finden und eine Investition tätigen',

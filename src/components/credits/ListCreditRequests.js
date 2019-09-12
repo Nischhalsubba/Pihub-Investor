@@ -38,11 +38,11 @@ class ListCreditRequests extends Component {
             €{product.max_credit_amount || 100000}
           </td>
           <td className="text-right-piehub-table font-weight-bold">
-            {product.status === 'offer_sent' ? <span className="badge badge-danger"><Translate content='label.AngebotErstellt' /></span>
+            {product.status === 'offer_sent' ? <span className="badge badge-warning"><Translate content='label.AngebotErstellt' /></span>
               : null}
-            {product.status === 'rejected' ? <span className="badge badge-warning"><Translate content='label.rejected' /></span>
+            {product.status === 'rejected' ? <span className="badge badge-danger"><Translate content='label.rejected' /></span>
               : null}
-            {product.status === 'open' ? <span className="badge badge-success"><Translate content='label.ZuBearbeiten' /></span>
+            {product.status === 'open' ? <span className="badge badge-success"><Translate content='label.processing' /></span>
               : null}
           </td>
         </tr>
