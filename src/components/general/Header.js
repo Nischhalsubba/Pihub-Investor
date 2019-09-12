@@ -37,13 +37,13 @@ class Header extends Component {
           <ul>
             <ul className="language-changer">
               <li>
-                <button>
+                <button onClick={() => this.onChange('en')}>
                   <img src="assets/img/gb.svg" alt="English Language" />
                   English
                   </button>
               </li>
               <li>
-                <button>
+                <button onClick={() => this.onChange('de')}>
                   <img src="assets/img/de.svg" alt="Deutsch Language" />
                   Deutsch
                   </button>
