@@ -47,59 +47,15 @@ class Header extends Component {
               </Link>
             </li>
 
-            {/* <li className="header-dropdown">
-              <a className="header-user-dropdown">
-                <img src="/assets/img/user.png" alt="John Doe" />
-                <i className="bx bx-chevron-down" />
 
-                <Translate content='label.logout' component="span" onClick={() =>
-                  this.props.logout(() => this.props.history.push('/login'))
-                } />
-              </a>
-            </li> */}
-            {/* <li class="header-actions__item header-dropdown">
-              <a class="header-user-dropdown" id="dropDownnMenuButtonUser" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <img src="/assets/img/user.png" alt="John Doe" />
-                <i class="bx bx-chevron-down"></i>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-user p-0" aria-labelledby="dropDownnMenuButtonUser">
-                  <div class="dropdown-container">
-                    <ul class="notification p-0">
-                      <li class="notification-item d-flex flex-row align-items-top">
-                        <div class="notification-item-container">
-                          <i class="bx bx-user"></i>
-                          <span>My Profile</span>
-                        </div>
-                      </li>
-                      <li class="notification-item d-flex flex-row align-items-top">
-                        <div class="notification-item-container">
-                          <NavLink to='/user/edit-profile'>
-                            <i class="bx bx-edit"></i>
-                            Edit Profile</NavLink>
-                        </div>
-                      </li>
-
-                      <li class="notification-item d-flex flex-row align-items-top"
-                      >
-                        <div class="notification-item-container" >
-                          <i class="bx bx-log-out"></i>
-                          <span onClick={() => console.log('lhdks')}>
-                            Logout</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </a>
-            </li> */}
-            <div class="dropdown">
-              <a class=" dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div className="dropdown">
+              <a className=" dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="/assets/img/user.png" alt="John Doe" />
               </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                <Link class="dropdown-item" to='/user/profile'>Profile</Link>
-                <a class="dropdown-item" to='/user/edit-profile'>Edit Profile</a>
-                <span class="dropdown-item" onClick={() => {
+              <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <Link className="dropdown-item" to='/user/profile'>Profile</Link>
+                <Link className="dropdown-item" to='/user/edit-profile'>Edit Profile</Link>
+                <span className="dropdown-item" onClick={() => {
                   this.props.logout(() => this.props.history.push('/login'))
                 }}>Logout</span>
               </div>

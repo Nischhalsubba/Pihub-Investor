@@ -112,12 +112,12 @@ ReactDOM.render(
           <Route
             exact
             path="/edit-product"
-            component={RequireInvestorAuth(EditProduct)}
+            component={RequireInvestorAuth(RequireVerification(EditProduct))}
           />
           <Route
             exact
             path="/products-invested"
-            component={RequireInvestorAuth(InvestedList)}
+            component={RequireInvestorAuth(RequireVerification(InvestedList))}
           />
           <Route
             exact
