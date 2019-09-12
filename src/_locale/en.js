@@ -116,7 +116,9 @@ export default {
         acquisition: 'Acquisition / Takeover financing',
         project: 'Project financing',
         mezzanine: 'Mezzanine financing',
-        youdonot:'You do not have any products yet! '
+        youdonot: 'You do not have any products yet! ',
+        profile: 'Profile',
+        editprofile: 'Edit Profile'
     },
     button: {
         Produktbearbeiten: 'Edit Product',
@@ -127,5 +129,8 @@ export default {
     },
     placeholder: {
         select: 'Select'
+    },
+    unverified: {
+        msg: 'Your account is not yet verified yet. Please contact the administrator'
     }
 };

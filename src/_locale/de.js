@@ -109,7 +109,9 @@ export default {
         deadline: 'Fristablauf',
         applicationcode: 'Anwendungscode',
         creditrequests: 'Kreditanträge',
-        youdonot: 'Sie haben noch keine Artikel!'
+        youdonot: 'Sie haben noch keine Artikel!',
+        profile: 'Profil',
+        editprofile: 'Profil bearbeite'
     },
     button: {
         Produktbearbeiten: 'Produkt bearbeiten',
@@ -120,5 +122,9 @@ export default {
     },
     placeholder: {
         select: 'Auswählen'
+    },
+    unverified: {
+        msg: 'Ihr Konto ist noch nicht bestätigt.Bitte kontaktieren Sie den Administrator'
     }
+
 };

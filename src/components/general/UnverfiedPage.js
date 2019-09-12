@@ -1,14 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Translate from 'react-translate-component';
 
 
 export default props => {
   return (
     <div className="content-body">
-      <strong> Ihr Konto ist noch nicht bestätigt.Bitte kontaktieren Sie den Administrator</strong>
+      <strong>
+        <Translate content='unverified.msg' />
+      </strong>
       <br />
       <Link to='/user/profile'>
-        Mein Profil
+        <Translate content='label.profile' />
       </Link>
     </div>
 

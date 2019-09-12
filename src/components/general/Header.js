@@ -53,11 +53,19 @@ class Header extends Component {
                 <img src="/assets/img/user.png" alt="John Doe" />
               </a>
               <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                <Link className="dropdown-item" to='/user/profile'>Profile</Link>
-                <Link className="dropdown-item" to='/user/edit-profile'>Edit Profile</Link>
+                <Link className="dropdown-item" to='/user/profile'>
+                  <Translate content='label.profile' />
+                </Link>
+                <Link className="dropdown-item" to='/user/edit-profile'>
+                  <Translate content='label.editprofile' />
+
+                </Link>
                 <span className="dropdown-item" onClick={() => {
                   this.props.logout(() => this.props.history.push('/login'))
-                }}>Logout</span>
+                }}>
+                  <Translate content='label.logout' />
+
+                </span>
               </div>
             </div>
           </ul>
