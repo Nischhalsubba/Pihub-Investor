@@ -16,7 +16,7 @@ export default {
         investedon: 'Invested on',
         investedamount: 'Invested amount',
         numberofrequest: 'Number of request',
-        createdon: 'Create on',
+        createdon: 'Created on',
         productname: 'Product name',
         requeston: 'Request on',
         requestedby: 'Requested by',
@@ -27,7 +27,11 @@ export default {
         terms: 'terms and conditions',
         addfile: 'Add files',
         ordrop: 'or drop files here',
-        approvedon: 'Approved on'
+        approvedon: 'Approved on',
+        noattachment: 'No Attachments available',
+        appreject: 'You have rejected this application',
+        appaccept: 'You have accepted this application',
+        norating: 'No ratings available'
     },
     sidebar: {
         product: 'Product',
@@ -119,14 +123,16 @@ export default {
         mezzanine: 'Mezzanine financing',
         youdonot: 'You do not have any products yet! ',
         profile: 'Profile',
-        editprofile: 'Edit Profile'
+        editprofile: 'Edit Profile',
+        minimumsales: 'Minimum Sales Creditor'
     },
     button: {
         Produktbearbeiten: 'Edit Product',
         signup: 'Sign up Now',
         search: 'Search',
         addnewproduct: 'Add new products',
-        submit: 'Submit'
+        submit: 'Submit',
+        edit: 'Edit Product'
     },
     placeholder: {
         select: 'Select'

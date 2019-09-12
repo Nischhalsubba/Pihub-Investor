@@ -26,7 +26,7 @@ class DetailCreditRequest extends Component {
   }
   renderDocs = docs => {
     if (docs.length === 0) {
-      return <span>No attachments available</span>
+      return <span><Translate content='column.noattachment' /></span>
     } else {
       return docs.map((doc, index) => {
         return (
@@ -50,34 +50,30 @@ class DetailCreditRequest extends Component {
       return (
         <Fragment>
           <Subheader heading={this.props.location.state.product} />
-          {/* {status === 'rejected' ?
-            //  <div class="alert alert-rejected">You rejected this Investment
-            <Translate content='label.yourejected' component="div" className="alert alert-rejected" />
-            // </div> 
-            : null} */}
 
-          {status === 'rejected' ? <div class="alert alert-rejected">SSie haben diesen Antrag abgelehnt</div> : null}
 
-          {status === 'accepted' ? <div class="alert alert-success">Sie haben diese Bewerbung angenommen</div> : null}
+          {status === 'rejected' ? <div class="alert alert-rejected"><Translate content='column.appreject' /></div> : null}
+
+          {status === 'accepted' ? <div class="alert alert-success"><Translate content='column.appaccept' /></div> : null}
           <div class="content-body credit-request">
             <div class="d-flex">
               <div class="col-lg-12 col-xl-8">
                 <div class="row justify-content-between w-100">
                   <div class="col-3 p-0">
                     {/* <h6>States</h6> */}
-                    <Translate content='label.state' />
+                    <h6> <Translate content='label.state' /></h6>
                     <span>Berlin</span>
                   </div>
                   <div class="col-3 p-0">
-                    <Translate content='label.credittype' />
+                    <h6> <Translate content='column.credittype' /></h6>
                     <span>Resolving credit </span>
                   </div>
                   <div class="col-3 p-0">
-                    <Translate content='label.country' />
+                    <h6><Translate content='label.country' /></h6>
                     <span>Germany</span>
                   </div>
                   <div class="col-3 p-0">
-                    <Translate content='label.industries' />
+                    <h6><Translate content='label.industries' /></h6>
                     <div class="d-flex flex-wrap justify-content-between flex-column">
                       <a class="mb-1" href="#">Service Industry</a>
                       <a class="mb-1" href="#">Administration and office work</a>
@@ -93,32 +89,32 @@ class DetailCreditRequest extends Component {
               <div class="col-lg-12 col-xl-4 rightbar">
                 <div class="amount">
                   {/* <h6>Requested amount of</h6> */}
-                  <Translate content='label.requestedamount' />
+                  <h6>  <Translate content='label.requestedamount' /></h6>
                   <h2>€{requested_amount}</h2>
                 </div>
                 <div class="investor clearfix mt-5">
                   {/* <h6>Requested By</h6> */}
-                  <Translate content='label.requestedby' />
+                  <h6> <Translate content='column.requestedby' /></h6>
                   <div class="investor-profile d-flex align-items-center">
                     <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" />
-                    <a class="ml-2" href="#">{requested_by}</a>
+                    <a class="ml-2">{requested_by}</a>
                   </div>
                 </div>
                 <div class="date mt-5">
                   {/* <h6>Request on</h6> */}
-                  <Translate content='label.requeston' />
+                  <h6> <Translate content='column.requeston' /></h6>
                   <span>{`${requestedDate.getDate()} - ${requestedDate.getMonth() + 1} - ${requestedDate.getFullYear()}`}</span>
                 </div>
                 <div class="date mt-5">
                   {/* <h6>Time Duration</h6> */}
-                  <Translate content='label.time' />
-                  <span>{duration} Months</span>
+                  <h6>  <Translate content='label.time' /></h6>
+                  <span>{duration} Monate</span>
                 </div>
               </div>
             </div>
             <div class="attachments mt-5 mb-5">
               {/* <h4>Attachments</h4> */}
-              <Translate content='label.attachments' />
+              <h6><Translate content='label.attachments' /></h6>
               {this.renderDocs(documents)}
             </div>
             <span class="mt-3">

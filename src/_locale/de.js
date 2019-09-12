@@ -27,6 +27,10 @@ export default {
         terms: 'Geschäftsbedingung',
         addfile: 'Dokument auswählen',
         ordrop: 'oder Dokument ablegen',
+        noattachment: 'Keine Anhänge verfügbar',
+        appreject: 'Sie haben diesen Antrag abgelehnt',
+        appaccept: 'Sie haben diese Bewerbung angenommen',
+        norating: 'Keine Bewertungen vorhanden'
     },
     sidebar: {
         product: 'Kreditprodukte',
@@ -105,21 +109,25 @@ export default {
         back: 'Zurück zur Startseite',
         logout: 'Ausloggen',
         accept: 'Angebot erstellen / Absage',
-        requestedamount: 'angeforderte Menge',
+        requestedamount: 'Angeforderte Menge',
         time: 'Zeitdauer',
         deadline: 'Fristablauf',
         applicationcode: 'Anwendungscode',
         creditrequests: 'Kreditanträge',
         youdonot: 'Sie haben noch keine Artikel!',
         profile: 'Profil',
-        editprofile: 'Profil bearbeite'
+        editprofile: 'Profil bearbeite',
+        minimumsales: 'Mindestumsatz Gläubiger'
+
     },
     button: {
         Produktbearbeiten: 'Produkt bearbeiten',
         signup: 'Jetzt registrieren',
         search: 'Suche',
         addnewproduct: 'Kreditprodukt hinzufügen',
-        submit: 'einreichen'
+        submit: 'einreichen',
+        edit: 'Produkt bearbeiten'
+
     },
     placeholder: {
         select: 'Auswählen'

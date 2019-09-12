@@ -4,7 +4,7 @@ class ViewApplication extends Component {
     return (
       <Fragment>
         <div>
-        </div>            
+        </div>
       </Fragment>
     );
   }

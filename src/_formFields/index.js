@@ -68,6 +68,7 @@ export const dropDownField = ({
   className,
   id,
   placeholder,
+  defaultValue,
   meta: { error, touched }
 }) => {
   return (
@@ -138,7 +139,8 @@ export const renderMultiselect = ({
   meta: { error, touched },
   data,
   valueField,
-  textField
+  textField,
+  defaultValue
 }) => {
   return (
     <Fragment>
@@ -146,15 +148,14 @@ export const renderMultiselect = ({
       <Multiselect
         {...input}
         onBlur={() => input.onBlur()}
-        // value={input.value === 'Select All' ? { data } : input.value || []}
         value={input.value[0] === 'Select All' ? data : input.value || []}
         data={data}
         valueField={valueField}
         textField={textField}
         className={className}
         id={id}
-        // placeholder="Wählen Sie Branchen"
-        placeholder="Auswählen eii"
+        placeholder="Auswählen"
+        defaultValue={defaultValue}
       />
       <font color="red">{touched && error}</font>
     </Fragment>
@@ -162,7 +163,7 @@ export const renderMultiselect = ({
 };
 
 export const renderDropzoneField = ({
-  input,
+        input,
   name,
   id,
   meta: { touched, error }
@@ -203,7 +204,7 @@ export const renderDropzoneField = ({
 };
 
 export const radioButton = ({
-  input,
+        input,
   label,
   type,
   className,

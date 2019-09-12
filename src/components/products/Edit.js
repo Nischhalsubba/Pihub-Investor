@@ -158,11 +158,9 @@ class EditProduct extends Component {
       min_sales_creditor,
       files
     } = this.props;
-    console.log(this.props.initialValues);
-    console.log(min_sales_creditor)
     return (
       <Fragment>
-        <Subheader heading={<Translate content='button.addnewproduct' />} />
+        <Subheader heading={<Translate content='button.edit' />} />
         <div className="content-body">
           <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
             <div className="row mt-4">
@@ -225,7 +223,7 @@ class EditProduct extends Component {
                   label={<Translate content='label.industries' />}
                   data={this.state.industries.names ? this.state.industries.names[`${this.props.language}`] : []}
                   className="form-group"
-                  placeholder="select tags"
+
                 />
               </div>
               <div class="col-12 col-sm-12 col-md-6">
@@ -330,7 +328,7 @@ class EditProduct extends Component {
                 <div className="form-group">
                   {/* <div className="row align-items-end"> */}
                   <label for="amount">
-                    Minimum Sales Creditor
+                    <Translate content='label.minimumsales' />
                   </label>
                   <div class="d-flex align-items-center">
                     <Field

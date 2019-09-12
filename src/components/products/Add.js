@@ -323,7 +323,8 @@ class AddProduct extends Component {
                 <div className="form-group">
                   {/* <div className="row align-items-end"> */}
                   <label for="amount">
-                    Minimum Sales Creditor
+                    <Translate content='label.minimumsales' />
+
                   </label>
                   <div class="d-flex align-items-center">
                     <Field

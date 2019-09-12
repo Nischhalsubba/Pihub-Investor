@@ -1,7 +1,12 @@
 export const extractNames = (list) => {
   var r = [];
   list.map(l => {
-    r.push(l.label);
+    if (l.label) {
+      r.push(l.label);
+
+    } else {
+      r.push(l.name)
+    }
   })
   return r
 }
@@ -80,3 +85,8 @@ export const getId = (mainList, list, language) => {
   console.log(result);
   return result;
 }
+
+
+export const dDigit = number => {
+  return (number = ('0' + number).slice(-2));
+};

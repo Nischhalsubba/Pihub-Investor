@@ -26,6 +26,7 @@ import ForgotPassword from './components/user/ForgotPassword';
 import SetPassword from './components/user/SetPassword';
 import Signout from './components/user/Signout';
 
+import ChangePassword from './components/user/signup/ChangePassword';
 //Product related imports
 import ProductsList from './components/products/List';
 import AddProduct from './components/products/Add';
@@ -82,6 +83,7 @@ ReactDOM.render(
         />
         <Route path="/logout" exact component={RequireInvestorAuth(Signout)} />
         <Route path="/signup" exact component={RequireNoAuth(Signup)} />
+        <Route path='/change-password' component={RequireInvestorAuth(ChangePassword)} />
         {/** --- End: NO AUTH ROUTES --- Authenticated users should be redirected to home screen ___ */}
         {/** ___ Start: signup protected routes (auth for these routes handled within component itself) --- */}
         <Route path="/signup/activated" exact component={SignUpActivated} />

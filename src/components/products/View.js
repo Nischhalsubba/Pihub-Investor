@@ -22,7 +22,7 @@ class ViewProduct extends Component {
   }
   listRating = ratings => {
     if (ratings.length === 0) {
-      return <span>**No ratings available for this product</span>
+      return <span>**<Translate content='column.norating' /></span>
     } else {
       return ratings.map((rating, index) => {
         return (
@@ -68,9 +68,9 @@ class ViewProduct extends Component {
               }}
                 className="btn btn-primary"
               >
-               <Translate content='button.Produktbearbeiten' />
+                <Translate content='button.Produktbearbeiten' />
 
-          </Link>
+              </Link>
             </div>
           </div>
           <div class="content-body credit-request">
@@ -118,8 +118,8 @@ class ViewProduct extends Component {
                   <h2>€{min_credit_amount}</h2>
                 </div>
                 {/* <div class="investor clearfix mt-5"> */}
-                  {/* <h6>Investor</h6> */}
-                  {/* <Translate content='label.investor' component="h6" />
+                {/* <h6>Investor</h6> */}
+                {/* <Translate content='label.investor' component="h6" />
                   <div class="investor-profile d-flex align-items-center">
                     <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" />
                     <a class="ml-2" href="#">{investor}</a>

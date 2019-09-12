@@ -1,6 +1,7 @@
 import client from './index';
 import clientWithForm from './formDataRequest';
 import { routes } from './../_api/routes';
+import { extractNames } from '../_utils/misc';
 import {
   PRODUCTS_LIST,
   ERROR,
@@ -87,6 +88,14 @@ export const addProduct = (details, callback) => async dispatch => {
 export const getProductById = id => async dispatch => {
   try {
     const response = await client.get(`${routes.getProductById}/${id}`);
+    console.log('foredit', response.data.data)
+    console.log(extractNames(response.data.data.states))
+    var detail = response.data.data;
+    detail.states = extractNames(response.data.data.states)
+    detail.County = extractNames(response.data.data.counties);
+    detail.undefined = extractNames(response.data.data.industries);
+    // detail.services = [{response.data.data.service];
+
     dispatch({
       type: SINGLE_PRODUCT,
       payload: response.data.data

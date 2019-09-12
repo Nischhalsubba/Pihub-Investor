@@ -19,5 +19,6 @@ export const routes = {
   getCreditorDetail: `${API_URL}/investor/creditor-detail`,
   uploadFile: `${API_URL}/investor/products`,
   getProfile: `${API_URL}/me`,
-  getService: `${API_URL}/services`
+  getService: `${API_URL}/services`,
+  passwordReset: `${API_URL}/password-reset-token`
 };

@@ -6,6 +6,7 @@ import { getCreditRequestList } from '../../actions/credits';
 import Pagination from '../general/Pagination';
 import Spinner from '../general/Spinner';
 import Translate from 'react-translate-component'
+import { dDigit } from '../../_utils/misc';
 class ListCreditRequests extends Component {
   componentDidMount() {
     this.props.getCreditRequestList(1);
@@ -30,10 +31,10 @@ class ListCreditRequests extends Component {
 
             <Link to={{ pathname: '/product', state: { id: product.product_id } }}> {product.product_title}</Link>
           </td>
-          <td>{product.service}</td>
-          <td class="text-right-piehub-table">{`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}</td>
+          <td >{product.service}</td>
+          <td >{`${dDigit(date.getDate())}-${dDigit(date.getMonth() + 1)}-${date.getFullYear()}`}</td>
           {/* <td class="text-right-piehub-table">{product.number_of_request}</td> */}
-          <td class="text-right-piehub-table">{`${deadline.getDate()}-${deadline.getMonth() + 1}-${deadline.getFullYear()}`}</td>
+          <td class="text-md-right text-left">{`${dDigit(deadline.getDate())}-${dDigit(deadline.getMonth() + 1)}-${deadline.getFullYear()}`}</td>
           <td class="text-right-piehub-table font-weight-bold">
             €{product.max_credit_amount || 100000}
           </td>
@@ -87,15 +88,13 @@ class ListCreditRequests extends Component {
                     {/* Kreditart */}
                   </th>
                   <th
-                    class="text-right-piehub-table"
-                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                    data-tablesaw-sortable-col="data-tablesaw-sortable-col" data-tablesaw-priority="persist"
                     scope="col"
                   >
-                    <Translate content='column.createdon' />
+                    <Translate content='column.createdon' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   </th>
                   <th
-                    class="text-right-piehub-table"
-                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                    className="text-md-right text-left" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
                     {/* Fristablauf */}
