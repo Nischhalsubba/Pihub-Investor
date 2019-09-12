@@ -101,13 +101,17 @@ export const inputSlider = ({
 }) => {
   return (
     <Fragment>
-      <div className="col col-10">
-        <label className="d-block mincredit-amount mb-5" for="mincredit-amount">
-          {label}
-        </label>
+      {/* <div className="form-group"> */}
+      <label >
+        {label}
+      </label>
+      {/* <div class="d-flex align-items-center"> */}
+
+      <div className='demo col-md-9 col-sm-8 col-8'>
+
         <input
           {...input}
-          className={className}
+          className='position-relative w-100'
           id={id}
           placeholder={placeholder}
           type={type}
@@ -118,9 +122,10 @@ export const inputSlider = ({
           styles={{ color: 'red' }}
         />
       </div>
+      {/* </div> */}
 
       <font color="red">{touched && error}</font>
-    </Fragment>
+    </Fragment >
   );
 };
 
