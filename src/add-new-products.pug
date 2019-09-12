@@ -48,25 +48,7 @@ html(lang="en")
 								.form-group
 									label(for="Industry") Industry
 									input.form-control(type="text", name="Industry")
-									//- .industry-list.clearfix
-									//- 	.d-flex.justify-content-between.flex-wrap
-									//- 		.industry-item
-									//- 			<input type="checkbox" name="industry" value=""> Administration and office work
-									//- 		.industry-item
-									//- 			<input type="checkbox" name="industry" value=""> Architecture and planning
-									//- 		.industry-item
-									//- 			<input type="checkbox" name="industry" value=""> Automotive 
-									//- 		.industry-item
-									//- 			<input type="checkbox" name="industry" value=""> Associations, organizations and institutions
-									//- 		.industry-item
-									//- 			<input type="checkbox" name="industry" value=""> Industry and mechanical engineering
-									//- 		.industry-item
-									//- 			<input type="checkbox" name="industry" value=""> Art, culture and entertainment	
-									//- 		.industry-item
-									//- 			<input type="checkbox" name="industry" value=""> Market Research
-									//- 		.industry-item
-									//- 			<input type="checkbox" name="industry" value=""> HR services		
-									//- 	input.float-right(type="submit", value="Save")
+						
 							.col-12.col-sm-12.col-md-6
 								.form-group
 									label(for="time") Time Duration (Months)
@@ -79,10 +61,9 @@ html(lang="en")
 							.col-12.col-sm-12.col-md-6
 								.form-group
 									label(for="amount") Minimum credit Amount
-									.d-flex.align-items-center
-										.demo.col-md-9.col-sm-8.col-8
-											input.position-relative.w-100(type="range", name="")
-										input.form-control.col-md-3.col-sm-4.col-4.ml-2.text-center(type="text", name="",value="£ 50.000")
+									.form-group-ranger
+										input.range-slider(type="range", name="")
+										input.form-control(type="text", name="",value="£ 50.000")
 							.col-12.col-sm-12.col-md-6
 								.form-group
 									label(for="amount") Maximum credit Amount

@@ -76,3 +76,24 @@
 	}
 }
 
+.language-changer {
+	display: flex;
+
+	li {
+		margin-right: 15px;
+
+		button {
+			padding: 0;
+			background: none;
+			border: none;
+
+			img {
+				margin-right: 5px;
+			}
+		}
+
+		&.active {
+			border-bottom: 1px solid $color-gray-6;
+		}
+	}
+}
