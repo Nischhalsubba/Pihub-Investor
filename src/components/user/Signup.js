@@ -44,29 +44,22 @@ class Signup extends Component {
       <div className="container-full-width">
         <div className="panel-container">
           <div className="feature-container feature-container--signup">
+            <img class="company-logo" src="/assets/img/logo.png" alt="company logo" />
+
             <div className="feature-sidebar">
               <div className="feature-ours">
-                {/* <h3 className="feature-ours__sub-title">
-                  The Perfect Investment
-                </h3> */}
+
                 <Translate content='label.theperfect' component="h3" className="feature-ours__sub-title" />
                 <Translate content='label.atcredittech' component="h2" className="feature-ours__title" />
-                {/* <h2 className="feature-ours__title">
-                  At Credittech you can easily find creditor and make an
-                  investment
-                </h2> */}
+
               </div>
               <div className="signup-quote">
-                {/* <h2 className="signup-quote__title">Why Credit Tech?</h2> */}
+
                 <Translate content='label.whycredittech' component="h2" className="signup-quote__title" />
-                {/* <p className="signup-quote__content">
-                  At first I Invested little and by time pass I Invested to the
-                  sector I like and Credit Tech takes me right there
-                </p> */}
+
                 <Translate content='label.atfirst' component="p" className="signup-quote__content" />
                 <p className="signup-quote__name">John Doe</p>
                 <Link to="/login" className="btn btn-white">
-                  {/* What others say? */}
                   <Translate content='label.whatothers' />
                 </Link>
               </div>
@@ -148,13 +141,7 @@ class Signup extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  {/* <Field
-                    name="phone_number"
-                    type="text"
-                    component={phoneInput}
-                    label="Phone Number"
-                    className="form-control"
-                  /> */}
+
                   <Translate content='label.phonenumber' component="label" />
                   <ReactPhoneInput defaultCountry={'de'} regions={'europe'} value={this.state.phone} onChange={(value) => this.setState({ phone: value })} inputExtraProps={{
                     name: 'phone',

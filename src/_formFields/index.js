@@ -50,10 +50,9 @@ export const checkBox = ({
         id={id}
         placeholder={placeholder}
       />
-
+      &nbsp; &nbsp; &nbsp;
       <label className="form-check-label">
-        {/* I agree to the  */}
-        <Translate content='label.iagree' /><Link to="/terms"> <Translate content='label.terms' /></Link>
+        <Translate content='column.iagree' /><Link to="/terms"> <Translate content='column.terms' /></Link>
       </label>
 
       <font color="red">{touched && error}</font>
@@ -228,28 +227,3 @@ export const radioButton = ({
   );
 };
 
-
-// export const phoneInput = ({
-//   input,
-//   label,
-//   type,
-//   className,
-//   id,
-//   placeholder,
-//   meta: { error, touched }
-// }) => {
-//   return (
-//     <div>
-//       <label>{label}</label>
-//       <ReactPhoneInput
-//         {...input}
-//         type={type}
-//         color={'white'}
-//         className={className}
-//         id={id}
-//         placeholder={placeholder}
-//       />
-//       <font color="red">{touched && error}</font>
-//     </div>
-//   );
-// };
