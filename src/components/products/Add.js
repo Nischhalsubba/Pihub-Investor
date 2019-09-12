@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { addProduct } from '../../actions/product';
 import { getIndustryList } from '../../actions/industry';
 import { getServiceList } from '../../actions/service';
+import { clearError } from '../../actions/clearError';
 import Subheader from '../general/Subheader';
 import * as validation from '../../_utils/validate';
 import germanStates from '../../_german_states';
@@ -51,6 +52,7 @@ const credits = [
 class AddProduct extends Component {
   state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [] };
   componentDidMount() {
+    this.props.clearError();
     this.props.getIndustryList();
     this.props.getServiceList();
     this.setState({
@@ -132,6 +134,7 @@ class AddProduct extends Component {
               }
               title="Grade must be either A,B or C"
               class="col-3 form-control text-center"
+              placeholder='A/B/C'
             /></div>
         </div>
         // </div>
@@ -481,5 +484,5 @@ AddProduct = connect(state => {
 })(AddProduct);
 export default connect(
   mapStateToProps,
-  { addProduct, getIndustryList, getServiceList }
+  { addProduct, getIndustryList, getServiceList, clearError }
 )(AddProduct);

@@ -164,7 +164,7 @@ class Signup extends Component {
               </form>
               <br />
               {/* Already have an account ?  */}
-              <Translate content="label.alreadyhaveanaccount" /><Link to="/login"><Translate content="label.login" /></Link>
+              <Translate content="label.alreadyhaveanaccount" />&nbsp;&nbsp;&nbsp;<Link to="/login"><strong><Translate content="label.login" /></strong></Link>
             </div>
           </div>
         </div>
