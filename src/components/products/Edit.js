@@ -240,17 +240,15 @@ class EditProduct extends Component {
                       component={inputSlider}
                       // label={<Translate content='label.timeduration' />}
                       id="time-duration"
-                      validate={validation.required}
                       max="60"
                       min="3"
                     />
                     {/* <div class="col-12 col-sm-12 col-md-6"> */}
-                    <input
+                    &nbsp;&nbsp;<input
                       className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
                       type="text"
                       id="mincredit-amount-value"
                       value={time_duration}
-                      validate={validation.required}
                       placeholder="3 Monate"
                     />
                   </div>
@@ -275,8 +273,8 @@ class EditProduct extends Component {
                       // label={<Translate content='label.mincredit' />}
                       id="mincredit-amount"
                       validate={validation.required}
-                      min="1"
-                      max="100"
+                      min="25000"
+                      max="5000000"
 
                     />
                     €<input
@@ -306,8 +304,8 @@ class EditProduct extends Component {
                       id="mincredit-amount"
                       readOnly
                       validate={validation.required}
-                      min="1"
-                      max="100"
+                      min="25000"
+                      max="5000000"
                     />
                     €<input
                       className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
@@ -338,8 +336,8 @@ class EditProduct extends Component {
                       component={inputSlider}
                       id="mincredit-amount"
                       validate={validation.required}
-                      min="1"
-                      max="100"
+                      min="0"
+                      max="50000000"
 
                     />
                     €<input
