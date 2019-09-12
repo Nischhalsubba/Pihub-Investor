@@ -770,14 +770,25 @@ textarea {
 
 input[type="range"] {
   -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   background: #242a5a;
   height: 5px;
   width: 100%; }
   input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
     width: 20px;
     height: 20px;
     border: 3px solid #242a5a;
-    border-radius: 50px; }
+    border-radius: 50px;
+    background: #fff; }
+  input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #242a5a;
+    border-radius: 50px;
+    background: #fff; }
 
 select {
   border: 1px solid #c7cad1; }
