@@ -505,7 +505,14 @@ table {
     border-top: none; }
   .table td,
   .table th {
-    padding: 20px 0; }
+    padding: 15px;
+    vertical-align: middle; }
+    .table td:first-child,
+    .table th:first-child {
+      padding-left: 0; }
+    .table td:last-child,
+    .table th:last-child {
+      padding-right: 0; }
 
 a {
   color: #05101a; }
@@ -945,22 +952,6 @@ input[type="checkbox"] {
   margin-bottom: 10px; }
   .content-head__title {
     font-size: 26px; }
-
-.dropdown {
-  position: relative; }
-  .dropdown .dropdown-container {
-    display: none;
-    width: 50px;
-    position: absolute;
-    top: 15px;
-    padding: 10px 0; }
-  .dropdown span.lang__select-btn {
-    cursor: pointer; }
-  .dropdown:hover .dropdown-container {
-    display: block; }
-
-.lang__select span {
-  cursor: pointer; }
 
 .container-full-width {
   width: 100%; }

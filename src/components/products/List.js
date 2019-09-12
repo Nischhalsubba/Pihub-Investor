@@ -45,10 +45,10 @@ class ProductsList extends Component {
             <td>€{product.min_credit_amount}</td>
             <td>€{product.max_credit_amount}</td>
             <td>
-              {product.status === 'requested' ? <span className="status-badge status-badge-awaiting"><Translate content='label.requested' /></span> : null}
-              {product.status === 'approved' ? <span className="status-badge status-badge-approved"><Translate content='label.approved' /></span> : null}
-              {product.status === 'rejected' ? <span className="status-badge status-badge-rejected"><Translate content='label.rejected' /></span> : null}
-              {product.status === 'invested' ? <span className="status-badge status-badge-awaiting"><Translate content='label.invested' /></span> : null}
+              {product.status === 'requested' ? <span className="badge badge-warning"><Translate content='label.requested' /></span> : null}
+              {product.status === 'approved' ? <span className="badge badge-success"><Translate content='label.approved' /></span> : null}
+              {product.status === 'rejected' ? <span className="badge badge-danger"><Translate content='label.rejected' /></span> : null}
+              {product.status === 'invested' ? <span className="badge badge-danger"><Translate content='label.invested' /></span> : null}
             </td>
 
           </tr>
@@ -93,7 +93,7 @@ class ProductsList extends Component {
             onChange={e => this.setState({ product_title: e.target.value })}
           />
           {/* <button >Search</button> */}
-          
+
           <Translate content='button.search' component="button" className="btn btn-primary mr-sm-2" onClick={(e) => {
             e.preventDefault();
             this.props.getProductsList(this.props.pagination.currentPage, this.state.status, this.state.product_title)
@@ -101,11 +101,7 @@ class ProductsList extends Component {
           } />
         </form>
         <div className="content-body">
-          <table
-            className="table tablesaw-stack"
-            data-tablesaw-mode="swipe"
-            data-tablesaw-minimap="data-tablesaw-minimap"
-          >
+          <table class="table tablesaw-stack" data-tablesaw-mode="swipe" data-tablesaw-minimap="data-tablesaw-minimap">
             <thead>
               <tr>
                 <th>

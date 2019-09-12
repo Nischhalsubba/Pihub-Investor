@@ -103,6 +103,7 @@ export const getProductById = id => async dispatch => {
 export const updateProduct = (details, id, callback) => async dispatch => {
   try {
     var body = new FormData();
+    body.set('_method', 'PUT')
     body.set('product_title', details.product_title);
     body.set('state_ids', details.state_ids.toString());
     body.set('county_ids', details.county_ids.toString());
@@ -125,7 +126,7 @@ export const updateProduct = (details, id, callback) => async dispatch => {
     }
     body.set('ratings', details.ratings);
     body.append('files[0]', details.files[0]);
-    const response = await clientWithForm.put(`${routes.addProduct}/${id}`, body);
+    const response = await clientWithForm.post(`${routes.addProduct}/${id}`, body);
     if (response) {
       callback();
     }
@@ -138,7 +139,7 @@ export const updateProduct = (details, id, callback) => async dispatch => {
     } else {
       dispatch({
         type: ERROR,
-        payload: 'Unable to add product now'
+        payload: 'Unable to edit product now'
       });
     }
   }

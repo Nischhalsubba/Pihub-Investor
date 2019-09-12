@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import counterpart from 'counterpart';
 import { getNotificationCount } from '../../actions/notification';
@@ -26,7 +26,9 @@ class Header extends Component {
   componentDidMount() {
     this.props.getNotificationCount();
   }
-
+  onPress = () => {
+    console.log('nls')
+  }
   render() {
     return (
       <header className="site-header">
@@ -35,40 +37,63 @@ class Header extends Component {
         </div>
         <nav class="header-actions">
           <ul>
-            <li class="d-flex lang__select dropdown">
-              <span onClick={() => this.onChange('en')}>EN</span>
-              <ul class="dropdown-container">
-                <li>
-                  <span className='lang__select-btn' onClick={() => this.onChange('de')}>DE</span>
-                </li>
-              </ul>
-              <i class="bx bx-chevron-down"></i>
-            </li>
+            <select class="d-flex lang__select dropdown" onChange={(e) => this.onChange(e.target.value)}>
+              <option class="lang__select-btn" value='en'>EN</option>
+              <option value='de'>DE</option>
+            </select>
             <li className="header-actions__item">
 
-              <Link className="header-notification" to="/notifications">
+              <NavLink className="header-notification" to="/notifications">
                 <i className="bx bx-bell" />
                 <span className="notification-count">{this.props.count}</span>
-              </Link>
+              </NavLink>
             </li>
 
-            <li className="header-dropdown">
+            {/* <li className="header-dropdown">
               <a className="header-user-dropdown">
                 <img src="/assets/img/user.png" alt="John Doe" />
                 <i className="bx bx-chevron-down" />
-                {/* <span
-                  onClick={() =>
-                    this.props.logout(() => this.props.history.push('/login'))
-                  }
-                >
-                  logout
-                </span> */}
+
                 <Translate content='label.logout' component="span" onClick={() =>
                   this.props.logout(() => this.props.history.push('/login'))
                 } />
               </a>
-            </li>
+            </li> */}
+            <li class="header-actions__item header-dropdown">
+              <a class="header-user-dropdown" id="dropDownnMenuButtonUser" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <img src="/assets/img/user.png" alt="John Doe" />
+                <i class="bx bx-chevron-down"></i>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-user p-0" aria-labelledby="dropDownnMenuButtonUser">
+                  <div class="dropdown-container">
+                    <ul class="notification p-0">
+                      <li class="notification-item d-flex flex-row align-items-top">
+                        <div class="notification-item-container">
+                          <i class="bx bx-user"></i>
+                          <span>My Profile</span>
+                        </div>
+                      </li>
+                      <li class="notification-item d-flex flex-row align-items-top">
+                        <div class="notification-item-container">
+                          <NavLink to='/user/edit-profile'>
+                            <i class="bx bx-edit"></i>
+                            Edit Profile</NavLink>
+                        </div>
+                      </li>
 
+                      <li class="notification-item d-flex flex-row align-items-top"
+                      >
+                        <div class="notification-item-container" >
+                          <i class="bx bx-log-out"></i>
+                          <span onChange={() => console.log('lhdks')}>
+                            Logout</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </a>
+            </li>
           </ul>
         </nav>
       </header>
