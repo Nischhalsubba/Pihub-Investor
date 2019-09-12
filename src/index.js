@@ -13,7 +13,7 @@ import reducers from './reducers';
 import NoMatch from './components/general/NoMatch';
 import RequireInvestorAuth from './components/_auth/RequireInvestorAuth';
 import RequireNoAuth from './components/_auth/RequireNoAuth';
-
+import RequireVerification from './components/_auth/RequireVerfication';
 // Sign-up related imports
 import Signup from './components/user/Signup';
 import SignUpActivated from './components/user/signup/Activated';
@@ -46,6 +46,7 @@ import CreditorDetail from './components/credits/CreditorDetail';
 //Profile
 import ViewProfile from './components/user/profile/ViewProfile';
 import EditProfile from './components/user/profile/EditProfile';
+import UnverifiedPage from './components/general/UnverfiedPage';
 //End of component import
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
@@ -106,7 +107,7 @@ ReactDOM.render(
           />
           <Route
             path="/add-product"
-            component={RequireInvestorAuth(AddProduct)}
+            component={RequireInvestorAuth(RequireVerification(AddProduct))}
           />
           <Route
             exact
@@ -152,7 +153,7 @@ ReactDOM.render(
           {/* Profile */}
           <Route path='/user/profile' component={RequireInvestorAuth(ViewProfile)} />
           <Route path='/user/edit-profile' component={RequireInvestorAuth(EditProfile)} />
-
+          <Route path='/account-unverified' component={RequireInvestorAuth(UnverifiedPage)} />
           {/* <Redirect from="/credit-request/detail" to="/product" /> */}
           {/** --- End: Authenticated User's routes ___ */}
         </App>

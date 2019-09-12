@@ -18,3 +18,4 @@ export const CHANGE_LANGUAGE = 'change_language';
 export const GET_CREDITOR_DETAIL = 'get_creditor_detail';
 export const GET_PROFILE = 'get_profile';
 export const GET_SERVICE = 'get_service';
+export const SCOPE = 'scope';

@@ -446,7 +446,7 @@ class AddProduct extends Component {
   }
 }
 function mapStateToProps(state) {
-  return { errMsg: state.errors, industry: state.industryList, service: state.service, language: state.language };
+  return { errMsg: state.errors, industry: state.industryList, service: state.service, language: state.language, verified: state.scope };
 }
 
 AddProduct = reduxForm({

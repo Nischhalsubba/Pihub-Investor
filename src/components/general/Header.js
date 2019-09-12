@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import counterpart from 'counterpart';
 import { getNotificationCount } from '../../actions/notification';
@@ -26,9 +26,7 @@ class Header extends Component {
   componentDidMount() {
     this.props.getNotificationCount();
   }
-  onPress = () => {
-    console.log('nls')
-  }
+
   render() {
     return (
       <header className="site-header">
@@ -43,10 +41,10 @@ class Header extends Component {
             </select>
             <li className="header-actions__item">
 
-              <NavLink className="header-notification" to="/notifications">
+              <Link className="header-notification" to="/notifications">
                 <i className="bx bx-bell" />
                 <span className="notification-count">{this.props.count}</span>
-              </NavLink>
+              </Link>
             </li>
 
             {/* <li className="header-dropdown">
@@ -59,7 +57,7 @@ class Header extends Component {
                 } />
               </a>
             </li> */}
-            <li class="header-actions__item header-dropdown">
+            {/* <li class="header-actions__item header-dropdown">
               <a class="header-user-dropdown" id="dropDownnMenuButtonUser" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                 <img src="/assets/img/user.png" alt="John Doe" />
@@ -85,7 +83,7 @@ class Header extends Component {
                       >
                         <div class="notification-item-container" >
                           <i class="bx bx-log-out"></i>
-                          <span onChange={() => console.log('lhdks')}>
+                          <span onClick={() => console.log('lhdks')}>
                             Logout</span>
                         </div>
                       </li>
@@ -93,7 +91,19 @@ class Header extends Component {
                   </div>
                 </div>
               </a>
-            </li>
+            </li> */}
+            <div class="dropdown">
+              <a class=" dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="/assets/img/user.png" alt="John Doe" />
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <Link class="dropdown-item" to='/user/profile'>Profile</Link>
+                <a class="dropdown-item" to='/user/edit-profile'>Edit Profile</a>
+                <span class="dropdown-item" onClick={() => {
+                  this.props.logout(() => this.props.history.push('/login'))
+                }}>Logout</span>
+              </div>
+            </div>
           </ul>
         </nav>
       </header>
