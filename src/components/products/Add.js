@@ -311,6 +311,34 @@ class AddProduct extends Component {
 
             </div>
             <div class="row mt-4">
+              <div className="col">
+                <div className="form-group">
+                  <div className="row align-items-end">
+                    <Field
+                      name="min_sales_creditor"
+                      type="range"
+                      className="w-100"
+                      component={inputSlider}
+                      label='Minimum Sales Creditor'
+                      id="mincredit-amount"
+                      validate={validation.required}
+                      min="1"
+                      max="100"
+
+                    />
+                    <div className="col col-2">
+                      <input
+                        className="form-control"
+                        type="text"
+                        id="mincredit-amount-value"
+                        value={min_sales_creditor}
+                        validate={validation.required}
+                        placeholder="$0"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="col">
                 <div class="form-group">
                   {/* <label class="d-block">Sicherheiten</label> */}
@@ -340,34 +368,7 @@ class AddProduct extends Component {
                 </div>
 
               </div>
-              <div className="col">
-                <div className="form-group">
-                  <div className="row align-items-end">
-                    <Field
-                      name="min_sales_creditor"
-                      type="range"
-                      className="w-100"
-                      component={inputSlider}
-                      label='Minimum Sales Creditor'
-                      id="mincredit-amount"
-                      validate={validation.required}
-                      min="1"
-                      max="100"
 
-                    />
-                    <div className="col col-2">
-                      <input
-                        className="form-control"
-                        type="text"
-                        id="mincredit-amount-value"
-                        value={min_sales_creditor}
-                        validate={validation.required}
-                        placeholder="$0"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
 
             </div>
             <div class="row mt-4">
