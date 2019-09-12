@@ -105,7 +105,7 @@ ReactDOM.render(
           <Route
             exact
             path="/products"
-            component={RequireInvestorAuth(ProductsList)}
+            component={RequireInvestorAuth(RequireVerification(ProductsList))}
           />
           <Route
             path="/add-product"
