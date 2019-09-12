@@ -152,7 +152,6 @@ class AddProduct extends Component {
       min_sales_creditor,
       files
     } = this.props;
-    console.log(this.state.states)
     return (
       <Fragment>
         <Subheader heading={<Translate content='button.addnewproduct' />} />
@@ -270,8 +269,8 @@ class AddProduct extends Component {
                       // label={<Translate content='label.mincredit' />}
                       id="mincredit-amount"
                       validate={validation.required}
-                      min="1"
-                      max="100"
+                      min="25000"
+                      max="5000000"
 
                     />
                     €<input
@@ -301,8 +300,8 @@ class AddProduct extends Component {
                       id="mincredit-amount"
                       readOnly
                       validate={validation.required}
-                      min="1"
-                      max="100"
+                      min="25000"
+                      max="5000000"
                     />
                     €<input
                       className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
@@ -334,8 +333,8 @@ class AddProduct extends Component {
                       component={inputSlider}
                       id="mincredit-amount"
                       validate={validation.required}
-                      min="1"
-                      max="100"
+                      min="0"
+                      max="50000000"
 
                     />
                     €<input
