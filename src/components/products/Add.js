@@ -156,7 +156,7 @@ class AddProduct extends Component {
         <div className="content-body">
           <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
             <div className="row mt-4">
-              <div className="col">
+              <div class="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
                   <Field
                     name="product_title"
@@ -168,7 +168,7 @@ class AddProduct extends Component {
                   />
                 </div>
               </div>
-              <div className="col">
+              <div class="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
                   <Field
                     name="states"
@@ -220,128 +220,133 @@ class AddProduct extends Component {
               </div>
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
-                  <div className="row align-items-end">
+                  <label for="amount">
+                    <Translate content='label.timeduration' />
+                  </label>
+                  <div class="d-flex align-items-center">
+
                     <Field
                       name="time_duration"
                       type="range"
                       className="w-100"
                       component={inputSlider}
-                      label={<Translate content='label.timeduration' />}
+                      // label={<Translate content='label.timeduration' />}
                       id="time-duration"
                       validate={validation.required}
                       max="60"
                       min="3"
                     />
-                    <div className="col col-2">
-                      <input
-                        className="form-control"
-                        type="text"
-                        id="mincredit-amount-value"
-                        value={time_duration}
-                        validate={validation.required}
-                        placeholder="3"
-                      />
-                    </div>
+                    {/* <div class="col-12 col-sm-12 col-md-6"> */}
+                    <input
+                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      type="text"
+                      id="mincredit-amount-value"
+                      value={time_duration}
+                      validate={validation.required}
+                      placeholder="3 Monate"
+                    />
                   </div>
                 </div>
               </div>
             </div>
+            {/* </div> */}
 
             <div className="row mt-4">
-              <div className="col">
+              <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
-                  <div className="row align-items-end">
+                  <label for="amount">
+                    <Translate content='label.mincredit' />
+                  </label>
+                  <div class="d-flex align-items-center">
+
                     <Field
                       name="min_credit_amount"
                       type="range"
-                      className="w-100"
+                      className="position-relative w-100"
                       component={inputSlider}
-                      label={<Translate content='label.mincredit' />}
+                      // label={<Translate content='label.mincredit' />}
                       id="mincredit-amount"
                       validate={validation.required}
                       min="1"
                       max="100"
 
                     />
-                    <div className="col col-2">
-                      <input
-                        className="form-control"
-                        type="text"
-                        id="mincredit-amount-value"
-                        value={min_creditValue}
-                        validate={validation.required}
-                        placeholder="$0"
-                      />
-                    </div>
+                    €<input
+                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      type="text"
+                      id="mincredit-amount-value"
+                      value={min_creditValue}
+                      validate={validation.required}
+                      placeholder="€0.0"
+                    />
                   </div>
                 </div>
               </div>
-              <div className="col">
+              <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
-                  <div className="row align-items-end">
+                  <label for="amount">
+                    <Translate content='label.maxcredit' />
+                  </label>
+                  <div class="d-flex align-items-center">
+
                     <Field
                       name="max_credit_amount"
                       type="range"
                       className="w-100"
                       component={inputSlider}
-                      label={<Translate content='label.maxcredit' />}
+                      // label={<Translate content='label.maxcredit' />}
                       id="mincredit-amount"
                       readOnly
                       validate={validation.required}
                       min="1"
                       max="100"
                     />
-                    <div className="col col-2">
-                      <input
-                        className="form-control"
-                        type="text"
-                        id="amount"
-                        value={max_credit_amount}
-                        validate={validation.required}
-                        placeholder="$0"
-                      />
-                    </div>
+                    €<input
+                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      type="text"
+                      id="amount"
+                      value={max_credit_amount}
+                      validate={validation.required}
+                      placeholder="€0.0"
+                    />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="row mt-4">
 
-
-            </div>
             <div class="row mt-4">
-              <div className="col">
+              <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
-                  <div className="row align-items-end">
+                  {/* <div className="row align-items-end"> */}
+                  <label for="amount">
+                    Minimum Sales Creditor
+                  </label>
+                  <div class="d-flex align-items-center">
                     <Field
                       name="min_sales_creditor"
                       type="range"
                       className="w-100"
                       component={inputSlider}
-                      label='Minimum Sales Creditor'
                       id="mincredit-amount"
                       validate={validation.required}
                       min="1"
                       max="100"
 
                     />
-                    <div className="col col-2">
-                      <input
-                        className="form-control"
-                        type="text"
-                        id="mincredit-amount-value"
-                        value={min_sales_creditor}
-                        validate={validation.required}
-                        placeholder="$0"
-                      />
-                    </div>
+                    €<input
+                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      type="text"
+                      id="mincredit-amount-value"
+                      value={min_sales_creditor}
+                      validate={validation.required}
+                      placeholder="€0.0"
+                    />
                   </div>
                 </div>
               </div>
-              <div class="col">
+              <div className="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
-                  {/* <label class="d-block">Sicherheiten</label> */}
                   <Translate content='label.Sicherheiten' component='label' className="d-block" />
                   <div class="form-check form-check-inline">
                     <Field
@@ -366,15 +371,11 @@ class AddProduct extends Component {
                     <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
                   </div>
                 </div>
-
               </div>
-
-
             </div>
             <div class="row mt-4">
               <div class="col">
                 <div class="form-group">
-                  {/* <label class="d-block">Rating for Credit</label> */}
                   <Translate content='label.rating' component="label" class="d-block" />
                   <div class="form-check form-check-inline">
                     <Field
