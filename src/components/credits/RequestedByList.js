@@ -44,10 +44,10 @@ class RequestedByList extends Component {
           <td>
             <span>{data.duration} Months</span>
           </td>
-          <td class="text-right-piehub-table font-weight-bold">
+          <td className="text-right-piehub-table font-weight-bold">
             €{data.requested_amount}
           </td>
-          <td class="text-right-piehub-table font-weight-bold">
+          <td className="text-right-piehub-table font-weight-bold">
             {data.status === 'rejected' ? <span className="badge badge-warning">Abgelehnt</span> : <span className="badge badge-success">In Bearbeitung</span>}
           </td>
 
@@ -65,12 +65,12 @@ class RequestedByList extends Component {
   };
   render() {
     return (
-      <div class="requests mt-5">
+      <div className="requests mt-5">
         {/* <h4>Credit Requests</h4> */}
         <Translate content='label.creditrequests' component="h4" />
         <hr />
         <table
-          class="table tablesaw-stack"
+          className="table tablesaw-stack"
           data-tablesaw-mode="stack"
           data-tablesaw-minimap="data-tablesaw-minimap"
         >
@@ -100,7 +100,7 @@ class RequestedByList extends Component {
                 {/* Laufzeil */}
               </th>
               <th
-                class="text-right-piehub-table"
+                className="text-right-piehub-table"
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 scope="col"
               >
@@ -108,14 +108,14 @@ class RequestedByList extends Component {
                 Kreditbetrag
               </th>
               <th
-                class="text-right-piehub-table"
+                className="text-right-piehub-table"
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 scope="col"
               >
                 <Translate content='column.status' />
               </th>
               {/* <th
-                class="text-right-piehub-table"
+                className="text-right-piehub-table"
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 scope="col"
               >

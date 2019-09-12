@@ -29,9 +29,9 @@ class Signup extends Component {
   displayErrors = errors => {
     return errors.map((err, index) => {
       return (
-        <li class="d-flex mb-1" key={index}>
+        <li className="d-flex mb-1" key={index}>
           <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
-          <span class="pl-2 green-text">{err}</span>
+          <span className="pl-2 green-text">{err}</span>
         </li>
 
 
@@ -169,7 +169,7 @@ class Signup extends Component {
                   component={checkBox}
                   type="checkbox"
                 />
-                {this.props.errMsg ? <ul class="p-0 mt-2">{this.displayErrors(this.props.errMsg)}</ul> : null}
+                {this.props.errMsg ? <ul className="p-0 mt-2">{this.displayErrors(this.props.errMsg)}</ul> : null}
                 {/* <button className="btn btn-primary btn-form" type="submit">
                   Sign Up Now
                 </button> */}

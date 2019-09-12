@@ -112,16 +112,16 @@ class AddProduct extends Component {
   creditRatings = (credits) => {
     return credits.map((credit, index) => {
       return (
-        // <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
-        <div class="rating-item">
-          <div class="col-9">
+        // <div className="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+        <div className="rating-item">
+          <div className="col-9">
             {/* <label>Ratingagentur</label> */}
             <Translate content='label.Ratingagentur' component="label" />
             <br />
-            <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
+            <input className="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
             />{credit.name}
           </div>
-          <div class="col-9">
+          <div className="col-9">
             {/* <label>Kreditrating</label> */}
             <Translate content='label.Kreditrating' component="label" />
             <br />
@@ -132,7 +132,7 @@ class AddProduct extends Component {
               })
               }
               title="Grade must be either A,B or C"
-              class="col-3 form-control text-center"
+              className="col-3 form-control text-center"
             /></div>
         </div>
         // </div>
@@ -183,7 +183,7 @@ class AddProduct extends Component {
               </div>
             </div>
             <div className="row mt-4">
-              <div class="col-12 col-sm-12 col-md-6">
+              <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
                   <Field
                     name="services"
@@ -195,8 +195,8 @@ class AddProduct extends Component {
                   />
                 </div>
               </div>
-              <div class="col-12 col-sm-12 col-md-6">
-                <div class="form-group">
+              <div className="col-12 col-sm-12 col-md-6">
+                <div className="form-group">
                   <Field
                     name="County"
                     component={renderMultiselect}
@@ -208,8 +208,8 @@ class AddProduct extends Component {
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col-12 col-sm-12 col-md-6">
+            <div className="row mt-4">
+              <div className="col-12 col-sm-12 col-md-6">
 
                 <Field
                   component={renderMultiselect}
@@ -219,8 +219,8 @@ class AddProduct extends Component {
                   placeholder="select tags"
                 />
               </div>
-              <div class="col-12 col-sm-12 col-md-6">
-                <div class="form-group">
+              <div className="col-12 col-sm-12 col-md-6">
+                <div className="form-group">
                   <div className="row align-items-end">
                     <Field
                       name="time_duration"
@@ -311,12 +311,12 @@ class AddProduct extends Component {
 
 
             </div>
-            <div class="row mt-4">
-              <div class="col">
-                <div class="form-group">
-                  {/* <label class="d-block">Sicherheiten</label> */}
+            <div className="row mt-4">
+              <div className="col">
+                <div className="form-group">
+                  {/* <label className="d-block">Sicherheiten</label> */}
                   <Translate content='label.Sicherheiten' component='label' className="d-block" />
-                  <div class="form-check form-check-inline">
+                  <div className="form-check form-check-inline">
                     <Field
                       type="radio"
                       component={radioButton}
@@ -325,9 +325,9 @@ class AddProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <Translate content='label.yes' component='label' class="form-check-label" for="rating-credit-yes" />
+                    <Translate content='label.yes' component='label' className="form-check-label" for="rating-credit-yes" />
                   </div>
-                  <div class="form-check form-check-inline">
+                  <div className="form-check form-check-inline">
                     <Field
                       type="radio"
                       component={radioButton}
@@ -336,7 +336,7 @@ class AddProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
+                    <Translate content='label.no' component='label' className="form-check-label" for="rating-credit-no" />
                   </div>
                 </div>
 
@@ -371,12 +371,12 @@ class AddProduct extends Component {
               </div>
 
             </div>
-            <div class="row mt-4">
-              <div class="col">
-                <div class="form-group">
-                  {/* <label class="d-block">Rating for Credit</label> */}
-                  <Translate content='label.rating' component="label" class="d-block" />
-                  <div class="form-check form-check-inline">
+            <div className="row mt-4">
+              <div className="col">
+                <div className="form-group">
+                  {/* <label className="d-block">Rating for Credit</label> */}
+                  <Translate content='label.rating' component="label" className="d-block" />
+                  <div className="form-check form-check-inline">
                     <Field
                       type="radio"
                       component={radioButton}
@@ -385,9 +385,9 @@ class AddProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <Translate content='label.yes' component='label' class="form-check-label" for="rating-credit-yes" />
+                    <Translate content='label.yes' component='label' className="form-check-label" for="rating-credit-yes" />
                   </div>
-                  <div class="form-check form-check-inline">
+                  <div className="form-check form-check-inline">
                     <Field
                       type="radio"
                       component={radioButton}
@@ -396,12 +396,12 @@ class AddProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
+                    <Translate content='label.no' component='label' className="form-check-label" for="rating-credit-no" />
                   </div>
                 </div>
               </div>
               {credit === 'true' ? (
-                <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+                <div className="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
                   <div className="row">{this.creditRatings(credits)}</div>
                 </div>
                 // </div>
@@ -428,9 +428,9 @@ class AddProduct extends Component {
             </div>
 
             {this.props.errMsg ? (
-              <li class="d-flex mb-1" >
+              <li className="d-flex mb-1" >
                 <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
-                <span class="pl-2 green-text">{this.props.errMsg}</span>
+                <span className="pl-2 green-text">{this.props.errMsg}</span>
               </li>
 
             ) : null}

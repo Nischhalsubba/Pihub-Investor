@@ -44,9 +44,9 @@ class CreditorDetail extends Component {
     } else {
       return docs.map((doc, index) => {
         return (
-          <div class="file mb-2">
-            <span class="file-name">tax payer investment.docx</span>
-            <span class="ml-4 file-size">400.5kb</span>
+          <div className="file mb-2">
+            <span className="file-name">tax payer investment.docx</span>
+            <span className="ml-4 file-size">400.5kb</span>
           </div>
         );
       })
@@ -61,23 +61,23 @@ class CreditorDetail extends Component {
       return (
         <Fragment>
 
-          <div class="content-body credit-request">
+          <div className="content-body credit-request">
             <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
-              <div class="d-flex">
-                <div class="col-lg-12 col-xl-8">
-                  <div class="row justify-content-between w-100">
-                    <div class="col-3 p-0">
+              <div className="d-flex">
+                <div className="col-lg-12 col-xl-8">
+                  <div className="row justify-content-between w-100">
+                    <div className="col-3 p-0">
                       {/* <h6>States</h6> */}
                       <Translate content='label.state' component="h6" />
                       <br />
                       <span>{state.name}</span>
                     </div>
-                    <div class="col-3 p-0">
+                    <div className="col-3 p-0">
                       {/* <Translate content='label.credittype' /> */}
                       <h6> County </h6><br />
                       <span>{county.name} </span>
                     </div>
-                    <div class="col-3 p-0">
+                    <div className="col-3 p-0">
                       {/* <Translate content='label.country' /> */}
                       <h6>Collateral</h6>
                       <br />
@@ -86,11 +86,11 @@ class CreditorDetail extends Component {
 
                       })}
                     </div>
-                    <div class="col-3 p-0">
+                    <div className="col-3 p-0">
                       <Translate content='label.industries' component="h6" />
-                      <div class="d-flex flex-wrap justify-content-between flex-column">
+                      <div className="d-flex flex-wrap justify-content-between flex-column">
                         {industries.map((i, index) => {
-                          return <span class="mb-1">{i.name}</span>
+                          return <span className="mb-1">{i.name}</span>
 
                         })}
 
@@ -99,30 +99,30 @@ class CreditorDetail extends Component {
                   </div>
 
                 </div>
-                <div class="col-lg-12 col-xl-4 rightbar">
-                  <div class="amount">
+                <div className="col-lg-12 col-xl-4 rightbar">
+                  <div className="amount">
                     {/* <h6>Requested amount of</h6> */}
                     {/* <Translate content='label.requestedamount' /> */}
                     <label>Finanzbedar</label>
                     <h2>€{financial_needs}</h2>
                   </div>
-                  <div class="investor clearfix mt-5">
+                  <div className="investor clearfix mt-5">
                     {/* <h6>Requested By</h6> */}
                     {/* <Translate content='label.requestedby' /> */}
                     <h6>Gläubiger</h6>
-                    <div class="investor-profile d-flex align-items-center">
+                    <div className="investor-profile d-flex align-items-center">
                       <img src="/assets/img/investor-profile.jpg" alt="Investor profile picture" />
-                      <a class="ml-2" href="#">{creditor}</a>
+                      <a className="ml-2" href="#">{creditor}</a>
                     </div>
                   </div>
-                  <div class="date mt-5">
+                  <div className="date mt-5">
                     {/* <h6>Request on</h6> */}
                     {/* <Translate content='label.requeston' /> */}
                     {/* <span>{`${requestedDate.getDate()} - ${requestedDate.getMonth() + 1} - ${requestedDate.getFullYear()}`}</span> */}
                     <label>Email: </label>
                     {email}
                   </div>
-                  <div class="date mt-5">
+                  <div className="date mt-5">
                     <h6>Address</h6>
                     {/* <Translate content='label.time' /> */}
                     <span>{street_address}</span> <br />
@@ -130,7 +130,7 @@ class CreditorDetail extends Component {
                   </div>
                 </div>
               </div>
-              <div class="attachments mt-5 mb-5">
+              <div className="attachments mt-5 mb-5">
                 {/* <h4>Attachments</h4> */}
                 <h4> <Translate content='label.attachments' /></h4>
                 {this.renderDocs(files)}

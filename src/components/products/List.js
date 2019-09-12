@@ -76,7 +76,7 @@ class ProductsList extends Component {
           buttonLabel={<Translate content='button.addnewproduct' />}
           link="/add-product"
         />
-        <form class="form-inline my-2 my-lg-0">
+        <form className="form-inline my-2 my-lg-0">
 
           <select className="form-control mr-sm-2" onChange={e => this.setState({ status: e.target.value })}>
             <option value="" >Alle</option>
@@ -88,7 +88,7 @@ class ProductsList extends Component {
             <option value="expired">Exprired</option>
 
           </select>
-          <input class="form-control mr-sm-2" placeholder="Suche" aria-label="Search"
+          <input className="form-control mr-sm-2" placeholder="Suche" aria-label="Search"
             value={this.state.product_title}
             onChange={e => this.setState({ product_title: e.target.value })}
           />

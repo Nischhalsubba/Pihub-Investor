@@ -30,9 +30,9 @@ class DetailCreditRequest extends Component {
     } else {
       return docs.map((doc, index) => {
         return (
-          <div class="file mb-2">
-            <span class="file-name">tax payer investment.docx</span>
-            <span class="ml-4 file-size">400.5kb</span>
+          <div className="file mb-2">
+            <span className="file-name">tax payer investment.docx</span>
+            <span className="ml-4 file-size">400.5kb</span>
           </div>
         );
       })
@@ -51,81 +51,81 @@ class DetailCreditRequest extends Component {
         <Fragment>
           <Subheader heading={this.props.location.state.product} />
           {/* {status === 'rejected' ?
-            //  <div class="alert alert-rejected">You rejected this Investment
+            //  <div className="alert alert-rejected">You rejected this Investment
             <Translate content='label.yourejected' component="div" className="alert alert-rejected" />
             // </div> 
             : null} */}
 
-          {status === 'rejected' ? <div class="alert alert-rejected">SSie haben diesen Antrag abgelehnt</div> : null}
+          {status === 'rejected' ? <div className="alert alert-rejected">SSie haben diesen Antrag abgelehnt</div> : null}
 
-          {status === 'accepted' ? <div class="alert alert-success">Sie haben diese Bewerbung angenommen</div> : null}
-          <div class="content-body credit-request">
-            <div class="d-flex">
-              <div class="col-lg-12 col-xl-8">
-                <div class="row justify-content-between w-100">
-                  <div class="col-3 p-0">
+          {status === 'accepted' ? <div className="alert alert-success">Sie haben diese Bewerbung angenommen</div> : null}
+          <div className="content-body credit-request">
+            <div className="d-flex">
+              <div className="col-lg-12 col-xl-8">
+                <div className="row justify-content-between w-100">
+                  <div className="col-3 p-0">
                     {/* <h6>States</h6> */}
                     <Translate content='label.state' />
                     <span>Berlin</span>
                   </div>
-                  <div class="col-3 p-0">
+                  <div className="col-3 p-0">
                     <Translate content='label.credittype' />
                     <span>Resolving credit </span>
                   </div>
-                  <div class="col-3 p-0">
+                  <div className="col-3 p-0">
                     <Translate content='label.country' />
                     <span>Germany</span>
                   </div>
-                  <div class="col-3 p-0">
+                  <div className="col-3 p-0">
                     <Translate content='label.industries' />
-                    <div class="d-flex flex-wrap justify-content-between flex-column">
-                      <a class="mb-1" href="#">Service Industry</a>
-                      <a class="mb-1" href="#">Administration and office work</a>
-                      <a class="mb-1" href="#">Banking and financial services </a>
-                      <a class="mb-1" href="#">Marketing, advertising and PR</a>
-                      <a class="mb-1" href="#">Healthcare</a>
-                      <a class="mb-1" href="#">Tourism, hotel and gastronomy</a>
+                    <div className="d-flex flex-wrap justify-content-between flex-column">
+                      <a className="mb-1" href="#">Service Industry</a>
+                      <a className="mb-1" href="#">Administration and office work</a>
+                      <a className="mb-1" href="#">Banking and financial services </a>
+                      <a className="mb-1" href="#">Marketing, advertising and PR</a>
+                      <a className="mb-1" href="#">Healthcare</a>
+                      <a className="mb-1" href="#">Tourism, hotel and gastronomy</a>
                     </div>
                   </div>
                 </div>
 
               </div>
-              <div class="col-lg-12 col-xl-4 rightbar">
-                <div class="amount">
+              <div className="col-lg-12 col-xl-4 rightbar">
+                <div className="amount">
                   {/* <h6>Requested amount of</h6> */}
                   <Translate content='label.requestedamount' />
                   <h2>€{requested_amount}</h2>
                 </div>
-                <div class="investor clearfix mt-5">
+                <div className="investor clearfix mt-5">
                   {/* <h6>Requested By</h6> */}
                   <Translate content='label.requestedby' />
-                  <div class="investor-profile d-flex align-items-center">
+                  <div className="investor-profile d-flex align-items-center">
                     <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" />
-                    <a class="ml-2" href="#">{requested_by}</a>
+                    <a className="ml-2" href="#">{requested_by}</a>
                   </div>
                 </div>
-                <div class="date mt-5">
+                <div className="date mt-5">
                   {/* <h6>Request on</h6> */}
                   <Translate content='label.requeston' />
                   <span>{`${requestedDate.getDate()} - ${requestedDate.getMonth() + 1} - ${requestedDate.getFullYear()}`}</span>
                 </div>
-                <div class="date mt-5">
+                <div className="date mt-5">
                   {/* <h6>Time Duration</h6> */}
                   <Translate content='label.time' />
                   <span>{duration} Months</span>
                 </div>
               </div>
             </div>
-            <div class="attachments mt-5 mb-5">
+            <div className="attachments mt-5 mb-5">
               {/* <h4>Attachments</h4> */}
               <Translate content='label.attachments' />
               {this.renderDocs(documents)}
             </div>
-            <span class="mt-3">
-              <button class="btn btn-success mr-2" disabled={status === 'accepted'}
+            <span className="mt-3">
+              <button className="btn btn-success mr-2" disabled={status === 'accepted'}
                 onClick={() => this.changeStatus('accepted')}
               >Akzeptieren</button>
-              <button class="btn btn-danger" disabled={status === 'rejected'}
+              <button className="btn btn-danger" disabled={status === 'rejected'}
                 onClick={() => this.changeStatus('rejected')}
 
               >Ablehnen</button>

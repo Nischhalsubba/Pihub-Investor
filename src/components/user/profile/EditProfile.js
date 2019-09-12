@@ -18,11 +18,11 @@ class EditProfile extends Component {
     return (
       <Fragment>
         <Subheader buttonLabel="Change Profile Picture" />
-        <div class="content-body">
+        <div className="content-body">
           <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
-            <div class="row mt-4">
-              <div class="col-12 col-sm-12 col-md-6">
-                <div class="form-group">
+            <div className="row mt-4">
+              <div className="col-12 col-sm-12 col-md-6">
+                <div className="form-group">
 
                   <Field
                     name='fname'
@@ -33,8 +33,8 @@ class EditProfile extends Component {
                   />
                 </div>
               </div>
-              <div class="col-12 col-sm-12 col-md-6">
-                <div class="form-group">
+              <div className="col-12 col-sm-12 col-md-6">
+                <div className="form-group">
 
                   <Field
                     name='lname'
@@ -46,9 +46,9 @@ class EditProfile extends Component {
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col-12 col-sm-12 col-md-12">
-                <div class="form-group">
+            <div className="row mt-4">
+              <div className="col-12 col-sm-12 col-md-12">
+                <div className="form-group">
 
                   <Field
                     name='headquarter'
@@ -60,9 +60,9 @@ class EditProfile extends Component {
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col-12 col-sm-12 col-md-12">
-                <div class="form-group">
+            <div className="row mt-4">
+              <div className="col-12 col-sm-12 col-md-12">
+                <div className="form-group">
 
                   <Field
                     name='company_name'
@@ -74,11 +74,11 @@ class EditProfile extends Component {
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col-12 col-sm-12 col-md-12">
-                <div class="form-group">
+            <div className="row mt-4">
+              <div className="col-12 col-sm-12 col-md-12">
+                <div className="form-group">
                   {/* <label>Email Address</label>
-                  <input class="form-control" type="email" name="email" placeholder="dinohwang@gmail.com" /> */}
+                  <input className="form-control" type="email" name="email" placeholder="dinohwang@gmail.com" /> */}
                   <Field
                     name='email'
                     type='email'
@@ -90,79 +90,79 @@ class EditProfile extends Component {
               </div>
             </div>
 
-            <div class="row mt-4">
-              <div class="col-12 col-sm-12 col-md-12">
-                <div class="form-group">
+            <div className="row mt-4">
+              <div className="col-12 col-sm-12 col-md-12">
+                <div className="form-group">
                   <label>Phone Number</label>
-                  <div class="row">
-                    <div class="col-1">
-                      <select class="form-control states">
+                  <div className="row">
+                    <div className="col-1">
+                      <select className="form-control states">
                         <option value=" ">DE</option>
                         <option value="Advertisement/Online Marketing">US</option>
                         <option value="Advertisement/Marketing">UK</option>
                         <option value="Advertisement/Offine Marketing">AUS</option>
                       </select>
                     </div>
-                    <div class="col-11">
-                      <input class="form-control" type="number" name="email" placeholder="+49 123 456 789" />
+                    <div className="col-11">
+                      <input className="form-control" type="number" name="email" placeholder="+49 123 456 789" />
 
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col-4 col-sm-12 col-md-4">
+            <div className="row mt-4">
+              <div className="col-4 col-sm-12 col-md-4">
                 <label for="">Contact Person</label>
-                <div class="form-group">
-                  <input class="mb-2 form-control" type="text" name="full-name" placeholder="Ria Quirin" />
-                  <input class="mb-2 form-control" type="email" name="email" placeholder="Ria@yahoo.com" />
-                  <input class="form-control" type="number" name="email" placeholder="+49 123 456 789" />
+                <div className="form-group">
+                  <input className="mb-2 form-control" type="text" name="full-name" placeholder="Ria Quirin" />
+                  <input className="mb-2 form-control" type="email" name="email" placeholder="Ria@yahoo.com" />
+                  <input className="form-control" type="number" name="email" placeholder="+49 123 456 789" />
                 </div>
               </div>
-              <div class="col-4 col-sm-12 col-md-4">
+              <div className="col-4 col-sm-12 col-md-4">
                 <label for="">Contact Person</label>
-                <div class="form-group">
-                  <input class="mb-2 form-control" type="text" name="full-name" placeholder="Meine Ferdi " />
-                  <input class="mb-2 form-control" type="email" name="email" placeholder="Meine@yahoo.com" />
-                  <input class="form-control" type="number" name="email" placeholder="+49 9877458547" />
+                <div className="form-group">
+                  <input className="mb-2 form-control" type="text" name="full-name" placeholder="Meine Ferdi " />
+                  <input className="mb-2 form-control" type="email" name="email" placeholder="Meine@yahoo.com" />
+                  <input className="form-control" type="number" name="email" placeholder="+49 9877458547" />
                 </div>
               </div>
-              <div class="col-4 col-sm-12 col-md-4">
+              <div className="col-4 col-sm-12 col-md-4">
                 <label for="">Contact Person</label>
-                <div class="form-group">
-                  <input class="mb-2 form-control" type="text" name="full-name" placeholder="Rosa Renata" />
-                  <input class="mb-2 form-control" type="email" name="email" placeholder="Rosa@yahoo.com" />
-                  <input class="form-control" type="number" name="email" placeholder="+49 123 456 789" />
+                <div className="form-group">
+                  <input className="mb-2 form-control" type="text" name="full-name" placeholder="Rosa Renata" />
+                  <input className="mb-2 form-control" type="email" name="email" placeholder="Rosa@yahoo.com" />
+                  <input className="form-control" type="number" name="email" placeholder="+49 123 456 789" />
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col-12 col-sm-12 col-md-12">
+            <div className="row mt-4">
+              <div className="col-12 col-sm-12 col-md-12">
                 <label for="">Social Media</label>
-                <div class="form-group d-flex align-items-center">
-                  <label class="m-0" for="">Facebook</label>
-                  <input class="ml-2 form-control" type="text" name="company-name" placeholder="https://www.facebook.com/officialdino" />
+                <div className="form-group d-flex align-items-center">
+                  <label className="m-0" for="">Facebook</label>
+                  <input className="ml-2 form-control" type="text" name="company-name" placeholder="https://www.facebook.com/officialdino" />
                 </div>
-                <div class="form-group d-flex align-items-center">
-                  <label class="m-0" for="">Twitter</label>
-                  <input class="ml-4 form-control" type="text" name="company-name" placeholder="https://www.twitter.com/officialdino" />
+                <div className="form-group d-flex align-items-center">
+                  <label className="m-0" for="">Twitter</label>
+                  <input className="ml-4 form-control" type="text" name="company-name" placeholder="https://www.twitter.com/officialdino" />
                 </div>
-                <div class="form-group d-flex align-items-center">
-                  <label class="m-0" for="">Linkedin</label>
-                  <input class="ml-3 form-control" type="text" name="company-name" placeholder="https://www.linkedin.com/officialdino" />
+                <div className="form-group d-flex align-items-center">
+                  <label className="m-0" for="">Linkedin</label>
+                  <input className="ml-3 form-control" type="text" name="company-name" placeholder="https://www.linkedin.com/officialdino" />
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col-12 col-sm-12 col-md-12">
-                <div class="form-group">
+            <div className="row mt-4">
+              <div className="col-12 col-sm-12 col-md-12">
+                <div className="form-group">
                   <label>Your short info</label>
                   <textarea name="" cols="30" rows="5" placeholder="Born in small family, worked my way to this point, now an entrepreneur helping startup touch the sky"></textarea>
                 </div>
               </div>
             </div>
-            <button class="btn btn-primary" >Update</button>
+            <button className="btn btn-primary" >Update</button>
           </form>
         </div>
       </Fragment >

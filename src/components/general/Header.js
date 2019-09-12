@@ -33,16 +33,16 @@ class Header extends Component {
         <div className="logo-container">
           <img src="/assets/img/logo.png" alt="Pinhub Logo" />
         </div>
-        <nav class="header-actions">
+        <nav className="header-actions">
           <ul>
-            <li class="d-flex lang__select dropdown">
+            <li className="d-flex lang__select dropdown">
               <span onClick={() => this.onChange('en')}>EN</span>
-              <ul class="dropdown-container">
+              <ul className="dropdown-container">
                 <li>
                   <span className='lang__select-btn' onClick={() => this.onChange('de')}>DE</span>
                 </li>
               </ul>
-              <i class="bx bx-chevron-down"></i>
+              <i className="bx bx-chevron-down"></i>
             </li>
             <li className="header-actions__item">
 
