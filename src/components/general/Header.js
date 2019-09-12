@@ -35,10 +35,21 @@ class Header extends Component {
         </div>
         <nav class="header-actions">
           <ul>
-            <select class="d-flex lang__select dropdown" onChange={(e) => this.onChange(e.target.value)}>
-              <option class="lang__select-btn" value='en'>EN</option>
-              <option value='de'>DE</option>
-            </select>
+            <ul className="language-changer">
+              <li>
+                <button>
+                  <img src="assets/img/gb.svg" alt="English Language" />
+                  English
+                  </button>
+              </li>
+              <li>
+                <button>
+                  <img src="assets/img/de.svg" alt="Deutsch Language" />
+                  Deutsch
+                  </button>
+              </li>
+            </ul>
+
             <li className="header-actions__item">
 
               <Link className="header-notification" to="/notifications">

@@ -953,6 +953,19 @@ input[type="checkbox"] {
   .content-head__title {
     font-size: 26px; }
 
+.language-changer {
+  display: flex; }
+  .language-changer li {
+    margin-right: 15px; }
+    .language-changer li button {
+      padding: 0;
+      background: none;
+      border: none; }
+      .language-changer li button img {
+        margin-right: 5px; }
+    .language-changer li.active {
+      border-bottom: 1px solid #868e96; }
+
 .container-full-width {
   width: 100%; }
 
