@@ -84,7 +84,7 @@ class ViewProduct extends Component {
                   </div>
                   <div class="col-3 p-0">
                     <Translate content='label.service' component="h6" />
-                    <a >{service} </a>
+                    <a >{service ? service.name : null} </a>
                   </div>
                   <div class="col-3 p-0">
                     <Translate content='label.state' component="h6" />

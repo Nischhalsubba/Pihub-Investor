@@ -89,12 +89,12 @@ export const getProductById = id => async dispatch => {
   try {
     const response = await client.get(`${routes.getProductById}/${id}`);
     console.log('foredit', response.data.data)
-    console.log(extractNames(response.data.data.states))
+    // console.log(extractNames(response.data.data.states))
     var detail = response.data.data;
     detail.states = extractNames(response.data.data.states)
     detail.County = extractNames(response.data.data.counties);
     detail.undefined = extractNames(response.data.data.industries);
-    // detail.services = [{response.data.data.service];
+    detail.services = [{ value: response.data.data.service.id, label: response.data.data.service.name }]
 
     dispatch({
       type: SINGLE_PRODUCT,
