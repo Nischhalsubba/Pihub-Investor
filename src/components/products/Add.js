@@ -223,7 +223,7 @@ class AddProduct extends Component {
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
                   <label for="amount">
-                    <Translate content='label.timeduration' />
+                    <strong><Translate content='label.timeduration' /></strong>
                   </label>
                   <div class="d-flex align-items-center">
 

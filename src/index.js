@@ -45,6 +45,7 @@ import ListCreditRequest from './components/credits/ListCreditRequests';
 import DetailCreditRequest from './components/credits/DetailCreditRequest';
 import CreditorDetail from './components/credits/CreditorDetail';
 //Profile
+import View from './components/user/profile/View'
 import ViewProfile from './components/user/profile/ViewProfile';
 import EditProfile from './components/user/profile/EditProfile';
 import UnverifiedPage from './components/general/UnverfiedPage';
