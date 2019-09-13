@@ -5,6 +5,10 @@
 	min-width: 100px;
 }
 
+.badge-primary {
+	background-color: $color-primary;
+}
+
 .badge-success {
 	background-color: $color-brand-success;
 	color: darken($color-brand-success, 40);
