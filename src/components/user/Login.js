@@ -41,7 +41,7 @@ class Login extends Component {
                                         component={inputField}
                                         label={<Translate content='label.emailaddress' />}
                                         className="form-control"
-                                        validate={[validation.email, validation.required]}
+                                        validate={[validation.newEmail, validation.required]}
                                     />
                                 </div>
                                 <div className="form-group">

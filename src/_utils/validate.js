@@ -23,3 +23,7 @@ export const password = value =>
     ? `Password must contain atleast one Capital letter, one small letter, one numeric value and must be 8 digit long`
     : undefined;
 
+var emailRule = new RegExp("^[A-Za-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{1,4}[^\s]+$");
+
+export const newEmail = value =>
+  value && !emailRule.test(value) ? 'Invalid Email!' : undefined;
