@@ -21,6 +21,20 @@ class EditProfile extends Component {
         <div class="content-body">
           <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
             <div class="row mt-4">
+              <div class="col-12 col-sm-12 col-md-12">
+                <div class="form-group">
+
+                  <Field
+                    name='company_name'
+                    type='text'
+                    component={inputField}
+                    label='Company Name'
+                    className='form-control'
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
 
@@ -60,20 +74,7 @@ class EditProfile extends Component {
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col-12 col-sm-12 col-md-12">
-                <div class="form-group">
 
-                  <Field
-                    name='company_name'
-                    type='text'
-                    component={inputField}
-                    label='Company Name'
-                    className='form-control'
-                  />
-                </div>
-              </div>
-            </div>
             <div class="row mt-4">
               <div class="col-12 col-sm-12 col-md-12">
                 <div class="form-group">
