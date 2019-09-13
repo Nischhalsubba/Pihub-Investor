@@ -115,9 +115,23 @@ class EditProfile extends Component {
 						<div class="row mt-4">
 							<div class="col-12 col-sm-12 col-md-12">
 								<div class="form-group">
+                  <label>Investor Categories</label>
+									<select class="form-control">
+										<option value=" ">Bank</option>
+										<option value="Advertisement/Online Marketing">Sparkasse</option>
+										<option value="Advertisement/Marketing">Kreditfons</option>
+										<option value="Advertisement/Offine Marketing">Family Office</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="row mt-4">
+							<div class="col-12 col-sm-12 col-md-12">
+								<div class="form-group">
 									<label>Phone Number</label>
 									<div class="row">
-										<div class="col-1">
+										<div class="col-2 col-md-1">
 											<select class="form-control states">
 												<option value=" ">DE</option>
 												<option value="Advertisement/Online Marketing">
@@ -129,7 +143,7 @@ class EditProfile extends Component {
 												</option>
 											</select>
 										</div>
-										<div class="col-11">
+										<div class="col-10 col-md-11">
 											<input
 												class="form-control"
 												type="number"
