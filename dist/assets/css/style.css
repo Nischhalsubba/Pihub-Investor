@@ -255,7 +255,7 @@ h6 {
   color: #fff; }
 
 .btn-reject {
-  background-color: #fa5252;
+  background-color: #F9D3D3;
   color: #fff; }
 
 .btn-option {
@@ -285,10 +285,10 @@ h6 {
   color: #FF8787; }
 
 .green {
-  border: 1px solid #1E822C; }
+  border: 1px solid #E2FCE6; }
 
 .green-text {
-  color: #1E822C; }
+  color: #E2FCE6; }
 
 .badge {
   display: block;
@@ -319,11 +319,11 @@ h6 {
   color: #242a5a; }
 
 .badge-success {
-  background-color: #1E822C;
+  background-color: #E2FCE6;
   color: #fff; }
 
 .badge-danger {
-  background-color: #fa5252;
+  background-color: #F9D3D3;
   color: #fff; }
 
 .verify {
@@ -437,16 +437,16 @@ li.header-actions__item .dropdown-menu {
   width: 100%; }
 
 .badge-success {
-  background-color: #1e822c;
-  color: black; }
+  background-color: #E2FCE6;
+  color: #29e947; }
 
 .badge-warning {
   background-color: #fff3bf;
   color: #f2c500; }
 
 .badge-danger {
-  background-color: #fa5252;
-  color: #7c0404; }
+  background-color: #F9D3D3;
+  color: #e11f1f; }
 
 .company-logo-email {
   position: absolute;
