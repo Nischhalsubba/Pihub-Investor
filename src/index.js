@@ -101,7 +101,7 @@ ReactDOM.render(
         {/** --- End: signup protected routes ___ */}
         <App>
           {/** ___ Start: Authenticated User's routes --- */}
-          <Route path="/" exact component={RequireInvestorAuth(ProductsList)} />
+          <Route path="/" exact component={RequireInvestorAuth(RequireVerification(ProductsList))} />
           <Route
             exact
             path="/products"
@@ -150,7 +150,7 @@ ReactDOM.render(
           <Route
             exact
             path="/credit-request"
-            component={RequireInvestorAuth(ListCreditRequest)}
+            component={RequireInvestorAuth(RequireVerification(ListCreditRequest))}
           />
           {/* Profile */}
           <Route path='/user/profile' component={RequireInvestorAuth(ViewProfile)} />
