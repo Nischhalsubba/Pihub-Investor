@@ -45,8 +45,8 @@ class CreditorDetail extends Component {
       return docs.map((doc, index) => {
         return (
           <div class="file mb-2">
-            <span class="file-name">tax payer investment.docx</span>
-            <span class="ml-4 file-size">400.5kb</span>
+            <span class="file-name">{doc.type}</span>
+            <span class="ml-4 file-size">{doc.file_type}</span>
           </div>
         );
       })
@@ -119,14 +119,14 @@ class CreditorDetail extends Component {
                     {/* <h6>Request on</h6> */}
                     {/* <Translate content='label.requeston' /> */}
                     {/* <span>{`${requestedDate.getDate()} - ${requestedDate.getMonth() + 1} - ${requestedDate.getFullYear()}`}</span> */}
-                    <label>Email: </label>
+                    <h6>Email: </h6>
                     {email}
                   </div>
                   <div class="date mt-5">
                     <h6>Address</h6>
                     {/* <Translate content='label.time' /> */}
-                    <span>{street_address}</span> <br />
-                    <span>{zip_code}</span>
+                    <span>{state.name}</span> <br />
+
                   </div>
                 </div>
               </div>

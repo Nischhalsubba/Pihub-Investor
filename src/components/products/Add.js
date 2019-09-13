@@ -117,15 +117,13 @@ class AddProduct extends Component {
         <div class="rating-item">
           <div class="col-9">
             {/* <label>Ratingagentur</label> */}
-            <Translate content='label.Ratingagentur' component="label" />
+            {index === 0 || index === 1 ? <Translate content='label.Ratingagentur' component="label" /> : null}
             <br />
             <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
             />{credit.name}
           </div>
           <div class="col-9">
-            {/* <label>Kreditrating</label> */}
-            <Translate content='label.Kreditrating' component="label" />
-            <br />
+            {index === 0 || index === 1 ? <Translate content='label.Kreditrating' component='label' /> : null}
             <input pattern="[a-cA-C]{1}"
               type="text" name={`rating_value[${credit.id}]`}
               onChange={(e) => this.setState({
@@ -136,11 +134,27 @@ class AddProduct extends Component {
               class="col-3 form-control text-center"
               placeholder='A/B/C'
             /></div>
+        </div >
+        // </div>
+      )
+    })
+  }
+  renderCreditTitle = (credits) => {
+    return credits.map((credit, index) => {
+      return (
+        // <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+        <div class="rating-item">
+          <div class="col-9">
+            {/* <label>Ratingagentur</label> */}
+            {/* <Translate content='label.Ratingagentur' component="label" /> */}
+            <br />
+            <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
+            />{credit.name}
+          </div>
         </div>
         // </div>
       )
     })
-
   }
   render() {
     const {
@@ -239,7 +253,7 @@ class AddProduct extends Component {
                       min="3"
                     />
                     {/* <div class="col-12 col-sm-12 col-md-6"> */}
-                    <input
+                    &nbsp;&nbsp;<input
                       className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
                       type="text"
                       id="mincredit-amount-value"
@@ -257,7 +271,7 @@ class AddProduct extends Component {
               <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
                   <label for="amount">
-                    <Translate content='label.mincredit' />
+                    <strong> <Translate content='label.mincredit' /></strong>
                   </label>
                   <div class="d-flex align-items-center">
 
@@ -287,7 +301,7 @@ class AddProduct extends Component {
               <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
                   <label for="amount">
-                    <Translate content='label.maxcredit' />
+                    <strong> <Translate content='label.maxcredit' /></strong>
                   </label>
                   <div class="d-flex align-items-center">
 
@@ -322,7 +336,7 @@ class AddProduct extends Component {
                 <div className="form-group">
                   {/* <div className="row align-items-end"> */}
                   <label for="amount">
-                    <Translate content='label.minimumsales' />
+                    <strong>  <Translate content='label.minimumsales' /></strong>
 
                   </label>
                   <div class="d-flex align-items-center">
@@ -350,7 +364,7 @@ class AddProduct extends Component {
               </div>
               <div className="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
-                  <Translate content='label.Sicherheiten' component='label' className="d-block" />
+                  <strong><Translate content='label.Sicherheiten' component='label' className="d-block" /></strong>
                   <div class="form-check form-check-inline">
                     <Field
                       type="radio"
@@ -379,7 +393,7 @@ class AddProduct extends Component {
             <div class="row mt-4">
               <div class="col">
                 <div class="form-group">
-                  <Translate content='label.rating' component="label" class="d-block" />
+                  <strong><Translate content='label.rating' component="label" class="d-block" /></strong>
                   <div class="form-check form-check-inline">
                     <Field
                       type="radio"
@@ -407,6 +421,7 @@ class AddProduct extends Component {
               {credit === 'true' ? (
                 <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
                   <div className="row">{this.creditRatings(credits)}</div>
+
                 </div>
                 // </div>
               ) : null}
@@ -419,7 +434,7 @@ class AddProduct extends Component {
             <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
-                  <Translate content='label.fileupload' component="label" className="d-block" />
+                  <strong> <Translate content='label.fileupload' component="label" /></strong>
                   <Field
                     name="files"
                     component={renderDropzoneField}

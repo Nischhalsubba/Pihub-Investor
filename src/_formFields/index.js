@@ -17,7 +17,7 @@ export const inputField = ({
 }) => {
   return (
     <div>
-      <label>{label}</label>
+      <label><strong>{label}</strong></label>
       <input
         {...input}
         type={type}
@@ -73,7 +73,7 @@ export const dropDownField = ({
 }) => {
   return (
     <div className="form-group">
-      <label>{label}</label>
+      <label><strong>{label}</strong></label>
       <Select
         {...input}
         onChange={value => input.onChange(value)}
@@ -144,7 +144,7 @@ export const renderMultiselect = ({
 }) => {
   return (
     <Fragment>
-      <label for="">{label}</label>
+      <label for=""><strong>{label}</strong></label>
       <Multiselect
         {...input}
         onBlur={() => input.onBlur()}
@@ -204,7 +204,7 @@ export const renderDropzoneField = ({
 };
 
 export const radioButton = ({
-        input,
+  input,
   label,
   type,
   className,
@@ -214,7 +214,7 @@ export const radioButton = ({
 }) => {
   return (
     <div>
-      <label>{label}</label>
+      <label><strong>{label}</strong></label>
       <input
         {...input}
         type="radio"
