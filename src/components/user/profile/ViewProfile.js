@@ -53,7 +53,7 @@ class ViewProfile extends Component {
               <figure className="m-0">
                 <img src="./assets/img/bx-map.png" alt="" />
               </figure>
-              <p class="ml-3 font-weight-bold mb-0">Wolfsburg, Germany <br/> 9000 Pestaloziallee</p>
+              <p class="ml-3 font-weight-bold mb-0">Wolfsburg, Germany <br/>Millbrook Lea Street, 6483</p>
             </div>
             <div class="d-flex mt-4 phone">
               <img src="./assets/img/bx-phone.png" alt="" />
