@@ -26,7 +26,6 @@ class ViewProfile extends Component {
                   <h2>{company_name}
                     <span class="badge-primary p-2 rounded ml-2">{status === 'approved' ? 'Verified' : 'Unverified'}</span>
                   </h2>
-                  <span>Wolfsburg, Germany</span>
                   <div class="d-flex social-media mt-2">
                     <a href="#" target="_blank" rel="noopener noreferrer">
                       <img class="mr-3" src="/assets/img/icons/facebook.png" alt="alt" width="25px" height="25px" />
@@ -51,8 +50,10 @@ class ViewProfile extends Component {
               <span class="ml-3 font-weight-bold">Sparkasse</span>
             </div>
             <div class="d-flex mt-4">
-              <img src="./assets/img/bx-map.png" alt="" />
-              <span class="ml-3 font-weight-bold">Darmstadth, Germany</span>
+              <figure className="m-0">
+                <img src="./assets/img/bx-map.png" alt="" />
+              </figure>
+              <p class="ml-3 font-weight-bold mb-0">Wolfsburg, Germany <br/> 9000 Pestaloziallee</p>
             </div>
             <div class="d-flex mt-4 phone">
               <img src="./assets/img/bx-phone.png" alt="" />
