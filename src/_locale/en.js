@@ -124,7 +124,8 @@ export default {
         youdonot: 'You do not have any products yet! ',
         profile: 'Profile',
         editprofile: 'Edit Profile',
-        minimumsales: 'Minimum Sales Creditor'
+        minimumsales: 'Minimum Sales Creditor',
+        resetpassword: 'Reset Password'
     },
     button: {
         Produktbearbeiten: 'Edit Product',

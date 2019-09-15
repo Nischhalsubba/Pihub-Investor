@@ -117,7 +117,9 @@ export default {
         youdonot: 'Sie haben noch keine Artikel!',
         profile: 'Profil',
         editprofile: 'Profil bearbeite',
-        minimumsales: 'Mindestumsatz Gläubiger'
+        minimumsales: 'Mindestumsatz Gläubiger',
+        resetpassword: 'Passwort zurücksetzen'
+
 
     },
     button: {

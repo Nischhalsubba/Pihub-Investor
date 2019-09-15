@@ -71,6 +71,9 @@ class Header extends Component {
                   <Translate content='label.editprofile' />
 
                 </Link>
+                <Link className="dropdown-item" to='/change-password'>
+                  <Translate content='label.resetpassword' />
+                </Link>
                 <span className="dropdown-item" onClick={() => {
                   this.props.logout(() => this.props.history.push('/login'))
                 }}>
