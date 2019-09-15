@@ -5,7 +5,8 @@ import Multiselect from 'react-widgets/lib/Multiselect';
 import 'react-widgets/dist/css/react-widgets.css';
 import Dropzone from 'react-dropzone';
 import Translate from 'react-translate-component'
-
+import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css'
 export const inputField = ({
   input,
   label,
@@ -89,6 +90,7 @@ export const dropDownField = ({
 };
 
 export const inputSlider = ({
+  step,
   input,
   label,
   type,
@@ -117,9 +119,8 @@ export const inputSlider = ({
           type={type}
           min={min}
           max={max}
-          step="1"
+          step={step}
           data-orientation="horizontal"
-          styles={{ color: 'red' }}
         />
       </div>
       {/* </div> */}
@@ -228,3 +229,39 @@ export const radioButton = ({
   );
 };
 
+export const inputDoubleSlider = ({
+  input,
+  label,
+  type,
+  className,
+  id,
+  placeholder,
+  max,
+  min,
+  meta: { error, touched }
+}) => {
+  return (
+    <Fragment>
+      {/* <div className="form-group"> */}
+      <label >
+        {label}
+      </label>
+      {/* <div class="d-flex align-items-center"> */}
+
+      <div className='demo col-md-9 col-sm-8 col-8'>
+
+        <InputRange
+          maxValue={max}
+          minValue={min}
+          value={{ max: max, min: min }}
+          onChange={value => {
+            console.log(value)
+            // input.onChange(value);
+          }} />
+        {/* </div> */}
+      </div>
+
+      <font color="red">{touched && error}</font>
+    </Fragment >
+  );
+};

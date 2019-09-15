@@ -20,3 +20,4 @@ export const GET_CREDITOR_DETAIL = 'get_creditor_detail';
 export const GET_PROFILE = 'get_profile';
 export const GET_SERVICE = 'get_service';
 export const SCOPE = 'scope';
+export const GET_TOKEN_FOR_EMAIL = 'get_token_email'

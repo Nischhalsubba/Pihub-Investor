@@ -24,10 +24,15 @@ export default ChildComponent => {
     //     }
     // }
     shouldNavigateAway() {
-      const { scopes } = jwt.decode(this.props.auth);
-      if (scopes[0] === 'unapproved_scope') {
-        this.props.history.push('/account-unverified');
+      if (!this.props.auth) {
+        this.props.history.push('/login');
+      } else {
+        const { scopes } = jwt.decode(this.props.auth);
+        if (scopes[0] === 'unapproved_scope') {
+          this.props.history.push('/account-unverified');
+        }
       }
+
     }
 
     render() {

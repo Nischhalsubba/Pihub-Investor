@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
-
+import InputRange from 'react-input-range';
 import { connect } from 'react-redux';
 import { addProduct } from '../../actions/product';
 import { getIndustryList } from '../../actions/industry';
@@ -50,7 +50,7 @@ const credits = [
   }
 ]
 class AddProduct extends Component {
-  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [] };
+  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [], value: { min: 2, max: 10 } };
   componentDidMount() {
     this.props.clearError();
     this.props.getIndustryList();
@@ -124,15 +124,15 @@ class AddProduct extends Component {
           </div>
           <div class="col-9">
             {index === 0 || index === 1 ? <Translate content='label.Kreditrating' component='label' /> : null}
-            <input pattern="[a-cA-C]{1}"
+            <input
               type="text" name={`rating_value[${credit.id}]`}
               onChange={(e) => this.setState({
                 rating_value: [...this.state.rating_value, { id: credit.id, value: e.target.value }]
               })
               }
-              title="Grade must be either A,B or C"
+
               class="col-3 form-control text-center"
-              placeholder='A/B/C'
+
             /></div>
         </div >
         // </div>
@@ -241,23 +241,38 @@ class AddProduct extends Component {
                   </label>
                   <div class="d-flex align-items-center">
 
-                    <Field
+                    {/* <Field
                       name="time_duration"
                       type="range"
                       className="w-100"
-                      component={inputSlider}
+                      component={inputDoubleSlider}
                       // label={<Translate content='label.timeduration' />}
                       id="time-duration"
                       validate={validation.required}
                       max="60"
                       min="3"
+                    /> */}
+                    <input
+                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      type="text"
+                      id="mincredit-amount-value"
+                      // value={time_duration}
+                      value={this.state.value.min}
+                      validate={validation.required}
+                      placeholder="3 Monate"
                     />
+                    <InputRange
+                      maxValue={60}
+                      minValue={3}
+                      value={this.state.value}
+                      onChange={value => this.setState({ value })} />
                     {/* <div class="col-12 col-sm-12 col-md-6"> */}
                     &nbsp;&nbsp;<input
                       className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
                       type="text"
                       id="mincredit-amount-value"
-                      value={time_duration}
+                      // value={time_duration}
+                      value={this.state.value.max}
                       validate={validation.required}
                       placeholder="3 Monate"
                     />
@@ -285,6 +300,7 @@ class AddProduct extends Component {
                       validate={validation.required}
                       min="25000"
                       max="5000000"
+                      step="10000"
 
                     />
                     €<input
@@ -316,6 +332,7 @@ class AddProduct extends Component {
                       validate={validation.required}
                       min="25000"
                       max="5000000"
+                      step="10000"
                     />
                     €<input
                       className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
@@ -349,6 +366,7 @@ class AddProduct extends Component {
                       validate={validation.required}
                       min="0"
                       max="50000000"
+                      step="100000"
 
                     />
                     €<input
@@ -458,6 +476,18 @@ class AddProduct extends Component {
                 <Translate content='button.submit' component="button" className="btn btn-primary btn-form" type="submit" />
               </div>
             </div>
+            {/* <div className="row mt-4">
+              <div className="col">
+                <InputRange
+                  maxValue={60}
+                  minValue={3}
+                  value={{ min: 10, max: 20 }}
+                  onChange={value => console.log(value)}
+                  className='position-relative w-100'
+
+                />
+              </div>
+            </div> */}
           </form>
         </div>
       </Fragment>

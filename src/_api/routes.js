@@ -20,5 +20,6 @@ export const routes = {
   uploadFile: `${API_URL}/investor/products`,
   getProfile: `${API_URL}/me`,
   getService: `${API_URL}/services`,
-  passwordReset: `${API_URL}/password-reset-token`
+  passwordReset: `${API_URL}/password-reset-token`,
+  changePasswordWithToken: `${API_URL}/change-password-with-token`
 };

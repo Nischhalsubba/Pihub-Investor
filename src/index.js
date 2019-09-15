@@ -27,6 +27,7 @@ import SetPassword from './components/user/SetPassword';
 import Signout from './components/user/Signout';
 
 import ChangePassword from './components/user/signup/ChangePassword';
+import PasswordChangeSuccess from './components/general/PasswordChangeSuccess';
 //Product related imports
 import ProductsList from './components/products/List';
 import AddProduct from './components/products/Add';
@@ -98,6 +99,7 @@ ReactDOM.render(
         {/** Logged in (there should be a token) and unconfirmed accounts only*/}
         <Route path="/confirm/:hash" exact component={Approval} />{' '}
         {/** Logged in (there should be a token) - confirmed but waiting to e approved accounts only*/}
+        <Route path='/password-change-success' component={PasswordChangeSuccess} />
         {/** --- End: signup protected routes ___ */}
         <App>
           {/** ___ Start: Authenticated User's routes --- */}
