@@ -73,7 +73,7 @@ ReactDOM.render(
         {/** ___ Start: NO AUTH ROUTES --- Authenticated users should be redirected to home screen ---*/}
         <Route path="/login" exact component={RequireNoAuth(Login)} />
         <Route
-          path="/password-set"
+          path="/set-password/:token"
           exact
           component={RequireNoAuth(SetPassword)}
         />

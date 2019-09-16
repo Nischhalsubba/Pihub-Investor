@@ -33,6 +33,7 @@ export const getProductsList = (page, status, product_title) => async dispatch =
       payload: response.data.meta
     })
   } catch (e) {
+    console.log(e)
     dispatch({
       type: ERROR,
       payload: e.response.data.message

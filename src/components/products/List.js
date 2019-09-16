@@ -33,7 +33,7 @@ class ProductsList extends Component {
                 {product.product_title}
               </Link>
             </td>
-            <td>{product.service}</td>
+            <td>{product.service.name}</td>
 
             <td>
               {product.industries.map((industry, index) => {

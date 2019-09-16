@@ -122,7 +122,7 @@ class ChangePassword extends Component {
   }
 }
 function validate(values) {
-  console.log('m her')
+
   const errors = {};
   errors.email = validation.newEmail(values.email);
 
