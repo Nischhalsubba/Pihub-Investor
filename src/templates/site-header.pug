@@ -9,16 +9,15 @@ header.site-header.align-items-center
 			span
 		img(src="/assets/img/logo.png", alt="Pinhub Logo")
 	nav.header-actions
-		ul
-			li.d-flex.lang__select.dropdown
-				//- label(for="langCheck") EN
-				//- input#langCheck.d-none(type="checkbox")
-				span.lang__select-btn EN
-				ul.dropdown-container
-					li
-						span DE
-				i.bx.bx-chevron-down
-
+		ul.language-changer
+			li.active
+				button
+					img(src='assets/img/gb.svg' alt='English Language')
+					| English
+			li
+				button
+					img(src='assets/img/de.svg' alt='Deutsch Language')
+					| Deutsch
 
 			li.header-actions__item.dropdown.notification
 				a.header-notification#dropDownnMenuNotificaiton(href="",data-toggle="dropdown",aria-haspopup="true",aria-expanded="false")
@@ -62,18 +61,18 @@ header.site-header.align-items-center
 							ul.notification.p-0
 								li.notification-item.d-flex.flex-row.align-items-top
 									.notification-item-container
-										img(src="/assets/img/icons/bx-user.svg", alt="alt",class="mr-2")
+										i.bx.bx-user
 										span My Profile
 								li.notification-item.d-flex.flex-row.align-items-top
 									.notification-item-container
-										img(src="/assets/img/icons/bx-edit.svg", alt="alt",class="mr-2")
+										i.bx.bx-edit
 										span Edit Profile
 								li.notification-item.d-flex.flex-row.align-items-top
 									.notification-item-container
-										img(src="/assets/img/icons/bx-cog.svg", alt="alt",class="mr-2")
+										i.bx.bx-cog
 										span My Settings
 								li.notification-item.d-flex.flex-row.align-items-top
 									.notification-item-container
-										img(src="/assets/img/icons/bx-log-in.svg", alt="alt",class="mr-2")
+										i.bx.bx-log-out
 										span Logout
 

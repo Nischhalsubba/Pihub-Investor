@@ -30,12 +30,28 @@ textarea {
 }
 
 input[type="range"] {
-	background-color: inherit;
-	width: 20px;
-	height: 20px;
+	-webkit-appearance: none;
+	appearance: none;
+	background: $color-primary;
+	height: 5px;
+	width: 100%;
 
 	&::-webkit-slider-thumb {
-		background-color: red;
+		-webkit-appearance: none;
+		appearance: none;
+		width: 20px;
+		height: 20px;
+		border: 3px solid $color-primary;
+		border-radius: 50px;
+		background: $color-white;
+	}
+
+	&::-moz-range-thumb {
+		width: 20px;
+		height: 20px;
+		border: 3px solid $color-primary;
+		border-radius: 50px;
+		background: $color-white;
 	}
 }
 
@@ -49,7 +65,7 @@ select.regionof-interest {
 }
 
 label {
-	font-weight: 500;
+	font-weight: 600;
 	margin-bottom: 15px;
 	color: $color-gray-9;
 }
@@ -101,8 +117,8 @@ label {
 	-webkit-tap-highlight-color: transparent;
 }
 
-.radio .label:after {
-	content: '';
+.radio .label::after {
+	content: "";
 	position: absolute;
 	top: 3px;
 	left: 3px;
@@ -116,15 +132,15 @@ label {
 	pointer-events: none;
 }
 
-.radio:hover .label:after {
+.radio:hover .label::after {
 	transform: scale(3.6);
 }
 
-input[type="radio"]:checked+.label {
+input[type="radio"]:checked + .label {
 	border-color: #225cff;
 }
 
-input[type="radio"]:checked+.label:after {
+input[type="radio"]:checked + .label::after {
 	transform: scale(1);
 	transition: all 0.2s cubic-bezier(0.35, 0.9, 0.4, 0.9);
 	opacity: 1;
@@ -143,54 +159,78 @@ input[type="radio"]:checked+.label:after {
 }
 
 // Date picker
-input[type='date'] {
-
+input[type="date"] {
 	&::-webkit-inner-spin-button,
 	input::-webkit-clear-button {
 		display: none;
 	}
 
 	&::-webkit-calendar-picker-indicator {
-		content: url('../img/icons/bx-calender.svg');
+		content: url("../img/icons/bx-calender.svg");
 		opacity: 1;
 	}
 }
 
-// Range slider
-input[type="range"] {
-	appearance: none;
-	border: none;
-	background-color: $color-primary;
-	height: 4px;
-
-	&:focus {
-		outline: none;
-	}
-}
-
 // industry dropdown
-.industry-list{
-	box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
+.industry-list {
+	box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
 	padding: 25px 15px 15px 15px;
 
-	.industry-item{
+	.industry-item {
 		margin-bottom: 10px;
-		
 	}
 }
 
-input[type="checkbox"]{
+input[type="checkbox"] {
 	margin-top: 10px;
 }
 
-.rating{
-	
-
-	.rating-item{
+.rating {
+	.rating-item {
 		display: flex;
 		align-items: center;
 		justify-items: center;
 		width: 50%;
 		margin-bottom: 1rem;
+	}
+}
+
+.form-group-ranger {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	.range-slider {
+		width: 100%;
+		border: none;
+		box-shadow: none;
+		height: 4px;
+
+		.noUi-connect {
+			background-color: $color-primary;
+		}
+
+		&.noUi-horizontal {
+			.noUi-handle {
+				width: 20px;
+				height: 20px;
+				border: 3px solid $color-primary;
+				border-radius: 50px;
+				top: -8px;
+
+				&::before,
+				&::after {
+					content: none;
+				}
+			}
+		}
+	}
+
+	.input-group {
+		width: 200px;
+
+		&:last-child {
+			margin-left: 15px;
+		}
 	}
 }

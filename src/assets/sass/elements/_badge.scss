@@ -2,7 +2,11 @@
 	padding: 10px 15px;
 	font-weight: 400;
 	font-size: $font-size-small;
-	width: 100%;
+	min-width: 100px;
+}
+
+.badge-primary {
+	background-color: $color-primary;
 }
 
 .badge-success {

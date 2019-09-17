@@ -76,22 +76,24 @@
 	}
 }
 
-.dropdown{
-	position:relative;
-	.dropdown-container{
-		display:none;
-		width:50px;
-		position: absolute;
-		top:15px;
-		padding:10px 0;
-	}
-	span.lang__select-btn{cursor: pointer;}
+.language-changer {
+	display: flex;
 
-	&:hover .dropdown-container{
-		display:block;
-	}
-}
+	li {
+		margin-right: 15px;
 
-.lang__select span{
-	cursor: pointer;
+		button {
+			padding: 0;
+			background: none;
+			border: none;
+
+			img {
+				margin-right: 5px;
+			}
+		}
+
+		&.active {
+			border-bottom: 1px solid $color-gray-6;
+		}
+	}
 }

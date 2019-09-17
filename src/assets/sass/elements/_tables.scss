@@ -15,6 +15,15 @@ table {
 
 	td,
 	th {
-		padding: 20px 0;
+		padding: 15px;
+		vertical-align: middle;
+
+		&:first-child {
+			padding-left: 0;
+		}
+
+		&:last-child {
+			padding-right: 0;
+		}
 	}
 }

@@ -1,0 +1,54 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include templates/head.pug
+        title Credit Requests
+    body
+        .container-full-height.ct-container
+            .sidebar
+                include components/nav-sidebar
+            .main-content.main-content--padded
+                include templates/site-header
+                .content-head
+                    .content-head-left
+                        h1.content-head__title Credit Requests
+
+                .content-body
+                    table.table.tablesaw-stack(data-tablesaw-mode="stack" data-tablesaw-minimap)
+                        thead
+                            tr 
+                                th(data-tablesaw-sortable-col) Creditor
+                                th(data-tablesaw-sortable-col) Product Name
+                                th(data-tablesaw-sortable-col data-tablesaw-priority="persist" scope="col") Service
+                                th.text-md-right.text-left(data-tablesaw-sortable-col scope="col") Created on
+                                th.text-md-right.text-left(data-tablesaw-sortable-col scope="col") Deadline
+                                th.text-md-right.text-left(data-tablesaw-sortable-col scope="col") Max Amount
+                                th.text-md-right.text-left(data-tablesaw-sortable-col scope="col") Status
+                        tbody
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+                            +creditor-list('John doe', 'It Investment', 'Corporate Loan', '07/04/2019', '08-09/2020', '40000', 'badge-success', 'Success')
+
+                .content-footer
+                    nav.nav-content
+                        ul.pagination
+                            li.page-item
+                                a.page-link(href="")
+                                    i.bx.bx-chevron-left
+                            li.page-item.active
+                                a.page-link(href="") 1
+                            li.page-item
+                                a.page-link(href="") 2
+                            li.page-item
+                                a.page-link(href="") 3
+                            li.page-item
+                                a.page-link(href="") 4
+                            li.page-item
+                                a.page-link(href="")
+                                    i.bx.bx-chevron-right
