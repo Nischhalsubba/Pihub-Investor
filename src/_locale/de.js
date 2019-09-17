@@ -120,8 +120,8 @@ export default {
         profile: 'Profil',
         editprofile: 'Profil bearbeite',
         minimumsales: 'Mindestumsatz Gläubiger',
-        resetpassword: 'Passwort zurücksetzen'
-
+        resetpassword: 'Passwort zurücksetzen',
+        months: 'Monate'
 
     },
     button: {
@@ -130,7 +130,8 @@ export default {
         search: 'Suche',
         addnewproduct: 'Kreditprodukt hinzufügen',
         submit: 'einreichen',
-        edit: 'Produkt bearbeiten'
+        edit: 'Produkt bearbeiten',
+        download: 'Herunterladen'
 
     },
     placeholder: {

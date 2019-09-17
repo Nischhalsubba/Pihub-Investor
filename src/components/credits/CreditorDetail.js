@@ -2,9 +2,10 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import Subheader from '../general/Subheader';
+// import Subheader from '../general/Subheader';
 import { uploadFile } from '../../actions/uploadFile'
 import { getCreditor } from '../../actions/creditor';
+import { downloadToken } from '../../actions/download';
 import Translate from 'react-translate-component';
 import Spinner from '../general/Spinner'
 import * as validation from '../../_utils/validate';
@@ -46,7 +47,8 @@ class CreditorDetail extends Component {
         return (
           <div class="file mb-2">
             <span class="file-name">{doc.type}</span>
-            <span class="ml-4 file-size">{doc.file_type}</span>
+            <span class="ml-4 file-size">FileType: {doc.file_type}</span>
+            <button className='btn btn-link' onClick={() => this.props.downloadToken(doc.path)}><Translate content='button.download' /></button>
           </div>
         );
       })
@@ -90,7 +92,7 @@ class CreditorDetail extends Component {
                       <Translate content='label.industries' component="h6" />
                       <div class="d-flex flex-wrap justify-content-between flex-column">
                         {industries.map((i, index) => {
-                          return <span class="mb-1">{i.name}</span>
+                          return <span class="mb-1"><br />{i.name}</span>
 
                         })}
 
@@ -177,4 +179,4 @@ function mapStateToProps(state) {
 CreditorDetail = reduxForm({
   form: 'creditorDetail'
 })(CreditorDetail);
-export default connect(mapStateToProps, { getCreditor, uploadFile })(CreditorDetail);
+export default connect(mapStateToProps, { getCreditor, uploadFile, downloadToken })(CreditorDetail);

@@ -20,15 +20,27 @@ class ViewProduct extends Component {
       );
     })
   }
+  listStates = states => {
+    if (states.length > 0) {
+      return states.map((state, index) => {
+        return (
+          <a class="mb-1" href="#">{state}<br /></a>
+
+        );
+      })
+    }
+
+  }
   listRating = ratings => {
     if (ratings.length === 0) {
       return <span>**<Translate content='column.norating' /></span>
     } else {
       return ratings.map((rating, index) => {
+        console.log(rating)
         return (
           <div class="col-3 p-0">
-            <h6>Creditrre form</h6>
-            <span>AAA</span>
+            <h6>{rating.name}</h6>
+            <span>{rating.value}</span>
           </div>
 
         );
@@ -46,14 +58,15 @@ class ViewProduct extends Component {
         min_credit_amount,
         industries,
         status,
-        time_duration,
+        min_time_duration,
+        max_time_duration,
         product_title,
         service,
-        state,
-        ratings
+        states,
+        ratings, County
         }
       } = this.props.product;
-      console.log('detail', this.props.product.product)
+      console.log('detail', this.props.product.product);
       return (
         <Fragment>
           <div className="content-head">
@@ -88,7 +101,12 @@ class ViewProduct extends Component {
                   </div>
                   <div class="col-3 p-0">
                     <Translate content='label.state' component="h6" />
-                    <a >{state}</a>
+                    <a >{states ? this.listStates(states) : null}</a>
+                  </div>
+                  <div class="col-3 p-0">
+                    {/* <Translate content='label.state' component="h6" /> */}
+                    <h6>County</h6>
+                    <a >{states ? this.listStates(County) : null}</a>
                   </div>
                   <div class="col-3 p-0">
                     <Translate content='label.industries' component="h6" />
@@ -117,18 +135,16 @@ class ViewProduct extends Component {
 
                   <h2>€{min_credit_amount}</h2>
                 </div>
-                {/* <div class="investor clearfix mt-5"> */}
-                {/* <h6>Investor</h6> */}
-                {/* <Translate content='label.investor' component="h6" />
-                  <div class="investor-profile d-flex align-items-center">
-                    <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" />
-                    <a class="ml-2" href="#">{investor}</a>
-                  </div>
-                </div> */}
+
                 <div class="date mt-5">
                   {/* <h6>Time Duration</h6> */}
-                  <Translate content='label.timeduration' component="h6" />
-                  <a href="#">{time_duration}Months </a>
+                  <Translate content='column.minduration' component="h6" />
+                  <a href="#">{min_time_duration} <Translate content='label.months' /> </a>
+                </div>
+                <div class="date mt-5">
+                  {/* <h6>Time Duration</h6> */}
+                  <Translate content='column.maxduration' component="h6" />
+                  <a href="#">{max_time_duration} <Translate content='label.months' /> </a>
                 </div>
               </div>
             </div>

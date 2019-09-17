@@ -21,5 +21,7 @@ export const routes = {
   getProfile: `${API_URL}/me`,
   getService: `${API_URL}/services`,
   passwordReset: `${API_URL}/password-reset-token`,
-  changePasswordWithToken: `${API_URL}/change-password-with-token`
+  changePasswordWithToken: `${API_URL}/change-password-with-token`,
+  downloadToken: `${API_URL}/download-token`,
+  downloadFile: `${API_URL}/download`
 };

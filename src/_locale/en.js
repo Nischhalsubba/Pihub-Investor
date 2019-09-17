@@ -127,7 +127,8 @@ export default {
         profile: 'Profile',
         editprofile: 'Edit Profile',
         minimumsales: 'Minimum Sales Creditor',
-        resetpassword: 'Reset Password'
+        resetpassword: 'Reset Password',
+        months: 'Months'
     },
     button: {
         Produktbearbeiten: 'Edit Product',
@@ -135,7 +136,8 @@ export default {
         search: 'Search',
         addnewproduct: 'Add new products',
         submit: 'Submit',
-        edit: 'Edit Product'
+        edit: 'Edit Product',
+        download: 'Download'
     },
     placeholder: {
         select: 'Select'
