@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
 import InputRange from 'react-input-range';
 import { connect } from 'react-redux';
 import { addProduct } from '../../actions/product';
@@ -50,7 +50,7 @@ const credits = [
   }
 ]
 class AddProduct extends Component {
-  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [], value: { min: 2, max: 10 } };
+  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [], value: { min: 6, max: 15 } };
   componentDidMount() {
     this.props.clearError();
     this.props.getIndustryList();
@@ -95,6 +95,8 @@ class AddProduct extends Component {
     }
 
     formProps.ratings = this.state.rating_value;
+    formProps.min_duration = this.state.value.min;
+    formProps.max_duration = this.state.value.max;
     if (formProps.County[0] === 'Select All') {
       formProps.county_ids = extractId(null, this.state.cities);
     } else {
@@ -107,7 +109,8 @@ class AddProduct extends Component {
       formProps.state_ids = extractId(formProps.states, germanStates);
 
     }
-    this.props.addProduct(formProps, () => this.props.history.push('/products'))
+    console.log(formProps)
+    // this.props.addProduct(formProps, () => this.props.history.push('/products'))
   };
 
   creditRatings = (credits) => {
@@ -154,6 +157,11 @@ class AddProduct extends Component {
         </div>
         // </div>
       )
+    })
+  }
+  displayFiles = files => {
+    return files.map((file, index) => {
+      return <span key={index}>{file.name} <br /></span >
     })
   }
   render() {
@@ -260,7 +268,7 @@ class AddProduct extends Component {
                       value={this.state.value.min}
                       validate={validation.required}
                       placeholder="3 Monate"
-                    />
+                    />&nbsp;&nbsp;
                     <InputRange
                       maxValue={60}
                       minValue={3}
@@ -459,7 +467,7 @@ class AddProduct extends Component {
                     type="file"
                     validate={validation.required}
                   />
-                  {files ? <strong>Filename: {files[0].name}</strong> : null}
+                  {files ? this.displayFiles(files) : null}
                 </div>
               </div>
             </div>

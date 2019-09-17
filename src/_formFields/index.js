@@ -6,7 +6,6 @@ import 'react-widgets/dist/css/react-widgets.css';
 import Dropzone from 'react-dropzone';
 import Translate from 'react-translate-component'
 import InputRange from 'react-input-range';
-import 'react-input-range/lib/css/index.css'
 export const inputField = ({
   input,
   label,
@@ -176,6 +175,7 @@ export const renderDropzoneField = ({
           input.onChange(filesToUpload);
         }}
         maxSize={8000000}
+        multiple
       >
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps() } className="border-dotted">
