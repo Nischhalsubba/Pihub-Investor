@@ -2,7 +2,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-// import Subheader from '../general/Subheader';
 import { uploadFile } from '../../actions/uploadFile'
 import { getCreditor } from '../../actions/creditor';
 import { downloadToken } from '../../actions/download';
@@ -16,9 +15,9 @@ class CreditorDetail extends Component {
     if (!this.props.location.state) {
       return this.props.history.push('/products-invested')
     }
-    console.log(this.props.location.state)
+    console.log('comp', this.props.location.state)
     const { id } = this.props.location.state;
-    this.props.getCreditor(id);
+    this.props.getCreditor(id, this.callback);
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.props.data !== prevProps.data) {
@@ -26,9 +25,11 @@ class CreditorDetail extends Component {
       this.setState({ detail: this.props.data.detail })
     }
     if (this.state.refresh !== prevState.refresh) {
-      this.props.getCreditor(this.props.location.state.id);
-
+      this.props.getCreditor(this.props.location.state.id, this.callback);
     }
+  }
+  callback = () => {
+    this.setState({ detail: this.props.data.detail })
 
   }
   onSubmit = formProps => {
@@ -59,17 +60,13 @@ class CreditorDetail extends Component {
       return <span>**<Translate content='column.norating' /></span>
     } else {
       return ratings.map((rating, index) => {
-        console.log(rating)
         return (
-          <div>
-            <h6>{Object.keys(rating)}</h6>
-            <span>{Object.values(rating)}</span>
+          <div class="col-3 p-0">
+            <h6>{Object.keys(rating)}</h6><span>{Object.values(rating)}</span>
           </div>
-
         );
       })
     }
-
   }
   render() {
     if (this.state.detail) {
@@ -113,16 +110,23 @@ class CreditorDetail extends Component {
 
                       </div>
                     </div>
-                    <div class="col-3 p-0">
-                      {/* <Translate content='label.industries' component="h6" /> */}
-                      <h6>Ratings</h6>
-                      <div class="d-flex flex-wrap justify-content-between flex-column">
-                        {ratings.length > 0 ? this.listRating(ratings) : null}
-                      </div>
-                    </div>
-                  </div>
+                    {/* <div class="col-3 p-0"> */}
+                    {/* <Translate content='label.industries' component="h6" /> */}
+                    {/* <h6>Ratings</h6>
 
-                </div>
+                    <div class="row justify-content-between w-100 mt-3">
+                      {ratings.length > 0 ? this.listRating(ratings) : null}
+                    </div>
+                  </div> */}
+
+                  </div>
+                  <div class="row justify-content-between w-100 mt-3">
+                    <h6 className='w-100'>Ratings</h6>
+                  </div>
+                  <div class="row justify-content-between w-100 mt-3">
+                    {ratings.length > 0 ? this.listRating(ratings) : null}
+                  </div>
+                  \                </div>
                 <div class="col-lg-12 col-xl-4 rightbar">
                   <div class="amount">
                     {/* <h6>Requested amount of</h6> */}
@@ -184,7 +188,7 @@ class CreditorDetail extends Component {
               </div>
             </form>
           </div>
-        </Fragment>
+        </Fragment >
       );
     } else {
       return <Spinner />

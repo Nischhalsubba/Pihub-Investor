@@ -48,7 +48,7 @@ class ViewProfile extends Component {
           </div>
           <div class="content-body mt-5">
             <div class="d-flex">
-              <img src="./assets/img/bx-briefcase.png" alt="" />
+              <img src="/assets/img/bx-briefcase.png" alt="" />
               <span class="ml-3 font-weight-bold">Category:{category}</span>
             </div>
             <div class="d-flex mt-4">
@@ -58,7 +58,7 @@ class ViewProfile extends Component {
               <p class="ml-3 font-weight-bold mb-0">{street_address} <br />{headquarter}, {zip_code}</p>
             </div>
             <div class="d-flex mt-4 phone">
-              <img src="./assets/img/bx-phone.png" alt="" />
+              <img src="/assets/img/bx-phone.png" alt="" />
               <div class="d-flex flex-column">
                 <h4 class="ml-3 font-weight-bold">{fname} {lname}</h4>
                 <span class="ml-3 mb-2">{email}</span>
@@ -66,7 +66,7 @@ class ViewProfile extends Component {
               </div>
             </div>
             <div class="d-flex mt-4">
-              <img src="./assets/img/icons/contact-person.png" alt="" width="20px" />
+              <img src="/assets/img/icons/contact-person.png" alt="" width="20px" />
               <span class="ml-3 font-weight-bold">Contact Person</span>
             </div>
             <div class="d-flex mt-4 contact_person">
