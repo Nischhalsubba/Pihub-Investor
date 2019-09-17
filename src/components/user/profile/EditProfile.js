@@ -2,20 +2,22 @@ import React, { Component, Fragment } from 'react';
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux';
 import { getProfile, editProfile } from '../../../actions/profile'
+import Translate from 'react-translate-component'
 
 import Subheader from '../../general/Subheader'
-import { inputField } from '../../../_formFields/'
+import { inputField, renderDropzoneField } from '../../../_formFields/'
 class EditProfile extends Component {
-  componentDidMount() {
-    this.props.getProfile();
-  }
-  onSubmit = formProps => {
-    this.props.editProfile(formProps, () => this.props.history.push('/user/profile'))
-  }
-  render() {
-    const { handleSubmit } = this.props;
+	componentDidMount() {
+		this.props.getProfile();
+	}
+	onSubmit = formProps => {
+		console.log('xx', formProps)
+		this.props.editProfile(formProps, () => this.props.history.push('/user/profile'))
+	}
+	render() {
+		const { handleSubmit } = this.props;
 
-    return (
+		return (
 			<Fragment>
 				<Subheader buttonLabel="Change Profile Picture" />
 				<div class="content-body">
@@ -33,30 +35,7 @@ class EditProfile extends Component {
 								</div>
 							</div>
 						</div>
-						<div class="row mt-4">
-							<div class="col-12 col-sm-12 col-md-6">
-								<div class="form-group">
-									<Field
-										name="fname"
-										type="text"
-										component={inputField}
-										label="First Name"
-										className="form-control"
-									/>
-								</div>
-							</div>
-							<div class="col-12 col-sm-12 col-md-6">
-								<div class="form-group">
-									<Field
-										name="lname"
-										type="text"
-										component={inputField}
-										label="Last Name"
-										className="form-control"
-									/>
-								</div>
-							</div>
-						</div>
+
 						<div class="row mt-4">
 							<div class="col-12 col-sm-12 col-md-12">
 								<div class="form-group">
@@ -75,7 +54,7 @@ class EditProfile extends Component {
 							<div class="col-12 col-sm-6 col-md-6">
 								<div class="form-group">
 									<Field
-										name="street"
+										name="street_address"
 										type="text"
 										component={inputField}
 										label="Street Address"
@@ -86,7 +65,7 @@ class EditProfile extends Component {
 							<div class="col-12 col-sm-6 col-md-6">
 								<div class="form-group">
 									<Field
-										name="zippostal"
+										name="zip_code"
 										type="text"
 										component={inputField}
 										label="Zip/Postal Code"
@@ -96,11 +75,9 @@ class EditProfile extends Component {
 							</div>
 						</div>
 
-						<div class="row mt-4">
+						{/* <div class="row mt-4">
 							<div class="col-12 col-sm-12 col-md-12">
 								<div class="form-group">
-									{/* <label>Email Address</label>
-                  <input class="form-control" type="email" name="email" placeholder="dinohwang@gmail.com" /> */}
 									<Field
 										name="email"
 										type="email"
@@ -110,118 +87,94 @@ class EditProfile extends Component {
 									/>
 								</div>
 							</div>
-						</div>
+						</div> */}
 
 						<div class="row mt-4">
 							<div class="col-12 col-sm-12 col-md-12">
 								<div class="form-group">
-                  <label>Investor Categories</label>
-									<select class="form-control">
-										<option value=" ">Bank</option>
-										<option value="Advertisement/Online Marketing">Sparkasse</option>
-										<option value="Advertisement/Marketing">Kreditfons</option>
-										<option value="Advertisement/Offine Marketing">Family Office</option>
-									</select>
+									<label>Investor Categories</label>
+									<Field name="category" component="select" className='form-control'>
+										<option value="bank">Bank</option>
+										<option value="sparkasse">Sparkasse</option>
+										<option value="kreditfons">Kreditfons</option>
+										<option value="family-office">Family Office</option>
+									</Field>
 								</div>
 							</div>
 						</div>
 
-						<div class="row mt-4">
-							<div class="col-12 col-sm-12 col-md-12">
-								<div class="form-group">
-									<label>Phone Number</label>
-									<div class="row">
-										<div class="col-2 col-md-1">
-											<select class="form-control states">
-												<option value=" ">DE</option>
-												<option value="Advertisement/Online Marketing">
-													US
-												</option>
-												<option value="Advertisement/Marketing">UK</option>
-												<option value="Advertisement/Offine Marketing">
-													AUS
-												</option>
-											</select>
-										</div>
-										<div class="col-10 col-md-11">
-											<input
-												class="form-control"
-												type="number"
-												name="email"
-												placeholder="+49 123 456 789"
-											/>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+
 						<div class="row mt-4">
 							<div class="col-4 col-sm-12 col-md-4">
 								<label for="">Contact Person</label>
 								<div class="form-group">
-									<input
-										class="mb-2 form-control"
+
+									<Field
+										name="contact_name_1"
 										type="text"
-										name="full-name"
-										placeholder="Ria Quirin"
+										component={inputField}
+										className="form-control"
 									/>
-									<input
-										class="mb-2 form-control"
+									<Field
+										name="contact_email_1"
 										type="email"
-										name="email"
-										placeholder="Ria@yahoo.com"
+										component={inputField}
+										className="form-control"
 									/>
-									<input
-										class="form-control"
-										type="number"
-										name="email"
-										placeholder="+49 123 456 789"
+
+									<Field
+										name="contact_phone_no_1"
+										type="text"
+										component={inputField}
+										className="form-control"
 									/>
 								</div>
 							</div>
 							<div class="col-4 col-sm-12 col-md-4">
 								<label for="">Contact Person</label>
 								<div class="form-group">
-									<input
-										class="mb-2 form-control"
+									<Field
+										name="contact_name_2"
 										type="text"
-										name="full-name"
-										placeholder="Meine Ferdi "
+										component={inputField}
+										className="form-control"
 									/>
-									<input
-										class="mb-2 form-control"
+									<Field
+										name="contact_email_2"
 										type="email"
-										name="email"
-										placeholder="Meine@yahoo.com"
+										component={inputField}
+										className="form-control"
 									/>
-									<input
-										class="form-control"
-										type="number"
-										name="email"
-										placeholder="+49 9877458547"
+
+									<Field
+										name="contact_phone_no_2"
+										type="text"
+										component={inputField}
+										className="form-control"
 									/>
 								</div>
 							</div>
 							<div class="col-4 col-sm-12 col-md-4">
 								<label for="">Contact Person</label>
 								<div class="form-group">
-									<input
-										class="mb-2 form-control"
+									<Field
+										name="contact_name_3"
 										type="text"
-										name="full-name"
-										placeholder="Rosa Renata"
+										component={inputField}
+										className="form-control"
 									/>
-									<input
-										class="mb-2 form-control"
+									<Field
+										name="contact_email_3"
 										type="email"
-										name="email"
-										placeholder="Rosa@yahoo.com"
+										component={inputField}
+										className="form-control"
 									/>
-									<input
-										class="form-control"
-										type="number"
-										name="email"
-										placeholder="+49 123 456 789"
+
+									<Field
+										name="contact_phone_no_3"
+										type="text"
+										component={inputField}
+										className="form-control"
 									/>
 								</div>
 							</div>
@@ -231,49 +184,53 @@ class EditProfile extends Component {
 								<label for="">Social Media</label>
 								<div class="form-group d-flex align-items-center">
 									<label class="m-0" for="">
-										Facebook
+										Facebook &nbsp;&nbsp;
 									</label>
-									<input
-										class="ml-2 form-control"
+									<Field
+										name="facebook_link"
 										type="text"
-										name="company-name"
-										placeholder="https://www.facebook.com/officialdino"
+										component={inputField}
+										className="ml-2 form-control"
+									/>
+
+								</div>
+								<div class="form-group d-flex align-items-center">
+									<label class="m-0" for="">
+										Twitter &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</label>
+
+									<Field
+										name="twitter_link"
+										type="text"
+										component={inputField}
+										className="ml-2 form-control"
 									/>
 								</div>
 								<div class="form-group d-flex align-items-center">
 									<label class="m-0" for="">
-										Twitter
+										Linkedin &nbsp;&nbsp;&nbsp;&nbsp;
 									</label>
-									<input
-										class="ml-4 form-control"
+									<Field
+										name="linked_in_link"
 										type="text"
-										name="company-name"
-										placeholder="https://www.twitter.com/officialdino"
+										component={inputField}
+										className="ml-2 form-control"
 									/>
-								</div>
-								<div class="form-group d-flex align-items-center">
-									<label class="m-0" for="">
-										Linkedin
-									</label>
-									<input
-										class="ml-3 form-control"
-										type="text"
-										name="company-name"
-										placeholder="https://www.linkedin.com/officialdino"
-									/>
+
 								</div>
 							</div>
 						</div>
-						<div class="row mt-4">
-							<div class="col-12 col-sm-12 col-md-12">
-								<div class="form-group">
-									<label>Your short info</label>
-									<textarea
-										name=""
-										cols="30"
-										rows="5"
-										placeholder="Born in small family, worked my way to this point, now an entrepreneur helping startup touch the sky"
-									></textarea>
+						<div className="row mt-4">
+							<div className="col">
+								<div className="form-group">
+									<strong> <Translate content='label.fileupload' component="label" /></strong>
+									<Field
+										name="document"
+										component={renderDropzoneField}
+										type="file"
+									// validate={validation.required}
+									/>
+									{/* {files ? this.displayFiles(files) : null} */}
 								</div>
 							</div>
 						</div>
@@ -282,19 +239,19 @@ class EditProfile extends Component {
 				</div>
 			</Fragment>
 		);
-  }
+	}
 }
 
 
 EditProfile = reduxForm({
-  form: 'editProfile'
+	form: 'editProfile'
 })(EditProfile)
 
 EditProfile = connect(
-  state => ({
-    initialValues: state.profile
-  }),
-  { getProfile, editProfile }
+	state => ({
+		initialValues: state.profile
+	}),
+	{ getProfile, editProfile }
 )(EditProfile)
 
 export default EditProfile

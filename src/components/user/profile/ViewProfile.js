@@ -11,15 +11,17 @@ class ViewProfile extends Component {
     if (!this.props.profile) {
       return <Spinner />
     } else {
-      const { fname, lname, company_name, email, phone_number, status } = this.props.profile;
+      const { fname, lname, company_name, email, phone_number, status, category, company_logo_link, contact_email_1, contact_email_2, contact_email_3, contact_phone_no_1, contact_phone_no_2, contact_phone_no_3, document_link, contact_name_1, contact_name_2, contact_name_3, facebook_link, linked_in_link, twitter_link, street_address, headquarter, zip_code } = this.props.profile;
       console.log('p', this.props.profile)
+      console.log(document_link)
+      console.log(company_logo_link)
       return (
         <Fragment>
           <div class="content-head">
             <div class="content-head-left w-50">
               <div class="d-flex company-image">
                 <div class="item position-relative">
-                  <img src="/assets/img/vw.png" alt="alt" width="120px" height="120px" />
+                  <img src='http://api.credittech.diagonal.solutions/storage/investor/7/8d152a18-d3e6-4702-9c71-6f9a59758c4f.jpg' alt="alt" width="120px" height="120px" />
                   <img class="verify" src="/assets/img/verify.png" alt="alt" />
                 </div>
                 <div class="item ml-4">
@@ -27,13 +29,13 @@ class ViewProfile extends Component {
                     <span class="badge-primary p-2 rounded ml-2">{status === 'approved' ? 'Verified' : 'Unverified'}</span>
                   </h2>
                   <div class="d-flex social-media mt-2">
-                    <a href="#" target="_blank" rel="noopener noreferrer">
+                    <a href={facebook_link} target="_blank" rel="noopener noreferrer">
                       <img class="mr-3" src="/assets/img/icons/facebook.png" alt="alt" width="25px" height="25px" />
                     </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer">
+                    <a href={twitter_link} target="_blank" rel="noopener noreferrer">
                       <img class="mr-3" src="/assets/img/icons/twitter.png" alt="alt" width="25px" height="25px" />
                     </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer">
+                    <a target="_blank" rel="noopener noreferrer" href={twitter_link}>
                       <img src="/assets/img/icons/linkedin.png" alt="alt" width="25px" height="25px" />
                     </a>
                   </div>
@@ -47,13 +49,13 @@ class ViewProfile extends Component {
           <div class="content-body mt-5">
             <div class="d-flex">
               <img src="./assets/img/bx-briefcase.png" alt="" />
-              <span class="ml-3 font-weight-bold">Sparkasse</span>
+              <span class="ml-3 font-weight-bold">Category:{category}</span>
             </div>
             <div class="d-flex mt-4">
               <figure className="m-0">
                 <img src="./assets/img/bx-map.png" alt="" />
               </figure>
-              <p class="ml-3 font-weight-bold mb-0">Wolfsburg, Germany <br/>Millbrook Lea Street, 6483</p>
+              <p class="ml-3 font-weight-bold mb-0">{street_address} <br />{headquarter}, {zip_code}</p>
             </div>
             <div class="d-flex mt-4 phone">
               <img src="./assets/img/bx-phone.png" alt="" />
@@ -69,14 +71,19 @@ class ViewProfile extends Component {
             </div>
             <div class="d-flex mt-4 contact_person">
               <div class="item d-flex flex-column">
-                <h5 class="font-weight-normal">Ria Quirin </h5>
-                <span class="mb-2">Ria@yahoo.com</span>
-                <span>+49 301234567</span>
+                <h5 class="font-weight-normal">{contact_name_1} </h5>
+                <span class="mb-2">{contact_email_1}</span>
+                <span>{contact_phone_no_1}</span>
               </div>
               <div class="item ml-4 d-flex flex-column">
-                <h5 class="font-weight-normal">Meine Ferdi </h5>
-                <span class="mb-2">Meine@yahoo.com</span>
-                <span>+49 9877458547</span>
+                <h5 class="font-weight-normal">{contact_name_2} </h5>
+                <span class="mb-2">{contact_email_2}</span>
+                <span>{contact_phone_no_2}</span>
+              </div>
+              <div class="item ml-4 d-flex flex-column">
+                <h5 class="font-weight-normal">{contact_name_3} </h5>
+                <span class="mb-2">{contact_email_3}</span>
+                <span>{contact_phone_no_3}</span>
               </div>
             </div>
           </div>
