@@ -109,8 +109,8 @@ class AddProduct extends Component {
       formProps.state_ids = extractId(formProps.states, germanStates);
 
     }
-    console.log(formProps)
-    // this.props.addProduct(formProps, () => this.props.history.push('/products'))
+    // console.log(formProps)
+    this.props.addProduct(formProps, () => this.props.history.push('/products'))
   };
 
   creditRatings = (credits) => {

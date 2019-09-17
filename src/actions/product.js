@@ -54,6 +54,9 @@ export const addProduct = (details, callback) => async dispatch => {
     body.set('min_credit_amount', details.min_credit_amount);
     body.set('max_credit_amount', details.max_credit_amount);
     body.set('min_sales_creditor', details.min_sales_creditor)
+    details.files.map((file, index) => {
+      body.append(`files[${index}]`, file)
+    })
     if (details.colatoral === 'true') {
       body.set('collatoral', 1)
     } else {
@@ -66,7 +69,9 @@ export const addProduct = (details, callback) => async dispatch => {
 
     }
     body.set('ratings', details.ratings);
-    body.append('files[0]', details.files[0]);
+    body.set('min_time_duration', details.min_duration);
+    body.set('max_time_duration', details.max_duration);
+    // body.append('files[0]', details.files[0]);
     const response = await clientWithForm.post(routes.addProduct, body);
     if (response) {
       callback();

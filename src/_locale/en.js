@@ -31,7 +31,9 @@ export default {
         noattachment: 'No Attachments available',
         appreject: 'You have rejected this application',
         appaccept: 'You have accepted this application',
-        norating: 'No ratings available'
+        norating: 'No ratings available',
+        minduration: 'Minimum Duration',
+        maxduration: 'Maximum Duration'
     },
     sidebar: {
         product: 'Product',

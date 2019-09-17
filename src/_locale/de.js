@@ -30,7 +30,9 @@ export default {
         noattachment: 'Keine Anhänge verfügbar',
         appreject: 'Sie haben diesen Antrag abgelehnt',
         appaccept: 'Sie haben diese Bewerbung angenommen',
-        norating: 'Keine Bewertungen vorhanden'
+        norating: 'Keine Bewertungen vorhanden',
+        minduration: 'Mindestdauer',
+        maxduration: 'Maximale Dauer'
     },
     sidebar: {
         product: 'Kreditprodukte',

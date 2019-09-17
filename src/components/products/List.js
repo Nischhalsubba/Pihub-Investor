@@ -21,6 +21,7 @@ class ProductsList extends Component {
     if (productsObject && productsObject.productsList.data.length > 0) {
       let products = productsObject.productsList.data;
       return products.map((product, index) => {
+        console.log(product)
         return (
           <tr key={product.id}>
             <td>
@@ -40,7 +41,8 @@ class ProductsList extends Component {
                 return <span>{industry.name}</span>
               })}
             </td>
-            <td>{product.time_duration} Monate</td>
+            <td>{product.min_time_duration} Monate</td>
+            <td>{product.max_time_duration} Monate</td>
 
             <td>€{product.min_credit_amount}</td>
             <td>€{product.max_credit_amount}</td>
@@ -114,7 +116,10 @@ class ProductsList extends Component {
                   <Translate content="label.industries" />
                 </th>
                 <th>
-                  <Translate content="column.duration" />
+                  <Translate content="column.minduration" />
+                </th>
+                <th>
+                  <Translate content="column.maxduration" />
                 </th>
                 <th>
                   <Translate content="column.minimum_credit_amount" />
