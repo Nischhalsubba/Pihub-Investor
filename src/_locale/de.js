@@ -121,7 +121,9 @@ export default {
         editprofile: 'Profil bearbeite',
         minimumsales: 'Mindestumsatz Gläubiger',
         resetpassword: 'Passwort zurücksetzen',
-        months: 'Monate'
+        months: 'Monate',
+        open: 'Öffnen',
+        postponed: 'Verschoben'
 
     },
     button: {

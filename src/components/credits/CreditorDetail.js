@@ -54,15 +54,30 @@ class CreditorDetail extends Component {
       })
     }
   }
+  listRating = ratings => {
+    if (ratings.length === 0) {
+      return <span>**<Translate content='column.norating' /></span>
+    } else {
+      return ratings.map((rating, index) => {
+        console.log(rating)
+        return (
+          <div>
+            <h6>{Object.keys(rating)}</h6>
+            <span>{Object.values(rating)}</span>
+          </div>
 
+        );
+      })
+    }
+
+  }
   render() {
     if (this.state.detail) {
       console.log('here', this.state.detail)
-      const { creditor, collatorals, county, email, files, financial_needs, industries, nda_requirement, phone_number, rating_for_credit, state, street_address, zip_code } = this.state.detail;
+      const { creditor, collatorals, county, email, files, financial_needs, industries, nda_requirement, phone_number, rating_for_credit, state, street_address, zip_code, ratings } = this.state.detail;
       const { handleSubmit } = this.props;
       return (
         <Fragment>
-
           <div class="content-body credit-request">
             <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
               <div class="d-flex">
@@ -96,6 +111,13 @@ class CreditorDetail extends Component {
 
                         })}
 
+                      </div>
+                    </div>
+                    <div class="col-3 p-0">
+                      {/* <Translate content='label.industries' component="h6" /> */}
+                      <h6>Ratings</h6>
+                      <div class="d-flex flex-wrap justify-content-between flex-column">
+                        {ratings.length > 0 ? this.listRating(ratings) : null}
                       </div>
                     </div>
                   </div>

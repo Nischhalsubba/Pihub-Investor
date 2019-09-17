@@ -128,7 +128,9 @@ export default {
         editprofile: 'Edit Profile',
         minimumsales: 'Minimum Sales Creditor',
         resetpassword: 'Reset Password',
-        months: 'Months'
+        months: 'Months',
+        open: 'Open',
+        postponed: 'Postponed'
     },
     button: {
         Produktbearbeiten: 'Edit Product',

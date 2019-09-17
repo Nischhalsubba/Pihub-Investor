@@ -21,7 +21,7 @@ class ProductsList extends Component {
     if (productsObject && productsObject.productsList.data.length > 0) {
       let products = productsObject.productsList.data;
       return products.map((product, index) => {
-        console.log(product)
+        console.log(product.status)
         return (
           <tr key={product.id}>
             <td>
@@ -51,6 +51,8 @@ class ProductsList extends Component {
               {product.status === 'approved' ? <span className="badge badge-success"><Translate content='label.approved' /></span> : null}
               {product.status === 'rejected' ? <span className="badge badge-danger"><Translate content='label.rejected' /></span> : null}
               {product.status === 'invested' ? <span className="badge badge-danger"><Translate content='label.invested' /></span> : null}
+              {product.status === 'open' ? <span className="badge badge-info"><Translate content='label.open' /></span> : null}
+              {product.status === 'postponed' ? <span className="badge badge-secondary"><Translate content='label.postponed' /></span> : null}
             </td>
 
           </tr>
