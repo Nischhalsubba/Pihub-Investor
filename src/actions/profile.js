@@ -15,7 +15,6 @@ export const getProfile = id => async dispatch => {
 
 export const editProfile = (details, callback) => async dispatch => {
   try {
-    console.log(details)
     var body = new FormData();
     Object.keys(details).map(field => {
       if (field !== 'company_logo_link' && field !== 'profile_pic_link' && field !== 'status' && field !== 'id' && field !== 'document_link') {
@@ -23,11 +22,20 @@ export const editProfile = (details, callback) => async dispatch => {
 
       }
     });
-    details.document.map((file, index) => {
-      body.append('document', file)
-    });
+    if (details.document) {
+      details.document.map((file, index) => {
+        body.append('document', file)
+      });
+    } else {
+      body.append('document', null)
+    }
+
+    if (details.company_logo) {
+      body.append('company_logo', details.company_logo);
+    } else {
+      body.append('company_logo', null)
+    }
     body.append('profile_pic', null);
-    body.append('company_logo', null);
     body.append('_method', 'put');
     const response = await client.post(routes.getProfile, body);
     if (response) {

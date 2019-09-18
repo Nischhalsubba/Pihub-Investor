@@ -7,19 +7,50 @@ import Translate from 'react-translate-component'
 import Subheader from '../../general/Subheader'
 import { inputField, renderDropzoneField } from '../../../_formFields/'
 class EditProfile extends Component {
+	state = { file: null, pic: null }
 	componentDidMount() {
 		this.props.getProfile();
 	}
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.file !== prevState.file) {
+			this.setState({
+				pic: URL.createObjectURL(this.state.file)
+			})
+		}
+	}
 	onSubmit = formProps => {
 		console.log('xx', formProps)
+		if (this.state.file) {
+			formProps.company_logo = this.state.file;
+		}
 		this.props.editProfile(formProps, () => this.props.history.push('/user/profile'))
 	}
 	render() {
 		const { handleSubmit } = this.props;
+		console.log(this.props.initialValues)
 
 		return (
 			<Fragment>
-				<Subheader buttonLabel="Change Profile Picture" />
+				{/* <Subheader buttonLabel="Change Profile Picture" /> */}
+
+				<div class="content-head">
+					<div class="content-head-left w-100">
+						<div class="d-flex align-items-center">
+							<div class="item position-relative">
+								{this.props.initialValues ? <Fragment>
+									<img src={this.state.pic || this.props.initialValues.company_logo_link || null} alt="alt" width="120px" height="120px" />
+									<img class="verify" src="/assets/img/verify.png" alt="alt" />
+								</Fragment>
+									: null
+								}
+							</div>
+							<div class="item ml-4 position-relative">
+								<input class="btn btn-outline-light opacity-none position-absolute z-index-1" type="file" accept="image/x-png,image/gif,image/jpeg" name="" onChange={e => this.setState({ file: e.target.files[0] })} />
+								{/* <span class="btn btn-outline-light position-absolute">Change profile picture</span> */}
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="content-body">
 					<form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
 						<div class="row mt-4">
@@ -74,21 +105,6 @@ class EditProfile extends Component {
 								</div>
 							</div>
 						</div>
-
-						{/* <div class="row mt-4">
-							<div class="col-12 col-sm-12 col-md-12">
-								<div class="form-group">
-									<Field
-										name="email"
-										type="email"
-										component={inputField}
-										label="Email"
-										className="form-control"
-									/>
-								</div>
-							</div>
-						</div> */}
-
 						<div class="row mt-4">
 							<div class="col-12 col-sm-12 col-md-12">
 								<div class="form-group">
@@ -237,7 +253,7 @@ class EditProfile extends Component {
 						<button class="btn btn-primary">Update</button>
 					</form>
 				</div>
-			</Fragment>
+			</Fragment >
 		);
 	}
 }

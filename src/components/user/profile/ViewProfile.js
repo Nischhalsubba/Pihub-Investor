@@ -21,7 +21,7 @@ class ViewProfile extends Component {
             <div class="content-head-left w-50">
               <div class="d-flex company-image">
                 <div class="item position-relative">
-                  <img src='http://api.credittech.diagonal.solutions/storage/investor/7/8d152a18-d3e6-4702-9c71-6f9a59758c4f.jpg' alt="alt" width="120px" height="120px" />
+                  <img src={company_logo_link} alt="alt" width="120px" height="120px" />
                   <img class="verify" src="/assets/img/verify.png" alt="alt" />
                 </div>
                 <div class="item ml-4">
