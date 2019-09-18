@@ -1,6 +1,7 @@
 
 import React, { Component, Fragment } from 'react';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
+import InputRange from 'react-input-range';
 
 import { connect } from 'react-redux';
 import { updateProduct } from '../../actions/product';
@@ -52,7 +53,7 @@ const credits = [
   }
 ]
 class EditProduct extends Component {
-  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [] };
+  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [], value: { min: 15, max: 50 } };
   componentDidMount() {
     if (!this.props.location.state) {
       // Redirect to list page if therer is no id of product to be fetched availabel
@@ -80,6 +81,14 @@ class EditProduct extends Component {
     };
     if (this.props.industry !== prevProps.industry) {
       this.setState({ industries: this.props.industry })
+    }
+    if (this.props.initialValues !== prevProps.initialValues) {
+      this.setState({
+        value: {
+          min: this.props.initialValues.min_time_duration,
+          max: this.props.initialValues.max_time_duration
+        }
+      })
     }
   }
 
@@ -113,7 +122,8 @@ class EditProduct extends Component {
       formProps.state_ids = extractId(formProps.states, germanStates);
 
     }
-    console.log(formProps)
+    formProps.min_time_duration = this.state.value.min;
+    formProps.max_time_duration = this.state.value.max;
     this.props.updateProduct(formProps, this.props.location.state.id, () => this.props.history.push({ pathname: '/product', state: { id: this.props.location.state.id } }))
   };
 
@@ -133,13 +143,12 @@ class EditProduct extends Component {
             {/* <label>Kreditrating</label> */}
             <Translate content='label.Kreditrating' component="label" />
             <br />
-            <input pattern="[a-cA-C]{1}"
+            <input
               type="text" name={`rating_value[${credit.id}]`}
               onChange={(e) => this.setState({
                 rating_value: [...this.state.rating_value, { id: credit.id, value: e.target.value }]
               })
               }
-              title="Grade must be either A,B or C"
               class="col-3 form-control text-center"
             /></div>
         </div>
@@ -158,6 +167,7 @@ class EditProduct extends Component {
       min_sales_creditor,
       files
     } = this.props;
+    console.log(this.props.initialValues)
     return (
       <Fragment>
         <Subheader heading={<Translate content='button.edit' />} />
@@ -226,36 +236,41 @@ class EditProduct extends Component {
 
                 />
               </div>
+
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
                   <label for="amount">
-                    <Translate content='label.timeduration' />
+                    <strong><Translate content='label.timeduration' /></strong>
                   </label>
                   <div class="d-flex align-items-center">
-
-                    <Field
-                      name="time_duration"
-                      type="range"
-                      className="w-100"
-                      component={inputSlider}
-                      // label={<Translate content='label.timeduration' />}
-                      id="time-duration"
-                      max="60"
-                      min="3"
-                    />
+                    <input
+                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      type="text"
+                      id="mincredit-amount-value"
+                      // value={time_duration}
+                      value={this.state.value.min}
+                      validate={validation.required}
+                      placeholder="3 Monate"
+                    />&nbsp;&nbsp;
+                    <InputRange
+                      maxValue={60}
+                      minValue={12}
+                      value={this.state.value}
+                      onChange={value => this.setState({ value })} />
                     {/* <div class="col-12 col-sm-12 col-md-6"> */}
                     &nbsp;&nbsp;<input
                       className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
                       type="text"
                       id="mincredit-amount-value"
-                      value={time_duration}
+                      // value={time_duration}
+                      value={this.state.value.max}
+                      validate={validation.required}
                       placeholder="3 Monate"
                     />
                   </div>
                 </div>
               </div>
             </div>
-            {/* </div> */}
 
             <div className="row mt-4">
               <div className="col-12 col-sm-12 col-md-6">
@@ -427,7 +442,6 @@ class EditProduct extends Component {
                     name="files"
                     component={renderDropzoneField}
                     type="file"
-                    validate={validation.required}
                   />
                   {files ? <strong>Filename: {files[0].name}</strong> : null}
                 </div>

@@ -71,7 +71,7 @@ export const addProduct = (details, callback) => async dispatch => {
     body.set('ratings', details.ratings);
     body.set('min_time_duration', details.min_duration);
     body.set('max_time_duration', details.max_duration);
-    // body.append('files[0]', details.files[0]);
+
     const response = await clientWithForm.post(routes.addProduct, body);
     if (response) {
       callback();
@@ -95,7 +95,6 @@ export const getProductById = id => async dispatch => {
   try {
     const response = await client.get(`${routes.getProductById}/${id}`);
     console.log('foredit', response.data.data)
-    // console.log(extractNames(response.data.data.states))
     var detail = response.data.data;
     detail.states = extractNames(response.data.data.states)
     detail.County = extractNames(response.data.data.counties);
@@ -117,6 +116,7 @@ export const getProductById = id => async dispatch => {
 
 export const updateProduct = (details, id, callback) => async dispatch => {
   try {
+    console.log('de', details)
     var body = new FormData();
     body.set('_method', 'PUT')
     body.set('product_title', details.product_title);
@@ -124,10 +124,12 @@ export const updateProduct = (details, id, callback) => async dispatch => {
     body.set('county_ids', details.county_ids.toString());
     body.append('industry_ids', details.industry_id.toString());
     body.set('service_id', details.services.value);
-    body.set('time_duration', details.time_duration);
     body.set('min_credit_amount', details.min_credit_amount);
     body.set('max_credit_amount', details.max_credit_amount);
     body.set('min_sales_creditor', details.min_sales_creditor)
+    body.set('min_time_duration', details.min_time_duration);
+    body.set('max_time_duration', details.max_time_duration);
+
     if (details.colatoral === 'true') {
       body.set('collatoral', 1)
     } else {
@@ -140,23 +142,30 @@ export const updateProduct = (details, id, callback) => async dispatch => {
 
     }
     body.set('ratings', details.ratings);
-    body.append('files[0]', details.files[0]);
+    if (details.files) {
+      details.files.map((file, index) => {
+        body.append(`files[${index}]`, file)
+      })
+    } else {
+      body.append(`files[0]`, null)
+    }
     const response = await clientWithForm.post(`${routes.addProduct}/${id}`, body);
     if (response) {
       callback();
     }
   } catch (e) {
-    if (e.response.data.message) {
-      dispatch({
-        type: ERROR,
-        payload: e.response.data.message
-      });
-    } else {
-      dispatch({
-        type: ERROR,
-        payload: 'Unable to edit product now'
-      });
-    }
+    console.log(e)
+    //   if (e.response.data.message) {
+    //     dispatch({
+    //       type: ERROR,
+    //       payload: e.response.data.message
+    //     });
+    //   } else {
+    //     dispatch({
+    //       type: ERROR,
+    //       payload: 'Unable to edit product now'
+    //     });
+    //   }
   }
 }
 

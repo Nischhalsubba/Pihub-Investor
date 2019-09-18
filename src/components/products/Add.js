@@ -50,7 +50,7 @@ const credits = [
   }
 ]
 class AddProduct extends Component {
-  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [], value: { min: 6, max: 15 } };
+  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [], value: { min: 15, max: 50 } };
   componentDidMount() {
     this.props.clearError();
     this.props.getIndustryList();
