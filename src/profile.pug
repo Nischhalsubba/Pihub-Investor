@@ -11,16 +11,16 @@ html(lang="en")
             .main-content.main-content--padded
                 include templates/site-header
                 .content-head
-                    .content-head-left
-                        .row
-                            .col-2.position-relative
-                                img(src="/assets/img/profile-picture.png", alt="alt")
+                    .content-head-left.w-50
+                        .d-flex.company-image
+                            .item.position-relative
+                                img(src="/assets/img/vw.png", alt="alt",width="120px",height="120px")
                                 img.verify(src="/assets/img/verify.png", alt="alt")
-                            .col-10
-                                h2 Dino Hwang
+                            .item.ml-4
+                                h2 Volkswagen Group
                                     span.badge-primary.p-2.rounded.ml-2 Verified
-                                p.mt-2 Born in small family, worked my way to this point, now an entrepreneur helping startup touch the sky
-                                .d-flex.social-media
+                                span Wolfsburg, Germany
+                                .d-flex.social-media.mt-2
                                     a(href="#", target="_blank", rel="noopener noreferrer")
                                         img.mr-3(src="/assets/img/icons/facebook.png", alt="alt", width="25px", height="25px")
                                     a(href="#", target="_blank", rel="noopener noreferrer")
@@ -33,34 +33,26 @@ html(lang="en")
                 .content-body.mt-5
                     .d-flex
                         img(src="./assets/img/bx-briefcase.png", alt="")
-                        span.ml-3.font-weight-bold Droomwave Home Appliances 
+                        span.ml-3.font-weight-bold Sparkasse
                     .d-flex.mt-4
-                        figure.m-0
-                            img(src="./assets/img/bx-map.png", alt="")
-                        p.ml-3.mb-0.font-weight-bold Darmstadth, Germany
-                            br
-                            | Millbrook Lea Street , 64283
-                    .d-flex.mt-4
+                        img(src="./assets/img/bx-map.png", alt="")
+                        span.ml-3.font-weight-bold Darmstadth, Germany
+                    .d-flex.mt-4.phone
                         img(src="./assets/img/bx-phone.png", alt="")
-                        span.ml-3.font-weight-bold 098 76 543210
-                            span.badge-primary.p-2.rounded.ml-2.mb-2 Hidden
-                    .d-flex.mt-4
-                        img(src="./assets/img/bx-envelope.png", alt="")
-                        span.ml-3.font-weight-bold dinohwang@gmail.com
-                            span.badge-primary.p-2.rounded.ml-2.mb-2 Hidden
+                        .d-flex.flex-column
+                            h4.ml-3.font-weight-bold Rosa Renata
+                                //- span.badge-primary.p-2.rounded.ml-2.mb-2 Hidden 
+                            span.ml-3.mb-2 Rosa@yahoo.com
+                            span.ml-3 +49 9877458547
                     .d-flex.mt-4
                         img(src="./assets/img/icons/contact-person.png", alt="",width="20px")
                         span.ml-3.font-weight-bold Contact Person
                     .d-flex.mt-4.contact_person
                         .item.d-flex.flex-column
-                            h4 Ria Quirin 
+                            h5.font-weight-normal Ria Quirin 
                             span.mb-2 Ria@yahoo.com
                             span +49 301234567
                         .item.ml-4.d-flex.flex-column
-                            h4 Meine Ferdi 
+                            h5.font-weight-normal Meine Ferdi 
                             span.mb-2 Meine@yahoo.com
-                            span +49 9877458547
-                        .item.ml-4.d-flex.flex-column
-                            h4 Rosa Renata 
-                            span.mb-2 Rosa@yahoo.com
                             span +49 9877458547

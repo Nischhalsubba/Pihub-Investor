@@ -16,8 +16,9 @@ html(lang="en")
                             .item.position-relative
                                 img(src="/assets/img/vw.png", alt="alt",width="120px",height="120px")
                                 img.verify(src="/assets/img/verify.png", alt="alt")
-                            .item.ml-4
-                                a.btn.btn-outline-light(href="") Change profile picture
+                            .item.ml-4.position-relative
+                                input.btn.btn-outline-light.opacity-none.position-absolute.z-index-1(type="file", name="")
+                                span.btn.btn-outline-light.position-absolute Change profile picture
                 .content-body
                     form.form-signup(action="add-new-products-sucess.html")
                         .row.mt-4
@@ -26,54 +27,55 @@ html(lang="en")
                                     label Company Name
                                     input(type="text", name="company-name" class="form-control" placeholder="Volkswagen Group")
                         .row.mt-4
-                            .col-12.col-sm-12.col-md-6
-                                .form-group
-                                    label First Name
-                                    input(type="text", name="first-name" class="form-control" placeholder="Rosa")
-                            .col-12.col-sm-12.col-md-6
-                                .form-group
-                                    label Last Name
-                                    input(type="text", name="last-name" class="form-control" placeholder="Renata")
-                        .row.mt-4
-                            .col-12.col-sm-12.col-md-6
-                                .form-group
-                                    label Email Address
-                                    input(type="email", name="first-name" class="form-control" placeholder="Rosa@yahoo.com")
-                            .col-12.col-sm-12.col-md-6
-                                .form-group
-                                    label Phone Number
-                                    input(type="number", name="last-name" class="form-control" placeholder="+49 9877458547")
-                        .row.mt-4
                             .col-12.col-sm-12.col-md-12
                                 .form-group
                                     label Headquarter Address
                                     input(type="text", name="company-name" class="form-control" placeholder="Millbrook Lea Street , 64283")
                         .row.mt-4
                             .col-12.col-sm-12.col-md-12
+                                label(for="") Social Media
+                                .form-group.d-flex.align-items-center
+                                    label.m-0(for="") Facebook
+                                    input.ml-2(type="text", name="company-name" class="form-control" placeholder="https://www.facebook.com/officialdino")
+                                .form-group.d-flex.align-items-center
+                                    label.m-0(for="") Twitter
+                                    input.ml-4(type="text", name="company-name" class="form-control" placeholder="https://www.twitter.com/officialdino")
+                                .form-group.d-flex.align-items-center
+                                    label.m-0(for="") Linkedin
+                                    input.ml-3(type="text", name="company-name" class="form-control" placeholder="https://www.linkedin.com/officialdino")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-6
                                 .form-group
-                                    label Old password
-                                    input.mb-2(type="password", name="email" class="form-control" placeholder="unchanged")
-                                    a(href="#") Click here to change password
+                                    label Bank
+                                    input(type="text", name="bank" class="form-control" placeholder="Bank name goes here")
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label  Sparkasse
+                                    input(type="text", name="saving bank" class="form-control" placeholder="Bank name goes here")
                         .row.mt-4
                             .col-12.col-sm-12.col-md-12
                                 .form-group
-                                    label New Password
-                                    input(type="password", name="email" class="form-control" placeholder="New password")
-
+                                    label  Kreditfonds
+                                    input.mb-2(type="text", name="Kreditfonds" class="form-control" placeholder="unchanged")
                         .row.mt-4
                             .col-12.col-sm-12.col-md-12
                                 .form-group
-                                    label Confirm Password
-                                    input(type="password", name="email" class="form-control" placeholder="Confirm password")
-
+                                    label Family Office
+                                    input(type="text", name="Family Office" class="form-control" placeholder="New password")
                         .row.mt-4
-                            .col-6.col-sm-12.col-md-6
+                            .col-4.col-sm-12.col-md-4
                                 label(for="") Contact Person
                                 .form-group
                                     input.mb-2(type="text", name="full-name" class="form-control" placeholder="Meine Ferdi ")                                    
                                     input.mb-2(type="email", name="email" class="form-control" placeholder="Meine@yahoo.com")
                                     input(type="number", name="email" class="form-control" placeholder="+49 9877458547")
-                            .col-6.col-sm-12.col-md-6
+                            .col-4.col-sm-12.col-md-4
+                                label(for="") Contact Person
+                                .form-group
+                                    input.mb-2(type="text", name="full-name" class="form-control" placeholder="Ria Quirin ")                                    
+                                    input.mb-2(type="email", name="email" class="form-control" placeholder="Ria@yahoo.com")
+                                    input(type="number", name="email" class="form-control" placeholder="+49 301234567")
+                            .col-4.col-sm-12.col-md-4
                                 label(for="") Contact Person
                                 .form-group
                                     input.mb-2(type="text", name="full-name" class="form-control" placeholder="Ria Quirin ")                                    
@@ -94,7 +96,7 @@ html(lang="en")
                         .row.mt-4
                             .col-12.col-sm-12.col-md-12
                                 .form-group
-                                    label(for="" class="d-block") File Upload
+                                    label(for="" class="d-block") Document Upload Field
                                     .border-dotted
                                         .border-dotted-center.w-25.position-absolute
                                             img(src="./assets/img/icons/bx-cloud-upload.png", alt="" class="d-block m-auto")

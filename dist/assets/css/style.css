@@ -247,14 +247,15 @@ h6 {
   font-size: 16px; }
 
 .border-dotted {
-  border: 2px dashed #7e91e5; }
+  border: 2px dashed #7e91e5;
+  height: 200px; }
 
 .btn-accept {
   background-color: #40c057;
   color: #fff; }
 
 .btn-reject {
-  background-color: #ffa8a8;
+  background-color: #F9D3D3;
   color: #fff; }
 
 .btn-option {
@@ -277,10 +278,67 @@ h6 {
 .form-control {
   height: 45px !important; }
 
+.error {
+  border: 1px solid #FF8787; }
+
+.error-text {
+  color: #FF8787; }
+
+.green {
+  border: 1px solid #E2FCE6; }
+
+.green-text {
+  color: #E2FCE6; }
+
+.badge {
+  display: block;
+  padding: 11px 10px;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 3px;
+  width: 80%;
+  float: right; }
+
+.badge-primary {
+  background-color: #242a5a;
+  color: #fff;
+  font-size: 10px !important; }
+
+.badge-warning {
+  background-color: #FFF3BF;
+  color: #8c7200; }
+
+.badge-deleted {
+  background-color: #fff;
+  color: #242a5a;
+  border: 1px solid #242a5a; }
+
+.badge-suspended {
+  background-color: #f8f9fa;
+  color: #242a5a; }
+
+.badge-success {
+  background-color: #E2FCE6;
+  color: #fff; }
+
+.badge-danger {
+  background-color: #F9D3D3;
+  color: #fff; }
+
 .verify {
   position: absolute;
-  bottom: 20px;
-  right: 10px; }
+  right: 5px;
+  bottom: 15px; }
+
+.company-image .col {
+  width: 120px !important; }
+
+.opacity-none {
+  opacity: 0; }
+
+.z-index-1 {
+  z-index: 1; }
 
 .credit-request p {
   line-height: 26px; }
@@ -306,6 +364,9 @@ h6 {
 
 .alert {
   width: 100%; }
+
+.phone img {
+  height: 20px; }
 
 .notification .notification-item {
   border-bottom: 1px solid #D1D7E2; }
@@ -385,16 +446,16 @@ li.header-actions__item .dropdown-menu {
   background-color: #242a5a; }
 
 .badge-success {
-  background-color: #8ce99a;
-  color: #1b8e2c; }
+  background-color: #E2FCE6;
+  color: #29e947; }
 
 .badge-warning {
   background-color: #ffe066;
   color: #997a00; }
 
 .badge-danger {
-  background-color: #ffa8a8;
-  color: #db0000; }
+  background-color: #F9D3D3;
+  color: #e11f1f; }
 
 .company-logo-email {
   position: absolute;
@@ -708,7 +769,6 @@ input[type="color"],
 textarea {
   color: #364b63;
   border: 1px solid #c7cad1;
-  border-radius: 3px;
   padding: 3px; }
   input[type="number"]:focus,
   input[type="tel"]:focus,
@@ -773,7 +833,7 @@ label {
 .dz-size {
   margin-left: 2rem; }
 
-.dz-message {
+.border-dotted-center {
   left: 35%;
   top: 35%; }
 

@@ -20,10 +20,10 @@ $color-primary            : #242a5a;
 $color-secondary          : #7e91e5;
 $color-accent             : #6ee8d8;
 
-$color-brand-success      : #8ce99a;
+$color-brand-success      : #E2FCE6;
 $color-brand-info         : #74c0fc;
-$color-brand-warning      : #ffe066;
-$color-brand-danger       : #ffa8a8;
+$color-brand-warning      : #fff3bf;
+$color-brand-danger       : #F9D3D3;
 
 $color-link               : $color-heading;
 $color-link-visited       : $color-heading;
@@ -41,3 +41,9 @@ $color-input-text-focus   : $color-heading;
 $color-input-border       : $color-border;
 
 $color-primary-light: #5A6AEC;
+$color-awaiting: #FFF3BF;
+$color-approved: #D3F9D8;
+$color-rejected: $color-brand-danger;
+
+$color-success:#E2FCE6;
+

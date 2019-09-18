@@ -21,7 +21,7 @@ input[type="color"],
 textarea {
 	color: $color-input-text;
 	border: 1px solid $color-border;
-	border-radius: 3px;
+	// border-radius: 50%;
 	padding: 3px;
 
 	&:focus {
@@ -91,7 +91,7 @@ label {
 	margin-left: 2rem;
 }
 
-.dz-message {
+.border-dotted-center {
 	left: 35%;
 	top: 35%;
 }
@@ -195,6 +195,85 @@ input[type="checkbox"] {
 	}
 }
 
+<<<<<<< HEAD
+
+// test css code
+// input[type=range] {
+// 	-webkit-appearance: none;
+// 	margin: 18px 0;
+// 	width: 100%;
+//   }
+//   input[type=range]:focus {
+// 	outline: none;
+//   }
+//   input[type=range]::-webkit-slider-runnable-track {
+// 	height: 5px;
+// 	cursor: pointer;
+// 	animate: 0.2s;
+// 	background: #3071a9;
+
+	
+//   }
+//   input[type=range]::-webkit-slider-thumb {
+// 	border: 3px solid #242A5A;
+// 	height: 21px;
+// 	width: 21px;
+// 	border-radius: 50%;
+// 	background: #5A6AEC;
+// 	cursor: pointer;
+// 	-webkit-appearance: none;
+// 	margin-top: -10px;
+//   }
+//   input[type=range]:focus::-webkit-slider-runnable-track {
+// 	background: #367ebd;
+//   }
+//   input[type=range]::-moz-range-track {
+// 	height: 5px;
+// 	cursor: pointer;
+// 	animate: 0.2s;
+// 	background: #3071a9;
+//   }
+//   input[type=range]::-moz-range-thumb {
+// 	border: 3px solid #242A5A;
+// 	height: 21px;
+// 	width: 21px;
+// 	border-radius: 50%;
+// 	background: #5A6AEC;
+// 	cursor: pointer;
+//   }
+//   input[type=range]::-ms-track {
+// 	height: 5px;
+// 	cursor: pointer;
+// 	animate: 0.2s;
+// 	border-color: transparent;
+//   }
+//   input[type=range]::-ms-fill-lower {
+// 	background: #2a6495;
+	
+// 	border-radius: 2.6px;
+// 	box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+//   }
+//   input[type=range]::-ms-fill-upper {
+// 	background: #3071a9;
+	
+// 	border-radius: 2.6px;
+// 	box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+//   }
+//   input[type=range]::-ms-thumb {
+// 	border: 3px solid #242A5A;
+// 	height: 21px;
+// 	width: 21px;
+// 	border-radius: 50%;
+// 	background: #5A6AEC;
+// 	cursor: pointer;
+//   }
+//   input[type=range]:focus::-ms-fill-lower {
+// 	background: #3071a9;
+//   }
+//   input[type=range]:focus::-ms-fill-upper {
+// 	background: #367ebd;
+//   }
+=======
 .form-group-ranger {
 	display: flex;
 	justify-content: space-between;
@@ -234,3 +313,4 @@ input[type="checkbox"] {
 		}
 	}
 }
+>>>>>>> edbe78439bfcb15e14e9a558fe1629b2fb0f4e76
