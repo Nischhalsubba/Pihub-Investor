@@ -1,0 +1,108 @@
+//- Header file
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include templates/head.pug
+        title Credit Request on IT investment
+    body
+        .container-full-height.ct-container
+            .sidebar
+                include components/nav-sidebar
+            .main-content.main-content--padded
+                include templates/site-header
+                .content-head
+                    .content-head-left.w-100
+                        .d-flex.align-items-center
+                            .item.position-relative
+                                img(src="/assets/img/vw.png", alt="alt",width="120px",height="120px")
+                                img.verify(src="/assets/img/verify.png", alt="alt")
+                            .item.ml-4.position-relative
+                                input.btn.btn-outline-light.opacity-none.position-absolute.z-index-1(type="file", name="")
+                                span.btn.btn-outline-light.position-absolute Change profile picture
+                .content-body
+                    form.form-signup(action="add-new-products-sucess.html")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label Company Name
+                                    input(type="text", name="company-name" class="form-control" placeholder="Volkswagen Group")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label Headquarter Address
+                                    input(type="text", name="company-name" class="form-control" placeholder="Millbrook Lea Street , 64283")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                label(for="") Social Media
+                                .form-group.d-flex.align-items-center
+                                    label.m-0(for="") Facebook
+                                    input.ml-2(type="text", name="company-name" class="form-control" placeholder="https://www.facebook.com/officialdino")
+                                .form-group.d-flex.align-items-center
+                                    label.m-0(for="") Twitter
+                                    input.ml-4(type="text", name="company-name" class="form-control" placeholder="https://www.twitter.com/officialdino")
+                                .form-group.d-flex.align-items-center
+                                    label.m-0(for="") Linkedin
+                                    input.ml-3(type="text", name="company-name" class="form-control" placeholder="https://www.linkedin.com/officialdino")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label Bank
+                                    input(type="text", name="bank" class="form-control" placeholder="Bank name goes here")
+                            .col-12.col-sm-12.col-md-6
+                                .form-group
+                                    label  Sparkasse
+                                    input(type="text", name="saving bank" class="form-control" placeholder="Bank name goes here")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label  Kreditfonds
+                                    input.mb-2(type="text", name="Kreditfonds" class="form-control" placeholder="unchanged")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label Family Office
+                                    input(type="text", name="Family Office" class="form-control" placeholder="New password")
+                        .row.mt-4
+                            .col-4.col-sm-12.col-md-4
+                                label(for="") Contact Person
+                                .form-group
+                                    input.mb-2(type="text", name="full-name" class="form-control" placeholder="Meine Ferdi ")                                    
+                                    input.mb-2(type="email", name="email" class="form-control" placeholder="Meine@yahoo.com")
+                                    input(type="number", name="email" class="form-control" placeholder="+49 9877458547")
+                            .col-4.col-sm-12.col-md-4
+                                label(for="") Contact Person
+                                .form-group
+                                    input.mb-2(type="text", name="full-name" class="form-control" placeholder="Ria Quirin ")                                    
+                                    input.mb-2(type="email", name="email" class="form-control" placeholder="Ria@yahoo.com")
+                                    input(type="number", name="email" class="form-control" placeholder="+49 301234567")
+                            .col-4.col-sm-12.col-md-4
+                                label(for="") Contact Person
+                                .form-group
+                                    input.mb-2(type="text", name="full-name" class="form-control" placeholder="Ria Quirin ")                                    
+                                    input.mb-2(type="email", name="email" class="form-control" placeholder="Ria@yahoo.com")
+                                    input(type="number", name="email" class="form-control" placeholder="+49 301234567")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                label(for="") Social Media
+                                .form-group.d-flex.align-items-center
+                                    label.m-0(for="") Facebook
+                                    input.ml-2(type="text", name="company-name" class="form-control" placeholder="https://www.facebook.com/officialdino")
+                                .form-group.d-flex.align-items-center
+                                    label.m-0(for="") Twitter
+                                    input.ml-4(type="text", name="company-name" class="form-control" placeholder="https://www.twitter.com/officialdino")
+                                .form-group.d-flex.align-items-center
+                                    label.m-0(for="") Linkedin
+                                    input.ml-3(type="text", name="company-name" class="form-control" placeholder="https://www.linkedin.com/officialdino")
+                        .row.mt-4
+                            .col-12.col-sm-12.col-md-12
+                                .form-group
+                                    label(for="" class="d-block") Document Upload Field
+                                    .border-dotted
+                                        .border-dotted-center.w-25.position-absolute
+                                            img(src="./assets/img/icons/bx-cloud-upload.png", alt="" class="d-block m-auto")
+                                            .text-center.mt-3
+                                                a(href="" class="font-weight-bold") Add file 
+                                                span
+                                                    | or drop files here
+                                                    input(type="file", name="" class="d-none")
+                        button.btn.btn-primary(type="submit") Update
