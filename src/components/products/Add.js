@@ -271,7 +271,7 @@ class AddProduct extends Component {
                     />&nbsp;&nbsp;
                     <InputRange
                       maxValue={60}
-                      minValue={3}
+                      minValue={12}
                       value={this.state.value}
                       onChange={value => this.setState({ value })} />
                     {/* <div class="col-12 col-sm-12 col-md-6"> */}
