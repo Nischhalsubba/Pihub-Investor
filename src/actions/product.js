@@ -159,3 +159,26 @@ export const updateProduct = (details, id, callback) => async dispatch => {
     }
   }
 }
+
+
+export const deleteProduct = (id, callback) => async dispatch => {
+  try {
+    const response = await client.delete(`${routes.addProduct}/${id}`);
+    if (response) {
+      console.log(response.data);
+      callback();
+    }
+  } catch (e) {
+    console.log('error on delete', e)
+  }
+}
+
+
+export const postponeProduct = (id, status, callback) => async dispatch => {
+  try {
+    const response = await client.put(`${routes.products}/${id}/status`, { action: status });
+    if (response) {
+      callback();
+    }
+  } catch (e) { }
+}

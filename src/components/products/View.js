@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getProductById } from '../../actions/product';
+import { getProductById, deleteProduct, postponeProduct } from '../../actions/product';
 // import Subheader from '../general/Subheader';
 import RequestedByList from '../credits/RequestedByList';
 import Translate from 'react-translate-component'
@@ -69,12 +69,14 @@ class ViewProduct extends Component {
       console.log('detail', this.props.product.product);
       return (
         <Fragment>
+          {status === 'deleted' ? <div class="alert alert-rejected"><Translate content='label.deletedmsg' /></div> : null}
+          {status === 'postponed' ? <div class="alert alert-secondary"><Translate content='label.postponedmsg' /></div> : null}
           <div className="content-head">
             <div className="content-head-left">
               {/* <h1 className="content-head__title">Produktdetail</h1> */}
               <Translate content='label.Produktdetail' component="h1" className="content-head__title" />
             </div>
-            <div className="content-head-right">
+            {status !== 'deleted' ? <div className="content-head-right">
               <Link to={{
                 pathname: '/edit-product',
                 state: { id: id }
@@ -84,7 +86,8 @@ class ViewProduct extends Component {
                 <Translate content='button.Produktbearbeiten' />
 
               </Link>
-            </div>
+            </div> : null}
+
           </div>
           <div class="content-body credit-request">
             <div class="d-flex">
@@ -160,6 +163,30 @@ class ViewProduct extends Component {
                 <span class="ml-4 file-size">322.2kb</span>
               </div>
             </div>
+            {status !== 'deleted' ?
+              <Fragment>
+                <button className='btn btn-primary' onClick={() => this.props.deleteProduct(id, () => this.props.history.push('/products'))}><Translate content='button.delete' /></button>
+                &nbsp;&nbsp;
+                {status !== 'postponed' ?
+                  <button
+                    className='btn btn-primary'
+                    onClick={() => this.props.postponeProduct(id, "postpone", () => {
+                      this.props.history.push('/products')
+                    })}
+                  ><Translate content='button.postpone' /></button>
+                  :
+                  <button
+                    className='btn btn-primary'
+                    onClick={() => this.props.postponeProduct(id, "undo_postpone", () => {
+                      this.props.history.push('/products')
+                    })}
+                  > <Translate content='button.undopostpone' /></button>
+                }
+
+              </Fragment>
+              : null}
+
+
             {id ? <RequestedByList id={id} name={product_title} /> : null}
           </div>
         </Fragment>
@@ -174,5 +201,5 @@ function mapStateToProps(state) {
 }
 export default connect(
   mapStateToProps,
-  { getProductById }
+  { getProductById, deleteProduct, postponeProduct }
 )(ViewProduct);

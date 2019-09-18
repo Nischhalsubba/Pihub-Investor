@@ -53,6 +53,7 @@ class ProductsList extends Component {
               {product.status === 'invested' ? <span className="badge badge-danger"><Translate content='label.invested' /></span> : null}
               {product.status === 'open' ? <span className="badge badge-info"><Translate content='label.open' /></span> : null}
               {product.status === 'postponed' ? <span className="badge badge-secondary"><Translate content='label.postponed' /></span> : null}
+              {product.status === 'deleted' ? <span className="badge badge-light"><Translate content='label.deleted' /></span> : null}
             </td>
 
           </tr>
@@ -133,6 +134,7 @@ class ProductsList extends Component {
                 <th>
                   <Translate content="column.status" />
                 </th>
+
                 {/* <th>
                 <Translate content="column.edit" />
                 </th> */}

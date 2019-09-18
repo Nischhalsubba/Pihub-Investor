@@ -130,7 +130,10 @@ export default {
         resetpassword: 'Reset Password',
         months: 'Months',
         open: 'Open',
-        postponed: 'Postponed'
+        postponed: 'Postponed',
+        deleted: 'Deleted',
+        deletedmsg: 'This product has been deleted',
+        postponedmsg: 'This product has been postponed. You can change the status'
     },
     button: {
         Produktbearbeiten: 'Edit Product',
@@ -139,7 +142,10 @@ export default {
         addnewproduct: 'Add new products',
         submit: 'Submit',
         edit: 'Edit Product',
-        download: 'Download'
+        download: 'Download',
+        delete: 'Delete',
+        postpone: 'Postpone',
+        undopostpone: 'Undo postpone'
     },
     placeholder: {
         select: 'Select'

@@ -123,7 +123,10 @@ export default {
         resetpassword: 'Passwort zurücksetzen',
         months: 'Monate',
         open: 'Öffnen',
-        postponed: 'Verschoben'
+        postponed: 'Verschoben',
+        deleted: 'Gelöscht',
+        deletedmsg: 'Dieses Produkt wurde gelöscht',
+        postponedmsg: 'Dieses Produkt wurde verschoben. Sie können den Status rückgängig machen.'
 
     },
     button: {
@@ -133,7 +136,10 @@ export default {
         addnewproduct: 'Kreditprodukt hinzufügen',
         submit: 'einreichen',
         edit: 'Produkt bearbeiten',
-        download: 'Herunterladen'
+        download: 'Herunterladen',
+        delete: 'Löschen',
+        postpone: 'Verschieben',
+        undopostpone: 'Verschieben rückgängig machen'
 
     },
     placeholder: {
