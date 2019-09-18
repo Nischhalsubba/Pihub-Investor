@@ -375,7 +375,7 @@ h6 {
     height: 26px;
     border-radius: 50%; }
   .notification .notification-item .status.wait {
-    background-color: #ffe066;
+    background-color: #fff3bf;
     margin-top: 3px; }
   .notification .notification-item .status.sucess {
     background-color: #D3F9D8;
@@ -450,8 +450,8 @@ li.header-actions__item .dropdown-menu {
   color: #29e947; }
 
 .badge-warning {
-  background-color: #ffe066;
-  color: #997a00; }
+  background-color: #fff3bf;
+  color: #f2c500; }
 
 .badge-danger {
   background-color: #F9D3D3;
@@ -485,9 +485,6 @@ li.header-actions__item .dropdown-menu {
 
 .email-content img {
   margin-bottom: 40px; }
-
-.email-content a {
-  color: #242a5a; }
 
 ul
 ol {
