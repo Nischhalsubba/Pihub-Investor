@@ -288,7 +288,7 @@ class EditProduct extends Component {
                       // label={<Translate content='label.mincredit' />}
                       id="mincredit-amount"
                       validate={validation.required}
-                      min="25000"
+                      min="250000"
                       max="5000000"
 
                     />
@@ -319,7 +319,7 @@ class EditProduct extends Component {
                       id="mincredit-amount"
                       readOnly
                       validate={validation.required}
-                      min="25000"
+                      min="250000"
                       max="5000000"
                     />
                     €<input
