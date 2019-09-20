@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProductById, deleteProduct, postponeProduct } from '../../actions/product';
+import { downloadToken } from '../../actions/download';
 // import Subheader from '../general/Subheader';
 import RequestedByList from '../credits/RequestedByList';
 import Translate from 'react-translate-component'
@@ -47,6 +48,23 @@ class ViewProduct extends Component {
       })
     }
   }
+  showAttachments = documents => {
+    if (documents.length === 0) {
+      return (
+        <span>No Attachments Available</span>
+      );
+    } else {
+      return documents.map((doc, index) => {
+        // console.log(doc)
+        return (
+          <div class="file mb-2" key={index}>
+            <span class="file-name">File {index + 1} <button className='btn btn-link' onClick={() => this.props.downloadToken(doc.path)}>Download</button></span>
+            <span class="ml-4 file-size">Type: {doc.type}</span>
+          </div>
+        );
+      })
+    }
+  }
   render() {
     if (this.props.product) {
       const {
@@ -63,10 +81,12 @@ class ViewProduct extends Component {
         product_title,
         service,
         states,
-        ratings, County
+        ratings,
+        County,
+        documents
         }
       } = this.props.product;
-      console.log('detail', this.props.product.product);
+      // console.log('detail', this.props.product.product);
       return (
         <Fragment>
           {status === 'deleted' ? <div class="alert alert-rejected"><Translate content='label.deletedmsg' /></div> : null}
@@ -154,14 +174,15 @@ class ViewProduct extends Component {
             <div class="attachments">
               {/* <h4>Attachments</h4> */}
               <Translate content='label.attachments' component="h6" />
-              <div class="file mb-2">
+              {/* <div class="file mb-2">
                 <span class="file-name">tax payer investment.docx</span>
                 <span class="ml-4 file-size">400.5kb</span>
               </div>
               <div class="file">
                 <span class="file-name">investment agreement.pdf</span>
                 <span class="ml-4 file-size">322.2kb</span>
-              </div>
+              </div> */}
+              {documents ? this.showAttachments(documents) : null}
             </div>
             {status !== 'deleted' ?
               <Fragment>
@@ -201,5 +222,5 @@ function mapStateToProps(state) {
 }
 export default connect(
   mapStateToProps,
-  { getProductById, deleteProduct, postponeProduct }
+  { getProductById, deleteProduct, postponeProduct, downloadToken }
 )(ViewProduct);
