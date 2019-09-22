@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
-
+import { Field, reduxForm, formValueSelector } from 'redux-form';
+import InputRange from 'react-input-range';
 import { connect } from 'react-redux';
 import { addProduct } from '../../actions/product';
 import { getIndustryList } from '../../actions/industry';
 import { getServiceList } from '../../actions/service';
+import { clearError } from '../../actions/clearError';
 import Subheader from '../general/Subheader';
 import * as validation from '../../_utils/validate';
 import germanStates from '../../_german_states';
@@ -49,8 +50,9 @@ const credits = [
   }
 ]
 class AddProduct extends Component {
-  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [] };
+  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [], value: { min: 15, max: 50 } };
   componentDidMount() {
+    this.props.clearError();
     this.props.getIndustryList();
     this.props.getServiceList();
     this.setState({
@@ -93,6 +95,8 @@ class AddProduct extends Component {
     }
 
     formProps.ratings = this.state.rating_value;
+    formProps.min_duration = this.state.value.min;
+    formProps.max_duration = this.state.value.max;
     if (formProps.County[0] === 'Select All') {
       formProps.county_ids = extractId(null, this.state.cities);
     } else {
@@ -105,40 +109,60 @@ class AddProduct extends Component {
       formProps.state_ids = extractId(formProps.states, germanStates);
 
     }
-    console.log('form', formProps)
+    // console.log(formProps)
     this.props.addProduct(formProps, () => this.props.history.push('/products'))
   };
 
   creditRatings = (credits) => {
     return credits.map((credit, index) => {
       return (
-        // <div className="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
-        <div className="rating-item">
-          <div className="col-9">
+        // <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+        <div class="rating-item">
+          <div class="col-9">
             {/* <label>Ratingagentur</label> */}
-            <Translate content='label.Ratingagentur' component="label" />
+            {index === 0 || index === 1 ? <Translate content='label.Ratingagentur' component="label" /> : null}
             <br />
-            <input className="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
+            <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
             />{credit.name}
           </div>
-          <div className="col-9">
-            {/* <label>Kreditrating</label> */}
-            <Translate content='label.Kreditrating' component="label" />
-            <br />
-            <input pattern="[a-cA-C]{1}"
+          <div class="col-9">
+            {index === 0 || index === 1 ? <Translate content='label.Kreditrating' component='label' /> : null}
+            <input
               type="text" name={`rating_value[${credit.id}]`}
               onChange={(e) => this.setState({
                 rating_value: [...this.state.rating_value, { id: credit.id, value: e.target.value }]
               })
               }
-              title="Grade must be either A,B or C"
-              className="col-3 form-control text-center"
+
+              class="col-3 form-control text-center"
+
             /></div>
+        </div >
+        // </div>
+      )
+    })
+  }
+  renderCreditTitle = (credits) => {
+    return credits.map((credit, index) => {
+      return (
+        // <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+        <div class="rating-item">
+          <div class="col-9">
+            {/* <label>Ratingagentur</label> */}
+            {/* <Translate content='label.Ratingagentur' component="label" /> */}
+            <br />
+            <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
+            />{credit.name}
+          </div>
         </div>
         // </div>
       )
     })
-
+  }
+  displayFiles = files => {
+    return files.map((file, index) => {
+      return <span key={index}>{file.name} <br /></span >
+    })
   }
   render() {
     const {
@@ -150,14 +174,13 @@ class AddProduct extends Component {
       min_sales_creditor,
       files
     } = this.props;
-    console.log(this.state.states)
     return (
       <Fragment>
         <Subheader heading={<Translate content='button.addnewproduct' />} />
         <div className="content-body">
           <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
             <div className="row mt-4">
-              <div className="col">
+              <div class="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
                   <Field
                     name="product_title"
@@ -169,7 +192,7 @@ class AddProduct extends Component {
                   />
                 </div>
               </div>
-              <div className="col">
+              <div class="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
                   <Field
                     name="states"
@@ -183,7 +206,7 @@ class AddProduct extends Component {
               </div>
             </div>
             <div className="row mt-4">
-              <div className="col-12 col-sm-12 col-md-6">
+              <div class="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
                   <Field
                     name="services"
@@ -195,8 +218,8 @@ class AddProduct extends Component {
                   />
                 </div>
               </div>
-              <div className="col-12 col-sm-12 col-md-6">
-                <div className="form-group">
+              <div class="col-12 col-sm-12 col-md-6">
+                <div class="form-group">
                   <Field
                     name="County"
                     component={renderMultiselect}
@@ -208,8 +231,8 @@ class AddProduct extends Component {
                 </div>
               </div>
             </div>
-            <div className="row mt-4">
-              <div className="col-12 col-sm-12 col-md-6">
+            <div class="row mt-4">
+              <div class="col-12 col-sm-12 col-md-6">
 
                 <Field
                   component={renderMultiselect}
@@ -219,164 +242,185 @@ class AddProduct extends Component {
                   placeholder="select tags"
                 />
               </div>
-              <div className="col-12 col-sm-12 col-md-6">
-                <div className="form-group">
-                  <div className="row align-items-end">
-                    <Field
+              <div class="col-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="amount">
+                    <strong><Translate content='label.timeduration' /></strong>
+                  </label>
+                  <div class="d-flex align-items-center">
+
+                    {/* <Field
                       name="time_duration"
                       type="range"
                       className="w-100"
-                      component={inputSlider}
-                      label={<Translate content='label.timeduration' />}
+                      component={inputDoubleSlider}
+                      // label={<Translate content='label.timeduration' />}
                       id="time-duration"
                       validate={validation.required}
                       max="60"
                       min="3"
+                    /> */}
+                    <input
+                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      type="text"
+                      id="mincredit-amount-value"
+                      // value={time_duration}
+                      value={this.state.value.min}
+                      validate={validation.required}
+                      placeholder="3 Monate"
+                    />&nbsp;&nbsp;
+                    <InputRange
+                      maxValue={60}
+                      minValue={12}
+                      value={this.state.value}
+                      onChange={value => this.setState({ value })} />
+                    {/* <div class="col-12 col-sm-12 col-md-6"> */}
+                    &nbsp;&nbsp;<input
+                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      type="text"
+                      id="mincredit-amount-value"
+                      // value={time_duration}
+                      value={this.state.value.max}
+                      validate={validation.required}
+                      placeholder="3 Monate"
                     />
-                    <div className="col col-2">
-                      <input
-                        className="form-control"
-                        type="text"
-                        id="mincredit-amount-value"
-                        value={time_duration}
-                        validate={validation.required}
-                        placeholder="3"
-                      />
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            {/* </div> */}
 
             <div className="row mt-4">
-              <div className="col">
+              <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
-                  <div className="row align-items-end">
+                  <label for="amount">
+                    <strong> <Translate content='label.mincredit' /></strong>
+                  </label>
+                  <div class="d-flex align-items-center">
+
                     <Field
                       name="min_credit_amount"
                       type="range"
-                      className="w-100"
+                      className="position-relative w-100"
                       component={inputSlider}
-                      label={<Translate content='label.mincredit' />}
+                      // label={<Translate content='label.mincredit' />}
                       id="mincredit-amount"
                       validate={validation.required}
-                      min="1"
-                      max="100"
+                      min="250000"
+                      max="5000000"
+                      step="10000"
 
                     />
-                    <div className="col col-2">
-                      <input
-                        className="form-control"
-                        type="text"
-                        id="mincredit-amount-value"
-                        value={min_creditValue}
-                        validate={validation.required}
-                        placeholder="$0"
-                      />
-                    </div>
+                    €<input
+                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      type="text"
+                      id="mincredit-amount-value"
+                      value={min_creditValue}
+                      validate={validation.required}
+                      placeholder="€0.0"
+                    />
                   </div>
                 </div>
               </div>
-              <div className="col">
+              <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
-                  <div className="row align-items-end">
+                  <label for="amount">
+                    <strong> <Translate content='label.maxcredit' /></strong>
+                  </label>
+                  <div class="d-flex align-items-center">
+
                     <Field
                       name="max_credit_amount"
                       type="range"
                       className="w-100"
                       component={inputSlider}
-                      label={<Translate content='label.maxcredit' />}
+                      // label={<Translate content='label.maxcredit' />}
                       id="mincredit-amount"
                       readOnly
                       validate={validation.required}
-                      min="1"
-                      max="100"
+                      min="250000"
+                      max="5000000"
+                      step="10000"
                     />
-                    <div className="col col-2">
-                      <input
-                        className="form-control"
-                        type="text"
-                        id="amount"
-                        value={max_credit_amount}
-                        validate={validation.required}
-                        placeholder="$0"
-                      />
-                    </div>
+                    €<input
+                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      type="text"
+                      id="amount"
+                      value={max_credit_amount}
+                      validate={validation.required}
+                      placeholder="€0.0"
+                    />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="row mt-4">
 
-
-            </div>
-            <div className="row mt-4">
-              <div className="col">
+            <div class="row mt-4">
+              <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
-                  {/* <label className="d-block">Sicherheiten</label> */}
-                  <Translate content='label.Sicherheiten' component='label' className="d-block" />
-                  <div className="form-check form-check-inline">
-                    <Field
-                      type="radio"
-                      component={radioButton}
-                      value="true"
-                      name="colatoral"
-                      className="form-check-input"
-                      id="credit"
-                    />
-                    <Translate content='label.yes' component='label' className="form-check-label" for="rating-credit-yes" />
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <Field
-                      type="radio"
-                      component={radioButton}
-                      value="false"
-                      name="colatoral"
-                      className="form-check-input"
-                      id="credit"
-                    />
-                    <Translate content='label.no' component='label' className="form-check-label" for="rating-credit-no" />
-                  </div>
-                </div>
+                  {/* <div className="row align-items-end"> */}
+                  <label for="amount">
+                    <strong>  <Translate content='label.minimumsales' /></strong>
 
-              </div>
-              <div className="col">
-                <div className="form-group">
-                  <div className="row align-items-end">
+                  </label>
+                  <div class="d-flex align-items-center">
                     <Field
                       name="min_sales_creditor"
                       type="range"
                       className="w-100"
                       component={inputSlider}
-                      label='Minimum Sales Creditor'
                       id="mincredit-amount"
                       validate={validation.required}
-                      min="1"
-                      max="100"
+                      min="0"
+                      max="50000000"
+                      step="100000"
 
                     />
-                    <div className="col col-2">
-                      <input
-                        className="form-control"
-                        type="text"
-                        id="mincredit-amount-value"
-                        value={min_sales_creditor}
-                        validate={validation.required}
-                        placeholder="$0"
-                      />
-                    </div>
+                    €<input
+                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      type="text"
+                      id="mincredit-amount-value"
+                      value={min_sales_creditor}
+                      validate={validation.required}
+                      placeholder="€0.0"
+                    />
                   </div>
                 </div>
               </div>
-
+              <div className="col-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <strong><Translate content='label.Sicherheiten' component='label' className="d-block" /></strong>
+                  <div class="form-check form-check-inline">
+                    <Field
+                      type="radio"
+                      component={radioButton}
+                      value="true"
+                      name="colatoral"
+                      className="form-check-input"
+                      id="credit"
+                    />
+                    <Translate content='label.yes' component='label' class="form-check-label" for="rating-credit-yes" />
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <Field
+                      type="radio"
+                      component={radioButton}
+                      value="false"
+                      name="colatoral"
+                      className="form-check-input"
+                      id="credit"
+                    />
+                    <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="row mt-4">
-              <div className="col">
-                <div className="form-group">
-                  {/* <label className="d-block">Rating for Credit</label> */}
-                  <Translate content='label.rating' component="label" className="d-block" />
-                  <div className="form-check form-check-inline">
+            <div class="row mt-4">
+              <div class="col">
+                <div class="form-group">
+                  <strong><Translate content='label.rating' component="label" class="d-block" /></strong>
+                  <div class="form-check form-check-inline">
                     <Field
                       type="radio"
                       component={radioButton}
@@ -385,9 +429,9 @@ class AddProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <Translate content='label.yes' component='label' className="form-check-label" for="rating-credit-yes" />
+                    <Translate content='label.yes' component='label' class="form-check-label" for="rating-credit-yes" />
                   </div>
-                  <div className="form-check form-check-inline">
+                  <div class="form-check form-check-inline">
                     <Field
                       type="radio"
                       component={radioButton}
@@ -396,13 +440,14 @@ class AddProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <Translate content='label.no' component='label' className="form-check-label" for="rating-credit-no" />
+                    <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
                   </div>
                 </div>
               </div>
               {credit === 'true' ? (
-                <div className="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+                <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
                   <div className="row">{this.creditRatings(credits)}</div>
+
                 </div>
                 // </div>
               ) : null}
@@ -415,22 +460,22 @@ class AddProduct extends Component {
             <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
-                  <Translate content='label.fileupload' component="label" className="d-block" />
+                  <strong> <Translate content='label.fileupload' component="label" /></strong>
                   <Field
                     name="files"
                     component={renderDropzoneField}
                     type="file"
                     validate={validation.required}
                   />
-                  {files ? <strong>Filename: {files[0].name}</strong> : null}
+                  {files ? this.displayFiles(files) : null}
                 </div>
               </div>
             </div>
 
             {this.props.errMsg ? (
-              <li className="d-flex mb-1" >
+              <li class="d-flex mb-1" >
                 <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
-                <span className="pl-2 green-text">{this.props.errMsg}</span>
+                <span class="pl-2 green-text">{this.props.errMsg}</span>
               </li>
 
             ) : null}
@@ -439,6 +484,18 @@ class AddProduct extends Component {
                 <Translate content='button.submit' component="button" className="btn btn-primary btn-form" type="submit" />
               </div>
             </div>
+            {/* <div className="row mt-4">
+              <div className="col">
+                <InputRange
+                  maxValue={60}
+                  minValue={3}
+                  value={{ min: 10, max: 20 }}
+                  onChange={value => console.log(value)}
+                  className='position-relative w-100'
+
+                />
+              </div>
+            </div> */}
           </form>
         </div>
       </Fragment>
@@ -446,7 +503,7 @@ class AddProduct extends Component {
   }
 }
 function mapStateToProps(state) {
-  return { errMsg: state.errors, industry: state.industryList, service: state.service, language: state.language };
+  return { errMsg: state.errors, industry: state.industryList, service: state.service, language: state.language, verified: state.scope };
 }
 
 AddProduct = reduxForm({
@@ -480,5 +537,5 @@ AddProduct = connect(state => {
 })(AddProduct);
 export default connect(
   mapStateToProps,
-  { addProduct, getIndustryList, getServiceList }
+  { addProduct, getIndustryList, getServiceList, clearError }
 )(AddProduct);

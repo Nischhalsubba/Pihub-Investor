@@ -33,17 +33,23 @@ class Header extends Component {
         <div className="logo-container">
           <img src="/assets/img/logo.png" alt="Pinhub Logo" />
         </div>
-        <nav className="header-actions">
+        <nav class="header-actions">
           <ul>
-            <li className="d-flex lang__select dropdown">
-              <span onClick={() => this.onChange('en')}>EN</span>
-              <ul className="dropdown-container">
-                <li>
-                  <span className='lang__select-btn' onClick={() => this.onChange('de')}>DE</span>
-                </li>
-              </ul>
-              <i className="bx bx-chevron-down"></i>
-            </li>
+            <ul className="language-changer">
+              <li>
+                <button onClick={() => this.onChange('en')}>
+                  <img src="assets/img/gb.svg" alt="English Language" />
+                  English
+                  </button>
+              </li>
+              <li>
+                <button onClick={() => this.onChange('de')}>
+                  <img src="assets/img/de.svg" alt="Deutsch Language" />
+                  Deutsch
+                  </button>
+              </li>
+            </ul>
+
             <li className="header-actions__item">
 
               <Link className="header-notification" to="/notifications">
@@ -52,23 +58,30 @@ class Header extends Component {
               </Link>
             </li>
 
-            <li className="header-dropdown">
-              <a className="header-user-dropdown">
-                <img src="/assets/img/user.png" alt="John Doe" />
-                <i className="bx bx-chevron-down" />
-                {/* <span
-                  onClick={() =>
-                    this.props.logout(() => this.props.history.push('/login'))
-                  }
-                >
-                  logout
-                </span> */}
-                <Translate content='label.logout' component="span" onClick={() =>
-                  this.props.logout(() => this.props.history.push('/login'))
-                } />
-              </a>
-            </li>
 
+            <div className="dropdown">
+              <a className=" dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="/assets/img/user.png" alt="John Doe" />
+              </a>
+              <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <Link className="dropdown-item" to='/user/profile'>
+                  <Translate content='label.profile' />
+                </Link>
+                <Link className="dropdown-item" to='/user/edit-profile'>
+                  <Translate content='label.editprofile' />
+
+                </Link>
+                <Link className="dropdown-item" to='/change-password'>
+                  <Translate content='label.resetpassword' />
+                </Link>
+                <span className="dropdown-item" onClick={() => {
+                  this.props.logout(() => this.props.history.push('/login'))
+                }}>
+                  <Translate content='label.logout' />
+
+                </span>
+              </div>
+            </div>
           </ul>
         </nav>
       </header>

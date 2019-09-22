@@ -16,7 +16,7 @@ export default {
         investedon: 'Invested on',
         investedamount: 'Invested amount',
         numberofrequest: 'Number of request',
-        createdon: 'Create on',
+        createdon: 'Created on',
         productname: 'Product name',
         requeston: 'Request on',
         requestedby: 'Requested by',
@@ -27,7 +27,13 @@ export default {
         terms: 'terms and conditions',
         addfile: 'Add files',
         ordrop: 'or drop files here',
-        approvedon: 'Approved on'
+        approvedon: 'Approved on',
+        noattachment: 'No Attachments available',
+        appreject: 'You have rejected this application',
+        appaccept: 'You have accepted this application',
+        norating: 'No ratings available',
+        minduration: 'Minimum Duration',
+        maxduration: 'Maximum Duration'
     },
     sidebar: {
         product: 'Product',
@@ -38,6 +44,7 @@ export default {
     },
     label: {
         Produktdetail: 'Product detail',
+        processing: 'Processing',
         AngebotErstellt: 'Offer sent',
         theperfect: 'The Perfect Investment',
         Sicherheiten: 'Collateral',
@@ -116,16 +123,34 @@ export default {
         acquisition: 'Acquisition / Takeover financing',
         project: 'Project financing',
         mezzanine: 'Mezzanine financing',
-        youdonot:'You do not have any products yet! '
+        youdonot: 'You do not have any products yet! ',
+        profile: 'Profile',
+        editprofile: 'Edit Profile',
+        minimumsales: 'Minimum Sales Creditor',
+        resetpassword: 'Reset Password',
+        months: 'Months',
+        open: 'Open',
+        postponed: 'Postponed',
+        deleted: 'Deleted',
+        deletedmsg: 'This product has been deleted',
+        postponedmsg: 'This product has been postponed. You can change the status'
     },
     button: {
         Produktbearbeiten: 'Edit Product',
         signup: 'Sign up Now',
         search: 'Search',
         addnewproduct: 'Add new products',
-        submit: 'Submit'
+        submit: 'Submit',
+        edit: 'Edit Product',
+        download: 'Download',
+        delete: 'Delete',
+        postpone: 'Postpone',
+        undopostpone: 'Undo postpone'
     },
     placeholder: {
         select: 'Select'
+    },
+    unverified: {
+        msg: 'Your account is not yet verified yet. Please contact the administrator'
     }
 };

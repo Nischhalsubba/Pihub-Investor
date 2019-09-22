@@ -17,28 +17,28 @@ class ConfirmEmail extends Component {
                             <div className="indicator-container d-flex flex-column align-items-center">
                                 <div className="indicator active d-flex justify-content-center align-items-center connect">
                                     <span>1</span></div>
-                                    {/* <span className="mt-3">Confirm Email</span> */}
-                                    <Translate content='label.confirmemail' component="span" className="mt-3" />
+                                {/* <span className="mt-3">Confirm Email</span> */}
+                                <Translate content='label.confirmemail' component="span" className="mt-3" />
                                 <hr />
                             </div>
                             <div className="indicator-container d-flex flex-column align-items-center">
                                 <div className="indicator d-flex justify-content-center align-items-center"><span>2</span></div>
                                 {/* <span
                                     className="mt-3">Admin Approval</span> */}
-                                    <Translate content='label.adminapproval' className="mt-3" />
+                                <Translate content='label.adminapproval' className="mt-3" />
                             </div>
                             <div className="indicator-container d-flex flex-column align-items-center">
                                 <div className="indicator d-flex justify-content-center align-items-center">
                                     <span>3</span></div>
-                                    {/* <span
+                                {/* <span
                                     className="mt-3">Activation </span> */}
-                                    <Translate content='label.activation' component="span" className="mt-3" />
+                                <Translate content='label.activation' component="span" className="mt-3" />
                             </div>
                         </div>
                         <div className="email-content text-center w-75 m-auto"> <img src="/assets/img/icons/Mail.png"
                             alt="Mail icon" />
                             {/* <h3>We've just send you an Email</h3> */}
-                            <Translate content='weve' component="h3" />
+                            <Translate content='label.weve' component="h3" />
                             {/* <p>Your account has been successfully created. Please check your email for the confirmation</p> */}
                             <Translate content='label.youraccounthas' component="p" />
                             <Translate content='label.didnt' /> <Translate content='label.sendit' component="a" href="#" />

@@ -24,7 +24,7 @@ class Login extends Component {
                         <div className="singin-container">
                             <header className="page-header">
                                 {/* <h1 className="page-title">Login</h1> */}
-<Translate content='label.login' component="h1" className="page-title" />
+                                <Translate content='label.login' component="h1" className="page-title" />
                                 {/* <p >
                                     Enter your email address and password
                                 </p> */}
@@ -41,7 +41,7 @@ class Login extends Component {
                                         component={inputField}
                                         label={<Translate content='label.emailaddress' />}
                                         className="form-control"
-                                        validate={[validation.email, validation.required]}
+                                        validate={[validation.newEmail, validation.required]}
                                     />
                                 </div>
                                 <div className="form-group">
@@ -59,12 +59,14 @@ class Login extends Component {
                                     <font color="red">{this.props.errorMessage}</font>
                                 </div>
                                 {/* <button className="btn btn-primary btn-form" type="submit"> */}
-                                {<Translate content='label.login' component="button" className="btn btn-primary btn-form"type="submit" />}
+                                <Link to='/forgot-password'> Forgot Password ?</Link>
+                                <br />
+                                {<Translate content='label.login' component="button" className="btn btn-primary btn-form" type="submit" />}
                                 {/* </button> */}
                             </form>
                             <br />
                             {/* If you dont have account you can sign up  */}
-                            <Translate content='label.ifyoudont' /><Link to="/signup"><Translate content='label.here' /></Link>
+                            <Translate content='label.ifyoudont' />&nbsp;&nbsp;&nbsp;<Link to="/signup"><strong><Translate content='label.here' /></strong></Link>
 
                         </div>
                     </div>

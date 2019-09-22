@@ -6,6 +6,7 @@ import { getCreditRequestList } from '../../actions/credits';
 import Pagination from '../general/Pagination';
 import Spinner from '../general/Spinner';
 import Translate from 'react-translate-component'
+import { dDigit } from '../../_utils/misc';
 class ListCreditRequests extends Component {
   componentDidMount() {
     this.props.getCreditRequestList(1);
@@ -30,19 +31,19 @@ class ListCreditRequests extends Component {
 
             <Link to={{ pathname: '/product', state: { id: product.product_id } }}> {product.product_title}</Link>
           </td>
-          <td>{product.service}</td>
-          <td className="text-right-piehub-table">{`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}</td>
-          {/* <td className="text-right-piehub-table">{product.number_of_request}</td> */}
-          <td className="text-right-piehub-table">{`${deadline.getDate()}-${deadline.getMonth() + 1}-${deadline.getFullYear()}`}</td>
-          <td className="text-right-piehub-table font-weight-bold">
+          <td >{product.service}</td>
+          <td >{`${dDigit(date.getDate())}-${dDigit(date.getMonth() + 1)}-${date.getFullYear()}`}</td>
+          {/* <td class="text-right-piehub-table">{product.number_of_request}</td> */}
+          <td class="text-md-right text-left">{`${dDigit(deadline.getDate())}-${dDigit(deadline.getMonth() + 1)}-${deadline.getFullYear()}`}</td>
+          <td class="text-right-piehub-table font-weight-bold">
             €{product.max_credit_amount || 100000}
           </td>
           <td className="text-right-piehub-table font-weight-bold">
-            {product.status === 'offer_sent' ? <span className="status-badge status-badge-awaiting"><Translate content='label.AngebotErstellt' /></span>
+            {product.status === 'offer_sent' ? <span className="badge badge-warning"><Translate content='label.AngebotErstellt' /></span>
               : null}
-            {product.status === 'rejected' ? <span className="status-badge status-badge-rejected"><Translate content='label.rejected' /></span>
+            {product.status === 'rejected' ? <span className="badge badge-danger"><Translate content='label.rejected' /></span>
               : null}
-            {product.status === 'open' ? <span className="status-badge status-badge-approved"><Translate content='label.ZuBearbeiten' /></span>
+            {product.status === 'open' ? <span className="badge badge-success"><Translate content='label.processing' /></span>
               : null}
           </td>
         </tr>
@@ -57,9 +58,9 @@ class ListCreditRequests extends Component {
       return (
         <Fragment>
           <Subheader heading={<Translate content='label.creditrequests' />} />
-          <div className="content-body">
+          <div class="content-body">
             <table
-              className="table tablesaw-stack"
+              class="table tablesaw-stack"
               data-tablesaw-mode="stack"
               data-tablesaw-minimap="data-tablesaw-minimap"
             >
@@ -87,22 +88,20 @@ class ListCreditRequests extends Component {
                     {/* Kreditart */}
                   </th>
                   <th
-                    className="text-right-piehub-table"
-                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                    data-tablesaw-sortable-col="data-tablesaw-sortable-col" data-tablesaw-priority="persist"
                     scope="col"
                   >
-                    <Translate content='column.createdon' />
+                    <Translate content='column.createdon' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   </th>
                   <th
-                    className="text-right-piehub-table"
-                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
+                    className="text-md-right text-left" data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
                     {/* Fristablauf */}
                     <Translate content='label.deadline' />
                   </th>
                   <th
-                    className="text-right-piehub-table"
+                    class="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
@@ -110,12 +109,12 @@ class ListCreditRequests extends Component {
                     {/* Kreditbetrag */}
                   </th>
                   <th
-                    className="text-right-piehub-table"
+                    class="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
                     <Translate content='column.status' />
-                </th>
+                  </th>
                 </tr>
               </thead>
               <tbody>{this.renderData(data)}</tbody>

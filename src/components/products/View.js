@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getProductById } from '../../actions/product';
+import { getProductById, deleteProduct, postponeProduct } from '../../actions/product';
+import { downloadToken } from '../../actions/download';
 // import Subheader from '../general/Subheader';
 import RequestedByList from '../credits/RequestedByList';
 import Translate from 'react-translate-component'
@@ -15,22 +16,51 @@ class ViewProduct extends Component {
   listIndustries = industries => {
     return industries.map((industry, index) => {
       return (
-        <a className="mb-1" href="#">{industry.name}</a>
+        <a class="mb-1" href="#">{industry.name}</a>
 
       );
     })
   }
+  listStates = states => {
+    if (states.length > 0) {
+      return states.map((state, index) => {
+        return (
+          <a class="mb-1" href="#">{state}<br /></a>
+
+        );
+      })
+    }
+
+  }
   listRating = ratings => {
     if (ratings.length === 0) {
-      return <span>**No ratings available for this product</span>
+      return <span>**<Translate content='column.norating' /></span>
     } else {
       return ratings.map((rating, index) => {
+        console.log(rating)
         return (
-          <div className="col-3 p-0">
-            <h6>Creditrre form</h6>
-            <span>AAA</span>
+          <div class="col-3 p-0">
+            <h6>{rating.name}</h6>
+            <span>{rating.value}</span>
           </div>
 
+        );
+      })
+    }
+  }
+  showAttachments = documents => {
+    if (documents.length === 0) {
+      return (
+        <span>No Attachments Available</span>
+      );
+    } else {
+      return documents.map((doc, index) => {
+        // console.log(doc)
+        return (
+          <div class="file mb-2" key={index}>
+            <span class="file-name">File {index + 1} <button className='btn btn-link' onClick={() => this.props.downloadToken(doc.path)}>Download</button></span>
+            <span class="ml-4 file-size">Type: {doc.type}</span>
+          </div>
         );
       })
     }
@@ -46,53 +76,64 @@ class ViewProduct extends Component {
         min_credit_amount,
         industries,
         status,
-        time_duration,
+        min_time_duration,
+        max_time_duration,
         product_title,
         service,
-        state,
-        ratings
+        states,
+        ratings,
+        County,
+        documents
         }
       } = this.props.product;
-      console.log('detail', this.props.product.product)
+      // console.log('detail', this.props.product.product);
       return (
         <Fragment>
+          {status === 'deleted' ? <div class="alert alert-rejected"><Translate content='label.deletedmsg' /></div> : null}
+          {status === 'postponed' ? <div class="alert alert-secondary"><Translate content='label.postponedmsg' /></div> : null}
           <div className="content-head">
             <div className="content-head-left">
               {/* <h1 className="content-head__title">Produktdetail</h1> */}
               <Translate content='label.Produktdetail' component="h1" className="content-head__title" />
             </div>
-            <div className="content-head-right">
+            {status !== 'deleted' ? <div className="content-head-right">
               <Link to={{
                 pathname: '/edit-product',
                 state: { id: id }
               }}
                 className="btn btn-primary"
               >
-               <Translate content='button.Produktbearbeiten' />
+                <Translate content='button.Produktbearbeiten' />
 
-          </Link>
-            </div>
+              </Link>
+            </div> : null}
+
           </div>
-          <div className="content-body credit-request">
-            <div className="d-flex">
-              <div className="col-lg-12 col-xl-8">
-                <div className="row justify-content-between w-100">
-                  <div className="col-3 p-0">
+          <div class="content-body credit-request">
+            <div class="d-flex">
+              <div class="col-lg-12 col-xl-8">
+                <div class="row justify-content-between w-100">
+                  <div class="col-3 p-0">
                     {/* <h6>Product Title</h6> */}
                     <Translate content='label.producttitle' component="h6" />
                     <a href="#">{product_title}</a>
                   </div>
-                  <div className="col-3 p-0">
+                  <div class="col-3 p-0">
                     <Translate content='label.service' component="h6" />
-                    <a >{service} </a>
+                    <a >{service ? service.name : null} </a>
                   </div>
-                  <div className="col-3 p-0">
+                  <div class="col-3 p-0">
                     <Translate content='label.state' component="h6" />
-                    <a >{state}</a>
+                    <a >{states ? this.listStates(states) : null}</a>
                   </div>
-                  <div className="col-3 p-0">
+                  <div class="col-3 p-0">
+                    {/* <Translate content='label.state' component="h6" /> */}
+                    <h6>County</h6>
+                    <a >{states ? this.listStates(County) : null}</a>
+                  </div>
+                  <div class="col-3 p-0">
                     <Translate content='label.industries' component="h6" />
-                    <div className="d-flex flex-wrap justify-content-between flex-column">
+                    <div class="d-flex flex-wrap justify-content-between flex-column">
                       {industries ? this.listIndustries(industries) : null}
                     </div>
                   </div>
@@ -100,50 +141,73 @@ class ViewProduct extends Component {
                 </div>
 
 
-                <div className="row justify-content-between w-100 mt-3">
+                <div class="row justify-content-between w-100 mt-3">
                   {ratings ? this.listRating(ratings) : null}
                 </div>
               </div>
-              <div className="col-lg-12 col-xl-4 rightbar">
-                <div className="amount">
+              <div class="col-lg-12 col-xl-4 rightbar">
+                <div class="amount">
                   {/* <h6>Max Credit Amount</h6> */}
                   <Translate content='label.maxcredit' component="h6" />
                   <h2>€{max_credit_amount}</h2>
                 </div>
-                <div className="amount">
+                <div class="amount">
                   {/* <h6>Max Credit Amount</h6> */}
                   {/* <h6>Mindestkreditbetrag</h6> */}
                   <Translate content='column.minimum_credit_amount' component="h6" />
 
                   <h2>€{min_credit_amount}</h2>
                 </div>
-                {/* <div className="investor clearfix mt-5"> */}
-                  {/* <h6>Investor</h6> */}
-                  {/* <Translate content='label.investor' component="h6" />
-                  <div className="investor-profile d-flex align-items-center">
-                    <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" />
-                    <a className="ml-2" href="#">{investor}</a>
-                  </div>
-                </div> */}
-                <div className="date mt-5">
+
+                <div class="date mt-5">
                   {/* <h6>Time Duration</h6> */}
-                  <Translate content='label.timeduration' component="h6" />
-                  <a href="#">{time_duration}Months </a>
+                  <Translate content='column.minduration' component="h6" />
+                  <a href="#">{min_time_duration} <Translate content='label.months' /> </a>
+                </div>
+                <div class="date mt-5">
+                  {/* <h6>Time Duration</h6> */}
+                  <Translate content='column.maxduration' component="h6" />
+                  <a href="#">{max_time_duration} <Translate content='label.months' /> </a>
                 </div>
               </div>
             </div>
-            <div className="attachments">
+            <div class="attachments">
               {/* <h4>Attachments</h4> */}
               <Translate content='label.attachments' component="h6" />
-              <div className="file mb-2">
-                <span className="file-name">tax payer investment.docx</span>
-                <span className="ml-4 file-size">400.5kb</span>
+              {/* <div class="file mb-2">
+                <span class="file-name">tax payer investment.docx</span>
+                <span class="ml-4 file-size">400.5kb</span>
               </div>
-              <div className="file">
-                <span className="file-name">investment agreement.pdf</span>
-                <span className="ml-4 file-size">322.2kb</span>
-              </div>
+              <div class="file">
+                <span class="file-name">investment agreement.pdf</span>
+                <span class="ml-4 file-size">322.2kb</span>
+              </div> */}
+              {documents ? this.showAttachments(documents) : null}
             </div>
+            {status !== 'deleted' ?
+              <Fragment>
+                <button className='btn btn-primary' onClick={() => this.props.deleteProduct(id, () => this.props.history.push('/products'))}><Translate content='button.delete' /></button>
+                &nbsp;&nbsp;
+                {status !== 'postponed' ?
+                  <button
+                    className='btn btn-primary'
+                    onClick={() => this.props.postponeProduct(id, "postpone", () => {
+                      this.props.history.push('/products')
+                    })}
+                  ><Translate content='button.postpone' /></button>
+                  :
+                  <button
+                    className='btn btn-primary'
+                    onClick={() => this.props.postponeProduct(id, "undo_postpone", () => {
+                      this.props.history.push('/products')
+                    })}
+                  > <Translate content='button.undopostpone' /></button>
+                }
+
+              </Fragment>
+              : null}
+
+
             {id ? <RequestedByList id={id} name={product_title} /> : null}
           </div>
         </Fragment>
@@ -158,5 +222,5 @@ function mapStateToProps(state) {
 }
 export default connect(
   mapStateToProps,
-  { getProductById }
+  { getProductById, deleteProduct, postponeProduct, downloadToken }
 )(ViewProduct);

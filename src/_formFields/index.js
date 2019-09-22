@@ -5,7 +5,7 @@ import Multiselect from 'react-widgets/lib/Multiselect';
 import 'react-widgets/dist/css/react-widgets.css';
 import Dropzone from 'react-dropzone';
 import Translate from 'react-translate-component'
-
+import InputRange from 'react-input-range';
 export const inputField = ({
   input,
   label,
@@ -17,7 +17,7 @@ export const inputField = ({
 }) => {
   return (
     <div>
-      <label>{label}</label>
+      <label><strong>{label}</strong></label>
       <input
         {...input}
         type={type}
@@ -50,10 +50,9 @@ export const checkBox = ({
         id={id}
         placeholder={placeholder}
       />
-
+      &nbsp; &nbsp; &nbsp;
       <label className="form-check-label">
-        {/* I agree to the  */}
-        <Translate content='label.iagree' /><Link to="/terms"> <Translate content='label.terms' /></Link>
+        <Translate content='column.iagree' /><Link to="/terms"> <Translate content='column.terms' /></Link>
       </label>
 
       <font color="red">{touched && error}</font>
@@ -69,11 +68,12 @@ export const dropDownField = ({
   className,
   id,
   placeholder,
+  defaultValue,
   meta: { error, touched }
 }) => {
   return (
     <div className="form-group">
-      <label>{label}</label>
+      <label><strong>{label}</strong></label>
       <Select
         {...input}
         onChange={value => input.onChange(value)}
@@ -89,6 +89,7 @@ export const dropDownField = ({
 };
 
 export const inputSlider = ({
+  step,
   input,
   label,
   type,
@@ -101,26 +102,30 @@ export const inputSlider = ({
 }) => {
   return (
     <Fragment>
-      <div className="col col-10">
-        <label className="d-block mincredit-amount mb-5" for="mincredit-amount">
-          {label}
-        </label>
+      {/* <div className="form-group"> */}
+      <label >
+        {label}
+      </label>
+      {/* <div class="d-flex align-items-center"> */}
+
+      <div className='demo col-md-9 col-sm-8 col-8'>
+
         <input
           {...input}
-          className={className}
+          className='position-relative w-100'
           id={id}
           placeholder={placeholder}
           type={type}
           min={min}
           max={max}
-          step="1"
+          step={step}
           data-orientation="horizontal"
-          styles={{ color: 'red' }}
         />
       </div>
+      {/* </div> */}
 
       <font color="red">{touched && error}</font>
-    </Fragment>
+    </Fragment >
   );
 };
 
@@ -134,23 +139,23 @@ export const renderMultiselect = ({
   meta: { error, touched },
   data,
   valueField,
-  textField
+  textField,
+  defaultValue
 }) => {
   return (
     <Fragment>
-      <label for="">{label}</label>
+      <label for=""><strong>{label}</strong></label>
       <Multiselect
         {...input}
         onBlur={() => input.onBlur()}
-        // value={input.value === 'Select All' ? { data } : input.value || []}
         value={input.value[0] === 'Select All' ? data : input.value || []}
         data={data}
         valueField={valueField}
         textField={textField}
         className={className}
         id={id}
-        // placeholder="Wählen Sie Branchen"
-        placeholder="Auswählen eii"
+        placeholder="Auswählen"
+        defaultValue={defaultValue}
       />
       <font color="red">{touched && error}</font>
     </Fragment>
@@ -158,7 +163,7 @@ export const renderMultiselect = ({
 };
 
 export const renderDropzoneField = ({
-  input,
+        input,
   name,
   id,
   meta: { touched, error }
@@ -170,6 +175,7 @@ export const renderDropzoneField = ({
           input.onChange(filesToUpload);
         }}
         maxSize={8000000}
+        multiple
       >
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps() } className="border-dotted">
@@ -209,7 +215,7 @@ export const radioButton = ({
 }) => {
   return (
     <div>
-      <label>{label}</label>
+      <label><strong>{label}</strong></label>
       <input
         {...input}
         type="radio"
@@ -223,28 +229,39 @@ export const radioButton = ({
   );
 };
 
+export const inputDoubleSlider = ({
+  input,
+  label,
+  type,
+  className,
+  id,
+  placeholder,
+  max,
+  min,
+  meta: { error, touched }
+}) => {
+  return (
+    <Fragment>
+      {/* <div className="form-group"> */}
+      <label >
+        {label}
+      </label>
+      {/* <div class="d-flex align-items-center"> */}
 
-// export const phoneInput = ({
-//   input,
-//   label,
-//   type,
-//   className,
-//   id,
-//   placeholder,
-//   meta: { error, touched }
-// }) => {
-//   return (
-//     <div>
-//       <label>{label}</label>
-//       <ReactPhoneInput
-//         {...input}
-//         type={type}
-//         color={'white'}
-//         className={className}
-//         id={id}
-//         placeholder={placeholder}
-//       />
-//       <font color="red">{touched && error}</font>
-//     </div>
-//   );
-// };
+      <div className='demo col-md-9 col-sm-8 col-8'>
+
+        <InputRange
+          maxValue={max}
+          minValue={min}
+          value={{ max: max, min: min }}
+          onChange={value => {
+            console.log(value)
+            // input.onChange(value);
+          }} />
+        {/* </div> */}
+      </div>
+
+      <font color="red">{touched && error}</font>
+    </Fragment >
+  );
+};

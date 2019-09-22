@@ -15,7 +15,7 @@ export default {
         investedon: 'Bestätlgt am',
         investedamount: 'Kreditbetrag',
         numberofrequest: 'Nummer der Anfrage',
-        createdon: 'Erstelit am',
+        createdon: 'Erstelit',
         approvedon: 'Bestätigt',
         productname: 'Produktname',
         requeston: 'Anfrage am',
@@ -27,19 +27,26 @@ export default {
         terms: 'Geschäftsbedingung',
         addfile: 'Dokument auswählen',
         ordrop: 'oder Dokument ablegen',
+        noattachment: 'Keine Anhänge verfügbar',
+        appreject: 'Sie haben diesen Antrag abgelehnt',
+        appaccept: 'Sie haben diese Bewerbung angenommen',
+        norating: 'Keine Bewertungen vorhanden',
+        minduration: 'Mindestdauer',
+        maxduration: 'Maximale Dauer'
     },
     sidebar: {
         product: 'Kreditprodukte',
         new_product: 'Kreditprodukte anlegen',
         invested_products: 'Aktive Kredite',
-        products: 'Kreditrodukte',
+        products: 'Kreditprodukte',
         credit_requested_products: 'Kreditanträge'
     },
     label: {
-        Produktdetail:'Produktdetails',
-        AngebotErstellt:'Angebot Erstellt',
-        ZuBearbeiten:'Zu Bearbeiten',
-        Kreditorname:'Kreditorname',
+        Produktdetail: 'Produktdetails',
+        AngebotErstellt: 'Angebot Erstellt',
+        ZuBearbeiten: 'Zu Bearbeiten',
+        processing: 'Zu Bearbeiten',
+        Kreditorname: 'Kreditorname',
         theperfect: 'Die perfekte Investition',
         atcredittech: 'Bei Credittech können Sie leicht einen Gläubiger finden und eine Investition tätigen',
         whycredittech: 'Warum Credit Tech?',
@@ -58,7 +65,7 @@ export default {
         login: 'Anmeldung',
         lorem: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.',
         ifyoudont: 'Wenn Sie kein Konto haben, können Sie sich anmelden',
-        youdont:'Du hast keine (neuen) Benachrichtigungen',
+        youdont: 'Du hast keine (neuen) Benachrichtigungen',
         enteryouremail: 'Geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein',
         here: 'Hier',
         sendit: 'Erneut senden',
@@ -82,8 +89,8 @@ export default {
         industries: 'Branche',
         state: 'Bundesland',
         service: 'Kreditart',
-        Sicherheiten:'Sicherheiten',
-        Ratingagentur:'Ratingagentur',
+        Sicherheiten: 'Sicherheiten',
+        Ratingagentur: 'Ratingagentur',
         producttitle: 'Produktname',
         requested: 'Angefordert',
         approved: 'Genehmigt',
@@ -94,7 +101,7 @@ export default {
         no: 'Nein',
         yes: 'Ja',
         rating: 'Mindeskreditrating',
-        Kreditrating:'Kreditrating',
+        Kreditrating: 'Kreditrating',
         country: 'Landkreis',
         editproducts: 'Produkte bearbeiten',
         mincredit: 'Mindestkreditvolumen',
@@ -104,21 +111,42 @@ export default {
         back: 'Zurück zur Startseite',
         logout: 'Ausloggen',
         accept: 'Angebot erstellen / Absage',
-        requestedamount: 'angeforderte Menge',
+        requestedamount: 'Angeforderte Menge',
         time: 'Zeitdauer',
         deadline: 'Fristablauf',
         applicationcode: 'Anwendungscode',
         creditrequests: 'Kreditanträge',
-        youdonot:'Sie haben noch keine Artikel!'
+        youdonot: 'Sie haben noch keine Artikel!',
+        profile: 'Profil',
+        editprofile: 'Profil bearbeite',
+        minimumsales: 'Mindestumsatz Gläubiger',
+        resetpassword: 'Passwort zurücksetzen',
+        months: 'Monate',
+        open: 'Öffnen',
+        postponed: 'Verschoben',
+        deleted: 'Gelöscht',
+        deletedmsg: 'Dieses Produkt wurde gelöscht',
+        postponedmsg: 'Dieses Produkt wurde verschoben. Sie können den Status rückgängig machen.'
+
     },
     button: {
-        Produktbearbeiten:'Produkt bearbeiten',
+        Produktbearbeiten: 'Produkt bearbeiten',
         signup: 'Jetzt registrieren',
         search: 'Suche',
         addnewproduct: 'Kreditprodukt hinzufügen',
-        submit: 'einreichen'
+        submit: 'einreichen',
+        edit: 'Produkt bearbeiten',
+        download: 'Herunterladen',
+        delete: 'Löschen',
+        postpone: 'Verschieben',
+        undopostpone: 'Verschieben rückgängig machen'
+
     },
-    placeholder:{
-        select:'Auswählen'
+    placeholder: {
+        select: 'Auswählen'
+    },
+    unverified: {
+        msg: 'Ihr Konto ist noch nicht bestätigt.Bitte kontaktieren Sie den Administrator'
     }
+
 };

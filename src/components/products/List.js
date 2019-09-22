@@ -21,6 +21,7 @@ class ProductsList extends Component {
     if (productsObject && productsObject.productsList.data.length > 0) {
       let products = productsObject.productsList.data;
       return products.map((product, index) => {
+        console.log(product.status)
         return (
           <tr key={product.id}>
             <td>
@@ -33,22 +34,26 @@ class ProductsList extends Component {
                 {product.product_title}
               </Link>
             </td>
-            <td>{product.service}</td>
+            <td>{product.service.name}</td>
 
             <td>
               {product.industries.map((industry, index) => {
                 return <span>{industry.name}</span>
               })}
             </td>
-            <td>{product.time_duration} Monate</td>
+            <td>{product.min_time_duration} Monate</td>
+            <td>{product.max_time_duration} Monate</td>
 
             <td>€{product.min_credit_amount}</td>
             <td>€{product.max_credit_amount}</td>
             <td>
-              {product.status === 'requested' ? <span className="status-badge status-badge-awaiting"><Translate content='label.requested' /></span> : null}
-              {product.status === 'approved' ? <span className="status-badge status-badge-approved"><Translate content='label.approved' /></span> : null}
-              {product.status === 'rejected' ? <span className="status-badge status-badge-rejected"><Translate content='label.rejected' /></span> : null}
-              {product.status === 'invested' ? <span className="status-badge status-badge-awaiting"><Translate content='label.invested' /></span> : null}
+              {product.status === 'requested' ? <span className="badge badge-warning"><Translate content='label.requested' /></span> : null}
+              {product.status === 'approved' ? <span className="badge badge-success"><Translate content='label.approved' /></span> : null}
+              {product.status === 'rejected' ? <span className="badge badge-danger"><Translate content='label.rejected' /></span> : null}
+              {product.status === 'invested' ? <span className="badge badge-danger"><Translate content='label.invested' /></span> : null}
+              {product.status === 'open' ? <span className="badge badge-info"><Translate content='label.open' /></span> : null}
+              {product.status === 'postponed' ? <span className="badge badge-secondary"><Translate content='label.postponed' /></span> : null}
+              {product.status === 'deleted' ? <span className="badge badge-light"><Translate content='label.deleted' /></span> : null}
             </td>
 
           </tr>
@@ -93,7 +98,7 @@ class ProductsList extends Component {
             onChange={e => this.setState({ product_title: e.target.value })}
           />
           {/* <button >Search</button> */}
-          
+
           <Translate content='button.search' component="button" className="btn btn-primary mr-sm-2" onClick={(e) => {
             e.preventDefault();
             this.props.getProductsList(this.props.pagination.currentPage, this.state.status, this.state.product_title)
@@ -101,11 +106,7 @@ class ProductsList extends Component {
           } />
         </form>
         <div className="content-body">
-          <table
-            className="table tablesaw-stack"
-            data-tablesaw-mode="swipe"
-            data-tablesaw-minimap="data-tablesaw-minimap"
-          >
+          <table class="table tablesaw-stack" data-tablesaw-mode="swipe" data-tablesaw-minimap="data-tablesaw-minimap">
             <thead>
               <tr>
                 <th>
@@ -118,7 +119,10 @@ class ProductsList extends Component {
                   <Translate content="label.industries" />
                 </th>
                 <th>
-                  <Translate content="column.duration" />
+                  <Translate content="column.minduration" />
+                </th>
+                <th>
+                  <Translate content="column.maxduration" />
                 </th>
                 <th>
                   <Translate content="column.minimum_credit_amount" />
@@ -130,6 +134,7 @@ class ProductsList extends Component {
                 <th>
                   <Translate content="column.status" />
                 </th>
+
                 {/* <th>
                 <Translate content="column.edit" />
                 </th> */}

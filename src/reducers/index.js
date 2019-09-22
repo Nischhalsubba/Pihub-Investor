@@ -17,6 +17,7 @@ import language from './language';
 import creditorDetail from './creditorDetail';
 import profile from './profile';
 import service from './service';
+import scope from './scope';
 const rootReducer = combineReducers({
   user,
   auth,
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   creditorDetail,
   profile,
   service,
+  scope,
   form: formReducer
 });
 

@@ -26,13 +26,13 @@ class DetailCreditRequest extends Component {
   }
   renderDocs = docs => {
     if (docs.length === 0) {
-      return <span>No attachments available</span>
+      return <span><Translate content='column.noattachment' /></span>
     } else {
       return docs.map((doc, index) => {
         return (
-          <div className="file mb-2">
-            <span className="file-name">tax payer investment.docx</span>
-            <span className="ml-4 file-size">400.5kb</span>
+          <div class="file mb-2">
+            <span class="file-name">tax payer investment.docx</span>
+            <span class="ml-4 file-size">400.5kb</span>
           </div>
         );
       })
@@ -50,82 +50,78 @@ class DetailCreditRequest extends Component {
       return (
         <Fragment>
           <Subheader heading={this.props.location.state.product} />
-          {/* {status === 'rejected' ?
-            //  <div className="alert alert-rejected">You rejected this Investment
-            <Translate content='label.yourejected' component="div" className="alert alert-rejected" />
-            // </div> 
-            : null} */}
 
-          {status === 'rejected' ? <div className="alert alert-rejected">SSie haben diesen Antrag abgelehnt</div> : null}
 
-          {status === 'accepted' ? <div className="alert alert-success">Sie haben diese Bewerbung angenommen</div> : null}
-          <div className="content-body credit-request">
-            <div className="d-flex">
-              <div className="col-lg-12 col-xl-8">
-                <div className="row justify-content-between w-100">
-                  <div className="col-3 p-0">
+          {status === 'rejected' ? <div class="alert alert-rejected"><Translate content='column.appreject' /></div> : null}
+
+          {status === 'accepted' ? <div class="alert alert-success"><Translate content='column.appaccept' /></div> : null}
+          <div class="content-body credit-request">
+            <div class="d-flex">
+              <div class="col-lg-12 col-xl-8">
+                <div class="row justify-content-between w-100">
+                  <div class="col-3 p-0">
                     {/* <h6>States</h6> */}
-                    <Translate content='label.state' />
+                    <h6> <Translate content='label.state' /></h6>
                     <span>Berlin</span>
                   </div>
-                  <div className="col-3 p-0">
-                    <Translate content='label.credittype' />
+                  <div class="col-3 p-0">
+                    <h6> <Translate content='column.credittype' /></h6>
                     <span>Resolving credit </span>
                   </div>
-                  <div className="col-3 p-0">
-                    <Translate content='label.country' />
+                  <div class="col-3 p-0">
+                    <h6><Translate content='label.country' /></h6>
                     <span>Germany</span>
                   </div>
-                  <div className="col-3 p-0">
-                    <Translate content='label.industries' />
-                    <div className="d-flex flex-wrap justify-content-between flex-column">
-                      <a className="mb-1" href="#">Service Industry</a>
-                      <a className="mb-1" href="#">Administration and office work</a>
-                      <a className="mb-1" href="#">Banking and financial services </a>
-                      <a className="mb-1" href="#">Marketing, advertising and PR</a>
-                      <a className="mb-1" href="#">Healthcare</a>
-                      <a className="mb-1" href="#">Tourism, hotel and gastronomy</a>
+                  <div class="col-3 p-0">
+                    <h6><Translate content='label.industries' /></h6>
+                    <div class="d-flex flex-wrap justify-content-between flex-column">
+                      <a class="mb-1" href="#">Service Industry</a>
+                      <a class="mb-1" href="#">Administration and office work</a>
+                      <a class="mb-1" href="#">Banking and financial services </a>
+                      <a class="mb-1" href="#">Marketing, advertising and PR</a>
+                      <a class="mb-1" href="#">Healthcare</a>
+                      <a class="mb-1" href="#">Tourism, hotel and gastronomy</a>
                     </div>
                   </div>
                 </div>
 
               </div>
-              <div className="col-lg-12 col-xl-4 rightbar">
-                <div className="amount">
+              <div class="col-lg-12 col-xl-4 rightbar">
+                <div class="amount">
                   {/* <h6>Requested amount of</h6> */}
-                  <Translate content='label.requestedamount' />
+                  <h6>  <Translate content='label.requestedamount' /></h6>
                   <h2>€{requested_amount}</h2>
                 </div>
-                <div className="investor clearfix mt-5">
+                <div class="investor clearfix mt-5">
                   {/* <h6>Requested By</h6> */}
-                  <Translate content='label.requestedby' />
-                  <div className="investor-profile d-flex align-items-center">
+                  <h6> <Translate content='column.requestedby' /></h6>
+                  <div class="investor-profile d-flex align-items-center">
                     <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" />
-                    <a className="ml-2" href="#">{requested_by}</a>
+                    <a class="ml-2">{requested_by}</a>
                   </div>
                 </div>
-                <div className="date mt-5">
+                <div class="date mt-5">
                   {/* <h6>Request on</h6> */}
-                  <Translate content='label.requeston' />
+                  <h6> <Translate content='column.requeston' /></h6>
                   <span>{`${requestedDate.getDate()} - ${requestedDate.getMonth() + 1} - ${requestedDate.getFullYear()}`}</span>
                 </div>
-                <div className="date mt-5">
+                <div class="date mt-5">
                   {/* <h6>Time Duration</h6> */}
-                  <Translate content='label.time' />
-                  <span>{duration} Months</span>
+                  <h6>  <Translate content='label.time' /></h6>
+                  <span>{duration} Monate</span>
                 </div>
               </div>
             </div>
-            <div className="attachments mt-5 mb-5">
+            <div class="attachments mt-5 mb-5">
               {/* <h4>Attachments</h4> */}
-              <Translate content='label.attachments' />
+              <h6><Translate content='label.attachments' /></h6>
               {this.renderDocs(documents)}
             </div>
-            <span className="mt-3">
-              <button className="btn btn-success mr-2" disabled={status === 'accepted'}
+            <span class="mt-3">
+              <button class="btn btn-success mr-2" disabled={status === 'accepted'}
                 onClick={() => this.changeStatus('accepted')}
               >Akzeptieren</button>
-              <button className="btn btn-danger" disabled={status === 'rejected'}
+              <button class="btn btn-danger" disabled={status === 'rejected'}
                 onClick={() => this.changeStatus('rejected')}
 
               >Ablehnen</button>

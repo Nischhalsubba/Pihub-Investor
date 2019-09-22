@@ -1,6 +1,7 @@
 import client from './index';
 import clientWithForm from './formDataRequest';
 import { routes } from './../_api/routes';
+import { extractNames } from '../_utils/misc';
 import {
   PRODUCTS_LIST,
   ERROR,
@@ -32,6 +33,7 @@ export const getProductsList = (page, status, product_title) => async dispatch =
       payload: response.data.meta
     })
   } catch (e) {
+    console.log(e)
     dispatch({
       type: ERROR,
       payload: e.response.data.message
@@ -52,6 +54,9 @@ export const addProduct = (details, callback) => async dispatch => {
     body.set('min_credit_amount', details.min_credit_amount);
     body.set('max_credit_amount', details.max_credit_amount);
     body.set('min_sales_creditor', details.min_sales_creditor)
+    details.files.map((file, index) => {
+      body.append(`files[${index}]`, file)
+    })
     if (details.colatoral === 'true') {
       body.set('collatoral', 1)
     } else {
@@ -64,7 +69,9 @@ export const addProduct = (details, callback) => async dispatch => {
 
     }
     body.set('ratings', details.ratings);
-    body.append('files[0]', details.files[0]);
+    body.set('min_time_duration', details.min_duration);
+    body.set('max_time_duration', details.max_duration);
+
     const response = await clientWithForm.post(routes.addProduct, body);
     if (response) {
       callback();
@@ -87,6 +94,13 @@ export const addProduct = (details, callback) => async dispatch => {
 export const getProductById = id => async dispatch => {
   try {
     const response = await client.get(`${routes.getProductById}/${id}`);
+    console.log('foredit', response.data.data)
+    var detail = response.data.data;
+    detail.states = extractNames(response.data.data.states)
+    detail.County = extractNames(response.data.data.counties);
+    detail.undefined = extractNames(response.data.data.industries);
+    detail.services = [{ value: response.data.data.service.id, label: response.data.data.service.name }]
+
     dispatch({
       type: SINGLE_PRODUCT,
       payload: response.data.data
@@ -98,3 +112,82 @@ export const getProductById = id => async dispatch => {
     });
   }
 };
+
+
+export const updateProduct = (details, id, callback) => async dispatch => {
+  try {
+    console.log('de', details)
+    var body = new FormData();
+    body.set('_method', 'PUT')
+    body.set('product_title', details.product_title);
+    body.set('state_ids', details.state_ids.toString());
+    body.set('county_ids', details.county_ids.toString());
+    body.append('industry_ids', details.industry_id.toString());
+    body.set('service_id', details.services.value);
+    body.set('min_credit_amount', details.min_credit_amount);
+    body.set('max_credit_amount', details.max_credit_amount);
+    body.set('min_sales_creditor', details.min_sales_creditor)
+    body.set('min_time_duration', details.min_time_duration);
+    body.set('max_time_duration', details.max_time_duration);
+
+    if (details.colatoral === 'true') {
+      body.set('collatoral', 1)
+    } else {
+      body.set('collatoral', 0);
+    }
+    if (details.credit === 'true') {
+      body.set('rating_for_credit', 1)
+    } else {
+      body.set('rating_for_credit', 0)
+
+    }
+    body.set('ratings', details.ratings);
+    if (details.files) {
+      details.files.map((file, index) => {
+        body.append(`files[${index}]`, file)
+      })
+    } else {
+      body.append(`files[0]`, null)
+    }
+    const response = await clientWithForm.post(`${routes.addProduct}/${id}`, body);
+    if (response) {
+      callback();
+    }
+  } catch (e) {
+    console.log(e)
+    //   if (e.response.data.message) {
+    //     dispatch({
+    //       type: ERROR,
+    //       payload: e.response.data.message
+    //     });
+    //   } else {
+    //     dispatch({
+    //       type: ERROR,
+    //       payload: 'Unable to edit product now'
+    //     });
+    //   }
+  }
+}
+
+
+export const deleteProduct = (id, callback) => async dispatch => {
+  try {
+    const response = await client.delete(`${routes.addProduct}/${id}`);
+    if (response) {
+      console.log(response.data);
+      callback();
+    }
+  } catch (e) {
+    console.log('error on delete', e)
+  }
+}
+
+
+export const postponeProduct = (id, status, callback) => async dispatch => {
+  try {
+    const response = await client.put(`${routes.products}/${id}/status`, { action: status });
+    if (response) {
+      callback();
+    }
+  } catch (e) { }
+}
