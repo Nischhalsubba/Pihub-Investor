@@ -160,6 +160,11 @@ class Signup extends Component {
                 {/* <button className="btn btn-primary btn-form" type="submit">
                   Sign Up Now
                 </button> */}
+                <br />
+                <a href='https://www.pihub-pi.com/de/datenschutz/' rel="noopener noreferrer" target="_blank">
+                  <Translate content='placeholder.privacy_policy' />
+                </a>
+                <br />
                 <Translate content='button.signup' className="btn btn-primary btn-form" type="submit" component="button" />
               </form>
               <br />

@@ -143,7 +143,9 @@ export default {
 
     },
     placeholder: {
-        select: 'Auswählen'
+        select: 'Auswählen',
+        privacy_policy: 'Datenschutz-Bestimmungen'
+
     },
     unverified: {
         msg: 'Ihr Konto ist noch nicht bestätigt.Bitte kontaktieren Sie den Administrator'

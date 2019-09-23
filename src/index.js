@@ -53,7 +53,7 @@ import UnverifiedPage from './components/general/UnverfiedPage';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
 counterpart.setLocale(
-  'de' || localStorage.getItem('language') || navigator.language.split('-')[0]
+  localStorage.getItem('language') || navigator.language.split('-')[0] || 'de'
 );
 
 const store = createStore(
