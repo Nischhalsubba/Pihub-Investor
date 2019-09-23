@@ -148,7 +148,8 @@ export default {
         undopostpone: 'Undo postpone'
     },
     placeholder: {
-        select: 'Select'
+        select: 'Select',
+        privacy_policy: 'Privacy Policy'
     },
     unverified: {
         msg: 'Your account is not yet verified yet. Please contact the administrator'

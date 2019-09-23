@@ -12,10 +12,10 @@ import de from '../../_locale/de';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
 counterpart.setLocale(
-  'de' || localStorage.getItem('language') || navigator.language.split('-')[0]
+  localStorage.getItem('language') || navigator.language.split('-')[0] || 'de'
 );
 class Header extends Component {
-  state = { language: localStorage.getItem('language') || 'de' }
+  state = { language: localStorage.getItem('language') || navigator.language.split('-')[0] || 'de' }
   onChange = e => {
 
     // let language = e.target.value;
