@@ -33,7 +33,7 @@ export const getProductsList = (page, status, product_title) => async dispatch =
       payload: response.data.meta
     })
   } catch (e) {
-    console.log(e)
+    // console.log(e)
     dispatch({
       type: ERROR,
       payload: e.response.data.message
@@ -94,7 +94,7 @@ export const addProduct = (details, callback) => async dispatch => {
 export const getProductById = id => async dispatch => {
   try {
     const response = await client.get(`${routes.getProductById}/${id}`);
-    console.log('foredit', response.data.data)
+    // console.log('foredit', response.data.data)
     var detail = response.data.data;
     detail.states = extractNames(response.data.data.states)
     detail.County = extractNames(response.data.data.counties);
@@ -116,7 +116,7 @@ export const getProductById = id => async dispatch => {
 
 export const updateProduct = (details, id, callback) => async dispatch => {
   try {
-    console.log('de', details)
+    // console.log('de', details)
     var body = new FormData();
     body.set('_method', 'PUT')
     body.set('product_title', details.product_title);

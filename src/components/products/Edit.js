@@ -7,14 +7,15 @@ import { connect } from 'react-redux';
 import { updateProduct } from '../../actions/product';
 import { getProductById } from '../../actions/product';
 import { getIndustryList } from '../../actions/industry';
-
+import { downloadToken } from '../../actions/download';
 import { getServiceList } from '../../actions/service';
+import { getCounties, getAllState } from '../../actions/statesCounties';
+
 import Subheader from '../general/Subheader';
 import * as validation from '../../_utils/validate';
 import germanStates from '../../_german_states';
-import city from '../../_german_states/city';
 import Translate from 'react-translate-component'
-import { extractNames, extractId, getId } from '../../_utils/misc';
+import { extractNames, extractId, getId, extractIdForName, extractIdCounty } from '../../_utils/misc';
 
 import {
   inputField,
@@ -53,7 +54,7 @@ const credits = [
   }
 ]
 class EditProduct extends Component {
-  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [], value: { min: 15, max: 50 } };
+  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [], statesWithId: [], value: { min: 15, max: 50 } };
   componentDidMount() {
     if (!this.props.location.state) {
       // Redirect to list page if therer is no id of product to be fetched availabel
@@ -62,25 +63,39 @@ class EditProduct extends Component {
     this.props.getProductById(this.props.location.state.id)
     this.props.getIndustryList();
     this.props.getServiceList();
-    this.setState({
-      states: extractNames(germanStates)
-    })
+    this.props.getCounties();
+    this.props.getAllState();
+    // this.setState({
+    //   states: extractNames(germanStates)
+    // })
   }
   componentDidUpdate(prevProps, prevState) {
+    // if (this.props.states !== prevProps.states) {
+    //   this.setState({
+    //     cities: city(this.props.states)
+    //   }, () => {
+    //     var c = extractNames(this.state.cities)
+    //     this.setState({ cityNames: c });
+    //   }
+    //   )
+    // };
+    if (prevProps.allStates !== this.props.allStates) {
+      this.setState({ states: this.props.allStates.list, statesWithId: this.props.allStates.all })
+    }
     if (this.props.states !== prevProps.states) {
-      this.setState({
-        cities: city(this.props.states)
-      }, () => {
-        var c = extractNames(this.state.cities)
-        this.setState({ cityNames: c });
-      }
-      )
+      this.props.getCounties(extractIdForName(this.props.states, this.state.statesWithId))
     };
     if (this.props.service !== prevProps.service) {
       this.setState({ services: this.props.service })
     };
     if (this.props.industry !== prevProps.industry) {
       this.setState({ industries: this.props.industry })
+    }
+    if (this.props.county !== prevProps.county) {
+      this.setState({
+        cities: this.props.county.list,
+        cityNames: this.props.county.name
+      })
     }
     if (this.props.initialValues !== prevProps.initialValues) {
       this.setState({
@@ -91,7 +106,22 @@ class EditProduct extends Component {
       })
     }
   }
+  showFiles = files => {
+    if (files.lenght === 0) {
+      return <span>No Attachments Available</span>
+    } else {
+      return files.map((file, index) => {
+        return (
+          <div class="file mb-2">
+            <span class="file-name">File {index + 1}</span>
+            {/* <span class="ml-4 file-size">FileType: {file.file_type}</span> */}
+            <span className='btn btn-link' onClick={() => this.props.downloadToken(file.path)}><Translate content='button.download' /></span>
+          </div>
+        )
 
+      })
+    }
+  }
   onSubmit = formProps => {
     // To delete duplicate keys while adding credit ratings
     const filteredArr = this.state.rating_value.reverse().reduce((acc, current) => {
@@ -111,19 +141,23 @@ class EditProduct extends Component {
 
     formProps.ratings = this.state.rating_value;
     if (formProps.County[0] === 'Select All') {
-      formProps.county_ids = extractId(null, this.state.cities);
+      formProps.county_ids = extractIdCounty(null, this.state.cities);
     } else {
-      formProps.county_ids = extractId(formProps.County, this.state.cities);
+      console.log('?', this.state.cities);
+      formProps.county_ids = extractIdCounty(formProps.County, this.state.cities);
 
     }
     if (formProps.states === 'Select All') {
-      formProps.state_ids = extractId(null, germanStates);
-    } else {
-      formProps.state_ids = extractId(formProps.states, germanStates);
+      // formProps.state_ids = extractId(null, germanStates);
+      formProps.state_ids = extractIdForName(null, this.state.statesWithId);
 
+    } else {
+      // formProps.state_ids = extractId(formProps.states, germanStates);
+      formProps.state_ids = extractIdForName(formProps.states, this.state.statesWithId);
     }
     formProps.min_time_duration = this.state.value.min;
     formProps.max_time_duration = this.state.value.max;
+    console.log(formProps);
     this.props.updateProduct(formProps, this.props.location.state.id, () => this.props.history.push({ pathname: '/product', state: { id: this.props.location.state.id } }))
   };
 
@@ -445,6 +479,7 @@ class EditProduct extends Component {
                   />
                   {files ? <strong>Filename: {files[0].name}</strong> : null}
                 </div>
+                {this.props.initialValues.documents ? this.showFiles(this.props.initialValues.documents) : null}
               </div>
             </div>
 
@@ -467,7 +502,7 @@ class EditProduct extends Component {
   }
 }
 function mapStateToProps(state) {
-  return { errMsg: state.errors, industry: state.industryList, service: state.service, language: state.language, initialValues: state.singleProduct.product };
+  return { errMsg: state.errors, industry: state.industryList, service: state.service, language: state.language, initialValues: state.singleProduct.product, allStates: state.allStates, county: state.county };
 }
 
 EditProduct = reduxForm({
@@ -502,5 +537,5 @@ EditProduct = connect(state => {
 })(EditProduct);
 export default connect(
   mapStateToProps,
-  { updateProduct, getIndustryList, getServiceList, getProductById }
+  { updateProduct, getIndustryList, getServiceList, getProductById, downloadToken, getCounties, getAllState }
 )(EditProduct);

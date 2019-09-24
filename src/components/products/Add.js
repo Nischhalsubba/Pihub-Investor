@@ -5,13 +5,12 @@ import { connect } from 'react-redux';
 import { addProduct } from '../../actions/product';
 import { getIndustryList } from '../../actions/industry';
 import { getServiceList } from '../../actions/service';
+import { getCounties, getAllState } from '../../actions/statesCounties';
 import { clearError } from '../../actions/clearError';
 import Subheader from '../general/Subheader';
 import * as validation from '../../_utils/validate';
-import germanStates from '../../_german_states';
-import city from '../../_german_states/city';
 import Translate from 'react-translate-component'
-import { extractNames, extractId, getId } from '../../_utils/misc';
+import { extractNames, extractId, getId, extractIdForName } from '../../_utils/misc';
 
 import {
   inputField,
@@ -50,30 +49,33 @@ const credits = [
   }
 ]
 class AddProduct extends Component {
-  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [], value: { min: 15, max: 50 } };
+  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [], statesWithId: [], value: { min: 15, max: 50 } };
   componentDidMount() {
     this.props.clearError();
     this.props.getIndustryList();
     this.props.getServiceList();
-    this.setState({
-      states: extractNames(germanStates)
-    })
+    this.props.getCounties();
+    this.props.getAllState();
+
   }
   componentDidUpdate(prevProps, prevState) {
+    if (prevProps.allStates !== this.props.allStates) {
+      this.setState({ states: this.props.allStates.list, statesWithId: this.props.allStates.all })
+    }
     if (this.props.states !== prevProps.states) {
-      this.setState({
-        cities: city(this.props.states)
-      }, () => {
-        var c = extractNames(this.state.cities)
-        this.setState({ cityNames: c });
-      }
-      )
+      this.props.getCounties(extractIdForName(this.props.states, this.state.statesWithId))
     };
     if (this.props.service !== prevProps.service) {
       this.setState({ services: this.props.service })
     };
     if (this.props.industry !== prevProps.industry) {
       this.setState({ industries: this.props.industry })
+    }
+    if (this.props.county !== prevProps.county) {
+      this.setState({
+        cities: this.props.county.list,
+        cityNames: this.props.county.name
+      })
     }
   }
 
@@ -103,10 +105,11 @@ class AddProduct extends Component {
       formProps.county_ids = extractId(formProps.County, this.state.cities);
 
     }
+    // console.log(this.state.statesWithId)
     if (formProps.states === 'Select All') {
-      formProps.state_ids = extractId(null, germanStates);
+      formProps.state_ids = extractIdForName(null, this.state.statesWithId);
     } else {
-      formProps.state_ids = extractId(formProps.states, germanStates);
+      formProps.state_ids = extractIdForName(formProps.states, this.state.statesWithId);
 
     }
     // console.log(formProps)
@@ -249,17 +252,7 @@ class AddProduct extends Component {
                   </label>
                   <div class="d-flex align-items-center">
 
-                    {/* <Field
-                      name="time_duration"
-                      type="range"
-                      className="w-100"
-                      component={inputDoubleSlider}
-                      // label={<Translate content='label.timeduration' />}
-                      id="time-duration"
-                      validate={validation.required}
-                      max="60"
-                      min="3"
-                    /> */}
+
                     <input
                       className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
                       type="text"
@@ -503,7 +496,7 @@ class AddProduct extends Component {
   }
 }
 function mapStateToProps(state) {
-  return { errMsg: state.errors, industry: state.industryList, service: state.service, language: state.language, verified: state.scope };
+  return { errMsg: state.errors, industry: state.industryList, service: state.service, language: state.language, verified: state.scope, allStates: state.allStates, county: state.county };
 }
 
 AddProduct = reduxForm({
@@ -537,5 +530,5 @@ AddProduct = connect(state => {
 })(AddProduct);
 export default connect(
   mapStateToProps,
-  { addProduct, getIndustryList, getServiceList, clearError }
+  { addProduct, getIndustryList, getServiceList, clearError, getCounties, getAllState }
 )(AddProduct);

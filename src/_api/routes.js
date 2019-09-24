@@ -23,5 +23,7 @@ export const routes = {
   passwordReset: `${API_URL}/password-reset-token`,
   changePasswordWithToken: `${API_URL}/change-password-with-token`,
   downloadToken: `${API_URL}/download-token`,
-  downloadFile: `${API_URL}/download`
+  downloadFile: `${API_URL}/download`,
+  getStateCounties: `${API_URL}/states`,
+  creditorDetail: `${API_URL}/investor/products`
 };

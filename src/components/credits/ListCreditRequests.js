@@ -23,7 +23,13 @@ class ListCreditRequests extends Component {
         <tr key={index}>
           <td>
             {' '}
-            <Link to={{ pathname: '/creditor/detail', state: { id: product.creditor_id } }}>
+            <Link to={{
+              pathname: '/creditor/detail', state:
+                {
+                  productId: product.product_id,
+                  appId: product.application_id
+                }
+            }}>
               {product.creditor_name}
             </Link>
           </td>
