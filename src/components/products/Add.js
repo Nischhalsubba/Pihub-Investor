@@ -10,7 +10,7 @@ import { clearError } from '../../actions/clearError';
 import Subheader from '../general/Subheader';
 import * as validation from '../../_utils/validate';
 import Translate from 'react-translate-component'
-import { extractNames, extractId, getId, extractIdForName } from '../../_utils/misc';
+import { extractNames, extractId, getId, extractIdForName, extractIdCounty } from '../../_utils/misc';
 
 import {
   inputField,
@@ -100,9 +100,9 @@ class AddProduct extends Component {
     formProps.min_duration = this.state.value.min;
     formProps.max_duration = this.state.value.max;
     if (formProps.County[0] === 'Select All') {
-      formProps.county_ids = extractId(null, this.state.cities);
+      formProps.county_ids = extractIdCounty(null, this.state.cities);
     } else {
-      formProps.county_ids = extractId(formProps.County, this.state.cities);
+      formProps.county_ids = extractIdCounty(formProps.County, this.state.cities);
 
     }
     // console.log(this.state.statesWithId)
