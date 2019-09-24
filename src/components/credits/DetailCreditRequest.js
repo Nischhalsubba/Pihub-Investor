@@ -38,6 +38,15 @@ class DetailCreditRequest extends Component {
       })
     }
   }
+  showCollaterals = collaterals => {
+    if (collaterals.length === 0) {
+      return <div>Not Available</div>
+    } else {
+      return collaterals.map((collat, index) => {
+        return <span key={index}>{collat.name} <br /></span>
+      })
+    }
+  }
   changeStatus = status => {
     const { pId, aId } = this.props.location.state;
 
@@ -45,7 +54,7 @@ class DetailCreditRequest extends Component {
   }
   render() {
     if (this.state.detail) {
-      const { requested_by, requested_on, requested_amount, deadline, description, duration, status, files } = this.state.detail;
+      const { requested_by, requested_on, amount, deadline, description, duration, status, files, time_duration, collaterals, state } = this.state.detail;
       var requestedDate = new Date(requested_on);
       return (
         <Fragment>
@@ -62,7 +71,7 @@ class DetailCreditRequest extends Component {
                   <div class="col-3 p-0">
                     {/* <h6>States</h6> */}
                     <h6> <Translate content='label.state' /></h6>
-                    <span>Berlin</span>
+                    <span>{state ? state.name : null}</span>
                   </div>
                   <div class="col-3 p-0">
                     <h6> <Translate content='column.credittype' /></h6>
@@ -75,12 +84,7 @@ class DetailCreditRequest extends Component {
                   <div class="col-3 p-0">
                     <h6><Translate content='label.industries' /></h6>
                     <div class="d-flex flex-wrap justify-content-between flex-column">
-                      <a class="mb-1" href="#">Service Industry</a>
-                      <a class="mb-1" href="#">Administration and office work</a>
-                      <a class="mb-1" href="#">Banking and financial services </a>
-                      <a class="mb-1" href="#">Marketing, advertising and PR</a>
-                      <a class="mb-1" href="#">Healthcare</a>
-                      <a class="mb-1" href="#">Tourism, hotel and gastronomy</a>
+                      {collaterals ? this.showCollaterals(collaterals) : null}
                     </div>
                   </div>
                 </div>
@@ -90,7 +94,7 @@ class DetailCreditRequest extends Component {
                 <div class="amount">
                   {/* <h6>Requested amount of</h6> */}
                   <h6>  <Translate content='label.requestedamount' /></h6>
-                  <h2>€{requested_amount}</h2>
+                  <h2>€{amount}</h2>
                 </div>
                 <div class="investor clearfix mt-5">
                   {/* <h6>Requested By</h6> */}
@@ -108,7 +112,7 @@ class DetailCreditRequest extends Component {
                 <div class="date mt-5">
                   {/* <h6>Time Duration</h6> */}
                   <h6>  <Translate content='label.time' /></h6>
-                  <span>{duration} Monate</span>
+                  <span>{time_duration} Monate</span>
                 </div>
                 <div class="date mt-5">
                   {/* <h6>Time Duration</h6> */}
