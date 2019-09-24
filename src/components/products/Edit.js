@@ -54,7 +54,7 @@ const credits = [
   }
 ]
 class EditProduct extends Component {
-  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [], statesWithId: [], value: { min: 15, max: 50 } };
+  state = { cities: [], ratings: [], rating_value: [], grade: '', cityNames: [], services: [], industries: [], states: [], statesWithId: [], value: { min: 15, max: 50 }, existing_file_id: [] };
   componentDidMount() {
     if (!this.props.location.state) {
       // Redirect to list page if therer is no id of product to be fetched availabel
@@ -98,6 +98,13 @@ class EditProduct extends Component {
       })
     }
     if (this.props.initialValues !== prevProps.initialValues) {
+      var existingFile = [];
+      if (Array.isArray(this.props.initialValues.documents)) {
+        this.props.initialValues.documents.map((doc) => {
+          existingFile.push(doc.id)
+        })
+      }
+      this.setState({ existing_file_id: existingFile })
       this.setState({
         value: {
           min: this.props.initialValues.min_time_duration,
@@ -123,6 +130,7 @@ class EditProduct extends Component {
     }
   }
   onSubmit = formProps => {
+    console.log('ex', this.state.existing_file_id)
     // To delete duplicate keys while adding credit ratings
     const filteredArr = this.state.rating_value.reverse().reduce((acc, current) => {
       const x = acc.find(item => item.id === current.id);
@@ -144,8 +152,9 @@ class EditProduct extends Component {
       formProps.county_ids = extractIdCounty(null, this.state.cities);
     } else {
       console.log('?', this.state.cities);
+      console.log(formProps.County);
       formProps.county_ids = extractIdCounty(formProps.County, this.state.cities);
-
+      console.log(formProps.county_ids);
     }
     if (formProps.states === 'Select All') {
       // formProps.state_ids = extractId(null, germanStates);
