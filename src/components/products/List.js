@@ -129,7 +129,7 @@ class ProductsList extends Component {
                 </th>
                 <th>
 
-                  <Translate content="column.mindestbetrag" />
+                  <Translate content="column.minimum_balance" />
                 </th>
                 <th>
                   <Translate content="column.status" />

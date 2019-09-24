@@ -12,6 +12,8 @@ export const extractNames = (list) => {
 }
 
 export const extractId = (list, mainList) => {
+  console.log(list);
+  console.log(mainList)
   var r = [];
 
   if (list) {
@@ -90,3 +92,65 @@ export const getId = (mainList, list, language) => {
 export const dDigit = number => {
   return (number = ('0' + number).slice(-2));
 };
+
+
+export const extractIdCounty = (list, mainList) => {
+  var result = [];
+  mainList.map((mL) => {
+    return list.map(l => {
+      if (l === mL.name) {
+        return result.push(mL.id)
+      }
+    })
+  });
+  return result;
+}
+
+export const renameKeys = (keysMap, mainObj) => {
+  return mainObj.map(obj => {
+    return Object.keys(obj).reduce((acc, key) => {
+
+      const renamedObject = {
+        [keysMap[key] || key]: obj[key]
+      };
+
+
+      return {
+        ...acc,
+        ...renamedObject
+      };
+    }, {});
+  })
+
+};
+
+
+export const extractIdForName = (list, mainList) => {
+  var r = [];
+
+  if (list) {
+    list.map((name) => {
+      return mainList.map((main) => {
+        if (main.id) {
+          if (name === main.name) {
+            r.push(main.id)
+          }
+        } else if (main.value) {
+          if (name === main.name) {
+            r.push(main.value)
+          }
+        }
+
+      })
+    })
+  } else {
+    return mainList.map((m) => {
+      if (m.id !== 'undefined') {
+        return r.push(m.id)
+
+      }
+    })
+  }
+
+  return r;
+}

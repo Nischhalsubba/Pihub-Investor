@@ -186,18 +186,18 @@ class ViewProduct extends Component {
             </div>
             {status !== 'deleted' ?
               <Fragment>
-                <button className='btn btn-primary' onClick={() => this.props.deleteProduct(id, () => this.props.history.push('/products'))}><Translate content='button.delete' /></button>
+                <button className='btn btn-danger' onClick={() => this.props.deleteProduct(id, () => this.props.history.push('/products'))}><Translate content='button.delete' /></button>
                 &nbsp;&nbsp;
                 {status !== 'postponed' ?
                   <button
-                    className='btn btn-primary'
+                    className='btn btn-warning'
                     onClick={() => this.props.postponeProduct(id, "postpone", () => {
                       this.props.history.push('/products')
                     })}
                   ><Translate content='button.postpone' /></button>
                   :
                   <button
-                    className='btn btn-primary'
+                    className='btn btn-warning'
                     onClick={() => this.props.postponeProduct(id, "undo_postpone", () => {
                       this.props.history.push('/products')
                     })}

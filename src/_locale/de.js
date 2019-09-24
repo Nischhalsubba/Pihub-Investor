@@ -7,7 +7,7 @@ export default {
         available_credit_amount: 'Verfügbarer Betrag',
         status: 'Status',
         edit: 'Bearbeiten',
-        mindestbetrag: 'Höchstkreditbetrag',
+        minimum_balance: 'Höchstkreditbetrag',
         duration: 'Laufzeit',
         services: 'Kreditart',
         creditorsname: 'Kreditnehmer',

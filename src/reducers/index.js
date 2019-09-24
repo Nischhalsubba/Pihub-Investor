@@ -18,6 +18,8 @@ import creditorDetail from './creditorDetail';
 import profile from './profile';
 import service from './service';
 import scope from './scope';
+import allStates from './allStates';
+import county from './county';
 const rootReducer = combineReducers({
   user,
   auth,
@@ -37,6 +39,8 @@ const rootReducer = combineReducers({
   profile,
   service,
   scope,
+  allStates,
+  county,
   form: formReducer
 });
 

@@ -23,7 +23,13 @@ class ListCreditRequests extends Component {
         <tr key={index}>
           <td>
             {' '}
-            <Link to={{ pathname: '/creditor/detail', state: { id: product.creditor_id } }}>
+            <Link to={{
+              pathname: '/creditor/detail', state:
+                {
+                  productId: product.product_id,
+                  appId: product.application_id
+                }
+            }}>
               {product.creditor_name}
             </Link>
           </td>
@@ -35,9 +41,9 @@ class ListCreditRequests extends Component {
           <td >{`${dDigit(date.getDate())}-${dDigit(date.getMonth() + 1)}-${date.getFullYear()}`}</td>
           {/* <td class="text-right-piehub-table">{product.number_of_request}</td> */}
           <td class="text-md-right text-left">{`${dDigit(deadline.getDate())}-${dDigit(deadline.getMonth() + 1)}-${deadline.getFullYear()}`}</td>
-          <td class="text-right-piehub-table font-weight-bold">
+          {/* <td class="text-right-piehub-table font-weight-bold">
             €{product.max_credit_amount || 100000}
-          </td>
+          </td> */}
           <td className="text-right-piehub-table font-weight-bold">
             {product.status === 'offer_sent' ? <span className="badge badge-warning"><Translate content='label.AngebotErstellt' /></span>
               : null}
@@ -100,14 +106,13 @@ class ListCreditRequests extends Component {
                     {/* Fristablauf */}
                     <Translate content='label.deadline' />
                   </th>
-                  <th
+                  {/* <th
                     class="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
                     <Translate content='column.investedamount' />
-                    {/* Kreditbetrag */}
-                  </th>
+                  </th> */}
                   <th
                     class="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"

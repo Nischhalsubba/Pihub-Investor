@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { inputField, checkBox } from '../../_formFields';
 import * as validation from '../../_utils/validate';
 import { signup } from '../../actions/signup';
+import { clearError } from '../../actions/clearError';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ReactPhoneInput from 'react-phone-input-2'
@@ -12,11 +13,15 @@ import Translate from 'react-translate-component';
 class Signup extends Component {
 
   state = { phone: 'a' }
-  componentDidUpdate(prevProps) {
-    if (this.props.errMsg !== prevProps.errMsg) {
-      console.log(this.props.errMsg)
-    }
+  componentDidMount() {
+    this.props.clearError();
+
   }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.errMsg !== prevProps.errMsg) {
+  //     console.log(this.props.errMsg)
+  //   }
+  // }
   onSubmit = formProps => {
 
     this.props.signup(formProps, () => {
@@ -27,16 +32,17 @@ class Signup extends Component {
     this.setState({ phone: value })
   };
   displayErrors = errors => {
-    return errors.map((err, index) => {
-      return (
-        <li className="d-flex mb-1" key={index}>
-          <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
-          <span className="pl-2 green-text">{err}</span>
-        </li>
+    if (errors && Array.isArray(errors)) {
+      return errors.map((err, index) => {
+        return (
+          <li class="d-flex mb-1" key={index}>
+            <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
+            <span class="pl-2 green-text">{err}</span>
+          </li>
+        );
+      })
+    }
 
-
-      );
-    })
   }
   render() {
     const { handleSubmit } = this.props;
@@ -156,7 +162,7 @@ class Signup extends Component {
                   component={checkBox}
                   type="checkbox"
                 />
-                {this.props.errMsg ? <ul className="p-0 mt-2">{this.displayErrors(this.props.errMsg)}</ul> : null}
+                {this.props.errMsg ? <ul class="p-0 mt-2">{this.displayErrors(this.props.errMsg)}</ul> : null}
                 {/* <button className="btn btn-primary btn-form" type="submit">
                   Sign Up Now
                 </button> */}
@@ -182,7 +188,7 @@ function validate(values) {
   errors.fname = validation.required(values.fname);
   errors.lname = validation.required(values.lname);
   // errors.company_name = validation.required(values.company_name);
-  errors.email = validation.email(values.email);
+  errors.email = validation.newEmail(values.email);
 
   if (!values.email) {
     errors.email = '* Required';
@@ -205,7 +211,7 @@ function mapStateToProps(state) {
 export default compose(
   connect(
     mapStateToProps,
-    { signup }
+    { signup, clearError }
   ),
   reduxForm({
     validate,

@@ -8,7 +8,7 @@ export default {
         available_credit_amount: 'Available Amount',
         status: 'Status',
         edit: 'Edit',
-        mindestbetrag: 'minimum balance',
+        minimum_balance: 'Minimum Balance',
         duration: 'Duration',
         services: 'Services',
         creditorsname: 'Creditors Name',

@@ -31,8 +31,8 @@ class DetailCreditRequest extends Component {
       return docs.map((doc, index) => {
         return (
           <div class="file mb-2">
-            <span class="file-name">tax payer investment.docx</span>
-            <span class="ml-4 file-size">400.5kb</span>
+            <span class="file-name">File {index + 1}</span>
+            <span class="ml-4 file-size">Type: {doc.type}</span>
           </div>
         );
       })
@@ -45,7 +45,7 @@ class DetailCreditRequest extends Component {
   }
   render() {
     if (this.state.detail) {
-      const { requested_by, requested_on, requested_amount, deadline, description, duration, status, documents } = this.state.detail;
+      const { requested_by, requested_on, requested_amount, deadline, description, duration, status, files } = this.state.detail;
       var requestedDate = new Date(requested_on);
       return (
         <Fragment>
@@ -110,12 +110,17 @@ class DetailCreditRequest extends Component {
                   <h6>  <Translate content='label.time' /></h6>
                   <span>{duration} Monate</span>
                 </div>
+                <div class="date mt-5">
+                  {/* <h6>Time Duration</h6> */}
+                  <h6>  Status</h6>
+                  <span>{status}</span>
+                </div>
               </div>
             </div>
             <div class="attachments mt-5 mb-5">
               {/* <h4>Attachments</h4> */}
               <h6><Translate content='label.attachments' /></h6>
-              {this.renderDocs(documents)}
+              {this.renderDocs(files)}
             </div>
             <span class="mt-3">
               <button class="btn btn-success mr-2" disabled={status === 'accepted'}

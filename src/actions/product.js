@@ -33,7 +33,7 @@ export const getProductsList = (page, status, product_title) => async dispatch =
       payload: response.data.meta
     })
   } catch (e) {
-    console.log(e)
+    // console.log(e)
     dispatch({
       type: ERROR,
       payload: e.response.data.message
@@ -94,7 +94,7 @@ export const addProduct = (details, callback) => async dispatch => {
 export const getProductById = id => async dispatch => {
   try {
     const response = await client.get(`${routes.getProductById}/${id}`);
-    console.log('foredit', response.data.data)
+    // console.log('foredit', response.data.data)
     var detail = response.data.data;
     detail.states = extractNames(response.data.data.states)
     detail.County = extractNames(response.data.data.counties);
@@ -121,9 +121,25 @@ export const updateProduct = (details, id, callback) => async dispatch => {
     body.set('_method', 'PUT')
     body.set('product_title', details.product_title);
     body.set('state_ids', details.state_ids.toString());
-    body.set('county_ids', details.county_ids.toString());
+    if (details.county_ids.length === 0) {
+      var countyId = [];
+      details.counties.map(county => {
+        countyId.push(county.id);
+      });
+      body.set('county_ids', countyId.toString());
+
+    } else {
+      body.set('county_ids', details.county_ids.toString());
+
+    }
     body.append('industry_ids', details.industry_id.toString());
-    body.set('service_id', details.services.value);
+    if (Array.isArray(details.services)) {
+      body.set('service_id', details.services[0].value);
+    } else {
+      body.set('service_id', details.services.value);
+
+    }
+    // body.set('service_id', details.services[0].value);
     body.set('min_credit_amount', details.min_credit_amount);
     body.set('max_credit_amount', details.max_credit_amount);
     body.set('min_sales_creditor', details.min_sales_creditor)

@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { uploadFile } from '../../actions/uploadFile'
-import { getCreditor } from '../../actions/creditor';
+import { getCreditor, creditorDetail } from '../../actions/creditor';
 import { downloadToken } from '../../actions/download';
 import Translate from 'react-translate-component';
 import Spinner from '../general/Spinner'
@@ -15,9 +15,9 @@ class CreditorDetail extends Component {
     if (!this.props.location.state) {
       return this.props.history.push('/products-invested')
     }
-    console.log('comp', this.props.location.state)
-    const { id } = this.props.location.state;
-    this.props.getCreditor(id, this.callback);
+    const { productId, appId } = this.props.location.state;
+    // this.props.getCreditor(id, this.callback);
+    this.props.creditorDetail(productId, appId, this.callback);
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.props.data !== prevProps.data) {
@@ -25,7 +25,8 @@ class CreditorDetail extends Component {
       this.setState({ detail: this.props.data.detail })
     }
     if (this.state.refresh !== prevState.refresh) {
-      this.props.getCreditor(this.props.location.state.id, this.callback);
+      // this.props.getCreditor(this.props.location.state.id, this.callback);
+      this.props.creditorDetail(this.props.location.state.productId, this.props.location.appId, this.callback);
     }
   }
   callback = () => {
@@ -71,7 +72,7 @@ class CreditorDetail extends Component {
   render() {
     if (this.state.detail) {
       console.log('here', this.state.detail)
-      const { creditor, collatorals, county, email, files, financial_needs, industries, nda_requirement, phone_number, rating_for_credit, state, street_address, zip_code, ratings } = this.state.detail;
+      const { creditor, collaterals, county, email, files, financial_needs, industries, nda_requirement, phone_number, rating_for_credit, state, street_address, zip_code, ratings, amount, sales } = this.state.detail;
       const { handleSubmit } = this.props;
       return (
         <Fragment>
@@ -95,7 +96,7 @@ class CreditorDetail extends Component {
                       {/* <Translate content='label.country' /> */}
                       <h6>Collateral</h6>
                       <br />
-                      {collatorals.map((c, index) => {
+                      {collaterals.map((c, index) => {
                         return <span key={index}>{c.name}</span>
 
                       })}
@@ -105,34 +106,24 @@ class CreditorDetail extends Component {
                       <div class="d-flex flex-wrap justify-content-between flex-column">
                         {industries.map((i, index) => {
                           return <span class="mb-1"><br />{i.name}</span>
-
                         })}
-
                       </div>
                     </div>
-                    {/* <div class="col-3 p-0"> */}
-                    {/* <Translate content='label.industries' component="h6" /> */}
-                    {/* <h6>Ratings</h6>
-
-                    <div class="row justify-content-between w-100 mt-3">
-                      {ratings.length > 0 ? this.listRating(ratings) : null}
-                    </div>
-                  </div> */}
 
                   </div>
                   <div class="row justify-content-between w-100 mt-3">
                     <h6 className='w-100'>Ratings</h6>
                   </div>
                   <div class="row justify-content-between w-100 mt-3">
-                    {ratings.length > 0 ? this.listRating(ratings) : null}
+                    {ratings.length > 0 ? this.listRating(ratings) : 'Not Available'}
                   </div>
-                  \                </div>
+                </div>
                 <div class="col-lg-12 col-xl-4 rightbar">
                   <div class="amount">
                     {/* <h6>Requested amount of</h6> */}
                     {/* <Translate content='label.requestedamount' /> */}
                     <label>Finanzbedar</label>
-                    <h2>€{financial_needs}</h2>
+                    <h2>€{amount}</h2>
                   </div>
                   <div class="investor clearfix mt-5">
                     {/* <h6>Requested By</h6> */}
@@ -144,22 +135,17 @@ class CreditorDetail extends Component {
                     </div>
                   </div>
                   <div class="date mt-5">
-                    {/* <h6>Request on</h6> */}
-                    {/* <Translate content='label.requeston' /> */}
-                    {/* <span>{`${requestedDate.getDate()} - ${requestedDate.getMonth() + 1} - ${requestedDate.getFullYear()}`}</span> */}
                     <h6>Email: </h6>
-                    {email}
+                    {email || 'Not Available'}
                   </div>
                   <div class="date mt-5">
                     <h6>Address</h6>
-                    {/* <Translate content='label.time' /> */}
                     <span>{state.name}</span> <br />
 
                   </div>
                 </div>
               </div>
               <div class="attachments mt-5 mb-5">
-                {/* <h4>Attachments</h4> */}
                 <h4> <Translate content='label.attachments' /></h4>
                 {this.renderDocs(files)}
               </div>
@@ -205,4 +191,4 @@ function mapStateToProps(state) {
 CreditorDetail = reduxForm({
   form: 'creditorDetail'
 })(CreditorDetail);
-export default connect(mapStateToProps, { getCreditor, uploadFile, downloadToken })(CreditorDetail);
+export default connect(mapStateToProps, { getCreditor, uploadFile, downloadToken, creditorDetail })(CreditorDetail);

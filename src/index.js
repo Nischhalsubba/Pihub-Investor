@@ -148,7 +148,7 @@ ReactDOM.render(
             component={RequireInvestorAuth(Notifications)}
           />
           {/* Credit requests related route definition */}
-          <Route path="/creditor/detail" component={RequireInvestorAuth(CreditorDetail)} />
+          <Route path="/creditor/detail" exact component={RequireInvestorAuth(CreditorDetail)} />
           <Route
             exact
             path="/credit-request"

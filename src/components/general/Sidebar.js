@@ -10,18 +10,18 @@ export default props => {
       <nav className="nav-sidebar">
         <ul className="menu-sidebar">
           <li className="current-menu has-sub-menu">
-            <Link to="/products" rel="noopener noreferrer">
+            <Link to="/products" >
               <i className="bx bx-dollar-circle" />
               <Translate content="sidebar.product" />
             </Link>
             <ul className="sub-menu">
               <li className={active === 1 ? 'current-menu' : null}>
-                <Link to="/products" rel="noopener noreferrer" onClick={() => setActive(1)}>
+                <Link to="/products" onClick={() => setActive(1)}>
                   <Translate content="sidebar.products" />
                 </Link>
               </li>
               <li className={active === 2 ? 'current-menu' : null}>
-                <Link to="/credit-request" rel="noopener noreferrer" onClick={() => setActive(2)}>
+                <Link to="/credit-request" onClick={() => setActive(2)}>
                   <Translate content="sidebar.credit_requested_products" />
                 </Link>
               </li>
@@ -37,7 +37,7 @@ export default props => {
                 </Link>
               </li>
               <li className={active === 4 ? 'current-menu' : null}>
-                <Link to="/add-product" target="_self" rel="noopener noreferrer"
+                <Link to="/add-product"
                   onClick={() => setActive(4)}
                 >
                   <Translate content="sidebar.new_product" />
