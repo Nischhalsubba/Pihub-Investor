@@ -1,8 +1,12 @@
 import client from './index';
 import { routes } from './../_api/routes';
 import { ERROR } from '../actions/types';
-export const downloadToken = (path) => async dispatch => {
+export const downloadToken = (path, filename, filetype) => async dispatch => {
   try {
+    var name = filename.split('.')[0] || 'attachement';
+    var type = filetype || 'pdf';
+    console.log(filename)
+
     const response = await client.post(routes.downloadToken, { file_path: path });
     const { token } = response.data;
     if (token) {
@@ -16,7 +20,7 @@ export const downloadToken = (path) => async dispatch => {
           var blob = new Blob([this.response], { type: '' });
           var link = document.createElement('a');
           link.href = window.URL.createObjectURL(blob);
-          link.download = 'attachment.pdf';
+          link.download = `${name}.${type}`
           link.click();
         }
       };

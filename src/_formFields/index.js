@@ -17,7 +17,8 @@ export const inputField = ({
 }) => {
   return (
     <div>
-      <label><strong>{label}</strong></label>
+      {label ? <label><strong>{label}</strong></label>
+        : null}
       <input
         {...input}
         type={type}
@@ -52,7 +53,7 @@ export const checkBox = ({
       />
       &nbsp; &nbsp; &nbsp;
       <label className="form-check-label">
-        <Translate content='column.iagree' /><Link to="/terms"> <Translate content='column.terms' /></Link>
+        <Translate content='column.iagree' /><Link to="/terms-and-conditions" target="_blank"> <Translate content='column.terms' /></Link>
       </label>
 
       <font color="red">{touched && error}</font>
@@ -73,7 +74,8 @@ export const dropDownField = ({
 }) => {
   return (
     <div className="form-group">
-      <label><strong>{label}</strong></label>
+      {label ? <label><strong>{label}</strong></label>
+        : null}
       <Select
         {...input}
         onChange={value => input.onChange(value)}

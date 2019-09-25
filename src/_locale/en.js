@@ -87,7 +87,7 @@ export default {
         attachments: 'Attachments',
         timeduration: 'Time duration(months)',
         investor: 'Investor',
-        maxcredit: 'Max Credit Amount',
+        maxcredit: 'Maximum Credit Amount',
         industries: 'Industries',
         state: 'State',
         service: 'Service',
@@ -104,7 +104,7 @@ export default {
         rating: 'Rating for Credit',
         country: 'County',
         editproducts: 'Edit Products',
-        mincredit: 'Minimum credit Value',
+        mincredit: 'Minimum Credit Value',
         notifications: 'Notifications',
         pagenot: ':( 404 - Page Not Found.',
         thepage: 'The page you are looking for might have been removed had its name changed or is temporarily unavailable.',
@@ -133,7 +133,8 @@ export default {
         postponed: 'Postponed',
         deleted: 'Deleted',
         deletedmsg: 'This product has been deleted',
-        postponedmsg: 'This product has been postponed. You can change the status'
+        postponedmsg: 'This product has been postponed. You can change the status',
+        suspended: 'Suspended'
     },
     button: {
         Produktbearbeiten: 'Edit Product',

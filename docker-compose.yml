@@ -11,7 +11,7 @@ services:
       - credittech
     labels:
       - traefik.backend=credittech-frontend-react
-      - traefik.normal.frontend.rule=Host:credittech.diagonal.solutions
+      - traefik.normal.frontend.rule=Host:credittech.diagonal.solutions,stage.investor.credittech.diagonal.solutions
       - traefik.docker.network=credittech
       - traefik.port=5000
 

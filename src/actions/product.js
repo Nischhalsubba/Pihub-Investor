@@ -68,7 +68,7 @@ export const addProduct = (details, callback) => async dispatch => {
       body.set('rating_for_credit', 0)
 
     }
-    body.set('ratings', details.ratings);
+    body.set('ratings', JSON.stringify(details.ratings));
     body.set('min_time_duration', details.min_duration);
     body.set('max_time_duration', details.max_duration);
 
@@ -100,7 +100,6 @@ export const getProductById = id => async dispatch => {
     detail.County = extractNames(response.data.data.counties);
     detail.undefined = extractNames(response.data.data.industries);
     detail.services = [{ value: response.data.data.service.id, label: response.data.data.service.name }]
-
     dispatch({
       type: SINGLE_PRODUCT,
       payload: response.data.data
@@ -116,7 +115,6 @@ export const getProductById = id => async dispatch => {
 
 export const updateProduct = (details, id, callback) => async dispatch => {
   try {
-    console.log('de', details)
     var body = new FormData();
     body.set('_method', 'PUT')
     body.set('product_title', details.product_title);
@@ -132,7 +130,15 @@ export const updateProduct = (details, id, callback) => async dispatch => {
       body.set('county_ids', details.county_ids.toString());
 
     }
-    body.append('industry_ids', details.industry_id.toString());
+    if (details.industry_id.length === 0) {
+      var industryId = [];
+      details.industries.map(industry => {
+        industryId.push(industry.id);
+      });
+      body.set('industry_ids', industryId.toString());
+    } else {
+      body.append('industry_ids', details.industry_id.toString());
+    }
     if (Array.isArray(details.services)) {
       body.set('service_id', details.services[0].value);
     } else {
@@ -157,7 +163,7 @@ export const updateProduct = (details, id, callback) => async dispatch => {
       body.set('rating_for_credit', 0)
 
     }
-    body.set('ratings', details.ratings);
+    body.append('ratings', JSON.stringify(details.ratings));
     if (details.files) {
       details.files.map((file, index) => {
         body.append(`files[${index}]`, file)

@@ -11,6 +11,7 @@ import de from './_locale/de';
 import App from './components/App';
 import reducers from './reducers';
 import NoMatch from './components/general/NoMatch';
+import TermsCondition from './components/general/TermsCondition';
 import RequireInvestorAuth from './components/_auth/RequireInvestorAuth';
 import RequireNoAuth from './components/_auth/RequireNoAuth';
 import RequireVerification from './components/_auth/RequireVerfication';
@@ -101,6 +102,8 @@ ReactDOM.render(
         {/** Logged in (there should be a token) - confirmed but waiting to e approved accounts only*/}
         <Route path='/password-change-success' component={PasswordChangeSuccess} />
         {/** --- End: signup protected routes ___ */}
+        <Route path='/terms-and-conditions' component={TermsCondition} />
+
         <App>
           {/** ___ Start: Authenticated User's routes --- */}
           <Route path="/" exact component={RequireInvestorAuth(RequireVerification(ProductsList))} />

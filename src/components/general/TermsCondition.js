@@ -1,0 +1,385 @@
+import React, { Fragment } from 'react';
+
+export default () => {
+  return (
+<div class="container-full-height ct-container">
+    <div class="main-content main-content--padded">
+      <div class="container-full-height text-centerd d-flex">
+        <div class="content m-auto w-75">
+          <div class="page-header">
+            <h1 class="page-title">Terms and Conditions</h1>
+          </div>
+          <p></p>
+          <b>§1. Präambel
+          </b>
+          <p></p>Die piHub Private Investments GmbH (nachfolgend „piHub“) betreibt eine digitale Vermittlungsplattform für Unternehmensfinanzierungen
+          jeglicher Art. Die Vermittlungsplattform richtet sich an Unternehmen („Unternehmen“) sowie an Banken und andere
+          Finanzdienstleister, welche Unternehmensfinanzierungen bereitstellen („Finanzierer“). Auf der Vermittlungsplattform
+          finden sich sowohl registrierte Nutzer sowie Besucher ein. piHub Private Investments erstellt selbst oder mit der
+          Hilfe Dritter für seine Nutzer unentgeltliche und unverbindliche Preis- und Konditionsvergleiche für Finanzierungen
+          und vermittelt den Kontakt zu den Finanzierern und begleitet den Finanzierungsprozess im Kontakt zu Finanzierern.
+          piHub Private Investments GmbH hat gem. §32 KWG die Erlaubnis Finanzdienstleistungen der Anlagevermittlung (§1
+          Abs. 1a Satz 2 Nr. 1 KWG) und der Anlageberatung (§1 Abs. 1a Satz 2 Nr. 1a KWG) zu erbringen.
+          <p></p>
+          <b>§2. Geltung der AGB</b>
+          <p>2.1. Geltungssbereich</p>
+          <p></p>Die vorliegenden Allgemeinen Geschäftsbedingungen regeln die Rechte und Pflichten zwischen piHub Private Investments
+          und den Nutzern sowie piHub Private Investments und den Besuchern in Bezug auf die Nutzung der Vermittlungsplattform.
+          <p>2.2. Ausschluss widersprechender AGB</p>
+          <p></p>Entgegenstehende Geschäftsbedingungen des Nutzers oder Besuchers finden keine Anwendung, es sei denn, diese
+          werden von piHub Private Investments schriftlich anerkannt.
+          <p>2.3. Änderung der vorliegenden AGB</p>
+          <p></p>piHub Private Investments ist berechtigt, diese AGB jederzeit zu ändern. Die geänderten Bedingungen werden
+          dem Nutzer per E-Mail, Fax oder schriftlich spätestens vier Wochen vor ihrem Inkrafttreten übersandt und im Übrigen
+          den Besuchern auf der Vermittlungsplattform bekanntgegeben. Widerspricht der Nutzer der Geltung der geänderten
+          Bedingungen nicht innerhalb von vier Wochen nach Zugang der Benachrichtigung seitens piHub Private Investments
+          über die Änderung oder wird die Vermittlungsplattform vom Nutzer oder von Besuchern ohne Widerspruch gegen die
+          Änderungen erneut genutzt, so gelten die geänderten Bedingungen als vom Nutzer bzw. Besucher akzeptiert. piHub
+          Private Investments wird den Nutzer in der Benachrichtigung und die Besucher in der Veröffentlichung auf der Vermittlungsplattform
+          auf die konkreten Änderungen und auf die Folgen eines unterbliebenen Widerspruchs gegen die Änderungen hinweisen.
+          <h2>§3. Leistungsgegenstand</h2>
+          <p></p>piHub Private Investments betreibt die in der Präambel beschriebene Vermittlungsplattform und tritt dementsprechend
+          als Dienstleister auf. PiHub Private Investments vermittelt Vertragsabschlüsse zwischen dem Nutzer und dem Finanzierer
+          und begleitet den Finanzierungsprozess im Kontakt zu Finanzierern. Die auf der Website dargestellten Vergleiche
+          für Finanzierungen stellen kein verbindliches Vertragsangebot durch piHub Private Investments oder eines Finanzierers
+          dar. Ein potentieller Vertragsschluss zwischen dem Nutzer und dem Finanzierer findet grundsätzlich außerhalb der
+          Vermittlungsplattform statt. Bei diesen Verträgen ist piHub Private Investments weder als Vertragspartei noch als
+          Vertreter bzw. Erfüllungsgehilfe einer Vertragspartei oder in sonstiger Weise beteiligt. Insbesondere übernimmt
+          piHub Private Investments keine Gewähr für das Zustandekommen eines Vertrages zwischen dem Nutzer und dem Finanzdienstleister
+          oder für die zwischen den Nutzern ausgetauschten Informationen, auch wenn diese Informationen über die Vermittlungsplattform
+          ausgetauscht werden. Insbesondere hat der Nutzer keinen Anspruch, ein Finanzierungsangebot durch einen bestimmten
+          Finanzierer zu erhalten.
+          <h2>§4. Allgemeine Bestimmungen zur Nutzung der Vermittlungsplattform</h2>
+          <h3></h3>4.1. Nutzungsberechtigung
+          <p></p>Die bestimmungsgemäße Nutzung der Vermittlungsplattform sowie die Suche nach Anbietern von Finanzierungen und
+          anderen Finanzprodukten stehen grundsätzlich jedem offen, der die in Ziff. 4.2 genannten Voraussetzungen erfüllt.
+          Für die Inanspruchnahme weitergehender Funktionen der Vermittlungsplattform, insbesondere das Berechnen und Einholen
+          von indikativen Angeboten durch den Nutzer oder das Annehmen von Nutzeranfragen durch einen Finanzdienstleister,
+          ist eine vorherige Registrierung erforderlich (siehe Ziff. 4.3). Mit der Nutzung der Vermittlungsplattform stimmen
+          die Besucher und Nutzer den AGB zu.
+          <h3></h3>4.2. Nutzergruppe
+          <p></p>Als Nutzer der Website sind ausschließlich gewerbliche Nutzer im Rahmen ihrer beruflichen Tätigkeit für juristische
+          Personen des privaten Rechtes zugelassen. Die Nutzung durch andere Personengruppen, insbesondere durch Verbraucher
+          (§ 13 BGB) bzw. Privatpersonen zur persönlichen Nutzung ist unzulässig.
+          <h3></h3>4.3. Registrierung/Zugangsdaten
+          <p> </p>
+          <h4>4.3.1. Registrierung </h4>
+          <p></p>Die vollumfängliche Nutzung des Portals setzt eine Registrierung als Nutzer voraus. Im Rahmen des Registrierungsprozesses
+          werden die zur Vermittlung einer Finanzierung notwendigen Daten erfasst. Die Einzelheiten hierzu sind in der Datenschutzerklärung
+          der piHub Private Investments aufgeführt. Ein Anspruch auf Registrierung des Nutzers und Abschluss eines Nutzungsvertrags
+          mit piHub Private Investments besteht nicht. Das sich registrierende Nutzer wird zur Vorlage von Nachweisen über
+          seine Identität aufgefordert. piHub Private Investments behält sich vor, das Nutzerprofil eines sich registrierenden
+          Nutzers bis zur Vorlage von Nachweisen nicht freizuschalten oder nachträglich bis zur Vorlage der angeforderten
+          Nachweise zu sperren. Der Nutzer ist berechtigt, sich bei der Registrierung und dem Abschluss des Nutzungsvertrages
+          durch eine zuvor bevollmächtigte Person (nachfolgend „Bevollmächtigte“) vertreten zu lassen. In diesem Fall erhält
+          der Bevollmächtigte eigene Zugangsdaten zur Vermittlungsplattform, agiert jedoch stets im Namen des vertretenen
+          Nutzers. Zu diesem Zweck wird das Nutzerkonto des vertretenen Nutzers mit den Zugangsdaten des Bevollmächtigten
+          verknüpft. piHub Private Investments ist berechtigt, einen geeigneten Nachweis der Bevollmächtigung vom Nutzer
+          zu verlangen. Sofern der Nutzer piHub Private Investments auf Anforderung keinen geeigneten Nachweis für die Bevollmächtigung
+          vorlegt oder sich zu einem späteren Zeitpunkt herausstellt, dass zu keinem Zeitpunkt eine Bevollmächtigung durch
+          den Nutzer erfolgt ist, wird piHub Private Investments die Verknüpfung zu dem betroffenen Nutzerkonto unverzüglich
+          löschen und die Zugangsdaten des Bevollmächtigten sperren. Bevollmächtigte, welche als Vermittler Finanzierungsanfragen
+          über die Vermittlungsplattform stellen, werden nicht mit dem Nutzerkonto verknüpft.
+          <h4></h4>4.3.2. Datenschutzrechtliche Vorschriften
+          <p></p>Das Nutzer ist verpflichtet, seine persönlichen Zugangsdaten zu der Vermittlungsplattform geheim zu halten
+          und vor dem unberechtigten Zugriff Dritter zu schützen. Erlangt der Nutzer Kenntnis darüber oder ergibt sich ein
+          Verdacht, dass ein unbefugter Dritter von den Zugangsdaten Kenntnis erlangt hat, so ist der Nutzer verpflichtet,
+          umgehend seine Zugangsdaten zu ändern. Ist dies nicht möglich, ist piHub Private Investments unverzüglich darüber
+          zu unterrichten. piHub Private Investments behält sich vor, Zugangsdaten zu sperren, falls das Nutzer gegen die
+          Geheimhaltungspflicht verstoßen hat oder Anhaltspunkte dafür vorliegen, dass Dritte unbefugt in den Besitz der
+          Zugangsdaten gelangt sind. Die Vorschriften dieses Absatzes gelten entsprechend für den Umgang des Bevollmächtigten
+          mit den Zugangsdaten zum verknüpften Nutzerskonto.
+          <h4></h4>4.4.1. Urheber- und sonstige Schutzrechte
+          <p></p>Die Vermittlungsplattform und die ihr zugrunde liegende Software und Datenbanken sind urheberrechtlich geschützt.
+          Dies gilt auch für die auf der Vermittlungsplattform veröffentlichten Texte, Bilder, Logos und das Design der Vermittlungsplattform
+          selbst. Die Bereitstellung zur Nutzung der Vermittlungsplattform in dem nach diesen AGB definierten Umfang stellt
+          keinen Verzicht auf die Urheberrechte dar.
+          <h4>4.4.2. Nutzungsrechte</h4>
+          <p></p>Die Vermittlungsplattform darf nur in der durch piHub Private Investments erlaubten Weise genutzt werden. Zu
+          diesem Zweck erhalten Nutzer und Besucher ein nicht ausschließliches, jederzeit kündbares und widerrufliches, beschränktes
+          Recht zur Nutzung der Vermittlungsplattform. Dies schließt die Anfertigung von technisch bedingten Vervielfältigungen
+          im Arbeitsspeicher des Nutzers bzw. Besuchers ein, ebenso wie die Anfertigung von einzelnen Ausdrucken, Kopien
+          der über die Vermittlungsplattform angebotenen Inhalte für eigene Zwecke, sofern die vollständige Internetadresse
+          der Vermittlungsplattform als Quellangabe deutlich sichtbar angegeben ist. Jegliche darüber hinausgehende von diesen
+          Bestimmungen nicht ausdrücklich zugelassene Nutzung bedarf der vorherigen schriftlichen Zustimmung von piHub Private
+          Investments.
+          <h4>4.4.3. Nutzungsrechte</h4>
+          <p></p>Die der Vermittlungsplattform zugrundeliegende Datenbank darf nur über die Website abgerufen werden. Ein Auslesen
+          oder Ausspähen der Datenbank mittels jeglicher Software ist nicht gestattet. Insbesondere ist der automatisierte
+          Zugriff auf die Vermittlungsplattform (sog. Screen Scraping) nicht gestattet. Unzulässig ist des Weiteren systematisches
+          Kopieren, Weitergeben, Senden oder Veröffentlichen der Daten in irgendeiner Form, die über die bestimmungsgemäße
+          Nutzung der Vermittlungsplattform und der ihr zugrunde liegenden Datenbank hinausgeht. Wir verweisen hier auf die
+          am 25. Mai 2016 in Kraft getretene Datenschutzgrundverordnung. Unzulässig ist es insbesondere, die Vermittlungsplattform
+          zu nutzen, um Dritten Angebote zu unterbreiten oder für Dritte Angebote einzuholen (ausgenommen für das eigene
+          Unternehmen bzw. den eigenen Arbeitgeber). piHub behält sich in diesem Falle vor, sich eine entsprechende schriftliche
+          Vollmacht vorweisen zu lassen.
+          <h3>4.5. Inhalte der Vermittlungsplattform</h3>
+          <p></p>Die Nutzer und Besucher haben keinen Anspruch auf eine bestimmte Ausgestaltung oder Ausstattung der Vermittlungsplattform.
+          Sofern keine wesentlichen Pflichten des Nutzungsvertrags berührt werden und es dem Nutzer bzw. Besucher unter Beachtung
+          der berechtigten Interessen der piHub Private Investments zumutbar ist, hat piHub Private Investments das Recht,
+          die Vermittlungsplattform (einschließlich der URL) oder einzelne Funktionen, Dienste oder Bereiche nach eigenem
+          billigem Ermessen mit Wirkung für die Zukunft zu ändern oder ganz oder teilweise, dauerhaft oder vorübergehend
+          einzustellen.
+          <h3>4.6. Verfügbarkeit der Vermittlungsplattform</h3>
+          <p></p>Es ist das Ziel von piHub Private Investments, eine Verfügbarkeit der Vermittlungsplattform von 100% zu erzielen.
+          Sie beträgt im Jahresmittel mindestens 97,5%. Für eine darüber hinausgehende jederzeitige Verfügbarkeit der Vermittlungsplattform
+          oder der hierauf zur Verfügung gestellten Dienstleistungen übernimmt piHub Private Investments keine Gewähr. Der
+          Zugang zur Website kann zeitweise insbesondere aufgrund von Wartungsarbeiten und Softwareaktualisierungen eingeschränkt
+          oder ausgeschlossen sein. Nach Möglichkeit informiert piHub Private Investments über Wartungsarbeiten, die voraussichtlich
+          länger als 24 Stunden dauern, im Voraus. Zugangsbeschränkungen können ausserdem bei technischen Störungen, die
+          außerhalb des Einflussbereichs von piHub Private Investments liegen, eintreten.
+          <h2>§5. Rechtsverhältnis piHub Private Investments-Nutzer</h2>
+          <h3>5.1. Finanzierungsanfragen</h3>
+          <h4>5.1.1. Erstellung von Angeboten</h4>
+          <p>(a) Finanzierungsanfragen</p>
+          <p></p>Die bei piHub Private Investments eingestellten Finanzierungsanfragen sind eine unverbindliche Aufforderung
+          des Nutzers zur Abgabe von Angeboten durch einen Finanzierer, der sich auf der Finanzierungsplattform registriert
+          hat, dar. Zum Zwecke der Erstellung von Angebotsvorschlägen durch die Finanzierer ist piHub Private Investments
+          berechtigt, die im Zusammenhang mit der Finanzierungsanfrage eingereichten Dokumente zur Prüfung an die Finanzdienstleister
+          weiterzuleiten. piHub Private Investments kann die Übermittlung einer Finanzierungsanfrage an die Bereitstellung
+          von Dokumenten knüpfen. piHub Private Investments ist berechtigt, den Nutzer zu kontaktieren, um erforderliche
+          Dokumente anzufordern und/oder Nachfragen zum eingestellten Finanzierungsbegehren zu klären.
+          <p>(b) Ausschluss der Verpflichtung zum Tätigwerden</p>
+          <p></p>Der Nutzer erteilt piHub Private Investments keinen exklusiven Alleinvermittlungsauftrag. Es besteht seitens
+          piHub Private Investments keine Verpflichtung, eine Finanzierungsanfrage an einen oder mehrere Finanzierer weiterzuleiten.
+          <p>(c) Bereitstellung der Angebotsvorschläge</p>
+          <p></p>Mittels der vom Nutzer oder Bevollmächtigten eingestellten Finanzierungsanfrage und der eingereichten Unterlagen
+          können Finanzierer Angebotsvorschläge abgeben. Dem Nutzer werden die von den Finanzierern abgegebenen Angebotsvorschläge
+          in seinem persönlichen Profil angezeigt.
+          <p>(d) Umfang der eingeholten Angebotsvorschläge</p>
+          <p></p>piHub Private Investments gewährleistet zu keinem Zeitpunkt und unter keinen Umständen, daß ein Angebot durch
+          einen Finanzierer erstellt wird. piHub Private Investments gewährleistet auch nicht, sämtliche am Markt befindlichen
+          Finanzierer in die Darstellung der Angebotsvorschläge einzubeziehen und hat auch keinen Einfluss darauf, welche
+          Finanzdienstleister dem Nutzer ein Angebot unterbreiten.
+          <p></p>(e) Regelungen hinsichtlich der Angebotsvorschläge und Unterlagen der Finanzdienstleister
+          <p></p>Die von piHub Private Investments übermittelten Vorschläge über Preise und Konditionen von Unternehmensfinanzierungen
+          beruhen auf den Angaben des jeweiligen Finanzdienstleisters. piHub Private Investments gibt weder eine Zusicherung
+          über die Eignung, Verfügbarkeit oder Qualität der übermittelten Angebotsvorschläge noch hinsichtlich des Zustandekommens
+          eines Darlehens- bzw. Finanzierungsvertrags mit einem Finanzierer. piHub Private Investments bemüht sich bei der
+          Einholung der Angebotsvorschläge der Finanzdienstleister um ständige Aktualität und Richtigkeit. Leistungs- bzw.
+          produktbezogene Informationen beruhen auf den Angaben der jeweiligen Finanzierer. piHub Private Investments übernimmt
+          keine Verpflichtung, die von den Finanzierern unterbreiteten Angebote zu überprüfen. Eine Haftung von piHub Private
+          Investments für Aktualität, Vollständigkeit und Richtigkeit der dargestellten Angebote wird ausgeschlossen. piHub
+          Private Investments stellt, grundsätzlich vom Finanzierer übermittelte Vertragsdokumente bereit. Für den Inhalt
+          der bereitgestellten Vertragsdokumente sowie sonstigen Informationen von Finanzierern übernimmt piHub Private Investments
+          keine Haftung.
+          <h4>5.1.2. Anfragen</h4>
+          <p></p>Durch Auswahl eines Finanzierers bzw. eines Angebotes aus der im persönlichen Profil des Nutzers bereitgestellten
+          Liste zu dem jeweiligen Finanzierungangebot gibt der Nutzer ein verbindliches Angebot zum Abschluss des jeweiligen
+          Vertrages ab. Die Auswahl eines durch einen Finanzierers unterbreiteten Angebotes kann der Nutzer durch Betätigung
+          der auf der Vermittlungsplattform in seinem persönlichen Profil vorgesehenen Funktionen vornehmen. Das verbindliche
+          Angebot zum Abschluß eines Vertrages leitet piHub Private Investments umgehend an den ausgewählten Finanzierer
+          weiter.
+          <h3></h3>5.2. Bonitätsprüfung
+          <p></p>Im Rahmen der Registrierung und Vergleichserstellung können Bonitätsprüfungen durch piHub Private Investments
+          erfolgen. Hierzu erfolgt eine Weiterleitung der eingegebenen Daten an die entsprechenden Wirtschaftsauskunfteien.
+          Nähere Informationen hierzu enthält die Datenschutzerklärung der piHub Private Investments.
+          <h3>5.3. Pflichten des Nutzers gegenüber piHub Private Investments</h3>
+          <h4>5.3.1. Pflichten hinsichtlich der hinterlegten Daten</h4>
+          <p></p>Die bei PiHub Private Investments hinterlegten Informationen und personenbezogenen Daten des Nutzers sind vollständig
+          und wahrheitsgemäß anzugeben. Die Angaben sind durch entsprechende Pflege des Nutzerkontos vor jeder Finanzierungsanfrage
+          zu aktualisieren.
+          <h4></h4>5.3.2. Einstandspflicht des Nutzers für angegebene Daten und übermittelte Dokumente
+          <p></p>Der Nutzer hat die für die Eintragung auf der Vermittlungsplattform notwendigen Informationen, Daten und Inhalte,
+          insbesondere die zwecks Weiterleitung an die Finanzdienstleister zur Verfügung gestellten Dokumente, sowie Verlinkungen
+          auf andere Websites auf ihre Rechtmäßigkeit hin zu überprüfen. Der Nutzer übernimmt die alleinige Verantwortung
+          für deren Rechtmäßigkeit. Insbesondere steht der Nutzer dafür ein, dass er berechtigt ist, die Informationen, Daten
+          und Inhalte auf der Website einzustellen bzw. an piHub Private Investments zu übersenden.
+          <h4>5.3.3. Meldepflicht</h4>
+          <p></p>Der Nutzer verpflichtet sich, das Zustandekommen eines über piHub Private Investments vermittelten Vertrags
+          mit einem Finanzierer gegenüber piHub Private Investments mittels der dafür zur Verfügung stehenden Vermittlungsplattform-Funktionen,
+          schriftlich oder in Textform (E-Mail) anzuzeigen. Dies gilt auch dann, wenn dem Nutzer die Ausführung eines bei
+          piHub Private Investments eingestellten Finanzierungsbegehrens auf andere Weise, insbesondere außerhalb der Vermittlungsplattform
+          angeboten wird.
+          <h2>§6. Rechtsverhältnis zwischen dem Nutzer und dem Finanzierer</h2>
+          <h3></h3>6.1. Kommunikation
+          <p></p>Die Kommunikation zwischen dem Finanzierer und dem Nutzer erfolgt ausschließlich unter Verwendung der auf der
+          Vermittlungsplattform vorhandenen Funktionen, es sei denn piHub Private Investments hat ausdrücklich seine Zustimmung
+          erteilt, eine andere Form der Kommunikation zu wählen. Nichtsdestotrotz ist der Finanzdienstleister nach Übermittlung
+          der persönlichen Daten des Nutzers berechtigt, den Nutzer zur Klärung bestehender Fragen und zum Zwecke eines Vertragsschlusses
+          direkt (telefonisch oder auf sonstige Weise) zu kontaktieren. piHub Private Investments ist hierüberumgehend zu
+          informieren.
+          <h3></h3>6.2. Vertragsabschluss
+          <p></p>Der Vertragsabschluss über die ausgewählte Finanzierung erfolgt ausschließlich zwischen dem Nutzer und dem
+          Finanzierer. piHub Private Investments ist insofern weder Vertreter noch Partei dieses Vertrages, sondern wird
+          lediglich als Vermittler tätig. Dementsprechend sind Finanzierer und Nutzer verantwortlich für den Inhalt und den
+          Abschluss der Verträge sowie für deren Umsetzung. Für einen Vertragsabschluss zwischen Nutzer und Finanzierer gelten
+          die jeweiligen Vertragsbedingungen, Allgemeinen Geschäftsbedingungen (AGB) und Datenschutzbestimmungen des ausgewählten
+          Finanzierers. Im Übrigen richten sich Vertragsabschluss und Vertragserfüllung nach dem allgemeinen Vertragsrecht.
+          <h3></h3>6.3. Vertraulichkeit/Datenschutz
+          <p></p>Der Finanzierer verpflichtet sich gegenüber piHub Private Investments und gegenüber dem Nutzer zum vertraulichen
+          Umgang mit den übermittelten Daten und Informationen unter Berücksichtigung der jeweils anwendbaren Datenschutzgesetze.
+          <h2>§7. Nutzungskosten und Provisionsanspruch</h2>
+          <h3>7.1. Unentgeltliche der Nutzung der Vermittlungsplattform</h3>
+          <p></p>Die allgemeine Nutzung des Portals ist grundsätzlich kostenfrei möglich. piHub Private Investments behält sich
+          vor, bestimmte Bereiche, Funktionen oder Leistungen in Zukunft kostenpflichtig anzubieten. In diesem Fall wird
+          auf die Kostenpflichtigkeit der betreffenden Leistung jeweils gesondert hingewiesen.
+          <h3>7.2. Provisionsanspruch gegenüber dem Finanzierer</h3>
+          <p></p>Für die erfolgreiche Vermittlung eines Vertragsabschlusses zwischen dem Nutzer und dem Finanzierer erhebt piHub
+          Private Investments vom jeweiligen Finanzdienstleister eine Provision, deren Höhe PiHub Private Investments und
+          der Finanzdienstleister individuell vereinbaren. Die Provision ist zu leisten, wenn es aufgrund der Vermittlungstätigkeit
+          von piHub Private Investments zu einem Vertragsabschluss zwischen dem Nutzer und dem Finanzierer gekommen ist.
+          Sollte keine gesonderte Vereinbarung getroffen worden sein, so beträgt das Vermittlungshonorar 1,50% bezogen auf
+          den jeweils vermittelten Finanzierungsbetrag.
+          <h3>7.3. Umgehungsverbot des Provisionsanspruchs</h3>
+          <p></p>Die Nutzer verpflichten sich gegenüber piHub Private Investments, jegliche Maßnahmen zur Umgehung des piHub
+          Private Investments zustehenden Provisionsanspruchs zu unterlassen. Im Falle einer Umgehung durch den Nutzer behält
+          sich piHub Private Investments vor, eine Vertragsstrafe in Höhe der dreifachen Provision geltend zu machen, welche
+          piHub Private Investments realisiert hätte, wäre die Gesellschaft nicht umgangen worden.
+          <h2>§8. Datenschutz und Datensicherheit</h2>
+          <h3></h3>8.1. Datenschutz
+          <p></p>piHub Private Investments behandelt die personenbezogenen Daten der Nutzer und Besucher vertraulich und entsprechend
+          der gesetzlichen Datenschutzvorschriften. Der Umgang mit personenbezogenen Daten durch piHub Private Investments
+          bzw. durch von piHub Private Investments beauftragte Dritte ist in den Regelungen zum Datenschutz und der datenschutzrechtlichen
+          Einwilligungserklärung geregelt. Es gilt die aktuelle Datenschutzerklärung von piHub Private Investments.
+          <h3></h3>8.2. Datensicherheit
+          <p></p>piHub Private Investments stellt durch angemessene technische und organisatorische Maßnahmen sicher, dass die
+          auf der Vermittlungsplattform eingestellten Daten und die über die Vermittlungsplattform geführte Kommunikation
+          vor dem Zugriff unberechtigter Dritter geschützt werden. Die Nutzer sind unabhängig hiervon und unbeschadet weitergehender
+          gesetzlicher Vorschriften verpflichtet, die von ihnen zur Verfügung gestellten Daten außerhalb der Vermittlungsplattform
+          in geeigneter Form zu speichern oder in Papierform vorzuhalten.
+          <h3>8.3. Datenschutzbeauftragte</h3>
+          <p>Der Datenschutzbeauftragte der piHub Private Investments ist: </p>
+          <p>Thomas Gutte Datenschutzberatung, Hochstr. 2, 65195 Wiesbaden </p>
+          <h2></h2>§9. Haftung/Schadensersatz/Vertragsstrafe
+          <h3>9.1. Haftung</h3>
+          <h4></h4>
+          <b>9.1.1. Haftung bei Vorsatz und Fahrlässigkeit</b>
+          <p></p>piHub Private Investments haftet gleich aus welchem Rechtsgrund bei Vorsatz und grober Fahrlässigkeit. Bei
+          einfacher Fahrlässigkeit haftet piHub Private Investments nur für Schäden aus der Verletzung einer wesentlichen
+          Vertragspflicht. Wesentliche Vertragspflichten sind solche Verpflichtungen, deren Erfüllung die ordnungsgemäße
+          Durchführung des Vertrags überhaupt erst ermöglicht und auf deren Einhaltung der Vertragspartner regelmäßig vertraut
+          und vertrauen darf.
+          <h4></h4>
+          <b>9.1.2. Haftungshöhe </b>
+          <p></p>Bei Verletzung einer wesentlichen Vertragspflicht ist die Haftung stets auf den Ersatz des bei Vertragsschluss
+          vorhersehbaren, typischerweise eintretenden Schadens begrenzt, soweit nicht Vorsatz oder grobe Fahrlässigkeit vorliegt.
+          Im Falle von Vorsatz oder grober Fahrlässigkeit haftet piHub Private Investments stets unbeschränkt.
+          <h4></h4>
+          <b>9.1.3. Haftung bei Verletzung von Lebens, Körpers oder der Gesundheit</b>
+          <p></p>Die vorgenannten Haftungsausschlüsse bzw. -beschränkungen gelten nicht für die Haftung wegen grob fahrlässigen
+          oder vorsätzlichen Verhaltens, wegen Verletzung des Lebens, Körpers oder der Gesundheit, aus der Übernahme einer
+          Beschaffenheitsgarantie, nach § 44a TKG oder nach dem Produkthaftungsgesetz sowie – soweit einschlägig – bei Verletzung
+          einer Pflicht aus §§ 60 oder 61 VVG.
+          <h4></h4>
+          <b>9.1.4. Haftung von gesetzlichen Vertretern und Hilfspersonen</b>
+          <p></p>Vorstehende Haftungsausschlüsse bzw. -beschränkungen gelten auch im Hinblick auf die Haftung der Angestellten,
+          Arbeitnehmer, Mitarbeiter, Vertreter und Erfüllungsgehilfen von piHub Private Investments und insbesondere zugunsten
+          der Anteilseigner, Mitarbeiter, Vertreter, Organe und deren Nutzern betreffend ihrer persönlichen Haftung.
+          <h4></h4>
+          <b>9.1.5. Haftung für zur Verfügung gestellte Daten</b>
+          <p></p>(a) Fremdseits eingestellte Inhalte im Verhältnis zu piHub Private Investments
+          <p></p>Die von den Nutzern auf der Vermittlungsplattform eingestellten Daten und Inhalte werden ausschließlich von
+          diesen erstellt und stellen für piHub Private Investments fremdes Eigentum dar. Diese Inhalte verbleiben für piHub
+          Private Investments auch nach Einstellung auf der Vermittlungsplattform in fremdem Eigentum; piHub Private Investments
+          erwirbt kein Eigentum an diesen Daten und Inhalten. Vor der Einstellung der Inhalte erfolgt keine Kontrolle durch
+          piHub Private Investments. Jeder Nutzer ist verpflichtet, die für seine Finanzierungsanfrage oder Finanzierungsgesuch
+          relevanten Daten und Inhalte selbst zu überprüfen. piHub Private Investments übernimmt keine Gewähr für die Richtigkeit
+          oder Vollständigkeit der auf der Vermittlungsplattform unentgeltlich bereitgestellten Informationen, die piHub
+          Private Investments von Nutzern erhält.
+          <p>b) Keine Haftung für vermittelte Dienstleistungen</p>
+          <p></p>Soweit piHub Private Investments den Zugang zu Datenbanken oder Diensten Dritter vermittelt, haftet piHub Private
+          Investments weder für Bestand oder Sicherheit dieser Datenbanken oder Dienste, noch für Datenschutz, inhaltliche
+          Richtigkeit, Vollständigkeit oder Aktualität sowie die Freiheit von Rechten Dritter bezüglich der durch den Nutzer
+          erhaltenen Daten, Informationen und Programme. Als Vermittlung zum Zugang zur Nutzung gilt auch die automatische
+          und kurzzeitige Vorhaltung fremder Inhalte auf der Vermittlungsplattform. piHub Private Investments haftet ebenfalls
+          nicht für aus einem zwischen Nutzer und Finanzierer vermittelten Vertrag resultierende Ansprüche einer Partei.
+          Insbesondere ist piHub Private Investments nicht für Schäden, Nicht- oder Schlechtleistungen, die aus diesem Vertrag
+          erwachsen, verantwortlich und gibt insofern auf der Vermittlungsplattform auch keinerlei Zusicherungen oder Garantien
+          über die Eignung, Verfügbarkeit oder Qualität der auf der Vermittlungsplattform dargestellten Finanzierungsangebote
+          ab.
+          <p>(c) Haftungsfreistellung durch den Nutzer</p>
+          <p></p>Der Nutzer stellt piHub Private Investments von sämtlichen Ansprüchen Dritter frei, die diese aufgrund fehlerhafter
+          oder rechtswidriger Angaben des Nutzers gegenüber piHub Private Investments geltend machen. Fehlerhafte Angaben
+          sind auch solche, die durch Verstoß gegen die Prüfpflicht nach automatischer Vervollständigung oder Dateneingabe
+          durch einen Bevollmächtigten entstanden sind. Bei Inanspruchnahme aufgrund fehlerhafter Angaben ist der Nutzer
+          bzw. der Finanzdienstleister zur Kooperation mit piHub Private Investments verpflichtet. Hierzu hat der Nutzer
+          bzw. der Finanzierer PiHub Private Investments unverzüglich über die geltend gemachten Ansprüche in Kenntnis zu
+          setzen und piHub Private Investments alle Informationen zur Verfügung zu stellen, die für die Prüfung der Ansprüche
+          und eine Rechtsverteidigung der piHub Private Investments erforderlich sind. Für die piHub Private Investments
+          aufgrund einer notwendigen Rechtsverteidigung entstehenden Kosten haftet der Nutzer bzw. der Finanzierer. Das gilt
+          nicht, soweit der Nutzer die Rechtsverletzung nicht zu vertreten hat.
+          <h3></h3>9.2. Schadensersatz
+          <h4></h4>
+          <b>9.2.1. Sanktionsvorbehalt für Verstöße gegen die AGB</b>
+          <p></p>piHub Private Investments behält sich vor, bei Verstößen von Nutzern gegen diese AGB die nachfolgend aufgeführten
+          Sanktionen zu verhängen.
+          <h4></h4>
+          <b>9.2.2. Pauschalierte Vertragsstrafe
+          </b>
+          <p></p>Verstößt der Nutzer oder der Finanzierer gegen die Ziff. 7.2 und 7.3 dieser AGB und entsteht piHub Private
+          Investments hierdurch ein Schaden, ist der betreffende Nutzer verpflichtet, Schadensersatz in pauschaler Höhe gem.
+          Ziff. 7.3 zu leisten. Dies gilt nicht, soweit der Nutzer oder der Finanzdienstleister den Verstoß nicht zu vertreten
+          hat. Dem Nutzer sowie dem Finanzdienstleister ist der Nachweis gestattet, dass überhaupt kein Schaden entstanden
+          ist.
+          <h4></h4>
+          <b>9.2.3. Geltendmachung weitergehender Ansprüche</b>
+          <p></p>Weitergehende Ansprüche der piHub Private Investments gegen den Nutzer bleiben unberührt.
+          <h3>9.3. Vertragsstrafe (für unzulässige Nutzung der Vermittlungsplattform)</h3>
+          <p></p>Zeigt der Nutzer den Abschluss eines über die Vermittlungsplattform vermittelten Vertrages nicht an, wird eine
+          Vertragsstrafe gem Ziff. 7.3. fällig. Ein Vertrag gilt als über die Vermittlungsplattform vermittelt, wenn die
+          Leistung der Vermittlungsplattform für den Vertragsabschluss mitursächlich war. Eine verwirkte Vertragsstrafe wird
+          auf Schadensersatzansprüche der piHub Private Investments aufgrund der vom Nutzer begangenen Pflichtverletzung
+          angerechnet.
+          <h2>§10. Vertragsdauer, Vertragsbeendigung, Ausschluss von Nutzern</h2>
+          <h3></h3>10.1. Vertragslaufzeit
+          <p></p>Der Vertrag über die Nutzung der Vermittlungsplattform ist auf unbestimmte Zeit.
+          <h3>10.2. Beendigung des Vertragsverhältnisses</h3>
+          <h4></h4>
+          <b>10.2.1. Kündigungsrecht des Nutzers</b>
+          <p></p>Das Nutzer ist berechtigt, das Nutzungsverhältnis jederzeit ordentlich zu kündigen. Die Kündigung hat schriftlich
+          oder per Email zu erfolgen.
+          <h4></h4>
+          <b>10.2.2. Kündigungsrecht von piHub Private Investments</b>
+          <p></p>piHub Private Investments ist berechtigt, den Nutzungsvertrag mit einer Frist von drei (3) Monaten zum Monatsende
+          zu kündigen. Sofern eine Finanzierungsanfrage des Nutzers noch nicht abgeschlossen ist, also noch keine Finanzierungsangebote
+          von Finanzierern abgegeben wurden, verlängert sich die Kündigungsfrist für piHub Private Investments bis zum Ablauf
+          der zum Zeitpunkt der Kündigung durch den Nutzer zuletzt eingestellten Finanzierungsanfrage. Entsprechendes gilt
+          für die Kündigung seitens piHub Private Investments gegenüber einem Finanzierer, sofern dieser im Zeitpunkt der
+          Kündigung noch Angebotsvorschläge an Nutzer offeriert hat.
+          <h4></h4>
+          <b>10.2.3. Recht zur außerordentlichen Kündigung</b>
+          <p></p>Das Recht zur außerordentlichen Kündigung aus wichtigem Grund bleibt unberührt. Als wichtiger Grund gilt insbesondere
+          ein grober Verstoß des Nutzers gegen diese AGB sowie die Fortsetzung/Wiederholung des Verstoßes trotz erfolgter
+          Abmahnung.
+          <h4></h4>
+          <b>10.2.4. Wirkung der Kündigung</b>
+          <p></p>Mit Wirksamwerden der Kündigung wird das Nutzerskonto des Nutzers durch piHub Private Investments gesperrt.
+          <h3>10.3. Ausschluss von Nutzern</h3>
+          <h4></h4>
+          <b>10.3.1. Recht zur Sperrung wegen vertragswidriger Inhalte/Ausschlussrecht
+          </b>
+          <p></p>piHub Private Investments ist berechtigt, im Falle von vertragswidrig eingestellten Anfragen, Beschreibungen
+          oder sonstige vertragswidrige Inhalte ohne vorherige Ankündigung oder Begründung zu sperren oder zu löschen. Auch
+          behält sich piHub Private Investments vor, vertragswidrig handelnde Nutzer vorübergehend oder dauerhaft von der
+          Nutzung der Vermittlungsplattform auszuschließen. Im Übrigen ist piHub Private Investments nach Eigenem billigen
+          Ermessen berechtigt, Maßnahmen zu treffen, die geeignet sind, Verstöße eines Nutzers zu beenden oder zu unterbinden.
+          Bei Auswahl der zu treffenden Maßnahmen wird piHub Private Investments die berechtigten Interessen des jeweiligen
+          Nutzers angemessen berücksichtigen. Insbesondere wird ein Ausschluss erst nach erfolgter Abmahnung erfolgen, sofern
+          diese nicht im gesonderten Fall entbehrlich ist (§ 314 Abs. 2 BGB).
+          <h4></h4>
+          <b>10.3.2. Ausschluss von der weiteren Nutzung</b>
+          <p></p>Ausgeschlossenen Nutzern ist die weitere Nutzung des Portals sowie eine erneute Registrierung bei piHub Private
+          Investments untersagt.
+          <h2>§11. Erfüllungsort, Gerichtsstand, anwendbares Recht</h2>
+          <h3></h3>11.1. Erfüllungsort
+          <p></p>Erfüllungsort für die gegenseitigen Leistungen aus dem Nutzungsvertrag ist der Sitz von piHub Private Investments
+          in Frankfurt am Main.
+          <h3>11.2. Zuständiges Gericht</h3>
+          <p></p>Für alle Streitigkeiten aus diesem Vertrag ist, soweit nicht gesetzlich zwingend etwas anderes bestimmt ist,
+          der Gerichtsstand am Sitz von piHub Private Investments in Frankfurt am Main vereinbart.
+          <h3>11.3. Geltendes Recht </h3>
+          <p></p>Für diesen Vertrag gilt deutsches Recht unter Ausschluss der Bestimmungen des internationalen Privatrechts.
+          <h2>§12. Sonstiges</h2>
+          <h3>12.1. Salvatorische Klausel</h3>
+          <p></p>Sollte eine der Bestimmungen dieser AGB ganz oder teilweise unwirksam oder nichtig sein oder werden oder Regelungslücken
+          enthalten, sollen die übrigen Bestimmungen hierdurch nicht berührt werden. In diesem Fall tritt an die Stelle der
+          unwirksamen oder nichtigen Bestimmung die jeweils anwendbare gesetzliche Vorschrift.
+          <h3>12.2. Schriftform</h3>
+          <p></p>Änderungen und Ergänzungen dieses Vertrages bedürfen zu ihrer Rechtswirksamkeit der Schriftform. Dies gilt
+          auch für die Aufhebung des Schrifterfordernisses selbst.</div>
+      </div>
+    </div>
+  </div>
+  );
+}
