@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import InputRange from 'react-input-range';
-import ReactTooltip from 'react-tooltip';
+// import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
 import { addProduct } from '../../actions/product';
 import { getIndustryList } from '../../actions/industry';
@@ -227,9 +227,9 @@ class AddProduct extends Component {
                   <label for="amount" data-tip data-for='service'>
                     <strong> <Translate content='label.service' data-tip data-for='service' /></strong>
                   </label>
-                  <ReactTooltip id='service'>
+                  {/* <ReactTooltip id='service'>
                     <span>Select a relevant service.</span>
-                  </ReactTooltip>
+                  </ReactTooltip> */}
                   <Field
                     name="services"
                     component={dropDownField}
