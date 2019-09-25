@@ -2,7 +2,7 @@
 import React, { Component, Fragment } from 'react';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import InputRange from 'react-input-range';
-
+import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
 import { updateProduct } from '../../actions/product';
 import { getProductById } from '../../actions/product';
@@ -111,9 +111,9 @@ class EditProduct extends Component {
       return files.map((file, index) => {
         return (
           <div class="file mb-2">
-            <span class="file-name">File {index + 1}</span>
+            <span class="file-name">{file.file_name}</span>
             {/* <span class="ml-4 file-size">FileType: {file.file_type}</span> */}
-            <span className='btn btn-link' onClick={() => this.props.downloadToken(file.path)}><Translate content='button.download' /></span>
+            <span className='btn btn-link' onClick={() => this.props.downloadToken(file.path, file.file_name, file.type)}><Translate content='button.download' /></span>
           </div>
         )
 
@@ -205,11 +205,17 @@ class EditProduct extends Component {
             <div className="row mt-4">
               <div class="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
+                  <label for="amount" data-tip data-for='product'>
+                    <strong> <Translate content='label.producttitle' data-tip data-for='product' /></strong>
+                  </label>
+                  <ReactTooltip id='product'>
+                    <span>Give a product name</span>
+                  </ReactTooltip>
                   <Field
                     name="product_title"
                     type="text"
                     component={inputField}
-                    label={<Translate content='label.producttitle' />}
+                    // label={<Translate content='label.producttitle' />}
                     className="form-control"
                     validate={validation.required}
                   />
@@ -217,11 +223,17 @@ class EditProduct extends Component {
               </div>
               <div class="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
+                  <label for="amount" data-tip data-for='state'>
+                    <strong> <Translate content='label.state' data-tip data-for='state' /></strong>
+                  </label>
+                  <ReactTooltip id='state'>
+                    <span>Select states.</span>
+                  </ReactTooltip>
                   <Field
                     name="states"
                     component={renderMultiselect}
                     data={this.state.states}
-                    label={<Translate content='label.state' />}
+                    // label={<Translate content='label.state' />}
                     validate={validation.required}
                     placeholder={<Translate content='placeholder.select' />}
                   />
@@ -231,11 +243,17 @@ class EditProduct extends Component {
             <div className="row mt-4">
               <div class="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
+                  <label for="amount" data-tip data-for='service'>
+                    <strong> <Translate content='label.service' data-tip data-for='service' /></strong>
+                  </label>
+                  <ReactTooltip id='service'>
+                    <span>Select a relevant service.</span>
+                  </ReactTooltip>
                   <Field
                     name="services"
                     component={dropDownField}
                     options={this.state.services[`${this.props.language}`]}
-                    label={<Translate content='label.service' />}
+                    // label={<Translate content='label.service' />}
                     validate={validation.required}
                     placeholder={<Translate content='placeholder.select' />}
                   />
@@ -243,11 +261,17 @@ class EditProduct extends Component {
               </div>
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
+                  <label for="amount" data-tip data-for='county'>
+                    <strong> <Translate content='label.country' data-tip data-for='service' /></strong>
+                  </label>
+                  <ReactTooltip id='county'>
+                    <span>Select one or more counties.</span>
+                  </ReactTooltip>
                   <Field
                     name="County"
                     component={renderMultiselect}
                     data={this.state.cityNames}
-                    label={<Translate content='label.country' />}
+                    // label={<Translate content='label.country' />}
                     // validate={validation.required}
                     placeholder="select tags"
                   />
@@ -256,10 +280,15 @@ class EditProduct extends Component {
             </div>
             <div class="row mt-4">
               <div class="col-12 col-sm-12 col-md-6">
-
+                <label for="amount" data-tip data-for='industry'>
+                  <strong> <Translate content='label.industries' /></strong>
+                </label>
+                <ReactTooltip id='industry'>
+                  <span>Select relevent industry.You can select more than one.</span>
+                </ReactTooltip>
                 <Field
                   component={renderMultiselect}
-                  label={<Translate content='label.industries' />}
+                  // label={<Translate content='label.industries' />}
                   data={this.state.industries.names ? this.state.industries.names[`${this.props.language}`] : []}
                   className="form-group"
 
@@ -268,47 +297,53 @@ class EditProduct extends Component {
 
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
-                  <label for="amount">
+                  <label for="amount" data-tip data-for='time-duration'>
                     <strong><Translate content='label.timeduration' /></strong>
                   </label>
                   <div class="d-flex align-items-center">
-                    <input
-                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
-                      type="text"
-                      id="mincredit-amount-value"
-                      // value={time_duration}
-                      value={this.state.value.min}
-                      validate={validation.required}
-                      placeholder="3 Monate"
-                    />&nbsp;&nbsp;
+                    <ReactTooltip id='time-duration'>
+                      <span>Time dutaion from 12 Months to 60 Months</span>
+                    </ReactTooltip>
+                    <div class="d-flex align-items-center">
+                      <input
+                        className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                        type="text"
+                        id="mincredit-amount-value"
+                        // value={time_duration}
+                        value={this.state.value.min}
+                        validate={validation.required}
+                        placeholder="3 Monate"
+                      />&nbsp;&nbsp;
                     <InputRange
-                      maxValue={60}
-                      minValue={12}
-                      value={this.state.value}
-                      onChange={value => this.setState({ value })} />
-                    {/* <div class="col-12 col-sm-12 col-md-6"> */}
-                    &nbsp;&nbsp;<input
-                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
-                      type="text"
-                      id="mincredit-amount-value"
-                      // value={time_duration}
-                      value={this.state.value.max}
-                      validate={validation.required}
-                      placeholder="3 Monate"
-                    />
+                        maxValue={60}
+                        minValue={12}
+                        value={this.state.value}
+                        onChange={value => this.setState({ value })} />
+                      {/* <div class="col-12 col-sm-12 col-md-6"> */}
+                      &nbsp;&nbsp;<input
+                        className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                        type="text"
+                        id="mincredit-amount-value"
+                        // value={time_duration}
+                        value={this.state.value.max}
+                        validate={validation.required}
+                        placeholder="3 Monate"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-
             <div className="row mt-4">
               <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
-                  <label for="amount">
-                    <Translate content='label.mincredit' />
+                  <label for="amount" data-tip data-for='min-credit'>
+                    <strong> <Translate content='label.mincredit' /></strong>
                   </label>
+                  <ReactTooltip id='min-credit'>
+                    <span>Minimum Credit Amount from 250k to 5m</span>
+                  </ReactTooltip>
                   <div class="d-flex align-items-center">
-
                     <Field
                       name="min_credit_amount"
                       type="range"
@@ -334,11 +369,13 @@ class EditProduct extends Component {
               </div>
               <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
-                  <label for="amount">
-                    <Translate content='label.maxcredit' />
+                  <label for="amount" data-tip data-for='max-credit'>
+                    <strong> <Translate content='label.maxcredit' /></strong>
                   </label>
+                  <ReactTooltip id='max-credit'>
+                    <span>Maximum Credit Amount from 250k to 5m and should be more than the min. credit amount</span>
+                  </ReactTooltip>
                   <div class="d-flex align-items-center">
-
                     <Field
                       name="max_credit_amount"
                       type="range"
@@ -369,9 +406,12 @@ class EditProduct extends Component {
               <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
                   {/* <div className="row align-items-end"> */}
-                  <label for="amount">
-                    <Translate content='label.minimumsales' />
+                  <label for="amount" data-tip data-for='min-sales'>
+                    <strong>  <Translate content='label.minimumsales' /></strong>
                   </label>
+                  <ReactTooltip id='min-sales' >
+                    <span>Minimum Sales Credit from 0 to 50M</span>
+                  </ReactTooltip>
                   <div class="d-flex align-items-center">
                     <Field
                       name="min_sales_creditor"
@@ -397,7 +437,12 @@ class EditProduct extends Component {
               </div>
               <div className="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
-                  <Translate content='label.Sicherheiten' component='label' className="d-block" />
+                  <strong>
+                    <Translate content='label.Sicherheiten' component='label' className="d-block" data-tip data-for='collateral' />
+                  </strong>
+                  <ReactTooltip id='collateral' >
+                    <span>Select yes if collateral is needed.</span>
+                  </ReactTooltip>
                   <div class="form-check form-check-inline">
                     <Field
                       type="radio"
@@ -426,7 +471,10 @@ class EditProduct extends Component {
             <div class="row mt-4">
               <div class="col">
                 <div class="form-group">
-                  <Translate content='label.rating' component="label" class="d-block" />
+                  <strong><Translate content='label.rating' component="label" class="d-block" data-tip data-for='rating' /></strong>
+                  <ReactTooltip id='rating' >
+                    <span>Select Yes if rating is required.</span>
+                  </ReactTooltip>
                   <div class="form-check form-check-inline">
                     <Field
                       type="radio"
@@ -457,16 +505,14 @@ class EditProduct extends Component {
                 </div>
                 // </div>
               ) : null}
-
-
             </div>
-
-
-
             <div className="row mt-4">
               <div className="col">
                 <div className="form-group">
-                  <Translate content='label.fileupload' component="label" className="d-block" />
+                  <Translate content='label.fileupload' component="label" className="d-block" data-tip data-for='files' />
+                  <ReactTooltip id='files' >
+                    <span>Upload files.</span>
+                  </ReactTooltip>
                   <Field
                     name="files"
                     component={renderDropzoneField}

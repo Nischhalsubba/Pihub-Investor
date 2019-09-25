@@ -272,7 +272,7 @@ class AddProduct extends Component {
                   // label={<Translate content='label.industries' />}
                   data={this.state.industries.names ? this.state.industries.names[`${this.props.language}`] : []}
                   className="form-group"
-                  placeholder="select tags"
+                  placeholder="select"
                 />
               </div>
               <div class="col-12 col-sm-12 col-md-6">
