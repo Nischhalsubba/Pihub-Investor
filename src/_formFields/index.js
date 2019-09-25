@@ -17,7 +17,8 @@ export const inputField = ({
 }) => {
   return (
     <div>
-      <label><strong>{label}</strong></label>
+      {label ? <label><strong>{label}</strong></label>
+        : null}
       <input
         {...input}
         type={type}
@@ -73,7 +74,8 @@ export const dropDownField = ({
 }) => {
   return (
     <div className="form-group">
-      <label><strong>{label}</strong></label>
+      {label ? <label><strong>{label}</strong></label>
+        : null}
       <Select
         {...input}
         onChange={value => input.onChange(value)}
