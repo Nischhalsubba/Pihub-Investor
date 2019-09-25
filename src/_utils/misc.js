@@ -12,10 +12,7 @@ export const extractNames = (list) => {
 }
 
 export const extractId = (list, mainList) => {
-  console.log(list);
-  console.log(mainList)
   var r = [];
-
   if (list) {
     list.map((name) => {
       return mainList.map((main) => {
@@ -84,7 +81,6 @@ export const getId = (mainList, list, language) => {
       result.push(ml.id)
     })
   }
-  console.log(result);
   return result;
 }
 
@@ -152,5 +148,20 @@ export const extractIdForName = (list, mainList) => {
     })
   }
 
+  return r;
+}
+
+
+export const findId = (list, mainList) => {
+  var r = [];
+  if (list) {
+    list.map(l => {
+      return mainList.map(mL => {
+        if (l === mL.name) {
+          return r.push(mL.id)
+        }
+      })
+    })
+  }
   return r;
 }

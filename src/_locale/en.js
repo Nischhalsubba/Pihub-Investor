@@ -133,7 +133,8 @@ export default {
         postponed: 'Postponed',
         deleted: 'Deleted',
         deletedmsg: 'This product has been deleted',
-        postponedmsg: 'This product has been postponed. You can change the status'
+        postponedmsg: 'This product has been postponed. You can change the status',
+        suspended: 'Suspended'
     },
     button: {
         Produktbearbeiten: 'Edit Product',

@@ -13,9 +13,8 @@ import { getCounties, getAllState } from '../../actions/statesCounties';
 
 import Subheader from '../general/Subheader';
 import * as validation from '../../_utils/validate';
-import germanStates from '../../_german_states';
 import Translate from 'react-translate-component'
-import { extractNames, extractId, getId, extractIdForName, extractIdCounty } from '../../_utils/misc';
+import { findId, extractId, getId, extractIdForName, extractIdCounty } from '../../_utils/misc';
 
 import {
   inputField,
@@ -60,25 +59,17 @@ class EditProduct extends Component {
       // Redirect to list page if therer is no id of product to be fetched availabel
       return this.props.history.push('/products')
     }
+    this.props.getAllState();
     this.props.getProductById(this.props.location.state.id)
     this.props.getIndustryList();
     this.props.getServiceList();
     this.props.getCounties();
-    this.props.getAllState();
-    // this.setState({
-    //   states: extractNames(germanStates)
-    // })
   }
   componentDidUpdate(prevProps, prevState) {
-    // if (this.props.states !== prevProps.states) {
-    //   this.setState({
-    //     cities: city(this.props.states)
-    //   }, () => {
-    //     var c = extractNames(this.state.cities)
-    //     this.setState({ cityNames: c });
-    //   }
-    //   )
-    // };
+    if (this.props.initialValues !== prevProps.initialValues) {
+      let id = findId(this.props.initialValues.states, this.state.statesWithId);
+      this.props.getCounties(id);
+    }
     if (prevProps.allStates !== this.props.allStates) {
       this.setState({ states: this.props.allStates.list, statesWithId: this.props.allStates.all })
     }
@@ -151,22 +142,17 @@ class EditProduct extends Component {
     if (formProps.County[0] === 'Select All') {
       formProps.county_ids = extractIdCounty(null, this.state.cities);
     } else {
-      console.log('?', this.state.cities);
-      console.log(formProps.County);
       formProps.county_ids = extractIdCounty(formProps.County, this.state.cities);
-      console.log(formProps.county_ids);
     }
     if (formProps.states === 'Select All') {
-      // formProps.state_ids = extractId(null, germanStates);
       formProps.state_ids = extractIdForName(null, this.state.statesWithId);
 
     } else {
-      // formProps.state_ids = extractId(formProps.states, germanStates);
       formProps.state_ids = extractIdForName(formProps.states, this.state.statesWithId);
     }
     formProps.min_time_duration = this.state.value.min;
     formProps.max_time_duration = this.state.value.max;
-    console.log(formProps);
+    // console.log(formProps);
     this.props.updateProduct(formProps, this.props.location.state.id, () => this.props.history.push({ pathname: '/product', state: { id: this.props.location.state.id } }))
   };
 
@@ -189,7 +175,7 @@ class EditProduct extends Component {
             <input
               type="text" name={`rating_value[${credit.id}]`}
               onChange={(e) => this.setState({
-                rating_value: [...this.state.rating_value, { id: credit.id, value: e.target.value }]
+                rating_value: [...this.state.rating_value, { rating_id: credit.id, value: e.target.value }]
               })
               }
               class="col-3 form-control text-center"

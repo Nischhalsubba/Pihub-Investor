@@ -90,6 +90,7 @@ class AddProduct extends Component {
       }
     }, []);
     this.setState({ rating_value: filteredArr });
+    console.log(this.state.rating_value)
     if (formProps.undefined[0] === 'Select All') {
       formProps.industry_id = getId(this.props.industry.list, null);
     } else {
@@ -112,7 +113,6 @@ class AddProduct extends Component {
       formProps.state_ids = extractIdForName(formProps.states, this.state.statesWithId);
 
     }
-    // console.log(formProps)
     this.props.addProduct(formProps, () => this.props.history.push('/products'))
   };
 
@@ -133,7 +133,7 @@ class AddProduct extends Component {
             <input
               type="text" name={`rating_value[${credit.id}]`}
               onChange={(e) => this.setState({
-                rating_value: [...this.state.rating_value, { id: credit.id, value: e.target.value }]
+                rating_value: [...this.state.rating_value, { rating_id: credit.id, value: e.target.value }]
               })
               }
 

@@ -126,7 +126,9 @@ export default {
         postponed: 'Verschoben',
         deleted: 'Gelöscht',
         deletedmsg: 'Dieses Produkt wurde gelöscht',
-        postponedmsg: 'Dieses Produkt wurde verschoben. Sie können den Status rückgängig machen.'
+        postponedmsg: 'Dieses Produkt wurde verschoben. Sie können den Status rückgängig machen.',
+        suspended: 'Suspendiert'
+
 
     },
     button: {

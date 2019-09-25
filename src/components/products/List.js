@@ -21,7 +21,6 @@ class ProductsList extends Component {
     if (productsObject && productsObject.productsList.data.length > 0) {
       let products = productsObject.productsList.data;
       return products.map((product, index) => {
-        console.log(product.status)
         return (
           <tr key={product.id}>
             <td>
@@ -54,6 +53,7 @@ class ProductsList extends Component {
               {product.status === 'open' ? <span className="badge badge-info"><Translate content='label.open' /></span> : null}
               {product.status === 'postponed' ? <span className="badge badge-secondary"><Translate content='label.postponed' /></span> : null}
               {product.status === 'deleted' ? <span className="badge badge-light"><Translate content='label.deleted' /></span> : null}
+              {product.status === 'suspended' ? <span className="badge badge-info"><Translate content='label.suspended' /></span> : null}
             </td>
 
           </tr>
