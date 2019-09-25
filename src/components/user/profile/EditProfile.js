@@ -19,7 +19,6 @@ class EditProfile extends Component {
 		}
 	}
 	onSubmit = formProps => {
-		console.log('xx', formProps)
 		if (this.state.file) {
 			formProps.company_logo = this.state.file;
 		}
@@ -27,7 +26,6 @@ class EditProfile extends Component {
 	}
 	render() {
 		const { handleSubmit } = this.props;
-		console.log(this.props.initialValues)
 
 		return (
 			<Fragment>
@@ -62,6 +60,7 @@ class EditProfile extends Component {
 										component={inputField}
 										label="Company Name"
 										className="form-control"
+										placeholder="Company Name inc."
 									/>
 								</div>
 							</div>
@@ -76,6 +75,7 @@ class EditProfile extends Component {
 										component={inputField}
 										label="Headquarter"
 										className="form-control"
+										placeholder="Berlin"
 									/>
 								</div>
 							</div>
@@ -90,6 +90,7 @@ class EditProfile extends Component {
 										component={inputField}
 										label="Street Address"
 										className="form-control"
+										placeholder='Hight Street'
 									/>
 								</div>
 							</div>
@@ -101,6 +102,7 @@ class EditProfile extends Component {
 										component={inputField}
 										label="Zip/Postal Code"
 										className="form-control"
+										placeholder="SE18 1EA"
 									/>
 								</div>
 							</div>
@@ -130,12 +132,14 @@ class EditProfile extends Component {
 										type="text"
 										component={inputField}
 										className="form-control"
+										placeholder='Contact Name'
 									/>
 									<Field
 										name="contact_email_1"
 										type="email"
 										component={inputField}
 										className="form-control"
+										placeholder="contact@email.com"
 									/>
 
 									<Field
@@ -143,6 +147,7 @@ class EditProfile extends Component {
 										type="text"
 										component={inputField}
 										className="form-control"
+										placeholder="+1 1234567890"
 									/>
 								</div>
 							</div>
@@ -154,12 +159,15 @@ class EditProfile extends Component {
 										type="text"
 										component={inputField}
 										className="form-control"
+										placeholder='Contact Name-2'
 									/>
 									<Field
 										name="contact_email_2"
 										type="email"
 										component={inputField}
 										className="form-control"
+										placeholder="contact2@email.com"
+
 									/>
 
 									<Field
@@ -167,6 +175,8 @@ class EditProfile extends Component {
 										type="text"
 										component={inputField}
 										className="form-control"
+										placeholder="+1 1234567890"
+
 									/>
 								</div>
 							</div>
@@ -178,12 +188,16 @@ class EditProfile extends Component {
 										type="text"
 										component={inputField}
 										className="form-control"
+										placeholder='Contact Name -3'
+
 									/>
 									<Field
 										name="contact_email_3"
 										type="email"
 										component={inputField}
 										className="form-control"
+										placeholder="contact3@email.com"
+
 									/>
 
 									<Field
@@ -191,6 +205,8 @@ class EditProfile extends Component {
 										type="text"
 										component={inputField}
 										className="form-control"
+										placeholder="+1 1234567890"
+
 									/>
 								</div>
 							</div>
@@ -207,6 +223,7 @@ class EditProfile extends Component {
 										type="text"
 										component={inputField}
 										className="ml-2 form-control"
+										placeholder="https://www.facebook.com/"
 									/>
 
 								</div>
@@ -220,6 +237,8 @@ class EditProfile extends Component {
 										type="text"
 										component={inputField}
 										className="ml-2 form-control"
+										placeholder="https://www.twitter.com/"
+
 									/>
 								</div>
 								<div class="form-group d-flex align-items-center">
@@ -231,6 +250,8 @@ class EditProfile extends Component {
 										type="text"
 										component={inputField}
 										className="ml-2 form-control"
+										placeholder="https://www.linkedin.com/"
+
 									/>
 
 								</div>

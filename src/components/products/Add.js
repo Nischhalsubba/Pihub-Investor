@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import InputRange from 'react-input-range';
-import ReactTooltip from 'react-tooltip';
+// import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
 import { addProduct } from '../../actions/product';
 import { getIndustryList } from '../../actions/industry';
@@ -189,9 +189,9 @@ class AddProduct extends Component {
                   <label for="amount" data-tip data-for='product'>
                     <strong> <Translate content='label.producttitle' data-tip data-for='product' /></strong>
                   </label>
-                  <ReactTooltip id='product'>
+                  {/* <ReactTooltip id='product'>
                     <span>Give a product name</span>
-                  </ReactTooltip>
+                  </ReactTooltip> */}
                   <Field
                     name="product_title"
                     type="text"
@@ -207,9 +207,9 @@ class AddProduct extends Component {
                   <label for="amount" data-tip data-for='state'>
                     <strong> <Translate content='label.state' data-tip data-for='state' /></strong>
                   </label>
-                  <ReactTooltip id='state'>
+                  {/* <ReactTooltip id='state'>
                     <span>Select states.</span>
-                  </ReactTooltip>
+                  </ReactTooltip> */}
                   <Field
                     name="states"
                     component={renderMultiselect}
@@ -227,9 +227,9 @@ class AddProduct extends Component {
                   <label for="amount" data-tip data-for='service'>
                     <strong> <Translate content='label.service' data-tip data-for='service' /></strong>
                   </label>
-                  <ReactTooltip id='service'>
+                  {/* <ReactTooltip id='service'>
                     <span>Select a relevant service.</span>
-                  </ReactTooltip>
+                  </ReactTooltip> */}
                   <Field
                     name="services"
                     component={dropDownField}
@@ -245,9 +245,9 @@ class AddProduct extends Component {
                   <label for="amount" data-tip data-for='county'>
                     <strong> <Translate content='label.country' data-tip data-for='service' /></strong>
                   </label>
-                  <ReactTooltip id='county'>
+                  {/* <ReactTooltip id='county'>
                     <span>Select one or more counties.</span>
-                  </ReactTooltip>
+                  </ReactTooltip> */}
                   <Field
                     name="County"
                     component={renderMultiselect}
@@ -264,9 +264,9 @@ class AddProduct extends Component {
                 <label for="amount" data-tip data-for='industry'>
                   <strong> <Translate content='label.industries' /></strong>
                 </label>
-                <ReactTooltip id='industry'>
+                {/* <ReactTooltip id='industry'>
                   <span>Select relevent industry.You can select more than one.</span>
-                </ReactTooltip>
+                </ReactTooltip> */}
                 <Field
                   component={renderMultiselect}
                   // label={<Translate content='label.industries' />}
@@ -281,9 +281,9 @@ class AddProduct extends Component {
                     <strong><Translate content='label.timeduration' /></strong>
                   </label>
                   <div class="d-flex align-items-center">
-                    <ReactTooltip id='time-duration'>
+                    {/* <ReactTooltip id='time-duration'>
                       <span>Time dutaion from 12 Months to 60 Months</span>
-                    </ReactTooltip>
+                    </ReactTooltip> */}
 
                     <input
                       className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
@@ -321,9 +321,9 @@ class AddProduct extends Component {
                   <label for="amount" data-tip data-for='min-credit'>
                     <strong> <Translate content='label.mincredit' /></strong>
                   </label>
-                  <ReactTooltip id='min-credit'>
+                  {/* <ReactTooltip id='min-credit'>
                     <span>Minimum Credit Amount from 250k to 5m</span>
-                  </ReactTooltip>
+                  </ReactTooltip> */}
                   <div class="d-flex align-items-center">
 
                     <Field
@@ -355,9 +355,9 @@ class AddProduct extends Component {
                   <label for="amount" data-tip data-for='max-credit'>
                     <strong> <Translate content='label.maxcredit' /></strong>
                   </label>
-                  <ReactTooltip id='max-credit'>
+                  {/* <ReactTooltip id='max-credit'>
                     <span>Maximum Credit Amount from 250k to 5m and should be more than the min. credit amount</span>
-                  </ReactTooltip>
+                  </ReactTooltip> */}
                   <div class="d-flex align-items-center">
 
                     <Field
@@ -394,9 +394,9 @@ class AddProduct extends Component {
                   <label for="amount" data-tip data-for='min-sales'>
                     <strong>  <Translate content='label.minimumsales' /></strong>
                   </label>
-                  <ReactTooltip id='min-sales' >
+                  {/* <ReactTooltip id='min-sales' >
                     <span>Minimum Sales Credit from 0 to 50M</span>
-                  </ReactTooltip>
+                  </ReactTooltip> */}
                   <div class="d-flex align-items-center">
                     <Field
                       name="min_sales_creditor"
@@ -426,9 +426,9 @@ class AddProduct extends Component {
                   <strong>
                     <Translate content='label.Sicherheiten' component='label' className="d-block" data-tip data-for='collateral' />
                   </strong>
-                  <ReactTooltip id='collateral' >
+                  {/* <ReactTooltip id='collateral' >
                     <span>Select yes if collateral is needed.</span>
-                  </ReactTooltip>
+                  </ReactTooltip> */}
                   <div class="form-check form-check-inline">
                     <Field
                       type="radio"
@@ -458,9 +458,9 @@ class AddProduct extends Component {
               <div class="col">
                 <div class="form-group">
                   <strong><Translate content='label.rating' component="label" class="d-block" data-tip data-for='rating' /></strong>
-                  <ReactTooltip id='rating' >
+                  {/* <ReactTooltip id='rating' >
                     <span>Select Yes if rating is required.</span>
-                  </ReactTooltip>
+                  </ReactTooltip> */}
                   <div class="form-check form-check-inline">
                     <Field
                       type="radio"
@@ -502,9 +502,9 @@ class AddProduct extends Component {
               <div className="col">
                 <div className="form-group">
                   <strong> <Translate content='label.fileupload' component="label" data-tip data-for='files' /></strong>
-                  <ReactTooltip id='files'>
+                  {/* <ReactTooltip id='files'>
                     <span>Upload necessary documents.</span>
-                  </ReactTooltip>
+                  </ReactTooltip> */}
                   <Field
                     name="files"
                     component={renderDropzoneField}
