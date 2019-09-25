@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import InputRange from 'react-input-range';
 // import ReactTooltip from 'react-tooltip';
+import Tooltip from 'react-tooltip-lite';
+
 import { connect } from 'react-redux';
 import { addProduct } from '../../actions/product';
 import { getIndustryList } from '../../actions/industry';
@@ -187,7 +189,9 @@ class AddProduct extends Component {
               <div class="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
                   <label for="amount" data-tip data-for='product'>
-                    <strong> <Translate content='label.producttitle' data-tip data-for='product' /></strong>
+                    <strong>                  <Tooltip content='Product'>
+                      <Translate content='label.producttitle' data-tip data-for='product' />                  </Tooltip>
+                    </strong>
                   </label>
                   {/* <ReactTooltip id='product'>
                     <span>Give a product name</span>
