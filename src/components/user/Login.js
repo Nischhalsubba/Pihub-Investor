@@ -66,7 +66,7 @@ class Login extends Component {
                             </form>
                             <br />
                             {/* If you dont have account you can sign up  */}
-                            <Translate content='label.ifyoudont' />&nbsp;&nbsp;&nbsp;<Link to="/signup"><strong><Translate content='label.here' /></strong></Link>
+                            <Translate content='label.ifyoudont' />&nbsp;<Link to="/signup"><strong><Translate content='label.here' /></strong></Link>
 
                         </div>
                     </div>
@@ -79,7 +79,7 @@ class Login extends Component {
                                     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                                     diam nonumy eirmod tempor invidunt ut labore et dolore magna.
                                 </p> */}
-                                <Translate content='label.lorem' component="p" className="signin-banner__desc" />
+                                <Translate content='label.banner_desc' component="p" className="signin-banner__desc" />
                             </header>
                             <img
                                 className="signin-banner__thumb"

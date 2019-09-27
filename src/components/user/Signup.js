@@ -59,16 +59,6 @@ class Signup extends Component {
                 <Translate content='label.atcredittech' component="h2" className="feature-ours__title" />
 
               </div>
-              <div className="signup-quote">
-
-                <Translate content='label.whycredittech' component="h2" className="signup-quote__title" />
-
-                <Translate content='label.atfirst' component="p" className="signup-quote__content" />
-                <p className="signup-quote__name">John Doe</p>
-                <Link to="/login" className="btn btn-white">
-                  <Translate content='label.whatothers' />
-                </Link>
-              </div>
             </div>
           </div>
           <div className="main-container">
