@@ -48,7 +48,8 @@ export default {
         processing: 'Zu Bearbeiten',
         Kreditorname: 'Kreditorname',
         theperfect: 'Finden Sie Ihren neuen Firmenkredit',
-        atcredittech: 'Bei Credittech können Sie leicht einen Gläubiger finden und eine Investition tätigen',
+        atcredittech: 'Melden Sie sich als Kreditgeber an und sie finden in wenigen Schritten neue Kreditkunden.\n' +
+            'Alle Branchen - Regional - Überregional',
         whycredittech: 'Warum Credit Tech?',
         atfirst: 'Zuerst habe ich wenig investiert und mit der Zeit habe ich in den Sektor investiert, den ich mag, und Credit Tech bringt mich genau dorthin',
         whatothers: 'Was sagen andere?',
@@ -146,6 +147,7 @@ export default {
     },
     placeholder: {
         select: 'Auswählen',
+        and: 'und ',
         privacy_policy: 'Datenschutz-Bestimmungen'
 
     },

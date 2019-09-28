@@ -23,8 +23,8 @@ export default {
         requestedamount: 'Requested amount',
         credittype: 'Credit type',
         yourejected: 'You rejected this Investment',
-        iagree: 'I agree to the',
-        terms: 'terms and conditions',
+        iagree: 'I agree to the ',
+        terms: 'terms, conditions ',
         addfile: 'Add files',
         ordrop: 'or drop files here',
         approvedon: 'Approved on',
@@ -50,7 +50,8 @@ export default {
         Sicherheiten: 'Collateral',
         Ratingagentur: 'Rating agency',
         Kreditrating: 'credit rating',
-        atcredittech: 'At Credittech you can easily find creditor and make an investment',
+        atcredittech: 'Register as a lender and you will find new credit customers in just a few steps.\n' +
+            'All sectors - Regional - Nationwide',
         whycredittech: 'Why Credit Tech?',
         atfirst: 'At first I Invested little and by time pass I Invested to the sector I like and Credit Tech takes me right there',
         whatothers: 'What others say?',
@@ -150,7 +151,8 @@ export default {
     },
     placeholder: {
         select: 'Select',
-        privacy_policy: 'Privacy Policy'
+        and: 'and ',
+        privacy_policy: 'privacy policy'
     },
     unverified: {
         msg: 'Your account is not yet verified yet. Please contact the administrator'

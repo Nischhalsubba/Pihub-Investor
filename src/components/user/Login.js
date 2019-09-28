@@ -79,7 +79,7 @@ class Login extends Component {
                                     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                                     diam nonumy eirmod tempor invidunt ut labore et dolore magna.
                                 </p> */}
-                                <Translate content='label.banner_desc' component="p" className="signin-banner__desc" />
+                                <Translate content='label.atcredittech' component="p" className="signin-banner__desc" />
                             </header>
                             <img
                                 className="signin-banner__thumb"
