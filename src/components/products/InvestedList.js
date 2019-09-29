@@ -19,7 +19,9 @@ class InvestedList extends Component {
 
     renderList = investments => {
         if (investments.length === 0) {
-            return <div>You haven't invested on any products yet</div>
+            return <div>
+                <Translate content="placeholder.noActiveProduct"/>
+            </div>
         } else {
             return investments.map((investment, index) => {
                 var investedDate = new Date(investment.invested_on);

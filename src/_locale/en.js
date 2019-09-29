@@ -135,7 +135,8 @@ export default {
         deleted: 'Deleted',
         deletedmsg: 'This product has been deleted',
         postponedmsg: 'This product has been postponed. You can change the status',
-        suspended: 'Suspended'
+        suspended: 'Suspended',
+        reject: 'Reject',
     },
     button: {
         Produktbearbeiten: 'Edit Product',
@@ -152,7 +153,10 @@ export default {
     placeholder: {
         select: 'Select',
         and: 'and ',
-        privacy_policy: 'privacy policy'
+        privacy_policy: 'privacy policy',
+        privacy_policy_ending: '.',
+        noActiveProduct: 'You haven\'t invested on any products yet.',
+        pleaseWait: 'Einen Moment bitte...',
     },
     unverified: {
         msg: 'Your account is not yet verified yet. Please contact the administrator'

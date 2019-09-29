@@ -62,6 +62,7 @@ export const checkBox = ({
                 <a href='https://www.pihub-pi.com/de/datenschutz/' rel="noopener noreferrer" target="_blank">
                     <Translate content='placeholder.privacy_policy' style={{fontWeight: 600}}/>
                 </a>
+                <Translate content='placeholder.privacy_policy_ending'/>
             </label>
             <p>
                 <font color="red">{touched && error}</font>
