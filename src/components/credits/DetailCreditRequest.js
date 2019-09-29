@@ -53,6 +53,40 @@ class DetailCreditRequest extends Component {
       })
     }
   }
+  /**
+   * @params = {
+   *     Boolean ratingForCredit,
+   *     Array creditRatings
+   * }
+   * Render Credit Ratings
+   **/
+  renderCreditRatings = (ratingForCredit, creditRatings) => {
+
+    if (ratingForCredit) {
+      return (
+          <div className="row justify-content-between w-100 mt-3">
+            <div className="col-2 p-0">
+              <h6>Creditrre form</h6><span>AAA</span>
+            </div>
+            <div className="col-2 p-0">
+              <h6>Standard & Poors</h6><span>A+</span>
+            </div>
+            <div className="col-2 p-0">
+              <h6>Moody's</h6><span>AAA+</span>
+            </div>
+            <div className="col-2 p-0">
+              <h6>Euler Hermes</h6><span>AAA+</span>
+            </div>
+            <div className="col-2 p-0">
+              <h6>Euler Hermes</h6><span>AAA+</span>
+            </div>
+            <div className="col-2 p-0">
+              <h6>Bank/Andere</h6><span>AAA+</span>
+            </div>
+          </div>
+      )
+    }
+  }
   changeStatus = status => {
     const { pId, aId } = this.props.location.state;
 
@@ -60,7 +94,17 @@ class DetailCreditRequest extends Component {
   }
   render() {
     if (this.state.detail) {
-      const {requested_by, requested_on, amount, deadline, description, duration, status, files, time_duration, collaterals, state, county, service, industries} = this.state.detail;
+      const {
+        requested_by,
+        requested_on,
+        amount,
+        deadline,
+        description,
+        duration,
+        status, files,
+        time_duration, collaterals,
+        state, county,
+        service, industries, rating_for_credit, ratings} = this.state.detail;
       var requestedDate = new Date(requested_on);
       return (
         <Fragment>
@@ -94,7 +138,7 @@ class DetailCreditRequest extends Component {
                     </div>
                   </div>
                 </div>
-
+                {this.renderCreditRatings(1, ratings)}
               </div>
               <div class="col-lg-12 col-xl-4 rightbar">
                 <div class="amount">
