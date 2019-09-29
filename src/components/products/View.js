@@ -213,7 +213,7 @@ class ViewProduct extends Component {
         </Fragment>
       );
     } else {
-      return <div>Just a sec</div>;
+      return <div><Translate content="placeholder.justASecond"/></div>;
     }
   }
 }

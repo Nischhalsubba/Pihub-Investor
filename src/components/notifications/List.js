@@ -77,7 +77,7 @@ class Notifications extends Component {
           </div>
           <div className="content-body mt-2">
             <ul className="notification p-0">
-              <span>Just a second</span>
+              <span><Translate content="placeholder.justASecond"/></span>
             </ul>
           </div>
         </Fragment>

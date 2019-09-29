@@ -5,6 +5,8 @@ import Subheader from '../general/Subheader';
 import { getApplicationDetail } from '../../actions/application';
 import Translate from 'react-translate-component';
 import { changeStatus } from '../../actions/changeStatus';
+import {ToEuro} from "../general/CurrencyFormatter";
+import Moment from 'react-moment';
 class DetailCreditRequest extends Component {
   state = { detail: null, refresh: false }
   componentDidMount() {
@@ -38,12 +40,16 @@ class DetailCreditRequest extends Component {
       })
     }
   }
-  showCollaterals = collaterals => {
-    if (collaterals.length === 0) {
+
+  /**
+   * Loop through collection to show objects display properties
+   **/
+  showCollections = collection => {
+    if (collection.length === 0) {
       return <div>Not Available</div>
     } else {
-      return collaterals.map((collat, index) => {
-        return <span key={index}>{collat.name} <br /></span>
+      return collection.map((object, index) => {
+        return <span key={index}>{object.name} <br/></span>
       })
     }
   }
@@ -54,7 +60,7 @@ class DetailCreditRequest extends Component {
   }
   render() {
     if (this.state.detail) {
-      const { requested_by, requested_on, amount, deadline, description, duration, status, files, time_duration, collaterals, state } = this.state.detail;
+      const {requested_by, requested_on, amount, deadline, description, duration, status, files, time_duration, collaterals, state, county, service, industries} = this.state.detail;
       var requestedDate = new Date(requested_on);
       return (
         <Fragment>
@@ -73,18 +79,18 @@ class DetailCreditRequest extends Component {
                     <h6> <Translate content='label.state' /></h6>
                     <span>{state ? state.name : null}</span>
                   </div>
-                  <div class="col-3 p-0">
-                    <h6> <Translate content='column.credittype' /></h6>
-                    <span>Resolving credit </span>
+                  <div className="col-3 p-0">
+                    <h6><Translate content='label.county'/></h6>
+                    <span>{county ? county.name : null}</span>
                   </div>
                   <div class="col-3 p-0">
-                    <h6><Translate content='label.county' /></h6>
-                    <span>Germany</span>
+                    <h6> <Translate content='column.credittype' /></h6>
+                    <span>{service ? service.name : null}</span>
                   </div>
                   <div class="col-3 p-0">
                     <h6><Translate content='label.industries' /></h6>
                     <div class="d-flex flex-wrap justify-content-between flex-column">
-                      {collaterals ? this.showCollaterals(collaterals) : null}
+                      {industries ? this.showCollections(industries) : null}
                     </div>
                   </div>
                 </div>
@@ -94,7 +100,7 @@ class DetailCreditRequest extends Component {
                 <div class="amount">
                   {/* <h6>Requested amount of</h6> */}
                   <h6>  <Translate content='label.requestedamount' /></h6>
-                  <h2>€{amount}</h2>
+                  <h2><ToEuro amount={amount}/></h2>
                 </div>
                 <div class="investor clearfix mt-5">
                   {/* <h6>Requested By</h6> */}
@@ -107,7 +113,7 @@ class DetailCreditRequest extends Component {
                 <div class="date mt-5">
                   {/* <h6>Request on</h6> */}
                   <h6> <Translate content='column.requeston' /></h6>
-                  <span>{`${requestedDate.getDate()} - ${requestedDate.getMonth() + 1} - ${requestedDate.getFullYear()}`}</span>
+                  <span><Moment format="DD.MM.YYYY">{requestedDate}</Moment></span>
                 </div>
                 <div class="date mt-5">
                   {/* <h6>Time Duration</h6> */}
@@ -139,7 +145,7 @@ class DetailCreditRequest extends Component {
         </Fragment>
       );
     } else {
-      return <div>Just a sec !!</div>
+      return <div><Translate content="placeholder.justASecond"/></div>
     }
 
   }

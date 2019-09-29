@@ -157,7 +157,8 @@ export default {
         privacy_policy_ending: '.',
         noActiveProduct: 'You haven\'t invested on any products yet.',
         pleaseWait: 'Einen Moment bitte...',
-        noCreditRequests: 'This product doesn\'t have any credit request.'
+        noCreditRequests: 'This product doesn\'t have any credit request.',
+        justASecond: 'Please wait a moment...'
     },
     unverified: {
         msg: 'Your account is not yet verified yet. Please contact the administrator'
