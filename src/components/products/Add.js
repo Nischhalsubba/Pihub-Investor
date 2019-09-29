@@ -246,7 +246,7 @@ class AddProduct extends Component {
               <div class="col-12 col-sm-12 col-md-6">
                 <div class="form-group">
                   <label for="amount" data-tip data-for='county'>
-                    <strong> <Translate content='label.country' data-tip data-for='service' /></strong>
+                    <strong> <Translate content='label.county' data-tip data-for='service' /></strong>
                   </label>
                   {/* <ReactTooltip id='county'>
                     <span>Select one or more counties.</span>
@@ -255,7 +255,7 @@ class AddProduct extends Component {
                     name="County"
                     component={renderMultiselect}
                     data={this.state.cityNames}
-                    // label={<Translate content='label.country' />}
+                    // label={<Translate content='label.county' />}
                     // validate={validation.required}
                     placeholder="select tags"
                   />

@@ -93,7 +93,7 @@ class CreditorDetail extends Component {
                       <span>{county.name} </span>
                     </div>
                     <div class="col-3 p-0">
-                      {/* <Translate content='label.country' /> */}
+                      {/* <Translate content='label.county' /> */}
                       <h6>Collateral</h6>
                       <br />
                       {collaterals.map((c, index) => {

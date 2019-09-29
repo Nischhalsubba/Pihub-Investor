@@ -19,7 +19,7 @@ class RequestedByList extends Component {
   }
   renderListOfRequester = (list, name) => {
     if (list.length === 0) {
-      return <span>No one has place in any kind of requests yet</span>;
+      return <tr><td><Translate content="placeholder.noCreditRequests"/></td></tr>;
     }
     return list.map((data, index) => {
       return (

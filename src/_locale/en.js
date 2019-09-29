@@ -103,7 +103,7 @@ export default {
         no: 'No',
         yes: 'Yes',
         rating: 'Rating for Credit',
-        country: 'County',
+        county: 'County',
         editproducts: 'Edit Products',
         mincredit: 'Minimum Credit Value',
         notifications: 'Notifications',
@@ -157,6 +157,7 @@ export default {
         privacy_policy_ending: '.',
         noActiveProduct: 'You haven\'t invested on any products yet.',
         pleaseWait: 'Einen Moment bitte...',
+        noCreditRequests: 'This product doesn\'t have any credit request.'
     },
     unverified: {
         msg: 'Your account is not yet verified yet. Please contact the administrator'

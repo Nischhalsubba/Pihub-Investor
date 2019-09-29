@@ -78,7 +78,7 @@ class DetailCreditRequest extends Component {
                     <span>Resolving credit </span>
                   </div>
                   <div class="col-3 p-0">
-                    <h6><Translate content='label.country' /></h6>
+                    <h6><Translate content='label.county' /></h6>
                     <span>Germany</span>
                   </div>
                   <div class="col-3 p-0">

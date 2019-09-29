@@ -128,7 +128,7 @@ class ViewProduct extends Component {
                   </div>
                   <div class="col-3 p-0">
                     {/* <Translate content='label.state' component="h6" /> */}
-                    <h6>County</h6>
+                    <Translate content='label.county' component="h6" />
                     <a >{states ? this.listStates(County) : null}</a>
                   </div>
                   <div class="col-3 p-0">

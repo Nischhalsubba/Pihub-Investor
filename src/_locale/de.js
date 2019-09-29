@@ -103,7 +103,7 @@ export default {
         yes: 'Ja',
         rating: 'Mindestkreditrating',
         Kreditrating: 'Kreditrating',
-        country: 'Landkreis',
+        county: 'Landkreis',
         editproducts: 'Produkte bearbeiten',
         mincredit: 'Mindestkreditvolumen',
         notifications: 'Benachrichtigungen',
@@ -150,8 +150,8 @@ export default {
         and: 'zu und erkenne die ',
         privacy_policy: 'Datenschutzrichtlinien',
         privacy_policy_ending: ' an.',
-        noActiveProduct: 'Sie haben noch keine aktiven Kredite.'
-
+        noActiveProduct: 'Sie haben noch keine aktiven Kredite.',
+        noCreditRequests: 'Dieses Produkt hat keine Kreditanfrage.'
     },
     unverified: {
         msg: 'Ihr Konto wurde noch nicht durch den Administrator freigeschaltet. Sobald dies geschehen ist, erhalten Sie eine E-Mail und können dann alle piHub-Funktionen nutzen.'
