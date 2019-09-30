@@ -59,8 +59,8 @@ class ViewProduct extends Component {
         // console.log(doc)
         return (
           <div class="file mb-2" key={index}>
-            <span class="file-name">File {index + 1} <button className='btn btn-link' onClick={() => this.props.downloadToken(doc.path)}>Download</button></span>
-            <span class="ml-4 file-size">Type: {doc.type}</span>
+            <span class="file-name"><button className='btn btn-link' onClick={() => this.props.downloadToken(doc.path)}>{doc.file_name}</button></span>
+            {/*<span class="ml-4 file-size">Type: {doc.type}</span>*/}
           </div>
         );
       })
@@ -73,6 +73,7 @@ class ViewProduct extends Component {
           id,
         investor,
         product_code,
+          collatoral,
         max_credit_amount,
         min_credit_amount,
         industries,
@@ -84,7 +85,8 @@ class ViewProduct extends Component {
         states,
         ratings,
         County,
-        documents
+        documents,
+          min_sales_creditor
         }
       } = this.props.product;
       // console.log('detail', this.props.product.product);
@@ -114,25 +116,25 @@ class ViewProduct extends Component {
             <div class="d-flex">
               <div class="col-lg-12 col-xl-8">
                 <div class="row justify-content-between w-100">
-                  <div class="col-3 p-0">
+                  <div class="col-2 p-0">
                     {/* <h6>Product Title</h6> */}
                     <Translate content='label.producttitle' component="h6" />
                     <a href="#">{product_title}</a>
                   </div>
-                  <div class="col-3 p-0">
+                  <div class="col-2 p-0">
                     <Translate content='label.service' component="h6" />
                     <a >{service ? service.name : null} </a>
                   </div>
-                  <div class="col-3 p-0">
+                  <div class="col-2 p-0">
                     <Translate content='label.state' component="h6" />
                     <a >{states ? this.listStates(states) : null}</a>
                   </div>
-                  <div class="col-3 p-0">
+                  <div class="col-2 p-0">
                     {/* <Translate content='label.state' component="h6" /> */}
                     <Translate content='label.county' component="h6" />
                     <a >{states ? this.listStates(County) : null}</a>
                   </div>
-                  <div class="col-3 p-0">
+                  <div class="col-2 p-0">
                     <Translate content='label.industries' component="h6" />
                     <div class="d-flex flex-wrap justify-content-between flex-column">
                       {industries ? this.listIndustries(industries) : null}
@@ -141,8 +143,20 @@ class ViewProduct extends Component {
 
                 </div>
 
+                <div className="row justify-content-between w-100 mt-5">
+                  <div className="col-2 p-0">
+                    <Translate content='label.minimumsales' component="h6"/>
+                    <ToEuro amount={min_sales_creditor}/>
+                  </div>
+                  <div className="col-2 p-0">
+                    <Translate content='label.Sicherheiten' component="h6"/>
+                    <a>{collatoral ? <Translate content='label.yes'/> : <Translate content='label.no'/>} </a>
+                  </div>
 
-                <div class="row justify-content-between w-100 mt-3">
+                </div>
+
+
+                <div class="row justify-content-between w-100 mt-5">
                   {ratings ? this.listRating(ratings) : null}
                 </div>
               </div>
@@ -152,7 +166,7 @@ class ViewProduct extends Component {
                   <Translate content='label.maxcredit' component="h6" />
                   <h2><ToEuro amount={max_credit_amount} /></h2>
                 </div>
-                <div class="amount">
+                <div class="amount mt-5">
                   {/* <h6>Max Credit Amount</h6> */}
                   {/* <h6>Mindestkreditbetrag</h6> */}
                   <Translate content='column.minimum_credit_amount' component="h6" />
