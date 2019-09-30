@@ -165,10 +165,20 @@ export default {
         minSales:'Minimum Sales Credit from 0 to 50M',
         maxCreditAmount:'Maximum Credit Amount from 250k to 5m and should be more than the min. credit amount',
         minCreditAmount:'Minimum Credit Amount from 250k to 5m',
-        timeDuration:'Time dutaion from 12 Months to 60 Months',
-        industry:'Select relevent industry.You can select more than one.',
+        timeDuration:'Time duration from 12 Months to 60 Months',
+        industry:'Select relevant industry.You can select more than one.',
         county:'Select one or more counties.',
         service:'Select a relevant service.',
         states:'Select states.',
+    },
+    statuses: {
+        offer: {
+            open: '',
+            accepted_by_investor: 'Angebot erstellt',//@todo change this to offer accepted
+            offer_rejected: 'Angebot abgelehnt',
+            rejected_by_creditor: 'Abgelehnt',
+            accepted_by_creditor: 'Akzeptiert'
+        },
+        product: {}
     }
 };

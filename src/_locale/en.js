@@ -158,7 +158,7 @@ export default {
         noActiveProduct: 'You haven\'t invested on any products yet.',
         pleaseWait: 'Einen Moment bitte...',
         noCreditRequests: 'This product doesn\'t have any credit request.',
-        justASecond: 'Please wait a moment...'
+        justASecond: 'Please wait a moment...',
     },
     unverified: {
         msg: 'Your account is not yet verified yet. Please contact the administrator'
@@ -176,5 +176,17 @@ export default {
         county:'Select one or more counties.',
         service:'Select a relevant service.',
         states:'Select states.',
+    },
+    statuses: {
+        offer: {
+            open: '',
+            accepted_by_investor: 'Offer Sent',//@todo change this to offer accepted
+            offer_rejected: 'Offer Ignored',
+            rejected_by_creditor: 'Rejected',
+            accepted_by_creditor: 'Accepted'
+        },
+        product: {
+
+        }
     }
 };
