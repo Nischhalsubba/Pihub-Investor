@@ -4,6 +4,9 @@ import { getApplicationList } from '../../actions/application';
 import { changeStatus } from '../../actions/changeStatus';
 import { Link, withRouter } from 'react-router-dom';
 import Translate from 'react-translate-component'
+import { ToEuro } from '../general/CurrencyFormatter';
+import {dDigit} from '../../_utils/misc'
+import Moment from 'react-moment';
 class RequestedByList extends Component {
   state = { list: [] };
   componentDidMount() {
@@ -22,6 +25,7 @@ class RequestedByList extends Component {
       return <tr><td><Translate content="placeholder.noCreditRequests"/></td></tr>;
     }
     return list.map((data, index) => {
+      let date=new Date(data.deadline)
       return (
         <tr key={index}>
           <td>
@@ -39,13 +43,14 @@ class RequestedByList extends Component {
             </Link>
           </td>
           <td>
-            <span>{data.deadline}</span>
+            <span>{dDigit(date.getDate())}.
+            {`${dDigit(date.getMonth() + 1)}.${date.getFullYear()}`}</span>
           </td>
           <td>
             <span>{data.duration} Months</span>
           </td>
           <td className="text-right-piehub-table font-weight-bold">
-            €{data.requested_amount}
+            <ToEuro amount={data.requested_amount} />
           </td>
           <td className="text-right-piehub-table font-weight-bold">
             {data.status === 'rejected' ? <span className="badge badge-warning">Abgelehnt</span> : <span className="badge badge-success">In Bearbeitung</span>}

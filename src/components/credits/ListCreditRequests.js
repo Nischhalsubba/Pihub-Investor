@@ -38,9 +38,9 @@ class ListCreditRequests extends Component {
             <Link to={{ pathname: '/product', state: { id: product.product_id } }}> {product.product_title}</Link>
           </td>
           <td >{product.service}</td>
-          <td >{`${dDigit(date.getDate())}-${dDigit(date.getMonth() + 1)}-${date.getFullYear()}`}</td>
+          <td >{`${dDigit(date.getDate())}.${dDigit(date.getMonth() + 1)}.${date.getFullYear()}`}</td>
           {/* <td class="text-right-piehub-table">{product.number_of_request}</td> */}
-          <td class="text-md-right text-left">{`${dDigit(deadline.getDate())}-${dDigit(deadline.getMonth() + 1)}-${deadline.getFullYear()}`}</td>
+          <td class="text-md-right text-left">{`${dDigit(deadline.getDate())}.${dDigit(deadline.getMonth() + 1)}.${deadline.getFullYear()}`}</td>
           {/* <td class="text-right-piehub-table font-weight-bold">
             €{product.max_credit_amount || 100000}
           </td> */}

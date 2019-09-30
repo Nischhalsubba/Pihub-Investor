@@ -6,6 +6,7 @@ import { downloadToken } from '../../actions/download';
 // import Subheader from '../general/Subheader';
 import RequestedByList from '../credits/RequestedByList';
 import Translate from 'react-translate-component'
+import { ToEuro } from '../general/CurrencyFormatter';
 class ViewProduct extends Component {
   componentDidMount() {
     if (!this.props.location.state) {
@@ -149,14 +150,14 @@ class ViewProduct extends Component {
                 <div class="amount">
                   {/* <h6>Max Credit Amount</h6> */}
                   <Translate content='label.maxcredit' component="h6" />
-                  <h2>€{max_credit_amount}</h2>
+                  <h2><ToEuro amount={max_credit_amount} /></h2>
                 </div>
                 <div class="amount">
                   {/* <h6>Max Credit Amount</h6> */}
                   {/* <h6>Mindestkreditbetrag</h6> */}
                   <Translate content='column.minimum_credit_amount' component="h6" />
 
-                  <h2>€{min_credit_amount}</h2>
+                  <h2><ToEuro amount={min_credit_amount} /></h2>
                 </div>
 
                 <div class="date mt-5">
