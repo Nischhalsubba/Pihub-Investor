@@ -9,6 +9,7 @@ import Translate from 'react-translate-component';
 import Spinner from '../general/Spinner'
 import * as validation from '../../_utils/validate';
 import { renderDropzoneField } from '../../_formFields';
+import { ToEuro } from '../general/CurrencyFormatter';
 class CreditorDetail extends Component {
   state = { detail: null, refresh: false }
   componentDidMount() {
@@ -123,7 +124,7 @@ class CreditorDetail extends Component {
                     {/* <h6>Requested amount of</h6> */}
                     {/* <Translate content='label.requestedamount' /> */}
                     <label>Finanzbedar</label>
-                    <h2>€{amount}</h2>
+                    <h2><ToEuro amount={amount}/></h2>
                   </div>
                   <div class="investor clearfix mt-5">
                     {/* <h6>Requested By</h6> */}

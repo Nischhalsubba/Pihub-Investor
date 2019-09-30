@@ -5,6 +5,7 @@ import { getInvestedList } from '../../actions/invested';
 import Subheader from '../general/Subheader';
 import Spinner from '../general/Spinner';
 import Translate from 'react-translate-component';
+import { ToEuro } from '../general/CurrencyFormatter';
 class InvestedList extends Component {
     state = { investments: null }
     componentDidMount() {
@@ -41,11 +42,11 @@ class InvestedList extends Component {
                         </td>
                         {/* <td className="text-right-piehub-table">{investment.service}</td> */}
                         <td className="text-right-piehub-table">
-                            {investedDate.getDate()}-{investedDate.getMonth() + 1}-{investedDate.getFullYear()}
+                            {investedDate.getDate()}.{investedDate.getMonth() + 1}.{investedDate.getFullYear()}
                         </td>
 
-                        <td className="font-weight-bold text-right-piehub-table">${investment.invested_amount}</td>
-                        <td className="font-weight-bold text-right-piehub-table">${investment.duration} Monate</td>
+                        <td className="font-weight-bold text-right-piehub-table"><ToEuro amount={investment.invested_amount} /></td>
+                        <td className="font-weight-bold text-right-piehub-table">{investment.duration} Monate</td>
                     </tr>
 
                 );

@@ -157,4 +157,18 @@ export default {
     unverified: {
         msg: 'Ihr Konto wurde noch nicht durch den Administrator freigeschaltet. Sobald dies geschehen ist, erhalten Sie eine E-Mail und können dann alle piHub-Funktionen nutzen.'
     },
+    tooltip:{
+        productName:'Give a product name',
+        documents:'Upload necessary documents.',
+        rating:'Select Yes if rating is required.',
+        Collateral:'Select yes if collateral is needed.',
+        minSales:'Minimum Sales Credit from 0 to 50M',
+        maxCreditAmount:'Maximum Credit Amount from 250k to 5m and should be more than the min. credit amount',
+        minCreditAmount:'Minimum Credit Amount from 250k to 5m',
+        timeDuration:'Time dutaion from 12 Months to 60 Months',
+        industry:'Select relevent industry.You can select more than one.',
+        county:'Select one or more counties.',
+        service:'Select a relevant service.',
+        states:'Select states.',
+    }
 };

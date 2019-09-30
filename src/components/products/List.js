@@ -5,6 +5,7 @@ import * as actions from '../../actions/product';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Pagination from '../general/Pagination';
+import { ToEuro } from '../general/CurrencyFormatter';
 class ProductsList extends Component {
   state = { status: null, product_title: '' }
   componentDidMount() {
@@ -43,8 +44,8 @@ class ProductsList extends Component {
             <td>{product.min_time_duration} Monate</td>
             <td>{product.max_time_duration} Monate</td>
 
-            <td>€{product.min_credit_amount}</td>
-            <td>€{product.max_credit_amount}</td>
+            <td><ToEuro amount={product.min_credit_amount} /></td>
+            <td><ToEuro amount={product.max_credit_amount} /></td>
             <td>
               {product.status === 'requested' ? <span className="badge badge-warning"><Translate content='label.requested' /></span> : null}
               {product.status === 'approved' ? <span className="badge badge-success"><Translate content='label.approved' /></span> : null}
