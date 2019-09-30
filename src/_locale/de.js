@@ -131,7 +131,15 @@ export default {
         suspended: 'Ausgesetzt',
         reject: 'Ablehnen',
         forgotPassword: 'Passwort vergessen?',
-        enterEmailForgotten: 'Geben Sie Ihre E-Mail-Adresse ein.'
+        enterEmailForgotten: 'Geben Sie Ihre E-Mail-Adresse ein.',
+        status:'Status',
+        ratingForCredit:'Rating for credit',
+        nda:'NDA',
+        deadlineForPayment:'Deadline for payment',
+        deadine:'Deadline',
+        collaterals:'Collaterals',
+        salesAmount:'Sales Amount',
+        reasons:'Reasons'
     },
     button: {
         Produktbearbeiten: 'Produkt bearbeiten',
@@ -159,17 +167,17 @@ export default {
         msg: 'Ihr Konto wurde noch nicht durch den Administrator freigeschaltet. Sobald dies geschehen ist, erhalten Sie eine E-Mail und können dann alle piHub-Funktionen nutzen.'
     },
     tooltip:{
-        productName:'Give a product name',
+        productName:'Falls das Kreditprodukt, das Sie anbieten möchten, einen Namen hat, können Sie diesen hier nennen. So können Sie das Produkt besser finden und wiedererkennen.',
         documents:'Upload necessary documents.',
-        rating:'Select Yes if rating is required.',
-        Collateral:'Select yes if collateral is needed.',
-        minSales:'Minimum Sales Credit from 0 to 50M',
-        maxCreditAmount:'Maximum Credit Amount from 250k to 5m and should be more than the min. credit amount',
-        minCreditAmount:'Minimum Credit Amount from 250k to 5m',
-        timeDuration:'Time duration from 12 Months to 60 Months',
-        industry:'Select relevant industry.You can select more than one.',
+        rating:'Bitte geben Sie – falls notwendig – das Mindestrating ein, das ein Unternehmen haben muß, damit Ihr Haus einen Kredit gewähren kann.',
+        Collateral:'Bitt geben Sie ein, ob Sie Kredit nur gegen Sicherheiten vergeben oder auch blanko.',
+        minSales:'Bitte geben Sie die Mindestumsatzgröße der Unternehmen ein, an die Sie Kredite vergeben möchten.',
+        maxCreditAmount:'Bitte geben Sie die Maximalgröße für eine Kreditanfrage ein.',
+        minCreditAmount:'Bitte geben Sie die Mindestgröße für eine Kreditanfrage ein.',
+        timeDuration:'Siekönnen hier die Mindest- und die Maximallaufzeit angeben.',
+        industry:'Sie können hier angeben, wenn Sie Kredite nur an bestimmte Branchenvergeben. Mehrfachnennungen sind möglich. Alternativ können Sie auch einfach „alle“ angeben.',
         county:'Select one or more counties.',
-        service:'Select a relevant service.',
+        service:'Bitte nennen Sie die Kreditart, welche Sie hier anbieten möchten.',
         states:'Select states.',
     },
     statuses: {

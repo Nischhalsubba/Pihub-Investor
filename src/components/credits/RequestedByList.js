@@ -99,8 +99,8 @@ class RequestedByList extends Component {
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 scope="col"
               >
-                {/* <Translate content='label.requestedamount' /> */}
-                Kreditbetrag
+                <Translate content='label.investedamount' />
+                {/* Kreditbetrag */}
               </th>
               <th
                 className="text-right-piehub-table"
