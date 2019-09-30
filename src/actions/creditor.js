@@ -22,9 +22,9 @@ export const getCreditor = (id, callback) => async dispatch => {
 };
 
 
-export const creditorDetail = (productId, appId, callback) => async dispatch => {
+export const creditorDetail = (pId, aId, callback) => async dispatch => {
   try {
-    const response = await client.get(`${routes.creditorDetail}/${productId}/applications/${appId}`);
+    const response = await client.get(`${routes.creditorDetail}/${pId}/applications/${aId}`);
     console.log(response.data.data)
     dispatch({
       type: GET_CREDITOR_DETAIL,
