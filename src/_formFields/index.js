@@ -52,7 +52,7 @@ export const checkBox = ({
                 id={id}
                 placeholder={placeholder}
             />
-            &nbsp; &nbsp; &nbsp;
+            &nbsp;
             <label className="form-check-label" style={{fontWeight: 100}}>
                 <Translate content='column.iagree' />
                 <Link to="/terms-and-conditions" target="_blank">

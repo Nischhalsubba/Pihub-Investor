@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { inputField } from '../../_formFields'
 import { getTokenForEmail } from '../../actions/password';
+import Translate from 'react-translate-component';
 class ForgotPassword extends Component {
   state = { submit: false, email: null }
   onSubmit = formProps => {
@@ -40,8 +41,10 @@ class ForgotPassword extends Component {
                 <div class="email-content">
                   <div class="w-75 m-auto text-center">
                     <img src="./assets/img/icons/activated.png" alt="Mail icon" />
-                    <h3>Forgot Password ?</h3>
-                    <p>Enter an email associated with your account.</p>
+                    <h3>
+                      <Translate content="label.forgotPassword"/>
+                    </h3>
+                    <p><Translate content="label.enterEmailForgotten"/></p>
                   </div>
                   <div class="w-75 m-auto">
                     <form class="form-signin" onSubmit={handleSubmit(this.onSubmit)}>
