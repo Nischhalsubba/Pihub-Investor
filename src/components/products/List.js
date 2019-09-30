@@ -38,7 +38,15 @@ class ProductsList extends Component {
 
             <td>
               {product.industries.map((industry, index) => {
-                return <span>{industry.name}</span>
+                  if(index < 2)
+                    return index === 0 ? <span>{industry.name}</span> : <Link
+                        to={{
+                            pathname: `/product`,
+                            state: { id: product.id }
+                        }}
+                    >
+                        &nbsp;...
+                    </Link>
               })}
             </td>
             <td>{product.min_time_duration} Monate</td>
@@ -91,7 +99,7 @@ class ProductsList extends Component {
             <option value="requested">Requested</option>
             <option value="suspended">Suspended</option>
             <option value="canceled">Canceled</option>
-            <option value="expired">Exprired</option>
+            <option value="expired">Expired</option>
 
           </select>
           <input className="form-control mr-sm-2" placeholder="Suche" aria-label="Search"

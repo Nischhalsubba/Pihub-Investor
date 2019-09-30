@@ -59,7 +59,7 @@ class Login extends Component {
                                     <font color="red">{this.props.errorMessage}</font>
                                 </div>
                                 {/* <button className="btn btn-primary btn-form" type="submit"> */}
-                                <Link to='/forgot-password'> Forgot Password ?</Link>
+                                <Link to='/forgot-password'> <Translate content="label.forgotPassword"/> </Link>
                                 <br />
                                 {<Translate content='label.login' component="button" className="btn btn-primary btn-form" type="submit" />}
                                 {/* </button> */}

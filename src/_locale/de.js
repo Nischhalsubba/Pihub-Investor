@@ -49,7 +49,7 @@ export default {
         Kreditorname: 'Kreditorname',
         theperfect: 'Finden Sie Ihren neuen Firmenkredit',
         atcredittech: 'Melden Sie sich als Kreditgeber an und Sie finden in wenigen Schritten neue Kreditkunden.\n' +
-            'Alle Branchen - Regional - Überregional',
+            'Alle Branchen - Regional - Überregional!',
         whycredittech: 'Warum piHub?',
         atfirst: 'Zuerst habe ich wenig investiert und mit der Zeit habe ich in den Sektor investiert, den ich mag, und Credit Tech bringt mich genau dorthin.',
         whatothers: 'Was sagen andere?',
@@ -67,8 +67,8 @@ export default {
         banner_desc: 'Melden Sie sich als Kreditgeber an und Sie finden in wenigen Schritten neue Kreditkunden. Alle Branchen - Regional - Überregional',
         ifyoudont: 'Wenn Sie noch kein Konto haben, können Sie sich',
         youdont: 'Sie haben keine (neuen) Benachrichtigungen.',
-        enteryouremail: 'Geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein',
-        here: 'Hier Registrieren.',
+        enteryouremail: 'Geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein.',
+        here: 'hier registrieren.',
         sendit: 'Erneut senden',
         didnt: 'Sie haben keine E-Mail erhalten?',
         youraccounthas: 'Ihr Konto wurde erfolgreich erstellt. Der Bestätigungslink wurde an Ihre E-Mail versand.',
@@ -84,7 +84,7 @@ export default {
         youraccounthasbeen: 'Ihr Konto wurde aktiviert. Ab sofort können Sie alle piHub-Funktionen nutzen.',
         wow: 'Willkommen in Pihub',
         attachments: 'Anlagen',
-        timeduration: 'Laufzeit',
+        timeduration: 'Laufzeit (Monaten)',
         investor: 'Investor',
         maxcredit: 'Höchstkreditbetrag',
         industries: 'Branche',
@@ -130,11 +130,12 @@ export default {
         postponedmsg: 'Dieses Produkt wurde ausgesetzt. Sie können das Produkt auf dieser Seite wieder aktivieren.',
         suspended: 'Ausgesetzt',
         reject: 'Ablehnen',
-
+        forgotPassword: 'Passwort vergessen?',
+        enterEmailForgotten: 'Geben Sie Ihre E-Mail-Adresse ein.'
     },
     button: {
         Produktbearbeiten: 'Produkt bearbeiten',
-        signup: 'Jetzt registrieren.',
+        signup: 'Jetzt registrieren',
         search: 'Suche',
         addnewproduct: 'Kreditprodukt hinzufügen',
         submit: 'Einreichen',
@@ -165,10 +166,20 @@ export default {
         minSales:'Minimum Sales Credit from 0 to 50M',
         maxCreditAmount:'Maximum Credit Amount from 250k to 5m and should be more than the min. credit amount',
         minCreditAmount:'Minimum Credit Amount from 250k to 5m',
-        timeDuration:'Time dutaion from 12 Months to 60 Months',
-        industry:'Select relevent industry.You can select more than one.',
+        timeDuration:'Time duration from 12 Months to 60 Months',
+        industry:'Select relevant industry.You can select more than one.',
         county:'Select one or more counties.',
         service:'Select a relevant service.',
         states:'Select states.',
+    },
+    statuses: {
+        offer: {
+            open: '',
+            accepted_by_investor: 'Angebot erstellt',//@todo change this to offer accepted
+            offer_rejected: 'Angebot abgelehnt',
+            rejected_by_creditor: 'Abgelehnt',
+            accepted_by_creditor: 'Akzeptiert'
+        },
+        product: {}
     }
 };

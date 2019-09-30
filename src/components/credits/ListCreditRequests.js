@@ -7,6 +7,7 @@ import Pagination from '../general/Pagination';
 import Spinner from '../general/Spinner';
 import Translate from 'react-translate-component'
 import { dDigit } from '../../_utils/misc';
+import {matchesInvestorStatus} from '../../_status'
 class ListCreditRequests extends Component {
   componentDidMount() {
     this.props.getCreditRequestList(1);
@@ -14,7 +15,7 @@ class ListCreditRequests extends Component {
 
   renderData = data => {
     if (data.length === 0) {
-      return <span>Es wurde noch keine Kreditanfrage gestellt</span>;
+      return <span><Translate content="placeholder.noCreditRequests"/> </span>;
     }
     return data.map((product, index) => {
       let date = new Date(product.created_on);
@@ -45,12 +46,9 @@ class ListCreditRequests extends Component {
             €{product.max_credit_amount || 100000}
           </td> */}
           <td className="text-right-piehub-table font-weight-bold">
-            {product.status === 'offer_sent' ? <span className="badge badge-warning"><Translate content='label.AngebotErstellt' /></span>
-              : null}
-            {product.status === 'rejected' ? <span className="badge badge-danger"><Translate content='label.rejected' /></span>
-              : null}
-            {product.status === 'open' ? <span className="badge badge-success"><Translate content='label.processing' /></span>
-              : null}
+            <span className={`badge ${matchesInvestorStatus[product.status].class}`}>
+              <Translate content={matchesInvestorStatus[product.status].translation_key}/>
+            </span>
           </td>
         </tr>
       );

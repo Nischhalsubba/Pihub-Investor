@@ -56,7 +56,7 @@ export default {
         atfirst: 'At first I Invested little and by time pass I Invested to the sector I like and Credit Tech takes me right there',
         whatothers: 'What others say?',
         signupto: 'Sign Up to Credit Tech as an Investor',
-        enteryourdetails: 'Enter your details below',
+        enteryourdetails: 'Enter your details below.',
         firstname: 'First Name',
         lastname: 'Last Name',
         companyname: 'Company Name',
@@ -86,7 +86,7 @@ export default {
         youraccounthasbeen: 'Your account has been activated. From now on you can use our service freely',
         wow: 'Wow, Welcome to Pihub',
         attachments: 'Attachments',
-        timeduration: 'Time duration(months)',
+        timeduration: 'Time duration (months)',
         investor: 'Investor',
         maxcredit: 'Maximum Credit Amount',
         industries: 'Industries',
@@ -137,10 +137,12 @@ export default {
         postponedmsg: 'This product has been postponed. You can change the status',
         suspended: 'Suspended',
         reject: 'Reject',
+        forgotPassword: 'Forgot Password?',
+        enterEmailForgotten: 'Enter your email address.'
     },
     button: {
         Produktbearbeiten: 'Edit Product',
-        signup: 'Sign up Now',
+        signup: 'Sign up',
         search: 'Search',
         addnewproduct: 'Add new products',
         submit: 'Submit',
@@ -158,7 +160,7 @@ export default {
         noActiveProduct: 'You haven\'t invested on any products yet.',
         pleaseWait: 'Einen Moment bitte...',
         noCreditRequests: 'This product doesn\'t have any credit request.',
-        justASecond: 'Please wait a moment...'
+        justASecond: 'Please wait a moment...',
     },
     unverified: {
         msg: 'Your account is not yet verified yet. Please contact the administrator'
@@ -176,5 +178,17 @@ export default {
         county:'Select one or more counties.',
         service:'Select a relevant service.',
         states:'Select states.',
+    },
+    statuses: {
+        offer: {
+            open: '',
+            accepted_by_investor: 'Offer Sent',//@todo change this to offer accepted
+            offer_rejected: 'Offer Ignored',
+            rejected_by_creditor: 'Rejected',
+            accepted_by_creditor: 'Accepted'
+        },
+        product: {
+
+        }
     }
 };
