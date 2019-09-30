@@ -29,7 +29,7 @@ class DetailCreditRequest extends Component {
   }
   renderDocs = docs => {
     if (docs.length === 0) {
-      return <span>**No attachments available</span>
+      return <span><Translate content='column.noattachment' /></span>
     } else {
       return docs.map((doc, index) => {
         return (
@@ -95,14 +95,14 @@ class DetailCreditRequest extends Component {
       )
     }
   }
-  showRating = (ratings) => {
-    if (ratings.length === 0) {
+  showNameValuePair = (NameValuePair) => {
+    if (NameValuePair.length === 0) {
       return <p class="product__info">Not available</p>
     } else {
-      return ratings.map((rating, index) => {
+      return NameValuePair.map((NameValue, index) => {
         return <div class="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-          <h6 class="product__title">{rating.name}</h6>
-          <p class="product__info">{rating.value}</p>
+          <h6 class="product__title">{NameValue.name}</h6>
+          <p class="product__info">{NameValue.value}</p>
         </div>
       })
     }
@@ -165,37 +165,37 @@ class DetailCreditRequest extends Component {
                 </div>
                 <div class="row justify-content-between w-100 mt-4 pl-3">
                   <div className="col-10 p-0">
-                    <h6>Reasons</h6>
+                    <h6><Translate content='label.reasons' /></h6>
                     <span>{description}</span>
                   </div>
                 </div>
                 <div class="row justify-content-between w-100 mt-4 credit-request-content pl-3">
                   <div class="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
                     {/* <h6>States</h6> */}
-                    <h6>Sales Amount</h6>
+                    <h6><Translate content='label.salesAmount' /></h6>
                     <span><ToEuro amount={sales} /></span>
                   </div>
                   <div class="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                    <h6>collaterals</h6>
-                    <span>{this.showRating(collaterals)}</span>
+                    <h6><Translate content='label.collaterals' /> </h6>
+                    <span>{this.showNameValuePair(collaterals)}</span>
                   </div>
                 </div>
                 <div class="row justify-content-between w-100 mt-4 credit-request-content pl-3">
                   <div class="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                    <h6>Deadline</h6>
+                    <h6><Translate content='label.deadline' /></h6>
                     <span>{dDigit(deadlineDate.getDate())}.{`${dDigit(deadlineDate.getMonth() + 1)}.${deadlineDate.getFullYear()}`}</span>
                   </div>
                   <div class="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                    <h6>Deadline for payment</h6>
+                    <h6><Translate content='label.deadlineForPayment' /></h6>
                     <span>{dDigit(paymentDate.getDate())}.{`${dDigit(paymentDate.getMonth() + 1)}.${paymentDate.getFullYear()}`}</span>
                   </div>
                   <div class="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                    <h6>NDA</h6><span></span>
+                    <h6><Translate content='label.nda' /></h6><span></span>
                   </div>
                 </div>
                 <div class="row justify-content-between w-100 mt-4 credit-request-content pl-3">
-                  <h6 class="w-100">Rating for credit</h6>
-                  {this.showRating(ratings)}
+                  <h6 class="w-100"><Translate content='label.ratingForCredit' /></h6>
+                  {this.showNameValuePair(ratings)}
                 </div>
                 {/* {this.renderCreditRatings(1, ratings)} */}
 
@@ -217,8 +217,7 @@ class DetailCreditRequest extends Component {
                 <div class="date mt-5">
                   {/* <h6>Request on</h6> */}
                   <h6> <Translate content='column.requeston' /></h6>
-                  <span>{dDigit(requestedDate.getDate())}.
-            {`${dDigit(requestedDate.getMonth() + 1)}.${requestedDate.getFullYear()}`}</span>
+                  <span>{dDigit(requestedDate.getDate())}.{`${dDigit(requestedDate.getMonth() + 1)}.${requestedDate.getFullYear()}`}</span>
                 </div>
                 <div class="date mt-5">
                   {/* <h6>Time Duration</h6> */}
@@ -227,7 +226,7 @@ class DetailCreditRequest extends Component {
                 </div>
                 <div class="date mt-5">
                   {/* <h6>Time Duration</h6> */}
-                  <h6>  Status</h6>
+                  <h6>  <Translate content='label.status' /></h6>
                   <span>{status}</span>
                 </div>
               </div>

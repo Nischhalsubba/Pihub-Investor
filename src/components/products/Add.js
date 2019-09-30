@@ -430,7 +430,7 @@ class AddProduct extends Component {
                     <Translate content='label.Sicherheiten' component='label' className="d-block" data-tip data-for='collateral' />
                   </strong>
                   <ReactTooltip id='collateral' type='info' >
-                    <Translate content='tooltip.collateral' />
+                    <Translate content='tooltip.Collateral' />
                   </ReactTooltip>
                   <div class="form-check form-check-inline">
                     <Field

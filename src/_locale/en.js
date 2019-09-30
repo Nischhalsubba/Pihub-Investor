@@ -138,7 +138,18 @@ export default {
         suspended: 'Suspended',
         reject: 'Reject',
         forgotPassword: 'Forgot Password?',
-        enterEmailForgotten: 'Enter your email address.'
+        enterEmailForgotten: 'Enter your email address.',
+        status:'Status',
+        ratingForCredit:'Rating for credit',
+        nda:'NDA',
+        deadlineForPayment:'Deadline for payment',
+        deadine:'Deadline',
+        collaterals:'Collaterals',
+        salesAmount:'Sales Amount',
+        reasons:'Reasons',
+        passwordChange:'You have successfully changed your password.',
+        newPassword:'with your new password'
+
     },
     button: {
         Produktbearbeiten: 'Edit Product',
