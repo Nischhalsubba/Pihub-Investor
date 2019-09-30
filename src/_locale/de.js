@@ -67,8 +67,8 @@ export default {
         banner_desc: 'Melden Sie sich als Kreditgeber an und Sie finden in wenigen Schritten neue Kreditkunden. Alle Branchen - Regional - Überregional',
         ifyoudont: 'Wenn Sie noch kein Konto haben, können Sie sich',
         youdont: 'Sie haben keine (neuen) Benachrichtigungen.',
-        enteryouremail: 'Geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein',
-        here: 'Hier Registrieren.',
+        enteryouremail: 'Geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein.',
+        here: 'hier registrieren.',
         sendit: 'Erneut senden',
         didnt: 'Sie haben keine E-Mail erhalten?',
         youraccounthas: 'Ihr Konto wurde erfolgreich erstellt. Der Bestätigungslink wurde an Ihre E-Mail versand.',
@@ -130,11 +130,12 @@ export default {
         postponedmsg: 'Dieses Produkt wurde ausgesetzt. Sie können das Produkt auf dieser Seite wieder aktivieren.',
         suspended: 'Ausgesetzt',
         reject: 'Ablehnen',
-
+        forgotPassword: 'Passwort vergessen?',
+        enterEmailForgotten: 'Geben Sie Ihre E-Mail-Adresse ein.'
     },
     button: {
         Produktbearbeiten: 'Produkt bearbeiten',
-        signup: 'Jetzt registrieren.',
+        signup: 'Jetzt registrieren',
         search: 'Suche',
         addnewproduct: 'Kreditprodukt hinzufügen',
         submit: 'Einreichen',
