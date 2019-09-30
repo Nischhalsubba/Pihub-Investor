@@ -31,7 +31,7 @@ class InvestedList extends Component {
                         <td>
                             <Link to={{
                                 pathname: '/creditor/detail',
-                                state: { productId: investment.product_id, appId: investment.application_id }
+                                state: { pId: investment.product_id, aId: investment.application_id }
                             }}> {investment.creditor_name}</Link>
                         </td>
                         <td>

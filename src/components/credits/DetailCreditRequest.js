@@ -104,23 +104,15 @@ class DetailCreditRequest extends Component {
 
     if (this.state.detail) {
       const {
-        id,
-        requested_by,
-        requested_on,
-        amount,
-        deadline,
-        description,
-        duration,
-        status, files,
-        time_duration, collaterals,
-        state, county,
-        service, industries, rating_for_credit, ratings } = this.state.detail;
-      var requestedDate = new Date(requested_on);
+
+        status,
+      } = this.state.detail;
+
 
       return (
         <Fragment>
           {/* <Subheader heading={this.props.location.state.product} /> */}
-          {<CreditInfo location={this.props.location} />}
+          <CreditInfo location={this.props.location} />
 
           <span class="mt-3">
             <button class="btn btn-success mr-2" disabled={status === 'accepted'}
