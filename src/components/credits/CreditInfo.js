@@ -29,13 +29,14 @@ class DetailCreditRequest extends Component {
   }
   renderDocs = docs => {
     if (docs.length === 0) {
-      return <span><Translate content='column.noattachment' /></span>
+      return <span>**No attachments available</span>
     } else {
       return docs.map((doc, index) => {
         return (
           <div class="file mb-2">
-            <span class="file-name">File {index + 1}</span>
-            <span class="ml-4 file-size">Type: {doc.type}</span>
+            <span class="file-name">{doc.type}</span>
+            <span class="ml-4 file-size">FileType: {doc.file_type}</span>
+            <button className='btn btn-link' onClick={() => this.props.downloadToken(doc.path)}><Translate content='button.download' /></button>
           </div>
         );
       })
@@ -94,6 +95,19 @@ class DetailCreditRequest extends Component {
       )
     }
   }
+  showRating = (ratings) => {
+    if (ratings.length === 0) {
+      return <p class="product__info">Not available</p>
+    } else {
+      return ratings.map((rating, index) => {
+        return <div class="col">
+          <h6 class="product__title">{rating.name}</h6>
+          <p class="product__info">{rating.value}</p>
+        </div>
+      })
+    }
+
+  }
   changeStatus = status => {
     const { pId, aId } = this.props.location.state;
 
@@ -108,6 +122,8 @@ class DetailCreditRequest extends Component {
         deadline,
         description,
         duration,
+        payment_after,
+        sales,
         status, files,
         time_duration, collaterals,
         state, county,
@@ -149,32 +165,33 @@ class DetailCreditRequest extends Component {
                 <div className="row justify-content-between w-100 mt-5">
                   <div className="col-10 p-0">
                     <h6>Reasons</h6>
-                    <span>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span>
+                    <span>{description}</span>
                   </div>
                 </div>
                 <div className="row justify-content-between w-100 mt-5">
                   <div className="col-2 p-0">
                     {/* <h6>States</h6> */}
                     <h6>Sales Amount</h6>
-                    <span>{state ? state.name : null}</span>
+                    <span>{sales}</span>
                   </div>
                   <div className="col-2 p-0">
                     <h6><Translate content='label.collateral'/></h6>
-                    <span>{county ? county.name : null} - value_in_euro</span>
+                    <span>{this.showRating(collaterals)} - value_in_euro</span>
                   </div>
                 </div>
                 <div className="row justify-content-between w-100 mt-5">
                   <div className="col-3 p-0">
-                    <h6>Deadline</h6><span>AAA+</span>
+                    <h6>Deadline</h6><span>{deadline}</span>
                   </div>
                   <div className="col-3 p-0">
-                    <h6>Deadline for payment</h6><span>AAA+</span>
+                    <h6>Deadline for payment</h6><span>{payment_after}</span>
                   </div>
                   <div className="col-3 p-0">
                     <h6>NDA</h6><span>AAA+</span>
                   </div>
                 </div>
-                {this.renderCreditRatings(1, ratings)}
+                {/* {this.renderCreditRatings(1, ratings)} */}
+                {this.showRating(ratings)}
               </div>
               <div class="col-lg-12 col-xl-4 rightbar">
                 <div class="amount">
@@ -209,10 +226,9 @@ class DetailCreditRequest extends Component {
               </div>
             </div>
             <div class="attachments mt-5 mb-5">
-              {/* <h4>Attachments</h4> */}
-              <h6><Translate content='label.attachments' /></h6>
-              {this.renderDocs(files)}
-            </div>
+                <h4> <Translate content='label.attachments' /></h4>
+                {this.renderDocs(files)}
+              </div>
             <span class="mt-3">
               <button class="btn btn-success mr-2" disabled={status === 'accepted'}
                 onClick={() => this.changeStatus('accepted')}
