@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
-import {Field, reduxForm} from 'redux-form';
+import {Field, formValueSelector, reduxForm} from 'redux-form';
 import {uploadFile} from '../../actions/uploadFile'
 import {getCreditor, creditorDetail} from '../../actions/creditor';
 import {downloadToken} from '../../actions/download';
@@ -18,7 +18,12 @@ class CreditorDetail extends Component {
         if (!this.props.location.state) {
             return this.props.history.push('/products-invested')
         }
-        const {pId, aId} = this.props.location.state;
+        let {pId, aId} = this.props.location.state;
+        if (!pId || !aId) {
+            const {appId,productId} = this.props.location.state;
+            pId = productId;
+            aId = appId;
+        }
         this.props.creditorDetail(pId, aId, this.callback);
     }
 
@@ -44,12 +49,12 @@ class CreditorDetail extends Component {
     };
     renderDocs = docs => {
         if (docs.length === 0) {
-            return <span>**No attachments available</span>
+            return <span><Translate content='column.noattachment'/></span>
         } else {
             return docs.map((doc, index) => {
                 return (
                     <div class="file mb-2">
-                        <span class="file-name">{doc.type}</span>
+                        <span class="file-name">{doc.file_name}</span>
                         <span class="ml-4 file-size">FileType: {doc.file_type}</span>
                         <button className='btn btn-link' onClick={() => this.props.downloadToken(doc.path)}><Translate
                             content='button.download'/></button>
@@ -58,31 +63,24 @@ class CreditorDetail extends Component {
             })
         }
     }
-    listRating = ratings => {
-        if (ratings.length === 0) {
-            return <span>**<Translate content='column.norating'/></span>
-        } else {
-            return ratings.map((rating, index) => {
-                return (
-                    <div class="col-3 p-0">
-                        <h6>{Object.keys(rating)}</h6><span>{Object.values(rating)}</span>
-                    </div>
-                );
-            })
-        }
+
+    displayFiles = files => {
+        return files.map((file, index) => {
+            return <span key={index}>{file.name} <br/></span>
+        })
     }
 
     render() {
+        const {files} = this.props;
         if (this.state.detail) {
-            console.log('here', this.state.detail)
-            const {creditor, collaterals, county, email, files, financial_needs, industries, nda_requirement, phone_number, rating_for_credit, state, street_address, zip_code, ratings, amount, sales} = this.state.detail;
+            console.log('details', this.state.detail)
             const {handleSubmit} = this.props;
             return (
                 <Fragment>
                     <div class="content-body credit-request">
-                      
+
                         <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
-                        <CreditInfo location={this.props.location} />
+                            <CreditInfo location={this.props.location}/>
                             <div className="row mt-4">
                                 <div className="col">
                                     <div className="form-group">
@@ -93,6 +91,8 @@ class CreditorDetail extends Component {
                                             type="file"
                                             validate={validation.required}
                                         />
+                                        {files ? this.displayFiles(files) : null}
+                                        {this.state.detail.investor_files ? this.renderDocs(this.state.detail.investor_files): '' }
                                     </div>
                                 </div>
                             </div>
@@ -126,5 +126,13 @@ function mapStateToProps(state) {
 
 CreditorDetail = reduxForm({
     form: 'creditorDetail'
+})(CreditorDetail);
+
+const selector = formValueSelector('creditorDetail');
+CreditorDetail = connect(state => {
+    const files = selector(state, 'files')
+    return {
+        files
+    };
 })(CreditorDetail);
 export default connect(mapStateToProps, {getCreditor, uploadFile, downloadToken, creditorDetail})(CreditorDetail);
