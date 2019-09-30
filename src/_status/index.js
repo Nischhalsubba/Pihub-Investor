@@ -54,7 +54,7 @@ export const matchesInvestorStatus = {
         translation_key: 'statuses.offer.accepted_by_investor',
         class: 'badge-warning'
     }, // offer sent by investor
-    rejected_by_investor: {
+    rejected: {
         translation_key: 'statuses.offer.offer_rejected',
         class: 'badge-danger'
     }, // I as investor when reject application
