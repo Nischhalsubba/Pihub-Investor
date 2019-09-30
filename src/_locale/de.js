@@ -111,7 +111,7 @@ export default {
         thepage: 'Die von Ihnen gesuchte Seite wurde möglicherweise entfernt. Ein Grund dafür kann sein, dass sich Ihr Name geändert hat oder die Seite ist vorübergehend nicht verfügbar.',
         back: 'Zurück zur Startseite',
         logout: 'Abmelden',
-        accept: 'Angebot erstellen',
+        accept: 'Akzeptieren',
         requestedamount: 'Kreditbetrag',
         time: 'Zeitdauer',
         deadline: 'Fristablauf (Angebot)',

@@ -111,7 +111,7 @@ export default {
         thepage: 'The page you are looking for might have been removed had its name changed or is temporarily unavailable.',
         back: 'Back to Homepage ',
         logout: 'Logout',
-        accept: 'Accept/decline',
+        accept: 'Accept',
         requestedamount: 'Requested amount',
         time: 'Time duration',
         deadline: 'Deadline',

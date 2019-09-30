@@ -32,12 +32,6 @@ class RequestedByList extends Component {
             <Link to={{
               pathname: '/application',
               state: { pId: this.props.id, aId: data.id, product: name }
-            }}>{data.application_code}</Link>
-          </td>
-          <td>
-            <Link to={{
-              pathname: '/application',
-              state: { pId: this.props.id, aId: data.id, product: name }
             }}>
               {data.requested_by}
             </Link>
@@ -81,10 +75,6 @@ class RequestedByList extends Component {
         >
           <thead>
             <tr>
-
-              <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
-                <Translate content='label.applicationcode' />
-              </th>
               <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
                 <Translate content='label.Kreditorname' />
                </th>
