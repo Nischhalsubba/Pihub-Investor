@@ -86,7 +86,7 @@ export default {
         youraccounthasbeen: 'Your account has been activated. From now on you can use our service freely',
         wow: 'Wow, Welcome to Pihub',
         attachments: 'Attachments',
-        timeduration: 'Time duration(months)',
+        timeduration: 'Time duration (months)',
         investor: 'Investor',
         maxcredit: 'Maximum Credit Amount',
         industries: 'Industries',
