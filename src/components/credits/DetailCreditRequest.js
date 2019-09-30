@@ -6,6 +6,7 @@ import { getApplicationDetail } from '../../actions/application';
 import Translate from 'react-translate-component';
 import { changeStatus } from '../../actions/changeStatus';
 import {ToEuro} from "../general/CurrencyFormatter";
+import {dDigit} from '../../_utils/misc'
 import Moment from 'react-moment';
 class DetailCreditRequest extends Component {
   state = { detail: null, refresh: false }
@@ -106,6 +107,7 @@ class DetailCreditRequest extends Component {
         state, county,
         service, industries, rating_for_credit, ratings} = this.state.detail;
       var requestedDate = new Date(requested_on);
+      
       return (
         <Fragment>
           <Subheader heading={this.props.location.state.product} />
@@ -157,7 +159,8 @@ class DetailCreditRequest extends Component {
                 <div class="date mt-5">
                   {/* <h6>Request on</h6> */}
                   <h6> <Translate content='column.requeston' /></h6>
-                  <span><Moment format="DD.MM.YYYY">{requestedDate}</Moment></span>
+                  <span>{dDigit(requestedDate.getDate())}.
+            {`${dDigit(requestedDate.getMonth() + 1)}.${requestedDate.getFullYear()}`}</span>
                 </div>
                 <div class="date mt-5">
                   {/* <h6>Time Duration</h6> */}
