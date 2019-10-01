@@ -190,26 +190,25 @@ export const renderDropzoneField = ({
                 multiple
             >
                 {({getRootProps, getInputProps}) => (
-                    <div {...getRootProps()} className="border-dotted">
-                        <div className="position-relative" id="file_dropzone">
-                            <div className="dz-message needsclick w-25 position-absolute">
-                                <img
-                                    className="d-block m-auto"
-                                    src="./assets/img/icons/bx-cloud-upload.png"
-                                    alt=""
-                                />
-                                <div className="text-center mt-3">
-                                    {/* <a className="font-weight-bold">Add file </a> */}
-                                    <Translate content='column.addfile' component="a"
-                                               className="font-weight-bold mr-1"/>
-                                    {/* <span>or drop files here</span> */}
-                                    <Translate content='column.ordrop'/>
-                                </div>
-                            </div>
-                            <div className="fallback"/>
-                        </div>
-                        <input {...getInputProps()} />
+                    <div
+                    {...getRootProps()}
+                    className="file-uploader file-uploader--small dropzone">
+                    <div className="dz-message">
+                        <img src="./assets/img/icons/bx-cloud-upload.png" alt="" />
+                        <p>
+                            {/* <a >Add file </a> */}
+                            <Translate
+                                content="column.addfile"
+                                component="a"
+                                className="font-weight-bold mr-1"
+                            />
+                            {/* <span>or drop files here</span> */}
+                            <Translate content="column.ordrop" />
+                        </p>
+                        <div className="fallback" />
                     </div>
+                    <input {...getInputProps()} />
+                </div>
                 )}
             </Dropzone>
             <font color="red">{touched && error}</font>

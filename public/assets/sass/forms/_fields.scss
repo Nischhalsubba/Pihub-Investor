@@ -282,6 +282,8 @@ input[type="checkbox"] {
 
 .file-uploader {
 	border: 1px dashed $color-border;
+	text-align: center;
+	padding: 30px;
 
 	img {
 		display: block;
@@ -290,7 +292,7 @@ input[type="checkbox"] {
 
 	&--small {
 		min-height: 90px;
-		padding: 0 15px;
+		padding: 15px;
 	}
 }
 
