@@ -161,7 +161,10 @@ export default {
         privacy_policy_ending: ' an.',
         noActiveProduct: 'Sie haben noch keine aktiven Kredite.',
         noCreditRequests: 'Dieses Produkt hat keine Kreditanfrage.',
-        justASecond: 'Einen Moment bitte...'
+        justASecond: 'Einen Moment bitte...',
+        selectAllStates: 'deutschlandweit',
+        selectAllCounties: 'Alle Landkreis auswählen',
+        selectAll: 'Alle auswählen',
     },
     unverified: {
         msg: 'Ihr Konto wurde noch nicht durch den Administrator freigeschaltet. Sobald dies geschehen ist, erhalten Sie eine E-Mail und können dann alle piHub-Funktionen nutzen.'

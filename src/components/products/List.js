@@ -115,7 +115,7 @@ class ProductsList extends Component {
           } />
         </form>
         <div className="content-body">
-          <table class="table tablesaw-stack" data-tablesaw-mode="swipe" data-tablesaw-minimap="data-tablesaw-minimap">
+          <table className="table tablesaw-stack" data-tablesaw-mode="swipe" data-tablesaw-minimap="data-tablesaw-minimap">
             <thead>
               <tr>
                 <th>

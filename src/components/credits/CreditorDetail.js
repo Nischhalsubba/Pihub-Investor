@@ -53,9 +53,9 @@ class CreditorDetail extends Component {
         } else {
             return docs.map((doc, index) => {
                 return (
-                    <div class="file mb-2">
-                        <span class="file-name">{doc.file_name}</span>
-                        <span class="ml-4 file-size">FileType: {doc.file_type}</span>
+                    <div className="file mb-2">
+                        <span className="file-name">{doc.file_name}</span>
+                        <span className="ml-4 file-size">FileType: {doc.file_type}</span>
                         <button className='btn btn-link' onClick={() => this.props.downloadToken(doc.path)}><Translate
                             content='button.download'/></button>
                     </div>
@@ -77,7 +77,7 @@ class CreditorDetail extends Component {
             const {handleSubmit} = this.props;
             return (
                 <Fragment>
-                    <div class="content-body credit-request">
+                    <div className="content-body credit-request">
 
                         <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
                             <CreditInfo location={this.props.location}/>

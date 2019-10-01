@@ -35,9 +35,9 @@ class Signup extends Component {
     if (errors && Array.isArray(errors)) {
       return errors.map((err, index) => {
         return (
-          <li class="d-flex mb-1" key={index}>
+          <li className="d-flex mb-1" key={index}>
             <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
-            <span class="pl-2 green-text">{err}</span>
+            <span className="pl-2 green-text">{err}</span>
           </li>
         );
       })
@@ -50,7 +50,7 @@ class Signup extends Component {
       <div className="container-full-width">
         <div className="panel-container">
           <div className="feature-container feature-container--signup">
-            <img class="company-logo" src="/assets/img/logo.png" alt="company logo" />
+            <img className="company-logo" src="/assets/img/logo.png" alt="company logo" />
 
             <div className="feature-sidebar">
               <div className="feature-ours">
@@ -152,7 +152,7 @@ class Signup extends Component {
                   component={checkBox}
                   type="checkbox"
                 />
-                {this.props.errMsg ? <ul class="p-0 mt-2">{this.displayErrors(this.props.errMsg)}</ul> : null}
+                {this.props.errMsg ? <ul className="p-0 mt-2">{this.displayErrors(this.props.errMsg)}</ul> : null}
                 <Translate content='button.signup' className="btn btn-primary btn-form" type="submit" component="button" />
               </form>
               <br />

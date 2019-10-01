@@ -31,29 +31,29 @@ class EditProfile extends Component {
 			<Fragment>
 				{/* <Subheader buttonLabel="Change Profile Picture" /> */}
 
-				<div class="content-head">
-					<div class="content-head-left w-100">
-						<div class="d-flex align-items-center">
-							<div class="item position-relative">
+				<div className="content-head">
+					<div className="content-head-left w-100">
+						<div className="d-flex align-items-center">
+							<div className="item position-relative">
 								{this.props.initialValues ? <Fragment>
 									<img src={this.state.pic || this.props.initialValues.company_logo_link || null} alt="alt" width="120px" height="120px" />
-									<img class="verify" src="/assets/img/verify.png" alt="alt" />
+									<img className="verify" src="/assets/img/verify.png" alt="alt" />
 								</Fragment>
 									: null
 								}
 							</div>
-							<div class="item ml-4 position-relative">
-								<input class="btn btn-outline-light opacity-none position-absolute z-index-1" type="file" accept="image/x-png,image/gif,image/jpeg" name="" onChange={e => this.setState({ file: e.target.files[0] })} />
-								{/* <span class="btn btn-outline-light position-absolute">Change profile picture</span> */}
+							<div className="item ml-4 position-relative">
+								<input className="btn btn-outline-light opacity-none position-absolute z-index-1" type="file" accept="image/x-png,image/gif,image/jpeg" name="" onChange={e => this.setState({ file: e.target.files[0] })} />
+								{/* <span className="btn btn-outline-light position-absolute">Change profile picture</span> */}
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="content-body">
+				<div className="content-body">
 					<form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
-						<div class="row mt-4">
-							<div class="col-12 col-sm-12 col-md-12">
-								<div class="form-group">
+						<div className="row mt-4">
+							<div className="col-12 col-sm-12 col-md-12">
+								<div className="form-group">
 									<Field
 										name="company_name"
 										type="text"
@@ -66,9 +66,9 @@ class EditProfile extends Component {
 							</div>
 						</div>
 
-						<div class="row mt-4">
-							<div class="col-12 col-sm-12 col-md-12">
-								<div class="form-group">
+						<div className="row mt-4">
+							<div className="col-12 col-sm-12 col-md-12">
+								<div className="form-group">
 									<Field
 										name="headquarter"
 										type="text"
@@ -81,9 +81,9 @@ class EditProfile extends Component {
 							</div>
 						</div>
 
-						<div class="row mt-4">
-							<div class="col-12 col-sm-6 col-md-6">
-								<div class="form-group">
+						<div className="row mt-4">
+							<div className="col-12 col-sm-6 col-md-6">
+								<div className="form-group">
 									<Field
 										name="street_address"
 										type="text"
@@ -94,8 +94,8 @@ class EditProfile extends Component {
 									/>
 								</div>
 							</div>
-							<div class="col-12 col-sm-6 col-md-6">
-								<div class="form-group">
+							<div className="col-12 col-sm-6 col-md-6">
+								<div className="form-group">
 									<Field
 										name="zip_code"
 										type="text"
@@ -107,9 +107,9 @@ class EditProfile extends Component {
 								</div>
 							</div>
 						</div>
-						<div class="row mt-4">
-							<div class="col-12 col-sm-12 col-md-12">
-								<div class="form-group">
+						<div className="row mt-4">
+							<div className="col-12 col-sm-12 col-md-12">
+								<div className="form-group">
 									<label>Investor Categories</label>
 									<Field name="category" component="select" className='form-control'>
 										<option value="bank">Bank</option>
@@ -122,10 +122,10 @@ class EditProfile extends Component {
 						</div>
 
 
-						<div class="row mt-4">
-							<div class="col-4 col-sm-12 col-md-4">
-								<label for="">Contact Person</label>
-								<div class="form-group">
+						<div className="row mt-4">
+							<div className="col-4 col-sm-12 col-md-4">
+								<label htmlFor="">Contact Person</label>
+								<div className="form-group">
 
 									<Field
 										name="contact_name_1"
@@ -151,9 +151,9 @@ class EditProfile extends Component {
 									/>
 								</div>
 							</div>
-							<div class="col-4 col-sm-12 col-md-4">
-								<label for="">Contact Person</label>
-								<div class="form-group">
+							<div className="col-4 col-sm-12 col-md-4">
+								<label htmlFor="">Contact Person</label>
+								<div className="form-group">
 									<Field
 										name="contact_name_2"
 										type="text"
@@ -180,9 +180,9 @@ class EditProfile extends Component {
 									/>
 								</div>
 							</div>
-							<div class="col-4 col-sm-12 col-md-4">
-								<label for="">Contact Person</label>
-								<div class="form-group">
+							<div className="col-4 col-sm-12 col-md-4">
+								<label htmlFor="">Contact Person</label>
+								<div className="form-group">
 									<Field
 										name="contact_name_3"
 										type="text"
@@ -211,11 +211,11 @@ class EditProfile extends Component {
 								</div>
 							</div>
 						</div>
-						<div class="row mt-4">
-							<div class="col-12 col-sm-12 col-md-12">
-								<label for="">Social Media</label>
-								<div class="form-group d-flex align-items-center">
-									<label class="m-0" for="">
+						<div className="row mt-4">
+							<div className="col-12 col-sm-12 col-md-12">
+								<label htmlFor="">Social Media</label>
+								<div className="form-group d-flex align-items-center">
+									<label className="m-0" htmlFor="">
 										Facebook &nbsp;&nbsp;
 									</label>
 									<Field
@@ -227,8 +227,8 @@ class EditProfile extends Component {
 									/>
 
 								</div>
-								<div class="form-group d-flex align-items-center">
-									<label class="m-0" for="">
+								<div className="form-group d-flex align-items-center">
+									<label className="m-0" htmlFor="">
 										Twitter &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</label>
 
@@ -241,8 +241,8 @@ class EditProfile extends Component {
 
 									/>
 								</div>
-								<div class="form-group d-flex align-items-center">
-									<label class="m-0" for="">
+								<div className="form-group d-flex align-items-center">
+									<label className="m-0" htmlFor="">
 										Linkedin &nbsp;&nbsp;&nbsp;&nbsp;
 									</label>
 									<Field
@@ -271,7 +271,7 @@ class EditProfile extends Component {
 								</div>
 							</div>
 						</div>
-						<button class="btn btn-primary">Update</button>
+						<button className="btn btn-primary">Update</button>
 					</form>
 				</div>
 			</Fragment >

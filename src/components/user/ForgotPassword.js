@@ -17,10 +17,10 @@ class ForgotPassword extends Component {
     if (this.state.submit) {
       return (
         <Fragment>
-          <img class="company-logo company-logo-email" src="./assets/img/logo.png" alt="company logo" />
-          <div class="container-full-height text-centerd d-flex">
-            <div class="content m-auto">
-              <div class="email-content text-center w-75 m-auto">
+          <img className="company-logo company-logo-email" src="./assets/img/logo.png" alt="company logo" />
+          <div className="container-full-height text-centerd d-flex">
+            <div className="content m-auto">
+              <div className="email-content text-center w-75 m-auto">
                 <img src="./assets/img/icons/mail.png" alt="Mail icon" />
                 <h3>We just sent you an email</h3>
                 <p>An Email with an instructions to reset your email has been sent to
@@ -35,22 +35,22 @@ class ForgotPassword extends Component {
       return (
         <Fragment>
           <Fragment>
-            <img class="company-logo company-logo-email" src="./assets/img/logo.png" alt="company logo" />
-            <div class="container-full-height text-centerd d-flex">
-              <div class="content m-auto">
-                <div class="email-content">
-                  <div class="w-75 m-auto text-center">
+            <img className="company-logo company-logo-email" src="./assets/img/logo.png" alt="company logo" />
+            <div className="container-full-height text-centerd d-flex">
+              <div className="content m-auto">
+                <div className="email-content">
+                  <div className="w-75 m-auto text-center">
                     <img src="./assets/img/icons/activated.png" alt="Mail icon" />
                     <h3>
                       <Translate content="label.forgotPassword"/>
                     </h3>
                     <p><Translate content="label.enterEmailForgotten"/></p>
                   </div>
-                  <div class="w-75 m-auto">
-                    <form class="form-signin" onSubmit={handleSubmit(this.onSubmit)}>
-                      <div class="form-group text-left w-75">
-                        {/* <label for="email-address">Email Address</label>
-                        <input class="form-control" type="email" name="email-address" /> */}
+                  <div className="w-75 m-auto">
+                    <form className="form-signin" onSubmit={handleSubmit(this.onSubmit)}>
+                      <div className="form-group text-left w-75">
+                        {/* <label htmlFor="email-address">Email Address</label>
+                        <input className="form-control" type="email" name="email-address" /> */}
                         <Field
                           type='email'
                           name='email'
@@ -60,7 +60,7 @@ class ForgotPassword extends Component {
                         />
                       </div>
                       {this.props.errMsg ? this.displayErrors(this.props.errMsg) : null}
-                      <button class="btn btn-primary btn-form" type="submit">
+                      <button className="btn btn-primary btn-form" type="submit">
                         Submit
                       </button>
                     </form>

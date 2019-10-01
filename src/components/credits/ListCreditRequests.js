@@ -40,9 +40,9 @@ class ListCreditRequests extends Component {
           </td>
           <td >{product.service}</td>
           <td >{`${dDigit(date.getDate())}.${dDigit(date.getMonth() + 1)}.${date.getFullYear()}`}</td>
-          {/* <td class="text-right-piehub-table">{product.number_of_request}</td> */}
-          <td class="text-md-right text-left">{`${dDigit(deadline.getDate())}.${dDigit(deadline.getMonth() + 1)}.${deadline.getFullYear()}`}</td>
-          {/* <td class="text-right-piehub-table font-weight-bold">
+          {/* <td className="text-right-piehub-table">{product.number_of_request}</td> */}
+          <td className="text-md-right text-left">{`${dDigit(deadline.getDate())}.${dDigit(deadline.getMonth() + 1)}.${deadline.getFullYear()}`}</td>
+          {/* <td className="text-right-piehub-table font-weight-bold">
             €{product.max_credit_amount || 100000}
           </td> */}
           <td className="text-right-piehub-table font-weight-bold">
@@ -62,9 +62,9 @@ class ListCreditRequests extends Component {
       return (
         <Fragment>
           <Subheader heading={<Translate content='label.creditrequests' />} />
-          <div class="content-body">
+          <div className="content-body">
             <table
-              class="table tablesaw-stack"
+              className="table tablesaw-stack"
               data-tablesaw-mode="stack"
               data-tablesaw-minimap="data-tablesaw-minimap"
             >
@@ -105,14 +105,14 @@ class ListCreditRequests extends Component {
                     <Translate content='label.deadline' />
                   </th>
                   {/* <th
-                    class="text-right-piehub-table"
+                    className="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >
                     <Translate content='column.investedamount' />
                   </th> */}
                   <th
-                    class="text-right-piehub-table"
+                    className="text-right-piehub-table"
                     data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                     scope="col"
                   >

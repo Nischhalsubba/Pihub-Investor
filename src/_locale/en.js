@@ -172,6 +172,9 @@ export default {
         pleaseWait: 'Einen Moment bitte...',
         noCreditRequests: 'This product doesn\'t have any credit request.',
         justASecond: 'Please wait a moment...',
+        selectAllStates: 'Select All States',
+        selectAllCounties: 'Select All Counties',
+        selectAll: 'Select All',
     },
     unverified: {
         msg: 'Your account is not yet verified yet. Please contact the administrator'

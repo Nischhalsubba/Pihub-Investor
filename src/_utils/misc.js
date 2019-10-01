@@ -1,3 +1,6 @@
+import en from './../_locale/en';
+import de from './../_locale/de';
+
 export const extractNames = (list) => {
   var r = [];
   list.map(l => {
@@ -55,13 +58,13 @@ export const splitService = (array) => {
 }
 
 export const splitIndustries = (array) => {
-  var english = [];
-  var german = [];
+  let english = [en.placeholder.selectAll];
+  let german = [de.placeholder.selectAll];
   array.map(arr => {
     english.push(arr.name.en);
     german.push(arr.name.de);
   });
-  var result = { en: english, de: german };
+  let result = { en: english, de: german };
   return result;
 }
 

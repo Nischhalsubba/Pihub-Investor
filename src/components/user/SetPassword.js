@@ -13,9 +13,9 @@ class SetPassword extends Component {
   displayErrors = errors => {
     return errors.map((err, index) => {
       return (
-        <li class="d-flex mb-1" key={index}>
+        <li className="d-flex mb-1" key={index}>
           <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
-          <span class="pl-2 green-text">{err}</span>
+          <span className="pl-2 green-text">{err}</span>
         </li>
 
 
@@ -33,21 +33,21 @@ class SetPassword extends Component {
     return (
       <Fragment>
         <Fragment>
-          <img class="company-logo company-logo-email" src="./assets/img/logo.png" alt="company logo" />
-          <div class="container-full-height text-centerd d-flex">
-            <div class="content m-auto">
-              <div class="email-content">
-                <div class="w-75 m-auto text-center">
+          <img className="company-logo company-logo-email" src="./assets/img/logo.png" alt="company logo" />
+          <div className="container-full-height text-centerd d-flex">
+            <div className="content m-auto">
+              <div className="email-content">
+                <div className="w-75 m-auto text-center">
                   <img src="./assets/img/icons/activated.png" alt="Mail icon" />
                   <h3>Reset Your Password</h3>
                   {/* <p>Enter an email associated with your account.</p> */}
                 </div>
-                <div class="w-75 m-auto">
-                  <form class="form-signin" onSubmit={handleSubmit(this.onSubmit)}>
+                <div className="w-75 m-auto">
+                  <form className="form-signin" onSubmit={handleSubmit(this.onSubmit)}>
 
-                    <div class="form-group text-left w-75">
-                      {/* <label for="email-address">Email Address</label>
-                    <input class="form-control" type="email" name="email-address" /> */}
+                    <div className="form-group text-left w-75">
+                      {/* <label htmlFor="email-address">Email Address</label>
+                    <input className="form-control" type="email" name="email-address" /> */}
                       <Field
                         type='password'
                         name='password'
@@ -56,9 +56,9 @@ class SetPassword extends Component {
                         placeholder='New Password'
 
                       />
-                    </div> <div class="form-group text-left w-75">
-                      {/* <label for="email-address">Email Address</label>
-                    <input class="form-control" type="email" name="email-address" /> */}
+                    </div> <div className="form-group text-left w-75">
+                      {/* <label htmlFor="email-address">Email Address</label>
+                    <input className="form-control" type="email" name="email-address" /> */}
                       <Field
                         type='password'
                         name='password_confirmation'
@@ -69,7 +69,7 @@ class SetPassword extends Component {
                     </div>
                     {this.props.errMsg ? this.displayErrors(this.props.errMsg) : null}
 
-                    <button class="btn btn-primary btn-form" type="submit">
+                    <button className="btn btn-primary btn-form" type="submit">
                       Submit
                   </button>
                   </form>

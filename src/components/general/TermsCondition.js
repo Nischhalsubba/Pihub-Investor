@@ -2,12 +2,12 @@ import React, { Fragment } from 'react';
 
 export default () => {
   return (
-<div class="container-full-height ct-container">
-    <div class="main-content main-content--padded">
-      <div class="container-full-height text-centerd d-flex">
-        <div class="content m-auto w-75">
-          <div class="page-header">
-            <h1 class="page-title">Terms and Conditions</h1>
+<div className="container-full-height ct-container">
+    <div className="main-content main-content--padded">
+      <div className="container-full-height text-centerd d-flex">
+        <div className="content m-auto w-75">
+          <div className="page-header">
+            <h1 className="page-title">Terms and Conditions</h1>
           </div>
           <p></p>
           <b>§1. Präambel

@@ -33,7 +33,7 @@ class Header extends Component {
         <div className="logo-container">
           <img src="/assets/img/logo.png" alt="Pinhub Logo" />
         </div>
-        <nav class="header-actions">
+        <nav className="header-actions">
           <ul>
             <ul className="language-changer">
               <li>

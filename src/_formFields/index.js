@@ -156,11 +156,11 @@ export const renderMultiselect = ({
                                   }) => {
     return (
         <Fragment>
-            <label for=""><strong>{label}</strong></label>
+            <label htmlFor=""><strong>{label}</strong></label>
             <Multiselect
                 {...input}
                 onBlur={() => input.onBlur()}
-                value={input.value[0] === 'Select All' ? data : input.value || []}
+                value={input.value[0] === 'Select All' || input.value[0] === 'Alle auswählen' ? data : input.value || []}
                 data={data}
                 valueField={valueField}
                 textField={textField}

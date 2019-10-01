@@ -2,6 +2,10 @@ import client from './index';
 import { routes } from './../_api/routes';
 import { GET_INDUSTRY, GET_INDUSTRY_NAME } from '../actions/types';
 import { splitIndustries } from '../_utils/misc';
+import en from "../_locale/en";
+import de from "../_locale/de";
+const Translate = require('react-translate-component');
+
 export const getIndustryList = () => async dispatch => {
   try {
     const response = await client.get(

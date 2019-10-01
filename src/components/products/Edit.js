@@ -110,9 +110,9 @@ class EditProduct extends Component {
     } else {
       return files.map((file, index) => {
         return (
-          <div class="file mb-2">
-            <span class="file-name">{file.file_name}</span>
-            {/* <span class="ml-4 file-size">FileType: {file.file_type}</span> */}
+          <div className="file mb-2">
+            <span className="file-name">{file.file_name}</span>
+            {/* <span className="ml-4 file-size">FileType: {file.file_type}</span> */}
             <span className='btn btn-link' onClick={() => this.props.downloadToken(file.path, file.file_name, file.type)}><Translate content='button.download' /></span>
           </div>
         )
@@ -159,16 +159,16 @@ class EditProduct extends Component {
   creditRatings = (credits) => {
     return credits.map((credit, index) => {
       return (
-        // <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
-        <div class="rating-item">
-          <div class="col-9">
+        // <div className="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+        <div className="rating-item">
+          <div className="col-9">
             {/* <label>Ratingagentur</label> */}
             <Translate content='label.Ratingagentur' component="label" />
             <br />
-            <input class="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
+            <input className="mr-2" type="checkbox" name={credit.id} value="" onChange={() => this.setState({ ratings: [...this.state.ratings, credit.id] })}
             />{credit.name}
           </div>
-          <div class="col-9">
+          <div className="col-9">
             {/* <label>Kreditrating</label> */}
             <Translate content='label.Kreditrating' component="label" />
             <br />
@@ -178,7 +178,7 @@ class EditProduct extends Component {
                 rating_value: [...this.state.rating_value, { rating_id: credit.id, value: e.target.value }]
               })
               }
-              class="col-3 form-control text-center"
+              className="col-3 form-control text-center"
             /></div>
         </div>
         // </div>
@@ -203,9 +203,9 @@ class EditProduct extends Component {
         <div className="content-body">
           <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
             <div className="row mt-4">
-              <div class="col-12 col-sm-12 col-md-6">
+              <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
-                  <label for="amount" data-tip data-for='product'>
+                  <label htmlFor="amount" data-tip data-for='product'>
                     <strong> <Translate content='label.producttitle' data-tip data-for='product' /></strong>
                   </label>
                   <ReactTooltip id='product' type='info'>
@@ -221,9 +221,9 @@ class EditProduct extends Component {
                   />
                 </div>
               </div>
-              <div class="col-12 col-sm-12 col-md-6">
+              <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
-                  <label for="amount" data-tip data-for='state'>
+                  <label htmlFor="amount" data-tip data-for='state'>
                     <strong> <Translate content='label.state' data-tip data-for='state' /></strong>
                   </label>
                   <ReactTooltip id='state' type='info'>
@@ -241,9 +241,9 @@ class EditProduct extends Component {
               </div>
             </div>
             <div className="row mt-4">
-              <div class="col-12 col-sm-12 col-md-6">
+              <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
-                  <label for="amount" data-tip data-for='service'>
+                  <label htmlFor="amount" data-tip data-for='service'>
                     <strong> <Translate content='label.service' data-tip data-for='service' /></strong>
                   </label>
                   <ReactTooltip id='service' type='info'>
@@ -259,9 +259,9 @@ class EditProduct extends Component {
                   />
                 </div>
               </div>
-              <div class="col-12 col-sm-12 col-md-6">
-                <div class="form-group">
-                  <label for="amount" data-tip data-for='county'>
+              <div className="col-12 col-sm-12 col-md-6">
+                <div className="form-group">
+                  <label htmlFor="amount" data-tip data-for='county'>
                     <strong> <Translate content='label.county' data-tip data-for='service' /></strong>
                   </label>
                   <ReactTooltip id='county' type='info'>
@@ -278,9 +278,9 @@ class EditProduct extends Component {
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col-12 col-sm-12 col-md-6">
-                <label for="amount" data-tip data-for='industry'>
+            <div className="row mt-4">
+              <div className="col-12 col-sm-12 col-md-6">
+                <label htmlFor="amount" data-tip data-for='industry'>
                   <strong> <Translate content='label.industries' /></strong>
                 </label>
                 <ReactTooltip id='industry' type='info'>
@@ -295,16 +295,16 @@ class EditProduct extends Component {
                 />
               </div>
 
-              <div class="col-12 col-sm-12 col-md-6">
-                <div class="form-group">
-                  <label for="amount" data-tip data-for='time-duration'>
+              <div className="col-12 col-sm-12 col-md-6">
+                <div className="form-group">
+                  <label htmlFor="amount" data-tip data-for='time-duration'>
                     <strong><Translate content='label.timeduration' /></strong>
                   </label>
-                  <div class="d-flex align-items-center">
+                  <div className="d-flex align-items-center">
                   <ReactTooltip id='time-duration' type='info'>
                       <Translate content='tooltip.timeDuration' />
                     </ReactTooltip>
-                    <div class="d-flex align-items-center">
+                    <div className="d-flex align-items-center">
                       <input
                         className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
                         type="text"
@@ -319,7 +319,7 @@ class EditProduct extends Component {
                         minValue={12}
                         value={this.state.value}
                         onChange={value => this.setState({ value })} />
-                      {/* <div class="col-12 col-sm-12 col-md-6"> */}
+                      {/* <div className="col-12 col-sm-12 col-md-6"> */}
                       &nbsp;&nbsp;<input
                         className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
                         type="text"
@@ -337,13 +337,13 @@ class EditProduct extends Component {
             <div className="row mt-4">
               <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
-                  <label for="amount" data-tip data-for='min-credit'>
+                  <label htmlFor="amount" data-tip data-for='min-credit'>
                     <strong> <Translate content='label.mincredit' /></strong>
                   </label>
                   <ReactTooltip id='min-credit' type='info'>
                     <Translate content='tooltip.minCreditAmount' />
                   </ReactTooltip>
-                  <div class="d-flex align-items-center">
+                  <div className="d-flex align-items-center">
                     <Field
                       name="min_credit_amount"
                       type="range"
@@ -369,13 +369,13 @@ class EditProduct extends Component {
               </div>
               <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
-                  <label for="amount" data-tip data-for='max-credit'>
+                  <label htmlFor="amount" data-tip data-for='max-credit'>
                     <strong> <Translate content='label.maxcredit' /></strong>
                   </label>
                   <ReactTooltip id='max-credit' type='info'>
                     <Translate content='tooltip.maxCreditAmount' />
                   </ReactTooltip>
-                  <div class="d-flex align-items-center">
+                  <div className="d-flex align-items-center">
                     <Field
                       name="max_credit_amount"
                       type="range"
@@ -402,17 +402,17 @@ class EditProduct extends Component {
             </div>
 
 
-            <div class="row mt-4">
+            <div className="row mt-4">
               <div className="col-12 col-sm-12 col-md-6">
                 <div className="form-group">
                   {/* <div className="row align-items-end"> */}
-                  <label for="amount" data-tip data-for='min-sales'>
+                  <label htmlFor="amount" data-tip data-for='min-sales'>
                     <strong>  <Translate content='label.minimumsales' /></strong>
                   </label>
                   <ReactTooltip id='min-sales' type='info'>
                     <Translate content='tooltip.minSales' />
                   </ReactTooltip>
-                  <div class="d-flex align-items-center">
+                  <div className="d-flex align-items-center">
                     <Field
                       name="min_sales_creditor"
                       type="range"
@@ -436,14 +436,14 @@ class EditProduct extends Component {
                 </div>
               </div>
               <div className="col-12 col-sm-12 col-md-6">
-                <div class="form-group">
+                <div className="form-group">
                   <strong>
                     <Translate content='label.Sicherheiten' component='label' className="d-block" data-tip data-for='collateral' />
                   </strong>
                   <ReactTooltip id='collateral' type='info' >
                     <Translate content='tooltip.collateral' />
                   </ReactTooltip>
-                  <div class="form-check form-check-inline">
+                  <div className="form-check form-check-inline">
                     <Field
                       type="radio"
                       component={radioButton}
@@ -452,9 +452,9 @@ class EditProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <Translate content='label.yes' component='label' class="form-check-label" for="rating-credit-yes" />
+                    <Translate content='label.yes' component='label' className="form-check-label" htmlFor="rating-credit-yes" />
                   </div>
-                  <div class="form-check form-check-inline">
+                  <div className="form-check form-check-inline">
                     <Field
                       type="radio"
                       component={radioButton}
@@ -463,19 +463,19 @@ class EditProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
+                    <Translate content='label.no' component='label' className="form-check-label" htmlFor="rating-credit-no" />
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row mt-4">
-              <div class="col">
-                <div class="form-group">
-                  <strong><Translate content='label.rating' component="label" class="d-block" data-tip data-for='rating' /></strong>
+            <div className="row mt-4">
+              <div className="col">
+                <div className="form-group">
+                  <strong><Translate content='label.rating' component="label" className="d-block" data-tip data-for='rating' /></strong>
                   <ReactTooltip id='rating' type='info' >
                     <Translate content='tooltip.rating' />
                   </ReactTooltip>
-                  <div class="form-check form-check-inline">
+                  <div className="form-check form-check-inline">
                     <Field
                       type="radio"
                       component={radioButton}
@@ -484,9 +484,9 @@ class EditProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <Translate content='label.yes' component='label' class="form-check-label" for="rating-credit-yes" />
+                    <Translate content='label.yes' component='label' className="form-check-label" htmlFor="rating-credit-yes" />
                   </div>
-                  <div class="form-check form-check-inline">
+                  <div className="form-check form-check-inline">
                     <Field
                       type="radio"
                       component={radioButton}
@@ -495,12 +495,12 @@ class EditProduct extends Component {
                       className="form-check-input"
                       id="credit"
                     />
-                    <Translate content='label.no' component='label' class="form-check-label" for="rating-credit-no" />
+                    <Translate content='label.no' component='label' className="form-check-label" htmlFor="rating-credit-no" />
                   </div>
                 </div>
               </div>
               {credit === 'true' ? (
-                <div class="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
+                <div className="rating d-flex justify-content-between align-content-center flex-wrap mt-3">
                   <div className="row">{this.creditRatings(credits)}</div>
                 </div>
                 // </div>
@@ -525,9 +525,9 @@ class EditProduct extends Component {
             </div>
 
             {this.props.errMsg ? (
-              <li class="d-flex mb-1" >
+              <li className="d-flex mb-1" >
                 <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
-                <span class="pl-2 green-text">{this.props.errMsg}</span>
+                <span className="pl-2 green-text">{this.props.errMsg}</span>
               </li>
 
             ) : null}

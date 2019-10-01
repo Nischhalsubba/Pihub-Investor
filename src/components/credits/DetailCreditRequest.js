@@ -34,9 +34,9 @@ class DetailCreditRequest extends Component {
     } else {
       return docs.map((doc, index) => {
         return (
-          <div class="file mb-2">
-            <span class="file-name">File {index + 1}</span>
-            <span class="ml-4 file-size">Type: {doc.type}</span>
+          <div className="file mb-2">
+            <span className="file-name">File {index + 1}</span>
+            <span className="ml-4 file-size">Type: {doc.type}</span>
           </div>
         );
       })
@@ -114,11 +114,11 @@ class DetailCreditRequest extends Component {
           {/* <Subheader heading={this.props.location.state.product} /> */}
           <CreditInfo location={this.props.location} />
 
-          <span class="mt-3">
-            <button class="btn btn-success mr-2" disabled={status === 'accepted'}
+          <span className="mt-3">
+            <button className="btn btn-success mr-2" disabled={status === 'accepted'}
               onClick={() => this.changeStatus('accepted')}
             ><Translate content="label.accept" /></button>
-            <button class="btn btn-danger" disabled={status === 'rejected'}
+            <button className="btn btn-danger" disabled={status === 'rejected'}
               onClick={() => this.changeStatus('rejected')}
 
             ><Translate content="label.reject" /> </button>
