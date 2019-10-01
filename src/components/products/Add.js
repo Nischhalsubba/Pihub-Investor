@@ -65,7 +65,7 @@ class AddProduct extends Component {
       this.setState({ states: this.props.allStates.list, statesWithId: this.props.allStates.all })
     }
     if (this.props.states !== prevProps.states) {
-      this.props.getCounties(extractIdForName(this.state.states, this.state.statesWithId))
+      this.props.getCounties(extractIdForName(this.props.states, this.state.statesWithId))
     };
     if (this.props.service !== prevProps.service) {
       this.setState({ services: this.props.service })
@@ -92,17 +92,16 @@ class AddProduct extends Component {
       }
     }, []);
     this.setState({ rating_value: filteredArr });
-    console.log(this.state.rating_value)
-    if (formProps.undefined[0] === 'Select All') {
+    if (formProps.industries[0] === 'Select All' || formProps.industries[0] === 'Alle auswählen') {
       formProps.industry_id = getId(this.props.industry.list, null);
     } else {
-      formProps.industry_id = getId(this.props.industry.list, formProps.undefined, this.props.language);
+      formProps.industry_id = getId(this.props.industry.list, formProps.industries, this.props.language);
     }
 
     formProps.ratings = this.state.rating_value;
     formProps.min_duration = this.state.value.min;
     formProps.max_duration = this.state.value.max;
-    if (formProps.County[0] === 'Select All') {
+    if (formProps.County[0] === 'Select All' || formProps.County[0] === 'Alle auswählen') {
       formProps.county_ids = extractIdCounty(null, this.state.cities);
     } else {
       formProps.county_ids = extractIdCounty(formProps.County, this.state.cities);
@@ -256,7 +255,7 @@ class AddProduct extends Component {
                     component={renderMultiselect}
                     data={this.state.cityNames}
                     // label={<Translate content='label.county' />}
-                    // validate={validation.required}
+                    validate={validation.required}
                     placeholder="select tags"
                   />
                 </div>
@@ -271,11 +270,12 @@ class AddProduct extends Component {
                   <Translate content='tooltip.industry' />
                 </ReactTooltip>
                 <Field
-                  component={renderMultiselect}
-                  // label={<Translate content='label.industries' />}
-                  data={this.state.industries.names ? this.state.industries.names[`${this.props.language}`] : []}
-                  className="form-group"
-                  placeholder="select"
+                    name="industries"
+                    component={renderMultiselect}
+                    // label={<Translate content='label.industries' />}
+                    data={this.state.industries.names ? this.state.industries.names[`${this.props.language}`] : []}
+                    className="form-group"
+                    placeholder="select"
                 />
               </div>
               <div className="col-12 col-sm-12 col-md-6">
@@ -539,7 +539,18 @@ class AddProduct extends Component {
   }
 }
 function mapStateToProps(state) {
-  return { errMsg: state.errors, industry: state.industryList, service: state.service, language: state.language, verified: state.scope, allStates: state.allStates, county: state.county };
+  return { errMsg: state.errors, industry: state.industryList,
+    service: state.service, language: state.language,
+    verified: state.scope,
+    allStates: state.allStates, county: state.county };
+}
+
+function selectAll(field, list) {
+  if(field && field.length === 1 && (field[0] === 'Select All' || field[0] === 'Alle auswählen')) { // just a hack
+    return list;
+  } else {
+    return  field;
+  }
 }
 
 AddProduct = reduxForm({
@@ -549,15 +560,17 @@ AddProduct = reduxForm({
 const selector = formValueSelector('addProduct');
 AddProduct = connect(state => {
   const time_duration = selector(state, 'time_duration');
-  const states = selector(state, 'states');
+  let states = selector(state, 'states');
   const credit = selector(state, 'credit');
   const min_creditValue = selector(state, 'min_credit_amount');
   const max_credit_amount = selector(state, 'max_credit_amount');
   const colatoral = selector(state, 'colatoral');
   const interestValue = selector(state, 'interest_rate');
   const credit_amountValue = selector(state, 'amount');
-  const min_sales_creditor = selector(state, 'min_sales_creditor')
-  const files = selector(state, 'files')
+  const min_sales_creditor = selector(state, 'min_sales_creditor');
+  const files = selector(state, 'files');
+  const industries = selector(state, 'industries');
+  states = selectAll(states, state.allStates ? state.allStates.list: []);
   return {
     states,
     credit,
@@ -568,6 +581,7 @@ AddProduct = connect(state => {
     max_credit_amount,
     min_sales_creditor,
     colatoral,
+    industries,
     files
   };
 })(AddProduct);

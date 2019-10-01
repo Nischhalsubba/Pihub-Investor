@@ -84,12 +84,13 @@ export const addProduct = (details, callback) => async dispatch => {
       callback();
     }
   } catch (e) {
-    if (e.response.data.message) {
+    if (e.response) {
       dispatch({
         type: ERROR,
         payload: e.response.data.message
       });
     } else {
+      console.log(e)
       dispatch({
         type: ERROR,
         payload: 'Unable to add product now'

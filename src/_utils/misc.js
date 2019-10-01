@@ -69,8 +69,7 @@ export const splitIndustries = (array) => {
 }
 
 export const getId = (mainList, list, language) => {
-
-  var result = [];
+  let result = [];
   if (list) {
     list.map(m => {
       return mainList.map(ml => {
@@ -80,7 +79,7 @@ export const getId = (mainList, list, language) => {
       })
     })
   } else {
-    return mainList.map(ml => {
+    mainList.map(ml => {
       result.push(ml.id)
     })
   }
