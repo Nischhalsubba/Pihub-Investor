@@ -1,0 +1,43 @@
+@media (max-width: 639px) {
+
+    // header language
+    .header-actions {
+        display: flex;
+        flex-direction: column;
+
+        .language-changer {
+            margin-bottom: 1rem;
+
+            &:last-child {
+                margin-right: 0px !important;
+            }
+        }
+    }
+
+    .credit-request {
+        .rightbar {
+            text-align: left !important;
+
+            .investor-profile {
+                float: left;
+            }
+        }
+    }
+
+    // SIgnup form
+    .signup-form-container {
+        width: 100%;
+        padding: 60px 30px;
+    }
+
+    // Customzing table
+    .table.tablesaw-stack {
+
+        tr td {
+            &:first-child {
+                // background-color: $color-gray-1 ;
+                border-top: 2px solid $color-primary;
+            }
+        }
+    }
+}

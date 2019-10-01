@@ -1,0 +1,29 @@
+table {
+	margin: 0 0 1.5em;
+	width: 100%;
+}
+
+.table {
+	border-bottom: 1px solid #dee2e6;
+	
+	thead {
+		td,
+		th {
+			border-top: none;
+		}
+	}
+
+	td,
+	th {
+		padding: 15px;
+		vertical-align: middle;
+
+		&:first-child {
+			padding-left: 0;
+		}
+
+		&:last-child {
+			padding-right: 0;
+		}
+	}
+}
