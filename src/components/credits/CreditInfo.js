@@ -71,8 +71,8 @@ class DetailCreditRequest extends Component {
         } else {
             return arrayOfObjects.map((object, index) => {
                 return <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                    <h6 className="product__title">{object.name}</h6>
-                    <p className="product__info">{object.value}</p>
+                    <h6 >{object.name}</h6>
+                    <p >{object.value}</p>
                 </div>
             })
         }
@@ -116,7 +116,7 @@ class DetailCreditRequest extends Component {
                     <div className="content-body credit-request">
                         <div className="d-flex">
                             <div className="col-lg-12 col-xl-8">
-                                <div className="row justify-content-between w-100">
+                                <div className="row justify-content-between w-100 mt-5 pl-3">
                                     <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
                                         {/* <h6>States</h6> */}
                                         <h6><Translate content='label.state'/></h6>
@@ -137,13 +137,13 @@ class DetailCreditRequest extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="row justify-content-between w-100 mt-4 pl-3">
+                                <div className="row justify-content-between w-100 mt-5 pl-3">
                                     <div className="col-10 p-0">
                                         <h6><Translate content='label.reasons'/></h6>
                                         <span>{description}</span>
                                     </div>
                                 </div>
-                                <div className="row justify-content-between w-100 mt-4 credit-request-content pl-3">
+                                <div className="row justify-content-between w-100 mt-5 credit-request-content pl-3">
                                     <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
                                         {/* <h6>States</h6> */}
                                         <h6><Translate content='label.salesAmount'/></h6>
@@ -154,7 +154,7 @@ class DetailCreditRequest extends Component {
                                         <span>{this.showNameValuePair(collaterals)}</span>
                                     </div>
                                 </div>
-                                <div className="row justify-content-between w-100 mt-4 credit-request-content pl-3">
+                                <div className="row justify-content-between w-100 mt-5 credit-request-content pl-3">
                                     <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
                                         <h6><Translate content='label.deadline'/></h6>
                                         <span>{dDigit(deadlineDate.getDate())}.{`${dDigit(deadlineDate.getMonth() + 1)}.${deadlineDate.getFullYear()}`}</span>
@@ -168,7 +168,7 @@ class DetailCreditRequest extends Component {
                                     </div> : <Fragment></Fragment>}
 
                                 </div>
-                                <div className="row justify-content-between w-100 mt-4 credit-request-content pl-3">
+                                <div className="row justify-content-between w-100 mt-5 credit-request-content pl-3">
                                     <h6 className="w-100"><Translate content='label.ratingForCredit'/></h6>
                                     {this.showNameValuePair(ratings)}
                                 </div>
@@ -206,9 +206,11 @@ class DetailCreditRequest extends Component {
                                 </div>
                             </div>
                         </div>
+                        <div className="row justify-content-between w-100 mt-4 pl-3">
                         <div className="attachments mt-5 mb-5">
                             <h4><Translate content='label.attachments'/></h4>
                             {this.renderDocs(application_files)}
+                        </div>
                         </div>
                         {/* <span className="mt-3">
               <button className="btn btn-success mr-2" disabled={status === 'accepted'}
