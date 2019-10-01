@@ -172,9 +172,9 @@ export default {
     },
     tooltip:{
         productName:'Falls das Kreditprodukt, das Sie anbieten möchten, einen Namen hat, können Sie diesen hier nennen. So können Sie das Produkt besser finden und wiedererkennen.',
-        documents:'Upload necessary documents.',
+        documents:'Laden Sie die erforderlichen Dokumente hoch.',
         rating:'Bitte geben Sie – falls notwendig – das Mindestrating ein, das ein Unternehmen haben muß, damit Ihr Haus einen Kredit gewähren kann.',
-        Collateral:'Bitt geben Sie ein, ob Sie Kredit nur gegen Sicherheiten vergeben oder auch blanko.',
+        collateral:'Bitt geben Sie ein, ob Sie Kredit nur gegen Sicherheiten vergeben oder auch blanko.',
         minSales:'Bitte geben Sie die Mindestumsatzgröße der Unternehmen ein, an die Sie Kredite vergeben möchten.',
         maxCreditAmount:'Bitte geben Sie die Maximalgröße für eine Kreditanfrage ein.',
         minCreditAmount:'Bitte geben Sie die Mindestgröße für eine Kreditanfrage ein.',
