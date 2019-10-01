@@ -125,7 +125,7 @@ export const renameKeys = (keysMap, mainObj) => {
 
 
 export const extractIdForName = (list, mainList) => {
-  var r = [];
+  var r =[];
 
   if (list) {
     list.map((name) => {
