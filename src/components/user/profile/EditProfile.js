@@ -265,7 +265,7 @@ class EditProfile extends Component {
 										name="document"
 										component={renderDropzoneField}
 										type="file"
-									// validate={validation.required}
+										className="file-uploader file-uploader--small dropzone"
 									/>
 									{/* {files ? this.displayFiles(files) : null} */}
 								</div>

@@ -84,12 +84,13 @@ class CreditorDetail extends Component {
                             <div className="row mt-4">
                                 <div className="col">
                                     <div className="form-group">
-                                        <Translate content='label.fileupload' component="label" className="d-block"/>
+                                        <Translate content='label.fileupload' component="label"/>
                                         <Field
                                             name="files"
                                             component={renderDropzoneField}
                                             type="file"
                                             validate={validation.required}
+                                            className="file-uploader file-uploader--small dropzone"
                                         />
                                         {files ? this.displayFiles(files) : null}
                                         <h4 className="mt-3"><Translate content='label.investorAttachments'/></h4>
