@@ -283,13 +283,13 @@ class AddProduct extends Component {
                   <label htmlFor="amount" data-tip data-for='time-duration'>
                     <strong><Translate content='label.timeduration' /></strong>
                   </label>
-                  <div className="d-flex align-items-center">
+                  <div className="form-group-ranger">
                     <ReactTooltip id='time-duration' type='info'>
                       <Translate content='tooltip.timeDuration' />
                     </ReactTooltip>
 
                     <input
-                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      className="form-control"
                       type="text"
                       id="mincredit-amount-value"
                       // value={time_duration}
@@ -304,7 +304,7 @@ class AddProduct extends Component {
                       onChange={value => this.setState({ value })} />
                     {/* <div className="col-12 col-sm-12 col-md-6"> */}
                     &nbsp;&nbsp;<input
-                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      className="form-control"
                       type="text"
                       id="mincredit-amount-value"
                       // value={time_duration}
@@ -327,12 +327,11 @@ class AddProduct extends Component {
                   <ReactTooltip id='min-credit' type='info'>
                     <Translate content='tooltip.minCreditAmount' />
                   </ReactTooltip>
-                  <div className="d-flex align-items-center">
+                  <div className="form-group-ranger">
 
                     <Field
                       name="min_credit_amount"
                       type="range"
-                      className="position-relative w-100"
                       component={inputSlider}
                       // label={<Translate content='label.mincredit' />}
                       id="mincredit-amount"
@@ -343,7 +342,7 @@ class AddProduct extends Component {
 
                     />
                     €<input
-                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      className="form-control"
                       type="text"
                       id="mincredit-amount-value"
                       value={min_creditValue}
@@ -361,7 +360,7 @@ class AddProduct extends Component {
                   <ReactTooltip id='max-credit' type='info'>
                     <Translate content='tooltip.maxCreditAmount' />
                   </ReactTooltip>
-                  <div className="d-flex align-items-center">
+                  <div className="form-group-ranger">
 
                     <Field
                       name="max_credit_amount"
@@ -377,7 +376,7 @@ class AddProduct extends Component {
                       step="10000"
                     />
                     €<input
-                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      className="form-control"
                       type="text"
                       id="amount"
                       value={max_credit_amount}
@@ -400,7 +399,7 @@ class AddProduct extends Component {
                   <ReactTooltip id='min-sales' type='info'>
                     <Translate content='tooltip.minSales' />
                   </ReactTooltip>
-                  <div className="d-flex align-items-center">
+                  <div className="form-group-ranger">
                     <Field
                       name="min_sales_creditor"
                       type="range"
@@ -414,7 +413,7 @@ class AddProduct extends Component {
 
                     />
                     €<input
-                      className="form-control col-md-3 col-sm-4 col-4 ml-2 text-center"
+                      className="form-control"
                       type="text"
                       id="mincredit-amount-value"
                       value={min_sales_creditor}
