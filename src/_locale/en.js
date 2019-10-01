@@ -181,7 +181,7 @@ export default {
         msg: 'Your account is not yet verified yet. Please contact the administrator'
     },
     tooltip:{
-        productname:'Give a product name',
+        productName:'Give a product name',
         documents:'Upload necessary documents.',
         rating:'Select Yes if rating is required.',
         Collateral:'Select yes if collateral is needed.',

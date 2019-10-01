@@ -56,7 +56,7 @@ class CreditorDetail extends Component {
                     <div className="file mb-2">
                         <span className="file-name">{doc.file_name}</span>
                         <span className="ml-4 file-size">FileType: {doc.file_type}</span>
-                        <button className='btn btn-link' onClick={() => this.props.downloadToken(doc.path)}><Translate
+                        <button className='btn btn-link' onClick={() => this.props.downloadToken(doc.path, doc.file_name, doc.file_type)}><Translate
                             content='button.download'/></button>
                     </div>
                 );

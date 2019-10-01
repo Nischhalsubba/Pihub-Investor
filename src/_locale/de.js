@@ -139,7 +139,8 @@ export default {
         deadine:'Deadline',
         collaterals:'Collaterals',
         salesAmount:'Sales Amount',
-        reasons:'Reasons'
+        reasons:'Reasons',
+        investorAttachments: 'Investor Anlagen'
     },
     button: {
         Produktbearbeiten: 'Produkt bearbeiten',
@@ -164,8 +165,7 @@ export default {
         justASecond: 'Einen Moment bitte...',
         selectAllStates: 'deutschlandweit',
         selectAllCounties: 'Alle Landkreis auswählen',
-        selectAll: 'Alle auswählen',
-        investorAttachments: 'Investor Anlagen'
+        selectAll: 'Alle auswählen'
     },
     unverified: {
         msg: 'Ihr Konto wurde noch nicht durch den Administrator freigeschaltet. Sobald dies geschehen ist, erhalten Sie eine E-Mail und können dann alle piHub-Funktionen nutzen.'
