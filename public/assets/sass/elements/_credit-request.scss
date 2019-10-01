@@ -1,0 +1,17 @@
+// All the scss related with credit request can be found here
+
+.product-details {
+	.product-info {
+		margin-bottom: 30px;
+	}
+
+	.product-info-file {
+		display: flex;
+		color: #6e8398;
+
+		.product__file-size {
+			color: #bec6d6;
+			margin-left: 20px;
+		}
+	}
+}

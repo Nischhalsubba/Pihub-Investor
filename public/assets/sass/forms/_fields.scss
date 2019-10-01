@@ -1,0 +1,295 @@
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+textarea {
+	width: 100%;
+	color: $color-primary;
+}
+
+input[type="number"],
+input[type="tel"],
+input[type="range"],
+input[type="date"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="color"],
+textarea {
+	color: $color-input-text;
+	border: 1px solid $color-border;
+	// border-radius: 50%;
+	padding: 3px;
+
+	&:focus {
+		color: $color-input-text-focus;
+	}
+}
+
+input[type="range"] {
+	-webkit-appearance: none;
+	appearance: none;
+	background: $color-primary;
+	height: 5px;
+	width: 100%;
+
+	&::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 20px;
+		height: 20px;
+		border: 3px solid $color-primary;
+		border-radius: 50px;
+		background: $color-white;
+	}
+
+	&::-moz-range-thumb {
+		width: 20px;
+		height: 20px;
+		border: 3px solid $color-primary;
+		border-radius: 50px;
+		background: $color-white;
+	}
+}
+
+select {
+	border: 1px solid $color-input-border;
+}
+
+select.regionof-interest {
+	background-image: $color-white !important;
+	background-size: 5px 5px;
+}
+
+label {
+	font-weight: 600;
+	margin-bottom: 15px;
+	color: $color-gray-9;
+}
+
+//Dropzone
+#file_dropzone {
+	min-height: 200px;
+	cursor: pointer;
+}
+
+.dz-success-mark,
+.dz-error-mark {
+	display: none;
+}
+
+.dz-details {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: left;
+}
+
+.dz-size {
+	margin-left: 2rem;
+}
+
+.border-dotted-center {
+	left: 35%;
+	top: 35%;
+}
+
+// radio buttons
+.radio {
+	position: relative;
+	cursor: pointer;
+	line-height: 20px;
+	font-size: 14px;
+	margin: 15px 0px;
+}
+
+.radio .label {
+	position: relative;
+	display: block;
+	float: left;
+	margin-right: 10px;
+	width: 20px;
+	height: 20px;
+	border: 2px solid #c8ccd4;
+	border-radius: 100%;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.radio .label::after {
+	content: "";
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 10px;
+	height: 10px;
+	border-radius: 100%;
+	background: #225cff;
+	transform: scale(0);
+	transition: all 0.2s ease;
+	opacity: 0.08;
+	pointer-events: none;
+}
+
+.radio:hover .label::after {
+	transform: scale(3.6);
+}
+
+input[type="radio"]:checked+.label {
+	border-color: #225cff;
+}
+
+input[type="radio"]:checked+.label::after {
+	transform: scale(1);
+	transition: all 0.2s cubic-bezier(0.35, 0.9, 0.4, 0.9);
+	opacity: 1;
+}
+
+.cntr {
+	position: absolute;
+	top: calc(50% - 10px);
+	left: 0;
+	width: 100%;
+	text-align: center;
+}
+
+.hidden {
+	display: none;
+}
+
+// Date picker
+input[type="date"] {
+
+	&::-webkit-inner-spin-button,
+	input::-webkit-clear-button {
+		display: none;
+	}
+
+	&::-webkit-calendar-picker-indicator {
+		content: url("../img/icons/bx-calender.svg");
+		opacity: 1;
+	}
+}
+
+// industry dropdown
+.industry-list {
+	box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+	padding: 25px 15px 15px 15px;
+
+	.industry-item {
+		margin-bottom: 10px;
+	}
+}
+
+input[type="checkbox"] {
+	margin-top: 10px;
+}
+
+.rating {
+	.rating-item {
+		display: flex;
+		align-items: center;
+		justify-items: center;
+		width: 50%;
+		margin-bottom: 1rem;
+	}
+}
+
+.form-control {
+	min-height: 45px;
+}
+
+.form-group-inline {
+	display: flex;
+	justify-content: space-between;
+
+	input[type="text"] {
+		width: 90px;
+	}
+}
+
+.form-group-ranger {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	.range-slider {
+		width: 100%;
+		border: none;
+		box-shadow: none;
+		height: 4px;
+
+		.noUi-connect {
+			background-color: $color-primary;
+		}
+
+		&.noUi-horizontal {
+			.noUi-handle {
+				width: 20px;
+				height: 20px;
+				border: 3px solid $color-primary;
+				border-radius: 50px;
+				top: -8px;
+
+				&::before,
+				&::after {
+					content: none;
+				}
+			}
+		}
+	}
+
+	.input-group {
+		width: 200px;
+
+		&:last-child {
+			margin-left: 15px;
+		}
+	}
+
+	.form-control {
+		width: 100px;
+	}
+}
+
+.form-filter {
+	justify-content: flex-end;
+
+	.form-group {
+		margin-left: 15px;
+	}
+}
+
+.choices {
+	&__button {
+		padding: 0;
+	}
+}
+
+.rw-multiselect {
+	.rw-input-reset {
+		height: 45px !important;
+	}
+}
+
+.file-upload-section {
+	&__title {
+		display: block;
+		margin-bottom: 30px;
+	}
+}
+
+.file-uploader {
+	border: 1px dashed $color-border;
+
+	img {
+		display: block;
+		margin: 0 auto 10px auto;
+	}
+
+	&--small {
+		min-height: 90px;
+		padding: 0 15px;
+	}
+}
