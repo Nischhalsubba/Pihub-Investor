@@ -95,7 +95,7 @@ class DetailCreditRequest extends Component {
                 duration,
                 payment_after,
                 sales,
-                status, files, //@todo change files to application_files
+                status, application_files,
                 time_duration, collaterals,
                 state, county, nda_requirement,
                 service, industries, rating_for_credit, ratings
@@ -208,7 +208,7 @@ class DetailCreditRequest extends Component {
                         </div>
                         <div className="attachments mt-5 mb-5">
                             <h4><Translate content='label.attachments'/></h4>
-                            {this.renderDocs(files)}
+                            {this.renderDocs(application_files)}
                         </div>
                         {/* <span className="mt-3">
               <button className="btn btn-success mr-2" disabled={status === 'accepted'}

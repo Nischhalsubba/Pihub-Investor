@@ -92,6 +92,7 @@ class CreditorDetail extends Component {
                                             validate={validation.required}
                                         />
                                         {files ? this.displayFiles(files) : null}
+                                        <h4 className="mt-3"><Translate content='label.investorAttachments'/></h4>
                                         {this.state.detail.investor_files ? this.renderDocs(this.state.detail.investor_files): '' }
                                     </div>
                                 </div>

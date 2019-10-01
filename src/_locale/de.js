@@ -165,6 +165,7 @@ export default {
         selectAllStates: 'deutschlandweit',
         selectAllCounties: 'Alle Landkreis auswählen',
         selectAll: 'Alle auswählen',
+        investorAttachments: 'Investor Anlagen'
     },
     unverified: {
         msg: 'Ihr Konto wurde noch nicht durch den Administrator freigeschaltet. Sobald dies geschehen ist, erhalten Sie eine E-Mail und können dann alle piHub-Funktionen nutzen.'

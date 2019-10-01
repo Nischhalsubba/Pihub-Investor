@@ -148,7 +148,8 @@ export default {
         salesAmount:'Sales Amount',
         reasons:'Reasons',
         passwordChange:'You have successfully changed your password.',
-        newPassword:'with your new password'
+        newPassword:'with your new password',
+        investorAttachments: 'Investor Attachments'
 
     },
     button: {
