@@ -62,13 +62,10 @@ class AddProduct extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.allStates !== this.props.allStates) {
-      
-      
       this.setState({ states: this.props.allStates.list, statesWithId: this.props.allStates.all })
     }
     if (this.props.states !== prevProps.states) {
       this.props.getCounties(extractIdForName(this.state.states, this.state.statesWithId))
-      
     };
     if (this.props.service !== prevProps.service) {
       this.setState({ services: this.props.service })
