@@ -196,7 +196,7 @@ export default {
     },
     statuses: {
         offer: {
-            open: '',
+            open: 'open',
             accepted_by_investor: 'Offer Sent',//@todo change this to offer accepted
             offer_rejected: 'Offer Ignored',
             rejected_by_creditor: 'Rejected',

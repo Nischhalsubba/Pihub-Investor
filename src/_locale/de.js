@@ -84,7 +84,7 @@ export default {
         youraccounthasbeen: 'Ihr Konto wurde aktiviert. Ab sofort können Sie alle piHub-Funktionen nutzen.',
         wow: 'Willkommen in Pihub',
         attachments: 'Anlagen',
-        timeduration: 'Laufzeit (Monaten)',
+        timeduration: 'Laufzeit (in Monaten)',
         investor: 'Investor',
         maxcredit: 'Höchstkreditbetrag',
         industries: 'Branche',
@@ -105,7 +105,7 @@ export default {
         Kreditrating: 'Kreditrating',
         county: 'Landkreis',
         editproducts: 'Produkte bearbeiten',
-        mincredit: 'Mindestkreditvolumen',
+        mincredit: 'Mindestkreditbetrag',
         notifications: 'Benachrichtigungen',
         pagenot: ':( 404 Error - Seite nicht gefunden.',
         thepage: 'Die von Ihnen gesuchte Seite wurde möglicherweise entfernt. Ein Grund dafür kann sein, dass sich Ihr Name geändert hat oder die Seite ist vorübergehend nicht verfügbar.',
@@ -186,7 +186,7 @@ export default {
     },
     statuses: {
         offer: {
-            open: '',
+            open: 'Geöffnet',
             accepted_by_investor: 'Angebot erstellt',//@todo change this to offer accepted
             offer_rejected: 'Angebot abgelehnt',
             rejected_by_creditor: 'Abgelehnt',
