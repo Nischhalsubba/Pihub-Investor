@@ -181,10 +181,10 @@ export default {
         msg: 'Your account is not yet verified yet. Please contact the administrator'
     },
     tooltip:{
-        productname:'Give a product name',
+        productName:'Give a product name',
         documents:'Upload necessary documents.',
         rating:'Select Yes if rating is required.',
-        Collateral:'Select yes if collateral is needed.',
+        collateral:'Select yes if collateral is needed.',
         minSales:'Minimum Sales Credit from 0 to 50M',
         maxCreditAmount:'Maximum Credit Amount from 250k to 5m and should be more than the min. credit amount',
         minCreditAmount:'Minimum Credit Amount from 250k to 5m',
