@@ -108,7 +108,7 @@ class AddProduct extends Component {
 
     }
     // console.log(this.state.statesWithId)
-    if (formProps.states === 'Select All') {
+    if (formProps.states === 'Select All' || formProps.states === 'Alle auswählen') {
       formProps.state_ids = extractIdForName(null, this.state.statesWithId);
     } else {
       formProps.state_ids = extractIdForName(formProps.states, this.state.statesWithId);
@@ -511,7 +511,7 @@ class AddProduct extends Component {
                     name="files"
                     component={renderDropzoneField}
                     type="file"
-                  // validate={validation.required}
+                    className="file-uploader file-uploader--small dropzone"
                   />
                   {files ? this.displayFiles(files) : null}
                 </div>

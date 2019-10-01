@@ -543,7 +543,7 @@ class EditProduct extends Component {
                         <div className="row mt-4">
                             <div className="col">
                                 <div className="form-group">
-                                    <Translate content='label.fileupload' component="label" className="d-block" data-tip
+                                    <Translate content='label.fileupload' component="label" data-tip
                                                data-for='files'/>
                                     <ReactTooltip id='files' type='info'>
                                         <Translate content='tooltip.documents'/>
@@ -552,6 +552,7 @@ class EditProduct extends Component {
                                         name="files"
                                         component={renderDropzoneField}
                                         type="file"
+                                        className="file-uploader file-uploader--small dropzone"
                                     />
                                     {files ? <strong>Filename: {files[0].name}</strong> : null}
                                 </div>
