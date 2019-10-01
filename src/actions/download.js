@@ -1,24 +1,23 @@
 import client from './index';
 import { routes } from './../_api/routes';
 import { ERROR } from '../actions/types';
-export const downloadToken = (path, filename, filetype) => async dispatch => {
+export const downloadToken = (path, fileName, fileType) => async dispatch => {
   try {
-    var name = filename.split('.')[0] || 'attachement';
-    var type = filetype || 'pdf';
-    console.log(filename)
+    let name = fileName.split('.')[0] || 'attachment';
+    let type = fileType || 'pdf';
 
     const response = await client.post(routes.downloadToken, { file_path: path });
     const { token } = response.data;
     if (token) {
-      var xhr = new XMLHttpRequest();
+      let xhr = new XMLHttpRequest();
       xhr.open('GET', `${routes.downloadFile}?token=${token}`);
 
 
       xhr.responseType = 'arraybuffer';
       xhr.onload = function (e) {
         if (this.status === 200) {
-          var blob = new Blob([this.response], { type: '' });
-          var link = document.createElement('a');
+          let blob = new Blob([this.response], { type: '' });
+          let link = document.createElement('a');
           link.href = window.URL.createObjectURL(blob);
           link.download = `${name}.${type}`
           link.click();
@@ -30,7 +29,7 @@ export const downloadToken = (path, filename, filetype) => async dispatch => {
   } catch (e) {
     dispatch({
       type: ERROR,
-      payload: e.response.data.message
+      payload: e.response? e.response.data.message: 'Unable to download the file!'
     });
   }
 };

@@ -62,7 +62,7 @@ class ViewProduct extends Component {
                 return (
                     <div class="file mb-2" key={index}>
                         <span class="file-name"><button className='btn btn-link'
-                                                        onClick={() => this.props.downloadToken(doc.path)}>{doc.file_name}</button></span>
+                                                        onClick={() => this.props.downloadToken(doc.path, doc.file_name, doc.file_type)}>{doc.file_name}</button></span>
                         {/*<span class="ml-4 file-size">Type: {doc.type}</span>*/}
                     </div>
                 );

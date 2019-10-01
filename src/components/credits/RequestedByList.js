@@ -99,7 +99,7 @@ class RequestedByList extends Component {
                 data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                 scope="col"
               >
-                <Translate content='label.investedamount' />
+                <Translate content='column.investedamount' />
                 {/* Kreditbetrag */}
               </th>
               <th

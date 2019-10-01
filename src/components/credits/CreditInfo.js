@@ -7,6 +7,7 @@ import {changeStatus} from '../../actions/changeStatus';
 import {ToEuro} from "../general/CurrencyFormatter";
 import {dDigit} from '../../_utils/misc'
 import {matchesInvestorStatus} from "../../_status";
+import {downloadToken} from '../../actions/download';
 
 class DetailCreditRequest extends Component {
     state = {detail: null, refresh: false}
@@ -232,4 +233,4 @@ function mapStateToProps(state) {
     return {data: state.applicationDetail}
 }
 
-export default connect(mapStateToProps, {getApplicationDetail, changeStatus})(DetailCreditRequest);
+export default connect(mapStateToProps, {getApplicationDetail, changeStatus, downloadToken})(DetailCreditRequest);
