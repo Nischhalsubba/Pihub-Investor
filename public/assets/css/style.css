@@ -1133,6 +1133,8 @@ input[type="checkbox"] {
   -webkit-box-shadow: none;
           box-shadow: none;
   height: 4px;
+  border-radius: 50px;
+  margin-right: 5px;
 }
 
 .form-group-ranger .range-slider .noUi-connect {
@@ -1160,7 +1162,12 @@ input[type="checkbox"] {
 }
 
 .form-group-ranger .form-control {
-  width: 100px;
+  text-align: center;
+  width: 150px;
+}
+
+.form-group-ranger .form-control:last-child {
+  margin-left: 15px;
 }
 
 .form-filter {

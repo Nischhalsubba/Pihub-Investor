@@ -120,20 +120,17 @@ export const inputSlider = ({
             </label>
             {/* <div class="d-flex align-items-center"> */}
 
-            <div className='demo col-md-9 col-sm-8 col-8'>
-
-                <input
-                    {...input}
-                    className='position-relative w-100'
-                    id={id}
-                    placeholder={placeholder}
-                    type={type}
-                    min={min}
-                    max={max}
-                    step={step}
-                    data-orientation="horizontal"
-                />
-            </div>
+            <input
+                {...input}
+                className='range-slider'
+                id={id}
+                placeholder={placeholder}
+                type={type}
+                min={min}
+                max={max}
+                step={step}
+                data-orientation="horizontal"
+            />
             {/* </div> */}
 
             <font color="red">{touched && error}</font>

@@ -219,6 +219,8 @@ input[type="checkbox"] {
 		border: none;
 		box-shadow: none;
 		height: 4px;
+		border-radius: 50px;
+		margin-right: 5px;
 
 		.noUi-connect {
 			background-color: $color-primary;
@@ -249,7 +251,12 @@ input[type="checkbox"] {
 	}
 
 	.form-control {
-		width: 100px;
+		text-align: center;
+		width: 150px;
+
+		&:last-child {
+			margin-left: 15px;
+		}
 	}
 }
 
