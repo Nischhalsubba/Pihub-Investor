@@ -54,6 +54,10 @@ export const matchesInvestorStatus = {
         translation_key: 'statuses.offer.accepted_by_investor',
         class: 'badge-warning'
     }, // offer sent by investor
+    invested: {
+        translation_key: 'statuses.offer.accepted_by_investor',
+        class: 'badge-warning'
+    }, // offer sent by investor
     accepted_by_investor: {
         translation_key: 'statuses.offer.accepted_by_investor',
         class: 'badge-warning'
