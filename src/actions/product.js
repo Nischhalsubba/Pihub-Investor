@@ -99,6 +99,7 @@ export const getProductById = id => async dispatch => {
     detail.states = extractNames(response.data.data.states)
     detail.County = extractNames(response.data.data.counties);
     detail.undefined = extractNames(response.data.data.industries);
+    // detail.collateral
     detail.services = [{ value: response.data.data.service.id, label: response.data.data.service.name }]
     dispatch({
       type: SINGLE_PRODUCT,

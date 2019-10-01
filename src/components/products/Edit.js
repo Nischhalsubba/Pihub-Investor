@@ -440,28 +440,30 @@ class EditProduct extends Component {
                   <strong>
                     <Translate content='label.Sicherheiten' component='label' className="d-block" data-tip data-for='collateral' />
                   </strong>
-                  <ReactTooltip id='collateral' type='info' >
+                  <ReactTooltip id='collatoral' type='info' >
                     <Translate content='tooltip.collateral' />
                   </ReactTooltip>
                   <div className="form-check form-check-inline">
-                    <Field
+                    <input
                       type="radio"
-                      component={radioButton}
+                      // component={radioButton}
                       value="true"
-                      name="colatoral"
+                      name="collatoral"
                       className="form-check-input"
                       id="credit"
+                      checked={this.props.initialValues.collatoral === 1 ? true : false}
                     />
                     <Translate content='label.yes' component='label' className="form-check-label" htmlFor="rating-credit-yes" />
                   </div>
                   <div className="form-check form-check-inline">
-                    <Field
+                    <input
                       type="radio"
-                      component={radioButton}
+                      // component={radioButton}
                       value="false"
-                      name="colatoral"
+                      name="collatoral"
                       className="form-check-input"
                       id="credit"
+                      checked={this.props.initialValues.collatoral===0 ? true : false}
                     />
                     <Translate content='label.no' component='label' className="form-check-label" htmlFor="rating-credit-no" />
                   </div>
@@ -476,24 +478,26 @@ class EditProduct extends Component {
                     <Translate content='tooltip.rating' />
                   </ReactTooltip>
                   <div className="form-check form-check-inline">
-                    <Field
+                    <input
                       type="radio"
-                      component={radioButton}
+                      // component={radioButton}
                       value="true"
                       name="credit"
                       className="form-check-input"
                       id="credit"
+                      checked={this.props.initialValues.ratings ? true: false}
                     />
                     <Translate content='label.yes' component='label' className="form-check-label" htmlFor="rating-credit-yes" />
                   </div>
                   <div className="form-check form-check-inline">
-                    <Field
+                    <input
                       type="radio"
-                      component={radioButton}
+                      // component={radioButton}
                       value="false"
                       name="credit"
                       className="form-check-input"
                       id="credit"
+                      
                     />
                     <Translate content='label.no' component='label' className="form-check-label" htmlFor="rating-credit-no" />
                   </div>
