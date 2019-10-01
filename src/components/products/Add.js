@@ -108,7 +108,7 @@ class AddProduct extends Component {
 
     }
     // console.log(this.state.statesWithId)
-    if (formProps.states === 'Select All') {
+    if (formProps.states === 'Select All' || formProps.states === 'Alle auswählen') {
       formProps.state_ids = extractIdForName(null, this.state.statesWithId);
     } else {
       formProps.state_ids = extractIdForName(formProps.states, this.state.statesWithId);
