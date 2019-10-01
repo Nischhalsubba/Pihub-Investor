@@ -113,112 +113,101 @@ class DetailCreditRequest extends Component {
 
                     {status === 'accepted' ?
                         <div className="alert alert-success"><Translate content='column.appaccept'/></div> : null}
-                    <div className="content-body credit-request">
-                        <div className="d-flex">
-                            <div className="col-lg-12 col-xl-8">
-                                <div className="row justify-content-between w-100">
-                                    <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                                        {/* <h6>States</h6> */}
-                                        <h6><Translate content='label.state'/></h6>
-                                        <span>{state ? state.name : null}</span>
-                                    </div>
-                                    <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                                        <h6><Translate content='label.county'/></h6>
-                                        <span>{county ? county.name : null}</span>
-                                    </div>
-                                    <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                                        <h6><Translate content='column.credittype'/></h6>
-                                        <span>{service ? service.name : null}</span>
-                                    </div>
-                                    <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                                        <h6><Translate content='label.industries'/></h6>
-                                        <div className="d-flex flex-wrap justify-content-between flex-column">
-                                            {industries ? this.showCollections(industries) : null}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row justify-content-between w-100 mt-4 pl-3">
-                                    <div className="col-10 p-0">
-                                        <h6><Translate content='label.reasons'/></h6>
-                                        <span>{description}</span>
-                                    </div>
-                                </div>
-                                <div className="row justify-content-between w-100 mt-4 credit-request-content pl-3">
-                                    <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                                        {/* <h6>States</h6> */}
-                                        <h6><Translate content='label.salesAmount'/></h6>
-                                        <span><ToEuro amount={sales}/></span>
-                                    </div>
-                                    <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                                        <h6><Translate content='label.collaterals'/></h6>
-                                        <span>{this.showNameValuePair(collaterals)}</span>
-                                    </div>
-                                </div>
-                                <div className="row justify-content-between w-100 mt-4 credit-request-content pl-3">
-                                    <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                                        <h6><Translate content='label.deadline'/></h6>
-                                        <span>{dDigit(deadlineDate.getDate())}.{`${dDigit(deadlineDate.getMonth() + 1)}.${deadlineDate.getFullYear()}`}</span>
-                                    </div>
-                                    <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                                        <h6><Translate content='label.deadlineForPayment'/></h6>
-                                        <span>{dDigit(paymentDate.getDate())}.{`${dDigit(paymentDate.getMonth() + 1)}.${paymentDate.getFullYear()}`}</span>
-                                    </div>
-                                    {!nda_requirement ? <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                                        <h6><Translate content='label.nda'/></h6><span><Translate content='label.yes'/></span>
-                                    </div> : <Fragment></Fragment>}
-
-                                </div>
-                                <div className="row justify-content-between w-100 mt-4 credit-request-content pl-3">
-                                    <h6 className="w-100"><Translate content='label.ratingForCredit'/></h6>
-                                    {this.showNameValuePair(ratings)}
-                                </div>
-                                {/* {this.renderCreditRatings(1, ratings)} */}
-
+                    <div className="content-body credit-request product-details">
+                        <div className="row product-info-row">
+                            <div className="product-info col-6 col-md-3">
+                                <h6><Translate content='label.state'/></h6>
+                                <span>{state ? state.name : null}</span>
                             </div>
-                            <div className="col-lg-12 col-xl-4 rightbar">
-                                <div className="amount">
-                                    {/* <h6>Requested amount of</h6> */}
-                                    <h6><Translate content='label.requestedamount'/></h6>
-                                    <h2><ToEuro amount={amount}/></h2>
+                            <div className="product-info col-6 col-md-3">
+                                <h6><Translate content='label.county'/></h6>
+                                <span>{county ? county.name : null}</span>
+                            </div>
+                            <div className="product-info col-6 col-md-3">
+                                <h6><Translate content='column.credittype'/></h6>
+                                <span>{service ? service.name : null}</span>
+                            </div>
+                            <div className="product-info col-12 col-md-3 text-left text-md-right">
+                                {/* <h6>Requested amount of</h6> */}
+                                <h6><Translate content='label.requestedamount'/></h6>
+                                <h2><ToEuro amount={amount}/></h2>
+                            </div>
+                        </div>
+
+                        <div className="reason-description product-info">
+                            <h6><Translate content='label.reasons'/></h6>
+                            <span>{description}</span>
+                        </div>
+
+                        <div className="row product-info-row">
+                            <div className="product-info col-6 col-md-3">
+                                <h6><Translate content='label.industries'/></h6>
+                                <div className="d-flex flex-wrap justify-content-between flex-column">
+                                    {industries ? this.showCollections(industries) : null}
                                 </div>
-                                <div className="investor clearfix mt-5">
-                                    {/* <h6>Requested By</h6> */}
-                                    <h6><Translate content='column.requestedby'/></h6>
-                                    <div className="investor-profile d-flex align-items-center">
-                                        {/* <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" /> */}
-                                        <a className="ml-2">{requested_by}</a>
-                                    </div>
-                                </div>
-                                <div className="date mt-5">
-                                    {/* <h6>Request on</h6> */}
-                                    <h6><Translate content='column.requeston'/></h6>
-                                    <span>{dDigit(requestedDate.getDate())}.{`${dDigit(requestedDate.getMonth() + 1)}.${requestedDate.getFullYear()}`}</span>
-                                </div>
-                                <div className="date mt-5">
-                                    {/* <h6>Time Duration</h6> */}
-                                    <h6><Translate content='label.time'/></h6>
-                                    <span>{time_duration} Monate</span>
-                                </div>
-                                <div className="date mt-5">
-                                    {/* <h6>Time Duration</h6> */}
-                                    <h6><Translate content='label.status'/></h6>
-                                    <span><Translate content={matchesInvestorStatus[status].translation_key}/></span>
+                            </div>
+                            <div className="product-info col-6 col-md-3">
+                                {/* <h6>States</h6> */}
+                                <h6><Translate content='label.salesAmount'/></h6>
+                                <span><ToEuro amount={sales}/></span>
+                            </div>
+                            <div className="product-info col-6 col-md-3">
+                                <h6><Translate content='label.collaterals'/></h6>
+                                <span>{this.showNameValuePair(collaterals)}</span>
+                            </div>
+
+                            <div className="product-info col-6 col-md-3 text-left text-md-right">
+                                <h6><Translate content='column.requestedby'/></h6>
+                                <div className="product-info-user">
+                                    {/* <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" /> */}
+                                    <a href="">{requested_by}</a>
                                 </div>
                             </div>
                         </div>
-                        <div className="attachments mt-5 mb-5">
-                            <h4><Translate content='label.attachments'/></h4>
+
+                        <div className="row product-info-row">
+                            <div className="product-info col-6 col-md-3">
+                                <h6><Translate content='label.deadline'/></h6>
+                                <span>{dDigit(deadlineDate.getDate())}.{`${dDigit(deadlineDate.getMonth() + 1)}.${deadlineDate.getFullYear()}`}</span>
+                            </div>
+                            <div className="product-info col-6 col-md-3">
+                                <h6><Translate content='label.deadlineForPayment'/></h6>
+                                <span>{dDigit(paymentDate.getDate())}.{`${dDigit(paymentDate.getMonth() + 1)}.${paymentDate.getFullYear()}`}</span>
+                            </div>
+                            {!nda_requirement ? <div className="product-info col-6 col-md-3">
+                                <h6><Translate content='label.nda'/></h6><span><Translate content='label.yes'/></span>
+                            </div> : <Fragment></Fragment>}
+
+                            <div className="product-info col-6 col-md-3 text-left text-md-right">
+                                <h6><Translate content='column.requeston'/></h6>
+                                <span>{dDigit(requestedDate.getDate())}.{`${dDigit(requestedDate.getMonth() + 1)}.${requestedDate.getFullYear()}`}</span>
+                            </div>
+                        </div>
+                        
+                        <div className="product-info-row row">
+                            <div className="product-info col-6 col-md-6">
+                                <h6><Translate content='label.ratingForCredit'/></h6>
+                                {this.showNameValuePair(ratings)}
+                            </div>
+
+                            <div className="product-info col-6 col-md-6 text-left text-md-right">
+                                {/* <h6>Time Duration</h6> */}
+                                <h6><Translate content='label.time'/></h6>
+                                <span>{time_duration} Monate</span>
+                            </div>
+                        </div>
+                        
+                        <div className="product-info-row">
+                            <div className="product-info text-left text-md-right">
+                                {/* <h6>Time Duration</h6> */}
+                                <h6><Translate content='label.status'/></h6>
+                                <span><Translate content={matchesInvestorStatus[status].translation_key}/></span>
+                            </div>
+                        </div>
+                        <div className="product-info-files product-info">
+                            <h4 className="product__file-name"><Translate content='label.attachments'/></h4>
                             {this.renderDocs(application_files)}
                         </div>
-                        {/* <span className="mt-3">
-              <button className="btn btn-success mr-2" disabled={status === 'accepted'}
-                onClick={() => this.changeStatus('accepted')}
-              ><Translate content="label.accept"/></button>
-              <button className="btn btn-danger" disabled={status === 'rejected'}
-                onClick={() => this.changeStatus('rejected')}
-
-              ><Translate content="label.reject"/> </button>
-            </span> */}
                     </div>
                 </Fragment>
             );

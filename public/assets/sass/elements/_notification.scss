@@ -1,0 +1,31 @@
+// SCSS related to Notification can be found here
+
+.notification{
+    .notification-item{
+        border-bottom: 1px solid #D1D7E2;
+        .status{
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+        }
+        .status.wait{
+            background-color: $color-brand-warning;
+            margin-top: 3px;
+        }
+        .status.sucess{
+            background-color: #D3F9D8;
+            margin-top: 3px;
+        }
+        .status.stop{
+            background-color: #F9D3D3;
+            margin-top: 3px;
+        }
+        p.wait{
+            color: #AB8D0D;
+        }
+        .time{
+            color: #949CAC;
+            font-size: 12px;
+        }
+    }
+}

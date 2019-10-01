@@ -1,0 +1,65 @@
+.border-dotted {
+    border: 2px dashed $color-secondary;
+    height: 200px;
+}
+
+.btn-accept {
+    background-color: #40c057;
+    color: $color-white;
+}
+
+.btn-reject {
+    background-color: #FA5252;
+    color: $color-white;
+}
+
+.btn-option {
+    background-color: #dde2eb;
+    color: #bec6d6;
+}
+
+.alert-sucess {
+    background-color: #e2fce6;
+    border: 1px solid #91bf97;
+    color: #358444;
+}
+
+.alert-rejected {
+    background-color: #ffe3e3;
+    border: 1px solid #ff6b6b;
+    color: #f03e3e;
+}
+
+.text-right-piehub-table {
+    text-align: right !important;
+}
+
+.form-control {
+    min-height: 45px !important;
+}
+
+.error {
+    border: 1px solid #FF8787;
+}
+
+.error-text {
+    color: #FF8787;
+}
+
+.verify {
+    position: absolute;
+    right: 5px;
+    bottom: 15px;
+}
+
+.company-image .col {
+    width: 120px !important;
+}
+
+.opacity-none {
+    opacity: 0;
+}
+
+.z-index-1 {
+    z-index: 1;
+}
