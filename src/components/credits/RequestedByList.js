@@ -100,7 +100,6 @@ class RequestedByList extends Component {
                         </th>
                         <th
                             data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                            data-tablesaw-priority="persist"
                             scope="col"
                         >
                             <Translate content='label.deadline'/>
@@ -108,14 +107,13 @@ class RequestedByList extends Component {
                         </th>
                         <th
                             data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                            data-tablesaw-priority="persist"
                             scope="col"
                         >
                             <Translate content='label.timeduration'/>
                             {/* Laufzeil */}
                         </th>
                         <th
-                            className="text-right-piehub-table"
+                            className="text-left text-md-right"
                             data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                             scope="col"
                         >
@@ -123,7 +121,7 @@ class RequestedByList extends Component {
                             {/* Kreditbetrag */}
                         </th>
                         <th
-                            className="text-right-piehub-table"
+                            className="text-left text-md-right"
                             data-tablesaw-sortable-col="data-tablesaw-sortable-col"
                             scope="col"
                         >
