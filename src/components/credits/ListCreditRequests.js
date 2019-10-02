@@ -8,6 +8,7 @@ import Spinner from '../general/Spinner';
 import Translate from 'react-translate-component'
 import {dDigit} from '../../_utils/misc';
 import {matchesInvestorStatus} from '../../_status'
+const Translator = require('react-translate-component');
 
 class ListCreditRequests extends Component {
     componentDidMount() {
@@ -49,7 +50,7 @@ class ListCreditRequests extends Component {
                         <Link
                             to={{pathname: '/product', state: {id: product.product_id}}}> {product.product_title}</Link>
                     </td>
-                    <td>{product.service}</td>
+                    <td>{product.service ? product.service.name[Translator.getLocale()] : <Translate content="placeholder.notAvailable"/>}</td>
                     <td>{`${dDigit(date.getDate())}.${dDigit(date.getMonth() + 1)}.${date.getFullYear()}`}</td>
                     {/* <td className="text-right-piehub-table">{product.number_of_request}</td> */}
                     <td className="text-md-right text-left">{`${dDigit(deadline.getDate())}.${dDigit(deadline.getMonth() + 1)}.${deadline.getFullYear()}`}</td>
