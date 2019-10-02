@@ -7,7 +7,7 @@ import {downloadToken} from '../../actions/download';
 import RequestedByList from '../credits/RequestedByList';
 import Translate from 'react-translate-component'
 import {ToEuro} from '../general/CurrencyFormatter';
-
+const Translator = require('react-translate-component');
 class ViewProduct extends Component {
     componentDidMount() {
         if (!this.props.location.state) {
@@ -19,7 +19,7 @@ class ViewProduct extends Component {
     listIndustries = industries => {
         return industries.map((industry, index) => {
             return (
-                <a className="mb-1" href="#">{industry.name}</a>
+                <a className="mb-1" href="#">{industry.name[Translator.getLocale()]}</a>
 
             );
         })
@@ -93,7 +93,7 @@ class ViewProduct extends Component {
                     min_sales_creditor
                 }
             } = this.props.product;
-            // console.log('detail', this.props.product.product);
+            // console.log('service', service);
             return (
                 <Fragment>
                     {status === 'deleted' ?
@@ -129,7 +129,7 @@ class ViewProduct extends Component {
                                     </div>
                                     <div className="col-2 p-0">
                                         <Translate content='label.service' component="h6"/>
-                                        <a>{service ? service.name : null} </a>
+                                        <a>{service ? service.name[Translator.getLocale()] : null} </a>
                                     </div>
                                     <div className="col-2 p-0">
                                         <Translate content='label.state' component="h6"/>
