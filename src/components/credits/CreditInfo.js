@@ -8,6 +8,7 @@ import {ToEuro} from "../general/CurrencyFormatter";
 import {dDigit} from '../../_utils/misc'
 import {matchesInvestorStatus} from "../../_status";
 import {downloadToken} from '../../actions/download';
+const Translator = require('react-translate-component');
 
 class DetailCreditRequest extends Component {
     state = {detail: null, refresh: false}
@@ -71,8 +72,7 @@ class DetailCreditRequest extends Component {
         } else {
             return arrayOfObjects.map((object, index) => {
                 return <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                    <h6 >{object.name}</h6>
-                    <p >{object.value}</p>
+                    <div className="d-flex"><span className="mr-3">{object.name}</span><span>{object.value}</span></div>
                 </div>
             })
         }
