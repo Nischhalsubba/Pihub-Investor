@@ -61,7 +61,7 @@ class DetailCreditRequest extends Component {
             return <div>Not Available</div>
         } else {
             return collection.map((object, index) => {
-                return <span key={index}>{object.name} <br/></span>
+                return <span key={index}>{object.name ? object.name[Translator.getLocale()]: <Translate content="placeholder.notAvailable"/>} <br/></span>
             })
         }
     }
@@ -125,7 +125,7 @@ class DetailCreditRequest extends Component {
                             </div>
                             <div className="product-info col-6 col-md-3">
                                 <h6><Translate content='column.credittype'/></h6>
-                                <span>{service ? service.name : null}</span>
+                                <span>{service.name ? service.name[Translator.getLocale()] : <Translate content="placeholder.notAvailable"/>}</span>
                             </div>
                             <div className="product-info col-12 col-md-3 text-left text-md-right">
                                 {/* <h6>Requested amount of</h6> */}

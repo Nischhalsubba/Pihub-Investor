@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Pagination from '../general/Pagination';
 import { ToEuro } from '../general/CurrencyFormatter';
+const Translator = require('react-translate-component');
 class ProductsList extends Component {
   state = { status: null, product_title: '' }
   componentDidMount() {
@@ -34,12 +35,12 @@ class ProductsList extends Component {
                 {product.product_title}
               </Link>
             </td>
-            <td>{product.service.name}</td>
+            <td>{product.service.name ? product.service.name[Translator.getLocale()]: <Translate content="placeholder.notAvailable"/> }</td>
 
             <td>
               {product.industries.map((industry, index) => {
                   if(index < 2)
-                    return index === 0 ? <span>{industry.name}</span> : <Link
+                    return index === 0 ? <span>{industry.name? industry.name[Translator.getLocale()]: <Translate content="placeholder.notAvailable"/>}</span> : <Link
                         to={{
                             pathname: `/product`,
                             state: { id: product.id }

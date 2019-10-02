@@ -176,6 +176,7 @@ export default {
         selectAllStates: 'Select All States',
         selectAllCounties: 'Select All Counties',
         selectAll: 'Select All',
+        notAvailable: 'Not available'
     },
     unverified: {
         msg: 'Your account is not yet verified yet. Please contact the administrator'

@@ -165,7 +165,8 @@ export default {
         justASecond: 'Einen Moment bitte...',
         selectAllStates: 'deutschlandweit',
         selectAllCounties: 'Alle Landkreis auswählen',
-        selectAll: 'Alle auswählen'
+        selectAll: 'Alle auswählen',
+        notAvailable: 'Nicht verfügbar.'
     },
     unverified: {
         msg: 'Ihr Konto wurde noch nicht durch den Administrator freigeschaltet. Sobald dies geschehen ist, erhalten Sie eine E-Mail und können dann alle piHub-Funktionen nutzen.'
