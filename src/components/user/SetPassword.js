@@ -8,7 +8,6 @@ import * as validation from '../../_utils/validate';
 class SetPassword extends Component {
   componentDidMount() {
     const { token } = this.props.match.params;
-    console.log(token)
   }
   displayErrors = errors => {
     return errors.map((err, index) => {

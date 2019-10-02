@@ -7,7 +7,7 @@ export const getCreditor = (id, callback) => async dispatch => {
     const response = await client.get(
       `${routes.getCreditorDetail}/${id}`
     );
-    console.log(response.data.data);
+
     dispatch({
       type: GET_CREDITOR_DETAIL,
       payload: response.data.data
@@ -25,7 +25,7 @@ export const getCreditor = (id, callback) => async dispatch => {
 export const creditorDetail = (pId, aId, callback) => async dispatch => {
   try {
     const response = await client.get(`${routes.creditorDetail}/${pId}/applications/${aId}`);
-    console.log(response.data.data)
+
     dispatch({
       type: GET_CREDITOR_DETAIL,
       payload: response.data.data

@@ -4,12 +4,12 @@ import { GET_TOKEN_FOR_EMAIL, ERROR, AUTH_USER } from '../actions/types';
 export const getTokenForEmail = (email, callback) => async dispatch => {
   try {
     const response = await client.post(routes.passwordReset, email);
-    console.log(response.data.token)
+
     if (response) {
       callback(response.data.token);
     }
   } catch (e) {
-    console.log(e.response.data.message);
+
     if (e.response.data.errors) {
       dispatch({
         type: ERROR,

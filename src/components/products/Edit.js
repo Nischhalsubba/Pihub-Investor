@@ -140,7 +140,7 @@ class EditProduct extends Component {
         }
     }
     onSubmit = formProps => {
-        console.log('ex', this.state.existing_file_id)
+
         // To delete duplicate keys while adding credit ratings
         const filteredArr = this.state.rating_value.reverse().reduce((acc, current) => {
             const x = acc.find(item => item.id === current.id);
@@ -223,7 +223,7 @@ class EditProduct extends Component {
             min_sales_creditor,
             files
         } = this.props;
-        console.log(this.props.initialValues)
+
         return (
             <Fragment>
                 <Subheader heading={<Translate content='button.edit'/>}/>

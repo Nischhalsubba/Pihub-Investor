@@ -40,7 +40,6 @@ class ViewProduct extends Component {
             return <span>**<Translate content='column.norating'/></span>
         } else {
             return ratings.map((rating, index) => {
-                console.log(rating)
                 return (
                     <div className="product-info col-6 col-md-3">
                         <h6>{rating.name}</h6>
@@ -58,7 +57,6 @@ class ViewProduct extends Component {
             );
         } else {
             return documents.map((doc, index) => {
-                // console.log(doc)
                 return (
                     <div className="file mb-2" key={index}>
                         <span className="file-name"><button className='btn btn-link'
@@ -93,7 +91,6 @@ class ViewProduct extends Component {
                     min_sales_creditor
                 }
             } = this.props.product;
-            // console.log('service', service);
             return (
                 <Fragment>
                     {status === 'deleted' ?

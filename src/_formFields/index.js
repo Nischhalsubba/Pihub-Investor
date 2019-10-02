@@ -264,7 +264,6 @@ export const inputDoubleSlider = ({
                     minValue={min}
                     value={{max: max, min: min}}
                     onChange={value => {
-                        console.log(value)
                         // input.onChange(value);
                     }}/>
                 {/* </div> */}

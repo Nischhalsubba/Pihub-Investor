@@ -18,7 +18,6 @@ export const getApplicationList = id => async dispatch => {
 export const getApplicationDetail = (pID, aId) => async dispatch => {
   try {
     const response = await client.get(`${routes.getApplicationDetail}/${pID}/applications/${aId}`);
-    console.log('app-detail', response.data.data)
     dispatch({
       type: GET_APPLICATION_DETAIL,
       payload: response.data.data

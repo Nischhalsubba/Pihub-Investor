@@ -12,9 +12,6 @@ class ViewProfile extends Component {
       return <Spinner />
     } else {
       const { fname, lname, company_name, email, phone_number, status, category, company_logo_link, contact_email_1, contact_email_2, contact_email_3, contact_phone_no_1, contact_phone_no_2, contact_phone_no_3, document_link, contact_name_1, contact_name_2, contact_name_3, facebook_link, linked_in_link, twitter_link, street_address, headquarter, zip_code } = this.props.profile;
-      console.log('p', this.props.profile)
-      console.log(document_link)
-      console.log(company_logo_link)
       return (
         <Fragment>
           <div className="content-head">

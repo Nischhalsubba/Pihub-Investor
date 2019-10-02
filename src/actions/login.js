@@ -10,8 +10,7 @@ export const signin = ({ email, password }, callback) => async dispatch => {
       password
     });
     const { scopes } = jwt.decode(response.data.message.token);
-    console.log('scope', scopes);
-    var verfied;
+    let verfied;
     if (scopes[0] === 'unconfirmed_scope') {
       verfied = false
     } else {

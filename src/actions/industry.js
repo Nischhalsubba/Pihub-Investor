@@ -11,8 +11,8 @@ export const getIndustryList = () => async dispatch => {
     const response = await client.get(
       `${routes.getIndustryList}`
     );
-    console.log('indus', response.data.data);
-    var industries = splitIndustries(response.data.data);
+
+    let industries = splitIndustries(response.data.data);
     dispatch({
       type: GET_INDUSTRY_NAME,
       payload: industries

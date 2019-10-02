@@ -43,7 +43,7 @@ class EditProfile extends Component {
 								}
 							</div>
 							<div className="item ml-4 position-relative">
-								<input className="btn btn-outline-light opacity-none position-absolute z-index-1" type="file" accept="image/x-png,image/gif,image/jpeg" name="" onChange={e => this.setState({ file: e.target.files[0] })} />
+								<input className="btn btn-outline-light position-absolute z-index-1" type="file" accept="image/x-png,image/gif,image/jpeg" name="" onChange={e => this.setState({ file: e.target.files[0] })} />
 								{/* <span className="btn btn-outline-light position-absolute">Change profile picture</span> */}
 							</div>
 						</div>

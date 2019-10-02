@@ -73,7 +73,7 @@ class CreditorDetail extends Component {
     render() {
         const {files} = this.props;
         if (this.state.detail) {
-            console.log('details', this.state.detail)
+
             const {handleSubmit} = this.props;
             return (
                 <Fragment>

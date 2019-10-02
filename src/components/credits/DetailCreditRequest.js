@@ -20,7 +20,6 @@ class DetailCreditRequest extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.props.data !== prevProps.data) {
-      console.log('here', this.props.data)
       this.setState({ detail: this.props.data.detail })
     }
     if (this.state.refresh !== prevState.refresh) {

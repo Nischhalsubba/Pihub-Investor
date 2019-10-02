@@ -6,7 +6,6 @@ export const getCreditRequestList = page => async dispatch => {
     const response = await client.get(
       `${routes.listCreditRequests}?page=${page}`
     );
-    console.log("credit requests", response.data.data);
     dispatch({
       type: CREDIT_REQUESTS_LIST,
       payload: response.data

@@ -107,7 +107,6 @@ class AddProduct extends Component {
       formProps.county_ids = extractIdCounty(formProps.County, this.state.cities);
 
     }
-    // console.log(this.state.statesWithId)
     if (formProps.states === 'Select All' || formProps.states === 'Alle auswählen') {
       formProps.state_ids = extractIdForName(null, this.state.statesWithId);
     } else {

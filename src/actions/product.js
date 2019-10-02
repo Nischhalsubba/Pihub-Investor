@@ -43,7 +43,7 @@ export const getProductsList = (page, status, product_title) => async dispatch =
 
 export const addProduct = (details, callback) => async dispatch => {
   // Once the data needed are finalized,need to refactor those codes below //
-  console.log(details);
+
   
   try {
     var body = new FormData();
@@ -102,8 +102,7 @@ export const addProduct = (details, callback) => async dispatch => {
 export const getProductById = id => async dispatch => {
   try {
     const response = await client.get(`${routes.getProductById}/${id}`);
-    // console.log('foredit', response.data.data)
-    var detail = response.data.data;
+    let detail = response.data.data;
     detail.states = extractNames(response.data.data.states)
     detail.County = extractNames(response.data.data.counties);
     detail.undefined = extractNames(response.data.data.industries);
@@ -204,7 +203,7 @@ export const deleteProduct = (id, callback) => async dispatch => {
   try {
     const response = await client.delete(`${routes.addProduct}/${id}`);
     if (response) {
-      console.log(response.data);
+
       callback();
     }
   } catch (e) {
