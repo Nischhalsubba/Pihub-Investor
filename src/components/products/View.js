@@ -7,6 +7,8 @@ import {downloadToken} from '../../actions/download';
 import RequestedByList from '../credits/RequestedByList';
 import Translate from 'react-translate-component'
 import {ToEuro} from '../general/CurrencyFormatter';
+import AnimatedCard from '../general/AnimatedCard';
+import { motion } from 'framer-motion';
 const Translator = require('react-translate-component');
 class ViewProduct extends Component {
     componentDidMount() {
@@ -41,11 +43,15 @@ class ViewProduct extends Component {
         } else {
             return ratings.map((rating, index) => {
                 return (
-                    <div className="product-info col-6 col-md-3">
+                    <motion.div
+                        className="product-info col-6 col-md-3"
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.03, duration: 0.25 }}
+                    >
                         <h6>{rating.name}</h6>
                         <span>{rating.value}</span>
-                    </div>
-
+                    </motion.div>
                 );
             })
         }
@@ -113,7 +119,7 @@ class ViewProduct extends Component {
                         </div> : null}
 
                     </div>
-                    <div className="content-body product-details">
+                    <AnimatedCard className="content-body product-details">
                         <div className="row product-info-row">
                             <div className="product-info col-6 col-md-3">
                                 {/* <h6>Product Title</h6> */}
@@ -222,7 +228,7 @@ class ViewProduct extends Component {
 
 
                         {id ? <RequestedByList id={id} name={product_title}/> : null}
-                    </div>
+                    </AnimatedCard>
                 </Fragment>
             );
         } else {

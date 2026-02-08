@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux';
 import { getProfile, editProfile } from '../../../actions/profile'
 import Translate from 'react-translate-component'
+import AnimatedCard from '../../general/AnimatedCard';
 
 import { inputField, renderDropzoneField } from '../../../_formFields/'
 class EditProfile extends Component {
@@ -48,7 +49,7 @@ class EditProfile extends Component {
 						</div>
 					</div>
 				</div>
-				<div className="content-body">
+				<AnimatedCard className="content-body">
 					<form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
 						<div className="row mt-4">
 							<div className="col-12 col-sm-12 col-md-12">
@@ -272,7 +273,7 @@ class EditProfile extends Component {
 						</div>
 						<button className="btn btn-primary">Update</button>
 					</form>
-				</div>
+				</AnimatedCard>
 			</Fragment >
 		);
 	}

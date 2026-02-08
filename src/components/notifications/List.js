@@ -2,6 +2,22 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { getNotificationList, markAsRead } from '../../actions/notification';
 import Translate from 'react-translate-component'
+import { motion } from 'framer-motion';
+import AnimatedCard from '../general/AnimatedCard';
+
+const listVariants = {
+  hidden: { opacity: 0, y: 6 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { staggerChildren: 0.04, delayChildren: 0.05 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0 }
+};
 class Notifications extends Component {
   state = { refresh: false };
   componentDidMount() {
@@ -15,7 +31,11 @@ class Notifications extends Component {
   }
   renderNotification = notifications => {
     if (notifications.length === 0) {
-      return <Translate content='label.youdont' />
+      return (
+        <li className="notification-empty">
+          <Translate content='label.youdont' />
+        </li>
+      );
       //  <span>You dont have any new notifications</span>;
     }
     return notifications.map((notification, index) => {
@@ -23,18 +43,20 @@ class Notifications extends Component {
       notification.is_read === 0 ? (color = 'sucess') : (color = 'wait');
       return (
         <Fragment key={index}>
-          <li
+          <motion.li
             className="notification-item d-flex flex-row align-items-top mb-3 pb-3"
             onClick={() =>
               this.markAsRead(notification.id, notification.is_read)
             }
+            variants={itemVariants}
+            whileHover={{ x: 2 }}
           >
             <div className={`status ${color} mr-4`} />
             <div className="title">
               <p className="wait">{notification.notification}</p>
               <div className="time">20 Minutes ago</div>
             </div>
-          </li>
+          </motion.li>
         </Fragment>
       );
     });
@@ -58,13 +80,13 @@ class Notifications extends Component {
               <Translate content='label.notifications' component="h1" className="content-head__title" />
             </div>
           </div>
-          <div className="content-body mt-2">
-            <ul className="notification p-0">
+          <AnimatedCard className="content-body mt-2">
+            <motion.ul className="notification p-0" variants={listVariants} initial="hidden" animate="visible">
               {this.props.list.notificationList
                 ? this.renderNotification(this.props.list.notificationList)
                 : null}
-            </ul>
-          </div>
+            </motion.ul>
+          </AnimatedCard>
         </Fragment>
       );
     } else {
@@ -75,11 +97,11 @@ class Notifications extends Component {
             <Translate content='label.notifications' component="h1" className="content-head__title" />
             </div>
           </div>
-          <div className="content-body mt-2">
-            <ul className="notification p-0">
+          <AnimatedCard className="content-body mt-2">
+            <motion.ul className="notification p-0" variants={listVariants} initial="hidden" animate="visible">
               <span><Translate content="placeholder.justASecond"/></span>
-            </ul>
-          </div>
+            </motion.ul>
+          </AnimatedCard>
         </Fragment>
       );
     }

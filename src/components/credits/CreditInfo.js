@@ -8,6 +8,8 @@ import {ToEuro} from "../general/CurrencyFormatter";
 import {dDigit} from '../../_utils/misc'
 import {matchesInvestorStatus} from "../../_status";
 import {downloadToken} from '../../actions/download';
+import AnimatedCard from '../general/AnimatedCard';
+import { motion } from 'framer-motion';
 const Translator = require('react-translate-component');
 
 class DetailCreditRequest extends Component {
@@ -71,9 +73,19 @@ class DetailCreditRequest extends Component {
             return <p className="product__info">Not available</p>
         } else {
             return arrayOfObjects.map((object, index) => {
-                return <div className="col-3 col-md-6 col-sm-12 col-lg-3 p-0">
-                    <div className="d-flex"><span className="mr-3">{object.name}</span><span>{object.value}</span></div>
-                </div>
+                return (
+                    <motion.div
+                        className="col-3 col-md-6 col-sm-12 col-lg-3 p-0"
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.03, duration: 0.25 }}
+                    >
+                        <div className="d-flex">
+                            <span className="mr-3">{object.name}</span>
+                            <span>{object.value}</span>
+                        </div>
+                    </motion.div>
+                );
             })
         }
 
@@ -112,7 +124,7 @@ class DetailCreditRequest extends Component {
 
                     {status === 'accepted' ?
                         <div className="alert alert-success"><Translate content='column.appaccept'/></div> : null}
-                    <div className="content-body credit-request product-details">
+                    <AnimatedCard className="content-body credit-request product-details">
                         <div className="row product-info-row">
                             <div className="product-info col-6 col-md-3">
                                 <h6><Translate content='label.state'/></h6>
@@ -207,7 +219,7 @@ class DetailCreditRequest extends Component {
                             <h4 className="product__file-name"><Translate content='label.attachments'/></h4>
                             {this.renderDocs(application_files)}
                         </div>
-                    </div>
+                    </AnimatedCard>
                 </Fragment>
             );
         } else {

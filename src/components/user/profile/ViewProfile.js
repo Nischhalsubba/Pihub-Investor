@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProfile } from '../../../actions/profile';
 import Spinner from '../../general/Spinner';
+import AnimatedCard from '../../general/AnimatedCard';
 class ViewProfile extends Component {
   componentDidMount() {
     this.props.getProfile()
@@ -43,7 +44,7 @@ class ViewProfile extends Component {
               <Link className="btn btn-primary" to='/user/edit-profile'>Edit Profile </Link>
             </div>
           </div>
-          <div className="content-body mt-5">
+          <AnimatedCard className="content-body mt-5">
             <div className="d-flex">
               <img src={`${process.env.PUBLIC_URL}/assets/img/bx-briefcase.png`} alt="" />
               <span className="ml-3 font-weight-bold">Category:{category}</span>
@@ -79,7 +80,7 @@ class ViewProfile extends Component {
                 <span>{contact_phone_no_3}</span>
               </div>
             </div>
-          </div>
+          </AnimatedCard>
         </Fragment>
       );
     }

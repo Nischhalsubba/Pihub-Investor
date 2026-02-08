@@ -8,6 +8,7 @@ import Spinner from '../general/Spinner';
 import Translate from 'react-translate-component'
 import {dDigit} from '../../_utils/misc';
 import {matchesInvestorStatus} from '../../_status'
+import AnimatedCard from '../general/AnimatedCard';
 const Translator = require('react-translate-component');
 
 class ListCreditRequests extends Component {
@@ -75,7 +76,7 @@ class ListCreditRequests extends Component {
             return (
                 <Fragment>
                     <Subheader heading={<Translate content='label.creditrequests'/>}/>
-                    <div className="content-body">
+                    <AnimatedCard className="content-body">
                         <table
                             className="table tablesaw-stack"
                             data-tablesaw-mode="stack"
@@ -146,7 +147,7 @@ class ListCreditRequests extends Component {
                             }
                             url={(page) => this.props.getCreditRequestList(page)}
                         />
-                    </div>
+                    </AnimatedCard>
                 </Fragment>
             );
         } else {

@@ -10,6 +10,7 @@ import { getServiceList } from '../../actions/service';
 import { getCounties, getAllState } from '../../actions/statesCounties';
 import { clearError } from '../../actions/clearError';
 import Subheader from '../general/Subheader';
+import AnimatedCard from '../general/AnimatedCard';
 import * as validation from '../../_utils/validate';
 import Translate from 'react-translate-component'
 import { getId, extractIdForName, extractIdCounty } from '../../_utils/misc';
@@ -179,7 +180,7 @@ class AddProduct extends Component {
     return (
       <Fragment>
         <Subheader heading={<Translate content='button.addnewproduct' />} />
-        <div className="content-body">
+        <AnimatedCard className="content-body">
           <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
             <div className="row mt-4">
               <div className="col-12 col-sm-12 col-md-6">
@@ -530,7 +531,7 @@ class AddProduct extends Component {
             </div>
 
           </form>
-        </div>
+        </AnimatedCard>
       </Fragment>
     );
   }

@@ -86,7 +86,7 @@ class Login extends Component {
                             <img
                                 className="signin-banner__thumb"
                                 src={`${process.env.PUBLIC_URL}/assets/img/signin-image.png`}
-                                alt="Perfect Investment"
+                                alt="Pihub Investor dashboard preview"
                             />
                         </div>
                     </div>

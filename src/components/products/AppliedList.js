@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import Subheader from './../general/Subheader';
-import Translate from 'react-translate-component'
+import Translate from 'react-translate-component';
+import AnimatedCard from '../general/AnimatedCard';
 class AppliedList extends Component {
   render() {
     return (
       <Fragment>
         <Subheader heading={<Translate content='label.productswithapplication' />}/>
-        <div className="content-body">
+        <AnimatedCard className="content-body">
           <table
             className="table tablesaw-stack"
             data-tablesaw-mode="swipe"
@@ -153,7 +154,7 @@ class AppliedList extends Component {
               </tr>
             </tbody>
           </table>
-        </div>
+        </AnimatedCard>
       </Fragment>
     );
   }

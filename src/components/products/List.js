@@ -5,6 +5,7 @@ import * as actions from '../../actions/product';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Pagination from '../general/Pagination';
+import AnimatedCard from '../general/AnimatedCard';
 import { ToEuro } from '../general/CurrencyFormatter';
 const Translator = require('react-translate-component');
 class ProductsList extends Component {
@@ -97,7 +98,17 @@ class ProductsList extends Component {
           buttonLabel={<Translate content='button.addnewproduct' />}
           link="/add-product"
         />
-        <form className="form-inline my-2 my-lg-0">
+        <form
+          className="form-inline my-2 my-lg-0"
+          onSubmit={(e) => {
+            e.preventDefault();
+            this.props.getProductsList(
+              this.props.pagination.currentPage,
+              this.state.status,
+              this.state.product_title
+            );
+          }}
+        >
 
           <select className="form-control mr-sm-2" onChange={e => this.setState({ status: e.target.value })}>
             <option value="" >Alle</option>
@@ -115,13 +126,14 @@ class ProductsList extends Component {
           />
           {/* <button >Search</button> */}
 
-          <Translate content='button.search' component="button" className="btn btn-primary mr-sm-2" onClick={(e) => {
-            e.preventDefault();
-            this.props.getProductsList(this.props.pagination.currentPage, this.state.status, this.state.product_title)
-          }
-          } />
+          <Translate
+            content="button.search"
+            component="button"
+            type="submit"
+            className="btn btn-primary mr-sm-2"
+          />
         </form>
-        <div className="content-body">
+        <AnimatedCard className="content-body">
           <table className="table tablesaw-stack" data-tablesaw-mode="swipe" data-tablesaw-minimap="data-tablesaw-minimap">
             <thead>
               <tr>
@@ -159,7 +171,7 @@ class ProductsList extends Component {
             <tbody>{this.renderList(this.props.data)}</tbody>
           </table>
           <Pagination totalPage={totalPage} url={(page) => this.props.getProductsList(page)} />
-        </div>
+        </AnimatedCard>
       </Fragment>
     );
   }

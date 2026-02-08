@@ -9,6 +9,7 @@ import Spinner from '../general/Spinner'
 import * as validation from '../../_utils/validate';
 import {renderDropzoneField} from '../../_formFields';
 import CreditInfo from './CreditInfo';
+import AnimatedCard from '../general/AnimatedCard';
 
 class CreditorDetail extends Component {
     state = {detail: null, refresh: false}
@@ -76,7 +77,7 @@ class CreditorDetail extends Component {
             const {handleSubmit} = this.props;
             return (
                 <Fragment>
-                    <div className="content-body credit-request">
+                    <AnimatedCard className="content-body credit-request">
 
                         <form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
                             <CreditInfo location={this.props.location}/>
@@ -109,7 +110,7 @@ class CreditorDetail extends Component {
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </AnimatedCard>
                 </Fragment>
             );
         } else {

@@ -1,9 +1,25 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Translate from 'react-translate-component';
 
 export default () => {
-  const [active, setActive] = useState(0);
+  const location = useLocation();
+  const path = location.pathname || '/';
+  const activeKey = (() => {
+    if (path === '/' || path.startsWith('/products') || path.startsWith('/product')) {
+      return 'products';
+    }
+    if (path.startsWith('/credit-request') || path.startsWith('/application') || path.startsWith('/creditor')) {
+      return 'credit-request';
+    }
+    if (path.startsWith('/products-invested')) {
+      return 'invested';
+    }
+    if (path.startsWith('/add-product') || path.startsWith('/edit-product')) {
+      return 'new-product';
+    }
+    return '';
+  })();
 
   return (
     <div className="sidebar">
@@ -22,31 +38,28 @@ export default () => {
               <Translate content="sidebar.product" />
             </Link>
             <ul className="sub-menu">
-              <li className={active === 1 ? 'current-menu' : null}>
-                <Link to="/products" onClick={() => setActive(1)}>
+              <li className={activeKey === 'products' ? 'current-menu' : null}>
+                <Link to="/products">
                   <Translate content="sidebar.products" />
                 </Link>
               </li>
-              <li className={active === 2 ? 'current-menu' : null}>
-                <Link to="/credit-request" onClick={() => setActive(2)}>
+              <li className={activeKey === 'credit-request' ? 'current-menu' : null}>
+                <Link to="/credit-request">
                   <Translate content="sidebar.credit_requested_products" />
                 </Link>
               </li>
 
-              <li className={active === 3 ? 'current-menu' : null}>
+              <li className={activeKey === 'invested' ? 'current-menu' : null}>
                 <Link
                   to="/products-invested"
                   target="_self"
                   rel="noopener noreferrer"
-                  onClick={() => setActive(3)}
                 >
                   <Translate content="sidebar.invested_products" />
                 </Link>
               </li>
-              <li className={active === 4 ? 'current-menu' : null}>
-                <Link to="/add-product"
-                  onClick={() => setActive(4)}
-                >
+              <li className={activeKey === 'new-product' ? 'current-menu' : null}>
+                <Link to="/add-product">
                   <Translate content="sidebar.new_product" />
                 </Link>
               </li>

@@ -6,6 +6,7 @@ import Subheader from '../general/Subheader';
 import Spinner from '../general/Spinner';
 import Translate from 'react-translate-component';
 import { ToEuro } from '../general/CurrencyFormatter';
+import AnimatedCard from '../general/AnimatedCard';
 class InvestedList extends Component {
     state = { investments: null }
     componentDidMount() {
@@ -56,7 +57,7 @@ class InvestedList extends Component {
         return (
             <Fragment>
                 <Subheader heading={<Translate content='sidebar.invested_products' />} />
-                <div className="content-body">
+                <AnimatedCard className="content-body">
                     <table className="table tablesaw-stack" data-tablesaw-mode="stack"
                         data-tablesaw-minimap="data-tablesaw-minimap">
                         <thead>
@@ -92,7 +93,7 @@ class InvestedList extends Component {
                             {this.state.investments ? this.renderList(this.state.investments) : <Spinner />}
                         </tbody>
                     </table>
-                </div>
+                </AnimatedCard>
             </Fragment>
         );
     }
