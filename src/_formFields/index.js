@@ -16,19 +16,24 @@ export const inputField = ({
                                placeholder,
                                meta: {error, touched}
                            }) => {
+    const fieldId = id || input.name;
+    const errorId = `${fieldId}-error`;
+    const hasError = touched && error;
     return (
         <div>
-            {label ? <label><strong>{label}</strong></label>
+            {label ? <label htmlFor={fieldId}><strong>{label}</strong></label>
                 : null}
             <input
                 {...input}
                 type={type}
                 color={'white'}
                 className={className}
-                id={id}
+                id={fieldId}
                 placeholder={placeholder}
+                aria-invalid={hasError ? 'true' : 'false'}
+                aria-describedby={hasError ? errorId : undefined}
             />
-            <font color="red">{touched && error}</font>
+            {hasError ? <span id={errorId} className="error-text" role="alert">{error}</span> : null}
         </div>
     );
 };
@@ -42,6 +47,9 @@ export const checkBox = ({
                              placeholder,
                              meta: {error, touched}
                          }) => {
+    const fieldId = id || input.name;
+    const errorId = `${fieldId}-error`;
+    const hasError = touched && error;
     return (
         <div className="form-check">
             <input
@@ -49,11 +57,13 @@ export const checkBox = ({
                 type={type}
                 color={'white'}
                 className={className}
-                id={id}
+                id={fieldId}
                 placeholder={placeholder}
+                aria-invalid={hasError ? 'true' : 'false'}
+                aria-describedby={hasError ? errorId : undefined}
             />
             &nbsp;
-            <label className="form-check-label" style={{fontWeight: 100}}>
+            <label className="form-check-label" style={{fontWeight: 100}} htmlFor={fieldId}>
                 <Translate content='column.iagree' />
                 <Link to="/terms-and-conditions" target="_blank">
                     <Translate content='column.terms' style={{fontWeight: 600}}/>
@@ -64,9 +74,7 @@ export const checkBox = ({
                 </a>
                 <Translate content='placeholder.privacy_policy_ending'/>
             </label>
-            <p>
-                <font color="red">{touched && error}</font>
-            </p>
+            {hasError ? <p><span id={errorId} className="error-text" role="alert">{error}</span></p> : null}
         </div>
     );
 };
@@ -82,20 +90,26 @@ export const dropDownField = ({
                                   defaultValue,
                                   meta: {error, touched}
                               }) => {
+    const fieldId = id || input.name;
+    const errorId = `${fieldId}-error`;
+    const hasError = touched && error;
     return (
         <div className="form-group">
-            {label ? <label><strong>{label}</strong></label>
+            {label ? <label htmlFor={fieldId}><strong>{label}</strong></label>
                 : null}
             <Select
                 {...input}
+                inputId={fieldId}
                 onChange={value => input.onChange(value)}
                 onBlur={() => input.onBlur(input.value)}
                 options={options}
                 className={className}
                 placeholder={placeholder}
                 attributes={{placeholder: 'placeholder.select'}}
+                aria-invalid={hasError ? 'true' : 'false'}
+                aria-describedby={hasError ? errorId : undefined}
             />
-            <font color="red">{touched && error}</font>
+            {hasError ? <span id={errorId} className="error-text" role="alert">{error}</span> : null}
         </div>
     );
 };
@@ -112,10 +126,13 @@ export const inputSlider = ({
                                 min,
                                 meta: {error, touched}
                             }) => {
+    const fieldId = id || input.name;
+    const errorId = `${fieldId}-error`;
+    const hasError = touched && error;
     return (
         <Fragment>
             {/* <div className="form-group"> */}
-            <label>
+            <label htmlFor={fieldId}>
                 {label}
             </label>
             {/* <div class="d-flex align-items-center"> */}
@@ -123,17 +140,19 @@ export const inputSlider = ({
             <input
                 {...input}
                 className='range-slider'
-                id={id}
+                id={fieldId}
                 placeholder={placeholder}
                 type={type}
                 min={min}
                 max={max}
                 step={step}
                 data-orientation="horizontal"
+                aria-invalid={hasError ? 'true' : 'false'}
+                aria-describedby={hasError ? errorId : undefined}
             />
             {/* </div> */}
 
-            <font color="red">{touched && error}</font>
+            {hasError ? <span id={errorId} className="error-text" role="alert">{error}</span> : null}
         </Fragment>
     );
 };
@@ -151,9 +170,12 @@ export const renderMultiselect = ({
                                       textField,
                                       defaultValue
                                   }) => {
+    const fieldId = id || input.name;
+    const errorId = `${fieldId}-error`;
+    const hasError = touched && error;
     return (
         <Fragment>
-            <label htmlFor=""><strong>{label}</strong></label>
+            <label htmlFor={fieldId}><strong>{label}</strong></label>
             <Multiselect
                 {...input}
                 onBlur={() => input.onBlur()}
@@ -162,11 +184,13 @@ export const renderMultiselect = ({
                 valueField={valueField}
                 textField={textField}
                 className={className}
-                id={id}
+                id={fieldId}
                 placeholder="Auswählen"
                 defaultValue={defaultValue}
+                aria-invalid={hasError ? 'true' : 'false'}
+                aria-describedby={hasError ? errorId : undefined}
             />
-            <font color="red">{touched && error}</font>
+            {hasError ? <span id={errorId} className="error-text" role="alert">{error}</span> : null}
         </Fragment>
     );
 };
@@ -177,6 +201,9 @@ export const renderDropzoneField = ({
                                         id,
                                         meta: {touched, error}
                                     }) => {
+    const fieldId = id || input.name || name;
+    const errorId = `${fieldId}-error`;
+    const hasError = touched && error;
     return (
         <Fragment>
             <Dropzone
@@ -196,7 +223,7 @@ export const renderDropzoneField = ({
                             {/* <a >Add file </a> */}
                             <Translate
                                 content="column.addfile"
-                                component="a"
+                                component="span"
                                 className="font-weight-bold mr-1"
                             />
                             {/* <span>or drop files here</span> */}
@@ -204,11 +231,16 @@ export const renderDropzoneField = ({
                         </p>
                         <div className="fallback" />
                     </div>
-                    <input {...getInputProps()} />
+                    <input
+                        {...getInputProps()}
+                        id={fieldId}
+                        aria-invalid={hasError ? 'true' : 'false'}
+                        aria-describedby={hasError ? errorId : undefined}
+                    />
                 </div>
                 )}
             </Dropzone>
-            <font color="red">{touched && error}</font>
+            {hasError ? <span id={errorId} className="error-text" role="alert">{error}</span> : null}
         </Fragment>
     );
 };
@@ -273,3 +305,5 @@ export const inputDoubleSlider = ({
         </Fragment>
     );
 };
+
+

@@ -55,9 +55,11 @@ class Login extends Component {
                                     />
                                 </div>
                                 {/*@todo replace error message below with proper designed div*/}
-                                <div className="form-group">
-                                    <font color="red">{this.props.errorMessage}</font>
-                                </div>
+                                {this.props.errorMessage ? (
+                                    <div className="form-group">
+                                        <span className="error-text" role="alert">{this.props.errorMessage}</span>
+                                    </div>
+                                ) : null}
                                 {/* <button className="btn btn-primary btn-form" type="submit"> */}
                                 <Link to='/forgot-password'> <Translate content="label.forgotPassword"/> </Link>
                                 <br />

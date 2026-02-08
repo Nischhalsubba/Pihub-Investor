@@ -2,12 +2,19 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 
-export default props => {
+export default () => {
   const [active, setActive] = useState(0);
 
   return (
     <div className="sidebar">
-      <nav className="nav-sidebar">
+      <div className="sidebar-brand">
+        <img src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} alt="Pihub Investor" />
+        <div className="sidebar-brand__text">
+          <span className="sidebar-brand__title">Pihub Investor</span>
+          <span className="sidebar-brand__sub">Investor Portal</span>
+        </div>
+      </div>
+      <nav className="nav-sidebar" aria-label="Primary">
         <ul className="menu-sidebar">
           <li className="current-menu has-sub-menu">
             <Link to="/products" >
@@ -48,6 +55,9 @@ export default props => {
           </li>
         </ul>
       </nav>
+      <div className="sidebar-footer">
+        <span>Creditor &amp; Admin portals coming soon</span>
+      </div>
     </div>
   );
 };
