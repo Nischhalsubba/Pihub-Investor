@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Translate from 'react-translate-component';
 
-export default () => {
-  const location = useLocation();
-  const path = location.pathname || '/';
+const Sidebar = ({ location }) => {
+  const path = (location && location.pathname) || '/';
   const activeKey = (() => {
     if (path === '/' || path.startsWith('/products') || path.startsWith('/product')) {
       return 'products';
@@ -74,3 +73,5 @@ export default () => {
     </div>
   );
 };
+
+export default withRouter(Sidebar);
