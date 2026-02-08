@@ -1,4 +1,7 @@
-const API_URL = (process.env.REACT_APP_API_URL || 'http://api.credittech.diagonal.solutions/api').replace(/\/$/, '');
+let API_URL = (process.env.REACT_APP_API_URL || 'http://api.credittech.diagonal.solutions/api').replace(/\/$/, '');
+if (typeof window !== 'undefined' && window.location && window.location.protocol === 'https:') {
+  API_URL = API_URL.replace(/^http:\/\//i, 'https://');
+}
 export const routes = {
   login: `${API_URL}/login`,
   signup: `${API_URL}/register`,
