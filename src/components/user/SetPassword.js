@@ -6,9 +6,6 @@ import { inputField } from '../../_formFields'
 import { changePasswordWithToken } from '../../actions/password';
 import * as validation from '../../_utils/validate';
 class SetPassword extends Component {
-  componentDidMount() {
-    const { token } = this.props.match.params;
-  }
   displayErrors = errors => {
     return errors.map((err, index) => {
       return (
@@ -89,6 +86,7 @@ function validate(values) {
   if (values.password !== values.password_confirmation) {
     errors.password_confirmation = '* Pass Mismatch!'
   }
+  return errors;
 }
 
 export default compose(

@@ -18,8 +18,8 @@ class ViewProduct extends Component {
 
     listIndustries = industries => {
         return industries.map((industry, index) => {
-            return (
-                <a className="mb-1" href="#">{industry.name[Translator.getLocale()]}</a>
+                return (
+                    <span className="mb-1">{industry.name[Translator.getLocale()]}</span>
 
             );
         })
@@ -28,7 +28,7 @@ class ViewProduct extends Component {
         if (states.length > 0) {
             return states.map((state, index) => {
                 return (
-                    <a className="mb-1" href="#">{state}<br/></a>
+                    <span className="mb-1">{state}<br/></span>
 
                 );
             })
@@ -73,8 +73,6 @@ class ViewProduct extends Component {
             const {
                 product: {
                     id,
-                    investor,
-                    product_code,
                     collatoral,
                     max_credit_amount,
                     min_credit_amount,
@@ -120,15 +118,15 @@ class ViewProduct extends Component {
                             <div className="product-info col-6 col-md-3">
                                 {/* <h6>Product Title</h6> */}
                                 <Translate content='label.producttitle' component="h6"/>
-                                <a href="#">{product_title}</a>
+                                <span>{product_title}</span>
                             </div>
                             <div className="product-info col-6 col-md-3">
                                 <Translate content='label.service' component="h6"/>
-                                <a>{service ? service.name[Translator.getLocale()] : null} </a>
+                                <span>{service ? service.name[Translator.getLocale()] : null} </span>
                             </div>
                             <div className="product-info col-6 col-md-3">
                                 <Translate content='label.state' component="h6"/>
-                                <a>{states ? this.listStates(states) : null}</a>
+                                <span>{states ? this.listStates(states) : null}</span>
                             </div>
                             <div className="product-info col-12 col-md-3 text-left text-md-right">
                                 {/* <h6>Max Credit Amount</h6> */}
@@ -141,7 +139,7 @@ class ViewProduct extends Component {
                             <div className="product-info col-6 col-md-3">
                                 {/* <Translate content='label.state' component="h6" /> */}
                                 <Translate content='label.county' component="h6"/>
-                                <a>{states ? this.listStates(County) : null}</a>
+                                <span>{states ? this.listStates(County) : null}</span>
                             </div>
                             <div className="product-info col-6 col-md-3">
                                 <Translate content='label.industries' component="h6"/>
@@ -171,14 +169,14 @@ class ViewProduct extends Component {
                             <div className="product-info col-6 col-md-6 text-left text-md-right">
                                 {/* <h6>Time Duration</h6> */}
                                 <Translate content='column.minduration' component="h6"/>
-                                <a href="#">{min_time_duration} <Translate content='label.months'/> </a>
+                                <span>{min_time_duration} <Translate content='label.months'/> </span>
                             </div>
                         </div>
 
                         <div className="product-info text-left text-md-right">
                             {/* <h6>Time Duration</h6> */}
                             <Translate content='column.maxduration' component="h6"/>
-                            <a href="#">{max_time_duration} <Translate content='label.months'/> </a>
+                            <span>{max_time_duration} <Translate content='label.months'/> </span>
                         </div>
 
                         <div className="product-info-row row">

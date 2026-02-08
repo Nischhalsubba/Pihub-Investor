@@ -41,7 +41,7 @@ class ConfirmEmail extends Component {
                             <Translate content='label.weve' component="h3" />
                             {/* <p>Your account has been successfully created. Please check your email for the confirmation</p> */}
                             <Translate content='label.youraccounthas' component="p" />
-                            <Translate content='label.didnt' /> <Translate content='label.sendit' component="a" href="#" />
+                            <Translate content='label.didnt' /> <Translate content='label.sendit' component="button" type="button" className="btn btn-link p-0" />
                             {/* <span>Didn't recieve an email? <a href="#">Send it again</a></span> */}
                         </div>
                     </div>

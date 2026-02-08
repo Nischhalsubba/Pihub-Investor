@@ -1,11 +1,6 @@
 import client from './index';
 import { routes } from './../_api/routes';
-import {
-  AUTH_ERROR,
-  AUTH_USER,
-  GET_NOTIFICATION_COUNT,
-  ERROR
-} from './types';
+import { ERROR } from './types';
 
 export const signup = (detail, callback) => async dispatch => {
   try {

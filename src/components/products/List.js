@@ -39,15 +39,21 @@ class ProductsList extends Component {
 
             <td>
               {product.industries.map((industry, index) => {
-                  if(index < 2)
-                    return index === 0 ? <span>{industry.name? industry.name[Translator.getLocale()]: <Translate content="placeholder.notAvailable"/>}</span> : <Link
+                  if (index < 2) {
+                    return index === 0 ? (
+                      <span>{industry.name ? industry.name[Translator.getLocale()] : <Translate content="placeholder.notAvailable"/>}</span>
+                    ) : (
+                      <Link
                         to={{
-                            pathname: `/product`,
-                            state: { id: product.id }
+                          pathname: `/product`,
+                          state: { id: product.id }
                         }}
-                    >
+                      >
                         &nbsp;...
-                    </Link>
+                      </Link>
+                    );
+                  }
+                  return null;
               })}
             </td>
             <td>{product.min_time_duration} Monate</td>

@@ -6,7 +6,6 @@ import {Link, withRouter} from 'react-router-dom';
 import Translate from 'react-translate-component'
 import {ToEuro} from '../general/CurrencyFormatter';
 import {dDigit} from '../../_utils/misc'
-import Moment from 'react-moment';
 
 class RequestedByList extends Component {
     state = {list: []};

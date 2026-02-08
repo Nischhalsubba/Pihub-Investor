@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 export default () => {
   return (
@@ -50,18 +50,18 @@ export default () => {
           ausgetauscht werden. Insbesondere hat der Nutzer keinen Anspruch, ein Finanzierungsangebot durch einen bestimmten
           Finanzierer zu erhalten.
           <h2>§4. Allgemeine Bestimmungen zur Nutzung der Vermittlungsplattform</h2>
-          <h3></h3>4.1. Nutzungsberechtigung
+          <div className="section-spacer" aria-hidden="true"></div>4.1. Nutzungsberechtigung
           <p></p>Die bestimmungsgemäße Nutzung der Vermittlungsplattform sowie die Suche nach Anbietern von Finanzierungen und
           anderen Finanzprodukten stehen grundsätzlich jedem offen, der die in Ziff. 4.2 genannten Voraussetzungen erfüllt.
           Für die Inanspruchnahme weitergehender Funktionen der Vermittlungsplattform, insbesondere das Berechnen und Einholen
           von indikativen Angeboten durch den Nutzer oder das Annehmen von Nutzeranfragen durch einen Finanzdienstleister,
           ist eine vorherige Registrierung erforderlich (siehe Ziff. 4.3). Mit der Nutzung der Vermittlungsplattform stimmen
           die Besucher und Nutzer den AGB zu.
-          <h3></h3>4.2. Nutzergruppe
+          <div className="section-spacer" aria-hidden="true"></div>4.2. Nutzergruppe
           <p></p>Als Nutzer der Website sind ausschließlich gewerbliche Nutzer im Rahmen ihrer beruflichen Tätigkeit für juristische
           Personen des privaten Rechtes zugelassen. Die Nutzung durch andere Personengruppen, insbesondere durch Verbraucher
           (§ 13 BGB) bzw. Privatpersonen zur persönlichen Nutzung ist unzulässig.
-          <h3></h3>4.3. Registrierung/Zugangsdaten
+          <div className="section-spacer" aria-hidden="true"></div>4.3. Registrierung/Zugangsdaten
           <p> </p>
           <h4>4.3.1. Registrierung </h4>
           <p></p>Die vollumfängliche Nutzung des Portals setzt eine Registrierung als Nutzer voraus. Im Rahmen des Registrierungsprozesses
@@ -80,7 +80,7 @@ export default () => {
           den Nutzer erfolgt ist, wird piHub Private Investments die Verknüpfung zu dem betroffenen Nutzerkonto unverzüglich
           löschen und die Zugangsdaten des Bevollmächtigten sperren. Bevollmächtigte, welche als Vermittler Finanzierungsanfragen
           über die Vermittlungsplattform stellen, werden nicht mit dem Nutzerkonto verknüpft.
-          <h4></h4>4.3.2. Datenschutzrechtliche Vorschriften
+          <div className="section-spacer" aria-hidden="true"></div>4.3.2. Datenschutzrechtliche Vorschriften
           <p></p>Das Nutzer ist verpflichtet, seine persönlichen Zugangsdaten zu der Vermittlungsplattform geheim zu halten
           und vor dem unberechtigten Zugriff Dritter zu schützen. Erlangt der Nutzer Kenntnis darüber oder ergibt sich ein
           Verdacht, dass ein unbefugter Dritter von den Zugangsdaten Kenntnis erlangt hat, so ist der Nutzer verpflichtet,
@@ -89,7 +89,7 @@ export default () => {
           Geheimhaltungspflicht verstoßen hat oder Anhaltspunkte dafür vorliegen, dass Dritte unbefugt in den Besitz der
           Zugangsdaten gelangt sind. Die Vorschriften dieses Absatzes gelten entsprechend für den Umgang des Bevollmächtigten
           mit den Zugangsdaten zum verknüpften Nutzerskonto.
-          <h4></h4>4.4.1. Urheber- und sonstige Schutzrechte
+          <div className="section-spacer" aria-hidden="true"></div>4.4.1. Urheber- und sonstige Schutzrechte
           <p></p>Die Vermittlungsplattform und die ihr zugrunde liegende Software und Datenbanken sind urheberrechtlich geschützt.
           Dies gilt auch für die auf der Vermittlungsplattform veröffentlichten Texte, Bilder, Logos und das Design der Vermittlungsplattform
           selbst. Die Bereitstellung zur Nutzung der Vermittlungsplattform in dem nach diesen AGB definierten Umfang stellt
@@ -170,7 +170,7 @@ export default () => {
           der auf der Vermittlungsplattform in seinem persönlichen Profil vorgesehenen Funktionen vornehmen. Das verbindliche
           Angebot zum Abschluß eines Vertrages leitet piHub Private Investments umgehend an den ausgewählten Finanzierer
           weiter.
-          <h3></h3>5.2. Bonitätsprüfung
+          <div className="section-spacer" aria-hidden="true"></div>5.2. Bonitätsprüfung
           <p></p>Im Rahmen der Registrierung und Vergleichserstellung können Bonitätsprüfungen durch piHub Private Investments
           erfolgen. Hierzu erfolgt eine Weiterleitung der eingegebenen Daten an die entsprechenden Wirtschaftsauskunfteien.
           Nähere Informationen hierzu enthält die Datenschutzerklärung der piHub Private Investments.
@@ -179,7 +179,7 @@ export default () => {
           <p></p>Die bei PiHub Private Investments hinterlegten Informationen und personenbezogenen Daten des Nutzers sind vollständig
           und wahrheitsgemäß anzugeben. Die Angaben sind durch entsprechende Pflege des Nutzerkontos vor jeder Finanzierungsanfrage
           zu aktualisieren.
-          <h4></h4>5.3.2. Einstandspflicht des Nutzers für angegebene Daten und übermittelte Dokumente
+          <div className="section-spacer" aria-hidden="true"></div>5.3.2. Einstandspflicht des Nutzers für angegebene Daten und übermittelte Dokumente
           <p></p>Der Nutzer hat die für die Eintragung auf der Vermittlungsplattform notwendigen Informationen, Daten und Inhalte,
           insbesondere die zwecks Weiterleitung an die Finanzdienstleister zur Verfügung gestellten Dokumente, sowie Verlinkungen
           auf andere Websites auf ihre Rechtmäßigkeit hin zu überprüfen. Der Nutzer übernimmt die alleinige Verantwortung
@@ -192,21 +192,21 @@ export default () => {
           piHub Private Investments eingestellten Finanzierungsbegehrens auf andere Weise, insbesondere außerhalb der Vermittlungsplattform
           angeboten wird.
           <h2>§6. Rechtsverhältnis zwischen dem Nutzer und dem Finanzierer</h2>
-          <h3></h3>6.1. Kommunikation
+          <div className="section-spacer" aria-hidden="true"></div>6.1. Kommunikation
           <p></p>Die Kommunikation zwischen dem Finanzierer und dem Nutzer erfolgt ausschließlich unter Verwendung der auf der
           Vermittlungsplattform vorhandenen Funktionen, es sei denn piHub Private Investments hat ausdrücklich seine Zustimmung
           erteilt, eine andere Form der Kommunikation zu wählen. Nichtsdestotrotz ist der Finanzdienstleister nach Übermittlung
           der persönlichen Daten des Nutzers berechtigt, den Nutzer zur Klärung bestehender Fragen und zum Zwecke eines Vertragsschlusses
           direkt (telefonisch oder auf sonstige Weise) zu kontaktieren. piHub Private Investments ist hierüberumgehend zu
           informieren.
-          <h3></h3>6.2. Vertragsabschluss
+          <div className="section-spacer" aria-hidden="true"></div>6.2. Vertragsabschluss
           <p></p>Der Vertragsabschluss über die ausgewählte Finanzierung erfolgt ausschließlich zwischen dem Nutzer und dem
           Finanzierer. piHub Private Investments ist insofern weder Vertreter noch Partei dieses Vertrages, sondern wird
           lediglich als Vermittler tätig. Dementsprechend sind Finanzierer und Nutzer verantwortlich für den Inhalt und den
           Abschluss der Verträge sowie für deren Umsetzung. Für einen Vertragsabschluss zwischen Nutzer und Finanzierer gelten
           die jeweiligen Vertragsbedingungen, Allgemeinen Geschäftsbedingungen (AGB) und Datenschutzbestimmungen des ausgewählten
           Finanzierers. Im Übrigen richten sich Vertragsabschluss und Vertragserfüllung nach dem allgemeinen Vertragsrecht.
-          <h3></h3>6.3. Vertraulichkeit/Datenschutz
+          <div className="section-spacer" aria-hidden="true"></div>6.3. Vertraulichkeit/Datenschutz
           <p></p>Der Finanzierer verpflichtet sich gegenüber piHub Private Investments und gegenüber dem Nutzer zum vertraulichen
           Umgang mit den übermittelten Daten und Informationen unter Berücksichtigung der jeweils anwendbaren Datenschutzgesetze.
           <h2>§7. Nutzungskosten und Provisionsanspruch</h2>
@@ -227,12 +227,12 @@ export default () => {
           sich piHub Private Investments vor, eine Vertragsstrafe in Höhe der dreifachen Provision geltend zu machen, welche
           piHub Private Investments realisiert hätte, wäre die Gesellschaft nicht umgangen worden.
           <h2>§8. Datenschutz und Datensicherheit</h2>
-          <h3></h3>8.1. Datenschutz
+          <div className="section-spacer" aria-hidden="true"></div>8.1. Datenschutz
           <p></p>piHub Private Investments behandelt die personenbezogenen Daten der Nutzer und Besucher vertraulich und entsprechend
           der gesetzlichen Datenschutzvorschriften. Der Umgang mit personenbezogenen Daten durch piHub Private Investments
           bzw. durch von piHub Private Investments beauftragte Dritte ist in den Regelungen zum Datenschutz und der datenschutzrechtlichen
           Einwilligungserklärung geregelt. Es gilt die aktuelle Datenschutzerklärung von piHub Private Investments.
-          <h3></h3>8.2. Datensicherheit
+          <div className="section-spacer" aria-hidden="true"></div>8.2. Datensicherheit
           <p></p>piHub Private Investments stellt durch angemessene technische und organisatorische Maßnahmen sicher, dass die
           auf der Vermittlungsplattform eingestellten Daten und die über die Vermittlungsplattform geführte Kommunikation
           vor dem Zugriff unberechtigter Dritter geschützt werden. Die Nutzer sind unabhängig hiervon und unbeschadet weitergehender
@@ -241,32 +241,32 @@ export default () => {
           <h3>8.3. Datenschutzbeauftragte</h3>
           <p>Der Datenschutzbeauftragte der piHub Private Investments ist: </p>
           <p>Thomas Gutte Datenschutzberatung, Hochstr. 2, 65195 Wiesbaden </p>
-          <h2></h2>§9. Haftung/Schadensersatz/Vertragsstrafe
+          <div className="section-spacer" aria-hidden="true"></div>§9. Haftung/Schadensersatz/Vertragsstrafe
           <h3>9.1. Haftung</h3>
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>9.1.1. Haftung bei Vorsatz und Fahrlässigkeit</b>
           <p></p>piHub Private Investments haftet gleich aus welchem Rechtsgrund bei Vorsatz und grober Fahrlässigkeit. Bei
           einfacher Fahrlässigkeit haftet piHub Private Investments nur für Schäden aus der Verletzung einer wesentlichen
           Vertragspflicht. Wesentliche Vertragspflichten sind solche Verpflichtungen, deren Erfüllung die ordnungsgemäße
           Durchführung des Vertrags überhaupt erst ermöglicht und auf deren Einhaltung der Vertragspartner regelmäßig vertraut
           und vertrauen darf.
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>9.1.2. Haftungshöhe </b>
           <p></p>Bei Verletzung einer wesentlichen Vertragspflicht ist die Haftung stets auf den Ersatz des bei Vertragsschluss
           vorhersehbaren, typischerweise eintretenden Schadens begrenzt, soweit nicht Vorsatz oder grobe Fahrlässigkeit vorliegt.
           Im Falle von Vorsatz oder grober Fahrlässigkeit haftet piHub Private Investments stets unbeschränkt.
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>9.1.3. Haftung bei Verletzung von Lebens, Körpers oder der Gesundheit</b>
           <p></p>Die vorgenannten Haftungsausschlüsse bzw. -beschränkungen gelten nicht für die Haftung wegen grob fahrlässigen
           oder vorsätzlichen Verhaltens, wegen Verletzung des Lebens, Körpers oder der Gesundheit, aus der Übernahme einer
           Beschaffenheitsgarantie, nach § 44a TKG oder nach dem Produkthaftungsgesetz sowie – soweit einschlägig – bei Verletzung
           einer Pflicht aus §§ 60 oder 61 VVG.
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>9.1.4. Haftung von gesetzlichen Vertretern und Hilfspersonen</b>
           <p></p>Vorstehende Haftungsausschlüsse bzw. -beschränkungen gelten auch im Hinblick auf die Haftung der Angestellten,
           Arbeitnehmer, Mitarbeiter, Vertreter und Erfüllungsgehilfen von piHub Private Investments und insbesondere zugunsten
           der Anteilseigner, Mitarbeiter, Vertreter, Organe und deren Nutzern betreffend ihrer persönlichen Haftung.
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>9.1.5. Haftung für zur Verfügung gestellte Daten</b>
           <p></p>(a) Fremdseits eingestellte Inhalte im Verhältnis zu piHub Private Investments
           <p></p>Die von den Nutzern auf der Vermittlungsplattform eingestellten Daten und Inhalte werden ausschließlich von
@@ -299,12 +299,12 @@ export default () => {
           und eine Rechtsverteidigung der piHub Private Investments erforderlich sind. Für die piHub Private Investments
           aufgrund einer notwendigen Rechtsverteidigung entstehenden Kosten haftet der Nutzer bzw. der Finanzierer. Das gilt
           nicht, soweit der Nutzer die Rechtsverletzung nicht zu vertreten hat.
-          <h3></h3>9.2. Schadensersatz
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>9.2. Schadensersatz
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>9.2.1. Sanktionsvorbehalt für Verstöße gegen die AGB</b>
           <p></p>piHub Private Investments behält sich vor, bei Verstößen von Nutzern gegen diese AGB die nachfolgend aufgeführten
           Sanktionen zu verhängen.
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>9.2.2. Pauschalierte Vertragsstrafe
           </b>
           <p></p>Verstößt der Nutzer oder der Finanzierer gegen die Ziff. 7.2 und 7.3 dieser AGB und entsteht piHub Private
@@ -312,7 +312,7 @@ export default () => {
           Ziff. 7.3 zu leisten. Dies gilt nicht, soweit der Nutzer oder der Finanzdienstleister den Verstoß nicht zu vertreten
           hat. Dem Nutzer sowie dem Finanzdienstleister ist der Nachweis gestattet, dass überhaupt kein Schaden entstanden
           ist.
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>9.2.3. Geltendmachung weitergehender Ansprüche</b>
           <p></p>Weitergehende Ansprüche der piHub Private Investments gegen den Nutzer bleiben unberührt.
           <h3>9.3. Vertragsstrafe (für unzulässige Nutzung der Vermittlungsplattform)</h3>
@@ -322,14 +322,14 @@ export default () => {
           auf Schadensersatzansprüche der piHub Private Investments aufgrund der vom Nutzer begangenen Pflichtverletzung
           angerechnet.
           <h2>§10. Vertragsdauer, Vertragsbeendigung, Ausschluss von Nutzern</h2>
-          <h3></h3>10.1. Vertragslaufzeit
+          <div className="section-spacer" aria-hidden="true"></div>10.1. Vertragslaufzeit
           <p></p>Der Vertrag über die Nutzung der Vermittlungsplattform ist auf unbestimmte Zeit.
           <h3>10.2. Beendigung des Vertragsverhältnisses</h3>
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>10.2.1. Kündigungsrecht des Nutzers</b>
           <p></p>Das Nutzer ist berechtigt, das Nutzungsverhältnis jederzeit ordentlich zu kündigen. Die Kündigung hat schriftlich
           oder per Email zu erfolgen.
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>10.2.2. Kündigungsrecht von piHub Private Investments</b>
           <p></p>piHub Private Investments ist berechtigt, den Nutzungsvertrag mit einer Frist von drei (3) Monaten zum Monatsende
           zu kündigen. Sofern eine Finanzierungsanfrage des Nutzers noch nicht abgeschlossen ist, also noch keine Finanzierungsangebote
@@ -337,16 +337,16 @@ export default () => {
           der zum Zeitpunkt der Kündigung durch den Nutzer zuletzt eingestellten Finanzierungsanfrage. Entsprechendes gilt
           für die Kündigung seitens piHub Private Investments gegenüber einem Finanzierer, sofern dieser im Zeitpunkt der
           Kündigung noch Angebotsvorschläge an Nutzer offeriert hat.
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>10.2.3. Recht zur außerordentlichen Kündigung</b>
           <p></p>Das Recht zur außerordentlichen Kündigung aus wichtigem Grund bleibt unberührt. Als wichtiger Grund gilt insbesondere
           ein grober Verstoß des Nutzers gegen diese AGB sowie die Fortsetzung/Wiederholung des Verstoßes trotz erfolgter
           Abmahnung.
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>10.2.4. Wirkung der Kündigung</b>
           <p></p>Mit Wirksamwerden der Kündigung wird das Nutzerskonto des Nutzers durch piHub Private Investments gesperrt.
           <h3>10.3. Ausschluss von Nutzern</h3>
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>10.3.1. Recht zur Sperrung wegen vertragswidriger Inhalte/Ausschlussrecht
           </b>
           <p></p>piHub Private Investments ist berechtigt, im Falle von vertragswidrig eingestellten Anfragen, Beschreibungen
@@ -357,12 +357,12 @@ export default () => {
           Bei Auswahl der zu treffenden Maßnahmen wird piHub Private Investments die berechtigten Interessen des jeweiligen
           Nutzers angemessen berücksichtigen. Insbesondere wird ein Ausschluss erst nach erfolgter Abmahnung erfolgen, sofern
           diese nicht im gesonderten Fall entbehrlich ist (§ 314 Abs. 2 BGB).
-          <h4></h4>
+          <div className="section-spacer" aria-hidden="true"></div>
           <b>10.3.2. Ausschluss von der weiteren Nutzung</b>
           <p></p>Ausgeschlossenen Nutzern ist die weitere Nutzung des Portals sowie eine erneute Registrierung bei piHub Private
           Investments untersagt.
           <h2>§11. Erfüllungsort, Gerichtsstand, anwendbares Recht</h2>
-          <h3></h3>11.1. Erfüllungsort
+          <div className="section-spacer" aria-hidden="true"></div>11.1. Erfüllungsort
           <p></p>Erfüllungsort für die gegenseitigen Leistungen aus dem Nutzungsvertrag ist der Sitz von piHub Private Investments
           in Frankfurt am Main.
           <h3>11.2. Zuständiges Gericht</h3>

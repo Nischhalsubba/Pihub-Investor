@@ -3,14 +3,13 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import counterpart from 'counterpart';
 import en from './_locale/en';
 import de from './_locale/de';
 
 import App from './components/App';
 import reducers from './reducers';
-import NoMatch from './components/general/NoMatch';
 import TermsCondition from './components/general/TermsCondition';
 import RequireInvestorAuth from './components/_auth/RequireInvestorAuth';
 import RequireNoAuth from './components/_auth/RequireNoAuth';
@@ -38,7 +37,6 @@ import AppliedList from './components/products/AppliedList';
 import ViewProduct from './components/products/View';
 //Product application related imports
 import ApplicationList from './components/products/applications/List';
-import ViewApplication from './components/products/applications/View';
 
 //Notification related imports
 import Notifications from './components/notifications/List';

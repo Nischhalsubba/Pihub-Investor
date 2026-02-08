@@ -1,7 +1,7 @@
 import client from './index';
 import { routes } from './../_api/routes';
 import { GET_ALL_STATES, GET_ALL_STATES_WITH_ID, GET_COUNTIES, GET_COUNTIES_NAME } from '../actions/types';
-import { extractNames, extractIdCounty, renameKeys } from '../_utils/misc';
+import { extractNames } from '../_utils/misc';
 import en from './../_locale/en';
 import de from './../_locale/de';
 const Translate = require('react-translate-component');
@@ -17,8 +17,8 @@ export const getCounties = (arr) => async dispatch => {
     await client.all(arr.map(async (a, index) => {
       singleCounty[index] = await client.get(`${routes.getStateCounties}/${a}/counties`);
     }));
-    singleCounty.map((data, index) => {
-      return data.data.data.map(city => {
+    singleCounty.forEach((data) => {
+      data.data.data.forEach(city => {
         allCounties.push(city)
       })
     });

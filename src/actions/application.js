@@ -1,6 +1,6 @@
 import client from './index';
 import { routes } from './../_api/routes';
-import { GET_APPLICATION_LIST, ERROR, GET_APPLICATION_DETAIL } from '../actions/types';
+import { GET_APPLICATION_LIST, GET_APPLICATION_DETAIL } from '../actions/types';
 export const getApplicationList = id => async dispatch => {
   try {
     const response = await client.get(

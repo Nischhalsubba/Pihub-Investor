@@ -26,26 +26,10 @@ class AppliedList extends Component {
               <tr>
                 <td>
                   {' '}
-                  <a href="">IT Investment</a>
+                  <span>IT Investment</span>
                 </td>
                 <td>
-                  <a href="">Health and personal care</a>
-                </td>
-                <td>10%</td>
-                <td>$7186</td>
-                <td>$233456</td>
-                <td>
-                  {' '}
-                  <span className="badge badge-warning">Awaiting Approval</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  {' '}
-                  <a href="">IT Investment</a>
-                </td>
-                <td>
-                  <a href="">Health and personal care</a>
+                  <span>Health and personal care</span>
                 </td>
                 <td>10%</td>
                 <td>$7186</td>
@@ -58,26 +42,10 @@ class AppliedList extends Component {
               <tr>
                 <td>
                   {' '}
-                  <a href="">IT Investment</a>
+                  <span>IT Investment</span>
                 </td>
                 <td>
-                  <a href="">Health and personal care</a>
-                </td>
-                <td>10%</td>
-                <td>$7186</td>
-                <td>$233456</td>
-                <td>
-                  {' '}
-                  <span className="badge badge-warning">Awaiting Approval</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  {' '}
-                  <a href="">IT Investment</a>
-                </td>
-                <td>
-                  <a href="">Health and personal care</a>
+                  <span>Health and personal care</span>
                 </td>
                 <td>10%</td>
                 <td>$7186</td>
@@ -90,26 +58,10 @@ class AppliedList extends Component {
               <tr>
                 <td>
                   {' '}
-                  <a href="">IT Investment</a>
+                  <span>IT Investment</span>
                 </td>
                 <td>
-                  <a href="">Health and personal care</a>
-                </td>
-                <td>10%</td>
-                <td>$7186</td>
-                <td>$233456</td>
-                <td>
-                  {' '}
-                  <span className="badge badge-warning">Awaiting Approval</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  {' '}
-                  <a href="">IT Investment</a>
-                </td>
-                <td>
-                  <a href="">Health and personal care</a>
+                  <span>Health and personal care</span>
                 </td>
                 <td>10%</td>
                 <td>$7186</td>
@@ -122,10 +74,58 @@ class AppliedList extends Component {
               <tr>
                 <td>
                   {' '}
-                  <a href="">IT Investment</a>
+                  <span>IT Investment</span>
                 </td>
                 <td>
-                  <a href="">Health and personal care</a>
+                  <span>Health and personal care</span>
+                </td>
+                <td>10%</td>
+                <td>$7186</td>
+                <td>$233456</td>
+                <td>
+                  {' '}
+                  <span className="badge badge-warning">Awaiting Approval</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {' '}
+                  <span>IT Investment</span>
+                </td>
+                <td>
+                  <span>Health and personal care</span>
+                </td>
+                <td>10%</td>
+                <td>$7186</td>
+                <td>$233456</td>
+                <td>
+                  {' '}
+                  <span className="badge badge-warning">Awaiting Approval</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {' '}
+                  <span>IT Investment</span>
+                </td>
+                <td>
+                  <span>Health and personal care</span>
+                </td>
+                <td>10%</td>
+                <td>$7186</td>
+                <td>$233456</td>
+                <td>
+                  {' '}
+                  <span className="badge badge-warning">Awaiting Approval</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {' '}
+                  <span>IT Investment</span>
+                </td>
+                <td>
+                  <span>Health and personal care</span>
                 </td>
                 <td>10%</td>
                 <td>$7186</td>
@@ -138,10 +138,10 @@ class AppliedList extends Component {
               <tr>
                 <td>
                   {' '}
-                  <a href="">IT Investment</a>
+                  <span>IT Investment</span>
                 </td>
                 <td>
-                  <a href="">Health and personal care</a>
+                  <span>Health and personal care</span>
                 </td>
                 <td>10%</td>
                 <td>$7186</td>

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { getProfile, editProfile } from '../../../actions/profile'
 import Translate from 'react-translate-component'
 
-import Subheader from '../../general/Subheader'
 import { inputField, renderDropzoneField } from '../../../_formFields/'
 class EditProfile extends Component {
 	state = { file: null, pic: null }

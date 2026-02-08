@@ -1,7 +1,5 @@
 import client from './index';
 import { routes } from './../_api/routes';
-import { ERROR } from './types';
-
 export const uploadFile = (doc, pId, aId, callback) => async dispatch => {
   try {
     let body = new FormData();

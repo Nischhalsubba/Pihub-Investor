@@ -1,6 +1,6 @@
 import client from './index';
 import { routes } from './../_api/routes';
-import { GET_TOKEN_FOR_EMAIL, ERROR, AUTH_USER } from '../actions/types';
+import { ERROR, AUTH_USER } from '../actions/types';
 export const getTokenForEmail = (email, callback) => async dispatch => {
   try {
     const response = await client.post(routes.passwordReset, email);

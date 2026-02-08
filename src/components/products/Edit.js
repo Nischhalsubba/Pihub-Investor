@@ -13,7 +13,7 @@ import {getCounties, getAllState} from '../../actions/statesCounties';
 import Subheader from '../general/Subheader';
 import * as validation from '../../_utils/validate';
 import Translate from 'react-translate-component'
-import {findId, extractId, getId, extractIdForName, extractIdCounty} from '../../_utils/misc';
+import {findId, getId, extractIdForName, extractIdCounty} from '../../_utils/misc';
 
 import {
     inputField,
@@ -107,7 +107,7 @@ class EditProduct extends Component {
         if (this.props.initialValues !== prevProps.initialValues) {
             var existingFile = [];
             if (Array.isArray(this.props.initialValues.documents)) {
-                this.props.initialValues.documents.map((doc) => {
+                this.props.initialValues.documents.forEach((doc) => {
                     existingFile.push(doc.id)
                 })
             }
@@ -218,7 +218,6 @@ class EditProduct extends Component {
             handleSubmit,
             min_creditValue,
             credit,
-            time_duration,
             max_credit_amount,
             min_sales_creditor,
             files
@@ -599,26 +598,18 @@ EditProduct = reduxForm({
 
 const selector = formValueSelector('editProduct');
 EditProduct = connect(state => {
-    const time_duration = selector(state, 'time_duration');
     const states = selector(state, 'states');
     const credit = selector(state, 'credit');
     const min_creditValue = selector(state, 'min_credit_amount');
     const max_credit_amount = selector(state, 'max_credit_amount');
-    const colatoral = selector(state, 'colatoral');
-    const interestValue = selector(state, 'interest_rate');
-    const credit_amountValue = selector(state, 'amount');
     const min_sales_creditor = selector(state, 'min_sales_creditor')
     const files = selector(state, 'files')
     return {
         states,
         credit,
         min_creditValue,
-        interestValue,
-        credit_amountValue,
-        time_duration,
         max_credit_amount,
         min_sales_creditor,
-        colatoral,
         files
     };
 })(EditProduct);

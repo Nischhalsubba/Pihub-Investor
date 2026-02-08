@@ -12,7 +12,7 @@ import { clearError } from '../../actions/clearError';
 import Subheader from '../general/Subheader';
 import * as validation from '../../_utils/validate';
 import Translate from 'react-translate-component'
-import { extractNames, extractId, getId, extractIdForName, extractIdCounty } from '../../_utils/misc';
+import { getId, extractIdForName, extractIdCounty } from '../../_utils/misc';
 
 import {
   inputField,
@@ -172,7 +172,6 @@ class AddProduct extends Component {
       handleSubmit,
       min_creditValue,
       credit,
-      time_duration,
       max_credit_amount,
       min_sales_creditor,
       files
@@ -557,14 +556,10 @@ AddProduct = reduxForm({
 
 const selector = formValueSelector('addProduct');
 AddProduct = connect(state => {
-  const time_duration = selector(state, 'time_duration');
   let states = selector(state, 'states');
   const credit = selector(state, 'credit');
   const min_creditValue = selector(state, 'min_credit_amount');
   const max_credit_amount = selector(state, 'max_credit_amount');
-  const colatoral = selector(state, 'colatoral');
-  const interestValue = selector(state, 'interest_rate');
-  const credit_amountValue = selector(state, 'amount');
   const min_sales_creditor = selector(state, 'min_sales_creditor');
   const files = selector(state, 'files');
   const industries = selector(state, 'industries');
@@ -573,12 +568,8 @@ AddProduct = connect(state => {
     states,
     credit,
     min_creditValue,
-    interestValue,
-    credit_amountValue,
-    time_duration,
     max_credit_amount,
     min_sales_creditor,
-    colatoral,
     industries,
     files
   };

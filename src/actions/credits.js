@@ -1,6 +1,6 @@
 import client from './index';
 import { routes } from './../_api/routes';
-import { CREDIT_REQUESTS_LIST, ERROR } from '../actions/types';
+import { CREDIT_REQUESTS_LIST } from '../actions/types';
 export const getCreditRequestList = page => async dispatch => {
   try {
     const response = await client.get(

@@ -11,7 +11,7 @@ class ViewProfile extends Component {
     if (!this.props.profile) {
       return <Spinner />
     } else {
-      const { fname, lname, company_name, email, phone_number, status, category, company_logo_link, contact_email_1, contact_email_2, contact_email_3, contact_phone_no_1, contact_phone_no_2, contact_phone_no_3, document_link, contact_name_1, contact_name_2, contact_name_3, facebook_link, linked_in_link, twitter_link, street_address, headquarter, zip_code } = this.props.profile;
+      const { company_name, status, category, company_logo_link, contact_email_1, contact_email_2, contact_email_3, contact_phone_no_1, contact_phone_no_2, contact_phone_no_3, contact_name_1, contact_name_2, contact_name_3, facebook_link, linked_in_link, twitter_link, street_address, headquarter, zip_code } = this.props.profile;
       return (
         <Fragment>
           <div className="content-head">
@@ -32,7 +32,7 @@ class ViewProfile extends Component {
                     <a href={twitter_link} target="_blank" rel="noopener noreferrer">
                       <img className="mr-3" src={`${process.env.PUBLIC_URL}/assets/img/icons/twitter.png`} alt="alt" width="25px" height="25px" />
                     </a>
-                    <a target="_blank" rel="noopener noreferrer" href={twitter_link}>
+                    <a target="_blank" rel="noopener noreferrer" href={linked_in_link}>
                       <img src={`${process.env.PUBLIC_URL}/assets/img/icons/linkedin.png`} alt="alt" width="25px" height="25px" />
                     </a>
                   </div>

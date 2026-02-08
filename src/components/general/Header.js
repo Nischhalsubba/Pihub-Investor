@@ -60,9 +60,9 @@ class Header extends Component {
 
 
             <div className="dropdown">
-              <a className=" dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button type="button" className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src={`${process.env.PUBLIC_URL}/assets/img/user.png`} alt="John Doe" />
-              </a>
+              </button>
               <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                 <Link className="dropdown-item" to='/user/profile'>
                   <Translate content='label.profile' />

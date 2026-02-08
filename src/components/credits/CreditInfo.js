@@ -92,13 +92,12 @@ class DetailCreditRequest extends Component {
                 amount,
                 deadline,
                 description,
-                duration,
                 payment_after,
                 sales,
                 status, application_files,
                 time_duration, collaterals,
                 state, county, nda_requirement,
-                service, industries, rating_for_credit, ratings
+                service, industries, ratings
             } = this.state.detail;
             let requestedDate = new Date(requested_on);
             let deadlineDate = new Date(deadline);
@@ -160,7 +159,7 @@ class DetailCreditRequest extends Component {
                                 <h6><Translate content='column.requestedby'/></h6>
                                 <div className="product-info-user">
                                     {/* <img src="assets/img/investor-profile.jpg" alt="Investor profile picture" /> */}
-                                    <a href="">{requested_by}</a>
+                                    <span>{requested_by}</span>
                                 </div>
                             </div>
                         </div>

@@ -1,13 +1,9 @@
 
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import Subheader from '../general/Subheader';
 import { getApplicationDetail } from '../../actions/application';
 import Translate from 'react-translate-component';
 import { changeStatus } from '../../actions/changeStatus';
-import { ToEuro } from "../general/CurrencyFormatter";
-import { dDigit } from '../../_utils/misc'
-import Moment from 'react-moment';
 import CreditInfo from './CreditInfo';
 class DetailCreditRequest extends Component {
   state = { detail: null, refresh: false }

@@ -3,7 +3,7 @@ import de from './../_locale/de';
 
 export const extractNames = (list) => {
   var r = [];
-  list.map(l => {
+  list.forEach(l => {
     if (l.label) {
       r.push(l.label);
 
@@ -17,8 +17,8 @@ export const extractNames = (list) => {
 export const extractId = (list, mainList) => {
   var r = [];
   if (list) {
-    list.map((name) => {
-      return mainList.map((main) => {
+    list.forEach((name) => {
+      mainList.forEach((main) => {
         if (main.id) {
           if (name === main.label) {
             r.push(main.id)
@@ -32,7 +32,7 @@ export const extractId = (list, mainList) => {
       })
     })
   } else {
-    return mainList.map((m) => {
+    mainList.forEach((m) => {
       if (m.id !== 'undefined') {
         return r.push(m.id)
 
@@ -46,7 +46,7 @@ export const extractId = (list, mainList) => {
 export const splitService = (array) => {
   var english = [];
   var german = [];
-  array.map((arr) => {
+  array.forEach((arr) => {
     var en = { value: arr.id, label: arr.name.en };
     var de = { value: arr.id, label: arr.name.de };
     english.push(en);
@@ -60,7 +60,7 @@ export const splitService = (array) => {
 export const splitIndustries = (array) => {
   let english = [en.placeholder.selectAll];
   let german = [de.placeholder.selectAll];
-  array.map(arr => {
+  array.forEach(arr => {
     english.push(arr.name.en);
     german.push(arr.name.de);
   });
@@ -71,15 +71,15 @@ export const splitIndustries = (array) => {
 export const getId = (mainList, list, language) => {
   let result = [];
   if (list) {
-    list.map(m => {
-      return mainList.map(ml => {
+    list.forEach(m => {
+      mainList.forEach(ml => {
         if (ml.name[`${language}`] === m) {
           result.push(ml.id);
         }
       })
     })
   } else {
-    mainList.map(ml => {
+    mainList.forEach(ml => {
       result.push(ml.id)
     })
   }
@@ -94,8 +94,14 @@ export const dDigit = number => {
 
 export const extractIdCounty = (list, mainList) => {
   var result = [];
-  mainList.map((mL) => {
-    return list.map(l => {
+  if (!list) {
+    mainList.forEach((mL) => {
+      result.push(mL.id);
+    });
+    return result;
+  }
+  mainList.forEach((mL) => {
+    list.forEach(l => {
       if (l === mL.name) {
         return result.push(mL.id)
       }
@@ -127,8 +133,8 @@ export const extractIdForName = (list, mainList) => {
   var r =[];
 
   if (list) {
-    list.map((name) => {
-      return mainList.map((main) => {
+    list.forEach((name) => {
+      mainList.forEach((main) => {
         if (main.id) {
           if (name === main.name) {
             r.push(main.id)
@@ -142,7 +148,7 @@ export const extractIdForName = (list, mainList) => {
       })
     })
   } else {
-    return mainList.map((m) => {
+    mainList.forEach((m) => {
       if (m.id !== 'undefined') {
         return r.push(m.id)
 
@@ -157,8 +163,8 @@ export const extractIdForName = (list, mainList) => {
 export const findId = (list, mainList) => {
   var r = [];
   if (list) {
-    list.map(l => {
-      return mainList.map(mL => {
+    list.forEach(l => {
+      mainList.forEach(mL => {
         if (l === mL.name) {
           return r.push(mL.id)
         }

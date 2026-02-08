@@ -16,14 +16,14 @@ export const getProfile = id => async dispatch => {
 export const editProfile = (details, callback) => async dispatch => {
   try {
     var body = new FormData();
-    Object.keys(details).map(field => {
+    Object.keys(details).forEach(field => {
       if (field !== 'company_logo_link' && field !== 'profile_pic_link' && field !== 'status' && field !== 'id' && field !== 'document_link') {
         body.append(`${field}`, details[`${field}`])
 
       }
     });
     if (details.document) {
-      details.document.map((file, index) => {
+      details.document.forEach((file) => {
         body.append('document', file)
       });
     } else {

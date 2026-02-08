@@ -8,7 +8,6 @@ import Translate from 'react-translate-component';
 import Spinner from '../general/Spinner'
 import * as validation from '../../_utils/validate';
 import {renderDropzoneField} from '../../_formFields';
-import {ToEuro} from '../general/CurrencyFormatter';
 import CreditInfo from './CreditInfo';
 
 class CreditorDetail extends Component {

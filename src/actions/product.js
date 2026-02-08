@@ -57,7 +57,7 @@ export const addProduct = (details, callback) => async dispatch => {
     body.set('max_credit_amount', details.max_credit_amount);
     body.set('min_sales_creditor', details.min_sales_creditor)
     if(details.files){
-      details.files.map((file, index) => {
+      details.files.forEach((file, index) => {
         body.append(`files[${index}]`, file)
       })
     }else{
@@ -128,7 +128,7 @@ export const updateProduct = (details, id, callback) => async dispatch => {
     body.set('state_ids', details.state_ids.toString());
     if (details.county_ids.length === 0) {
       var countyId = [];
-      details.counties.map(county => {
+      details.counties.forEach(county => {
         countyId.push(county.id);
       });
       body.set('county_ids', countyId.toString());
@@ -139,7 +139,7 @@ export const updateProduct = (details, id, callback) => async dispatch => {
     }
     if (details.industry_id.length === 0) {
       var industryId = [];
-      details.industries.map(industry => {
+      details.industries.forEach(industry => {
         industryId.push(industry.id);
       });
       body.set('industry_ids', industryId.toString());
@@ -172,7 +172,7 @@ export const updateProduct = (details, id, callback) => async dispatch => {
     }
     body.append('ratings', JSON.stringify(details.ratings));
     if (details.files) {
-      details.files.map((file, index) => {
+      details.files.forEach((file, index) => {
         body.append(`files[${index}]`, file)
       })
     } else {
