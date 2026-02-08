@@ -138,7 +138,14 @@ class ListCreditRequests extends Component {
                             </thead>
                             <tbody>{this.renderData(data)}</tbody>
                         </table>
-                        <Pagination url="creditRequest"/>
+                        <Pagination
+                            totalPage={
+                                this.props.list.creditRequests.meta
+                                    ? this.props.list.creditRequests.meta.last_page
+                                    : 1
+                            }
+                            url={(page) => this.props.getCreditRequestList(page)}
+                        />
                     </div>
                 </Fragment>
             );

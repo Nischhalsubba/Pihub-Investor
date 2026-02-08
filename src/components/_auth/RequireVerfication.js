@@ -27,7 +27,8 @@ export default ChildComponent => {
       if (!this.props.auth) {
         this.props.history.push('/login');
       } else {
-        const { scopes } = jwt.decode(this.props.auth);
+        const decoded = jwt.decode(this.props.auth);
+        const scopes = decoded && decoded.scopes ? decoded.scopes : [];
         if (scopes[0] === 'unapproved_scope') {
           this.props.history.push('/account-unverified');
         }

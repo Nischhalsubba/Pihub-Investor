@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import counterpart from 'counterpart';
 import en from './_locale/en';
 import de from './_locale/de';
@@ -69,7 +69,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <HashRouter>
       <Switch>
         {/** ___ Start: NO AUTH ROUTES --- Authenticated users should be redirected to home screen ---*/}
         <Route path="/login" exact component={RequireNoAuth(Login)} />
@@ -166,7 +166,7 @@ ReactDOM.render(
         </App>
         {/* <Route component={NoMatch} /> */}
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   </Provider>,
   document.querySelector('#root')
 );

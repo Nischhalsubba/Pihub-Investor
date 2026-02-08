@@ -36,7 +36,7 @@ class Signup extends Component {
       return errors.map((err, index) => {
         return (
           <li className="d-flex mb-1" key={index}>
-            <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
+            <img src={`${process.env.PUBLIC_URL}/assets/img/icons/bx-check-circle.svg`} alt="alt" />
             <span className="pl-2 green-text">{err}</span>
           </li>
         );
@@ -50,7 +50,7 @@ class Signup extends Component {
       <div className="container-full-width">
         <div className="panel-container">
           <div className="feature-container feature-container--signup">
-            <img className="company-logo" src="/assets/img/logo.png" alt="company logo" />
+            <img className="company-logo" src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} alt="company logo" />
 
             <div className="feature-sidebar">
               <div className="feature-ours">

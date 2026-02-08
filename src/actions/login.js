@@ -27,9 +27,12 @@ export const signin = ({ email, password }, callback) => async dispatch => {
     });
     callback();
   } catch (e) {
+    const errorMessage =
+      (e && e.response && e.response.data && e.response.data.error) ||
+      'Unable to sign in. Please try again.';
     dispatch({
       type: AUTH_ERROR,
-      payload: `${e.response.data.error}.`
+      payload: `${errorMessage}.`
     });
   }
 };

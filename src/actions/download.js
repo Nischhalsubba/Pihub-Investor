@@ -1,10 +1,23 @@
 import client from './index';
 import { routes } from './../_api/routes';
 import { ERROR } from '../actions/types';
+import { isDemo } from '../_api/mock';
 export const downloadToken = (path, fileName, fileType) => async dispatch => {
   try {
     let name = fileName.split('.')[0] || 'attachment';
     let type = fileType || 'pdf';
+
+    if (isDemo()) {
+      const blob = new Blob(
+        [`Demo download for ${name}.${type}\nThis file is generated in demo mode.`],
+        { type: 'text/plain' }
+      );
+      let link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `${name}.${type}`;
+      link.click();
+      return;
+    }
 
     const response = await client.post(routes.downloadToken, { file_path: path });
     const { token } = response.data;

@@ -37,7 +37,7 @@ class EditProfile extends Component {
 							<div className="item position-relative">
 								{this.props.initialValues ? <Fragment>
 									<img src={this.state.pic || this.props.initialValues.company_logo_link || null} alt="alt" width="120px" height="120px" />
-									<img className="verify" src="/assets/img/verify.png" alt="alt" />
+									<img className="verify" src={`${process.env.PUBLIC_URL}/assets/img/verify.png`} alt="alt" />
 								</Fragment>
 									: null
 								}

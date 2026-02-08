@@ -19,7 +19,7 @@ class ViewProfile extends Component {
               <div className="d-flex company-image">
                 <div className="item position-relative">
                   <img src={company_logo_link} alt="alt" width="120px" height="120px" />
-                  <img className="verify" src="/assets/img/verify.png" alt="alt" />
+                  <img className="verify" src={`${process.env.PUBLIC_URL}/assets/img/verify.png`} alt="alt" />
                 </div>
                 <div className="item ml-4">
                   <h2>{company_name}
@@ -27,13 +27,13 @@ class ViewProfile extends Component {
                   </h2>
                   <div className="d-flex social-media mt-2">
                     <a href={facebook_link} target="_blank" rel="noopener noreferrer">
-                      <img className="mr-3" src="/assets/img/icons/facebook.png" alt="alt" width="25px" height="25px" />
+                      <img className="mr-3" src={`${process.env.PUBLIC_URL}/assets/img/icons/facebook.png`} alt="alt" width="25px" height="25px" />
                     </a>
                     <a href={twitter_link} target="_blank" rel="noopener noreferrer">
-                      <img className="mr-3" src="/assets/img/icons/twitter.png" alt="alt" width="25px" height="25px" />
+                      <img className="mr-3" src={`${process.env.PUBLIC_URL}/assets/img/icons/twitter.png`} alt="alt" width="25px" height="25px" />
                     </a>
                     <a target="_blank" rel="noopener noreferrer" href={twitter_link}>
-                      <img src="/assets/img/icons/linkedin.png" alt="alt" width="25px" height="25px" />
+                      <img src={`${process.env.PUBLIC_URL}/assets/img/icons/linkedin.png`} alt="alt" width="25px" height="25px" />
                     </a>
                   </div>
                 </div>
@@ -45,17 +45,17 @@ class ViewProfile extends Component {
           </div>
           <div className="content-body mt-5">
             <div className="d-flex">
-              <img src="/assets/img/bx-briefcase.png" alt="" />
+              <img src={`${process.env.PUBLIC_URL}/assets/img/bx-briefcase.png`} alt="" />
               <span className="ml-3 font-weight-bold">Category:{category}</span>
             </div>
             <div className="d-flex mt-4">
               <figure className="m-0">
-                <img src="./assets/img/bx-map.png" alt="" />
+                <img src={`${process.env.PUBLIC_URL}/assets/img/bx-map.png`} alt="" />
               </figure>
               <p className="ml-3 font-weight-bold mb-0">{street_address} <br />{headquarter}, {zip_code}</p>
             </div>
             <div className="d-flex mt-4 phone">
-              <img src="/assets/img/bx-phone.png" alt="" />
+              <img src={`${process.env.PUBLIC_URL}/assets/img/bx-phone.png`} alt="" />
               <div className="d-flex flex-column">
                 <h4 className="ml-3 font-weight-bold">{contact_name_2}</h4>
                 <span className="ml-3 mb-2">{contact_email_2}</span>
@@ -63,7 +63,7 @@ class ViewProfile extends Component {
               </div>
             </div>
             <div className="d-flex mt-4">
-              <img src="/assets/img/icons/contact-person.png" alt="" width="20px" />
+              <img src={`${process.env.PUBLIC_URL}/assets/img/icons/contact-person.png`} alt="" width="20px" />
               <span className="ml-3 font-weight-bold">Contact Person</span>
             </div>
             <div className="d-flex mt-4 contact_person">

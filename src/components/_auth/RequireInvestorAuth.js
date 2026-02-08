@@ -17,8 +17,8 @@ export default ChildComponent => {
             if (!this.props.auth) {
                 this.props.history.push('/login');
             } else {
-                const {exp} = jwt.decode(this.props.auth);
-                if ((exp * 1000) < Date.now()) {
+                const decoded = jwt.decode(this.props.auth);
+                if (!decoded || !decoded.exp || (decoded.exp * 1000) < Date.now()) {
                     this.props.history.push('/login');
                 }
             }

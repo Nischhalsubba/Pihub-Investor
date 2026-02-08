@@ -31,20 +31,20 @@ class Header extends Component {
     return (
       <header className="site-header">
         <div className="logo-container">
-          <img src="/assets/img/logo.png" alt="Pinhub Logo" />
+          <img src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} alt="Pinhub Logo" />
         </div>
         <nav className="header-actions">
           <ul>
             <ul className="language-changer">
               <li>
                 <button onClick={() => this.onChange('en')}>
-                  <img src="assets/img/gb.svg" alt="English Language" />
+                  <img src={`${process.env.PUBLIC_URL}/assets/img/gb.svg`} alt="English Language" />
                   English
                   </button>
               </li>
               <li>
                 <button onClick={() => this.onChange('de')}>
-                  <img src="assets/img/de.svg" alt="Deutsch Language" />
+                  <img src={`${process.env.PUBLIC_URL}/assets/img/de.svg`} alt="Deutsch Language" />
                   Deutsch
                   </button>
               </li>
@@ -61,7 +61,7 @@ class Header extends Component {
 
             <div className="dropdown">
               <a className=" dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="/assets/img/user.png" alt="John Doe" />
+                <img src={`${process.env.PUBLIC_URL}/assets/img/user.png`} alt="John Doe" />
               </a>
               <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                 <Link className="dropdown-item" to='/user/profile'>

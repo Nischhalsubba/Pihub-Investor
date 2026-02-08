@@ -1,7 +1,7 @@
 # Frontend: CreditTech
 
 ### Configuration
-Please create .env* file  if it already doesn't exist. A sample environment file is ``.dist-env``
+Please create a `.env` file if it doesn't exist. A sample environment file is `.dist-env`.
 
 - .env: Default.
 - .env.local: Local overrides. This file is loaded for all environments except test.
@@ -20,6 +20,14 @@ Please refer to the [adding-custom-environment-variables](https://create-react-a
 
 The app uses React.
 
+### Demo Mode (No Backend Required)
+If you do not have the API running, you can use the built-in demo data.
+
+- Set `REACT_APP_DEMO=true` in your `.env`.
+- Optional: Set `REACT_APP_DEMO_DELAY_MS=150` to simulate network latency.
+- When `REACT_APP_DEMO=true`, the app uses local mock data for API calls and provides a demo login token.
+- In demo mode you can use any email/password to sign in.
+
 ### Using npm (Development)
 
 ```
@@ -33,6 +41,14 @@ The app uses React.
 ```
  > npm run build
 ```
+
+### GitHub Pages
+This repo is configured to build with relative asset paths (`"homepage": "."`) and uses `HashRouter` for client-side routing.
+
+1. Run `npm install` (once).
+2. Run `npm run deploy` (this builds and publishes `build/` to the `gh-pages` branch).
+3. In GitHub, enable Pages to use the `gh-pages` branch.
+4. If you want to use a different base path, update the `homepage` field in `package.json` before building.
 
 ### Docker Container
 

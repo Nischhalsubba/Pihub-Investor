@@ -15,8 +15,8 @@ export default ChildComponent => {
         shouldNavigateAway() {
             // give false condition
             if (this.props.auth) {
-                const {exp} = jwt.decode(this.props.auth);
-                if ((exp * 1000) > Date.now()) {
+                const decoded = jwt.decode(this.props.auth);
+                if (decoded && decoded.exp && (decoded.exp * 1000) > Date.now()) {
                     this.props.history.push('/');
                 }
             }

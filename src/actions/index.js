@@ -1,25 +1,37 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-const API_HEADER_FROM = 'investor'
+import { isDemo, mockRequest } from '../_api/mock';
 
-let client;
-axios.interceptors.request.use(
+const API_HEADER_FROM = process.env.REACT_APP_API_HEADER_FROM || 'investor';
+
+const jsonClient = axios.create();
+
+jsonClient.interceptors.request.use(
   async config => {
-    //if token in localstorage and has not expired add to all axios call
-    if (localStorage.getItem('token')) {
-      const { exp } = jwt.decode(localStorage.getItem('token'));
-      if (exp * 1000 > Date.now()) {
-        config.headers.Authorization =
-          `Bearer ` + localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded = jwt.decode(token);
+      if (decoded && decoded.exp && decoded.exp * 1000 > Date.now()) {
+        config.headers.Authorization = `Bearer ${token}`;
       }
     }
     config.headers.From = API_HEADER_FROM;
     config.headers['Content-Type'] = 'application/json';
-
     return config;
   },
-  error => {
-    return Promise.reject(error);
-  }
+  error => Promise.reject(error)
 );
-export default (client = axios);
+
+const client = {
+  get: (url, config) =>
+    isDemo() ? mockRequest('get', url, null, config) : jsonClient.get(url, config),
+  post: (url, data, config) =>
+    isDemo() ? mockRequest('post', url, data, config) : jsonClient.post(url, data, config),
+  put: (url, data, config) =>
+    isDemo() ? mockRequest('put', url, data, config) : jsonClient.put(url, data, config),
+  delete: (url, config) =>
+    isDemo() ? mockRequest('delete', url, null, config) : jsonClient.delete(url, config),
+  all: promises => Promise.all(promises)
+};
+
+export default client;

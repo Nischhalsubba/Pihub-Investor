@@ -17,7 +17,7 @@ class Approval extends Component {
         if (!this.state.invalid) {
             return (
                 <Fragment>
-                    <Link to="/signup"> <img className="company-logo company-logo-email" src="/assets/img/logo.png" alt="company logo" /></Link>
+                    <Link to="/signup"> <img className="company-logo company-logo-email" src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} alt="company logo" /></Link>
                     <div className="container-full-height text-centerd d-flex">
                         <div className="content m-auto">
                             <div className="email-staging d-flex justify-content-center justify-content-between position-relative mb-5">
@@ -40,7 +40,7 @@ class Approval extends Component {
                                         <Translate content='label.activation' component="span" className="mt-3" />
                                 </div>
                             </div>
-                            <div className="email-content text-center m-auto"> <img src="/assets/img/icons/admin-approval.png"
+                            <div className="email-content text-center m-auto"> <img src={`${process.env.PUBLIC_URL}/assets/img/icons/admin-approval.png`}
                                 alt="Mail icon" />
                                 {/* <h3>Just one more step, Admin Approval</h3> */}
                                 <Translate content='label.justonemore' component="h3" />
@@ -56,7 +56,7 @@ class Approval extends Component {
             return (
                 <Fragment>
                     <Link to="/signup">
-                        <img className="company-logo company-logo-email" src="/assets/img/logo.png" alt="company logo" /></Link>
+                        <img className="company-logo company-logo-email" src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} alt="company logo" /></Link>
                     <div className="container-full-height text-centerd d-flex">
                         <div className="content m-auto">
                             {/* <div className="email-staging d-flex justify-content-center justify-content-between position-relative mb-5">
@@ -65,7 +65,7 @@ class Approval extends Component {
                               
                              
                             </div> */}
-                            <div className="email-content text-center m-auto"> <img src="/assets/img/icons/admin-approval.png"
+                            <div className="email-content text-center m-auto"> <img src={`${process.env.PUBLIC_URL}/assets/img/icons/admin-approval.png`}
                                 alt="Mail icon" />
                                 {/* <h3>We cant verify your email address.</h3> */}
                                 <Translate content='label.wecant' component="h3" />

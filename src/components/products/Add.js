@@ -519,7 +519,7 @@ class AddProduct extends Component {
 
             {this.props.errMsg ? (
               <li className="d-flex mb-1" >
-                <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
+                <img src={`${process.env.PUBLIC_URL}/assets/img/icons/bx-check-circle.svg`} alt="alt" />
                 <span className="pl-2 green-text">{this.props.errMsg}</span>
               </li>
 

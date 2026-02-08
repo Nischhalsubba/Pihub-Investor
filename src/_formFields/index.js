@@ -191,7 +191,7 @@ export const renderDropzoneField = ({
                     {...getRootProps()}
                     className="file-uploader file-uploader--small dropzone">
                     <div className="dz-message">
-                        <img src="./assets/img/icons/bx-cloud-upload.png" alt="" />
+                        <img src={`${process.env.PUBLIC_URL}/assets/img/icons/bx-cloud-upload.png`} alt="" />
                         <p>
                             {/* <a >Add file </a> */}
                             <Translate

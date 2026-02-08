@@ -17,11 +17,11 @@ class ForgotPassword extends Component {
     if (this.state.submit) {
       return (
         <Fragment>
-          <img className="company-logo company-logo-email" src="./assets/img/logo.png" alt="company logo" />
+          <img className="company-logo company-logo-email" src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} alt="company logo" />
           <div className="container-full-height text-centerd d-flex">
             <div className="content m-auto">
               <div className="email-content text-center w-75 m-auto">
-                <img src="./assets/img/icons/mail.png" alt="Mail icon" />
+                <img src={`${process.env.PUBLIC_URL}/assets/img/icons/Mail.png`} alt="Mail icon" />
                 <h3>We just sent you an email</h3>
                 <p>An Email with an instructions to reset your email has been sent to
                  <b>{this.state.email}</b>
@@ -35,12 +35,12 @@ class ForgotPassword extends Component {
       return (
         <Fragment>
           <Fragment>
-            <img className="company-logo company-logo-email" src="./assets/img/logo.png" alt="company logo" />
+            <img className="company-logo company-logo-email" src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} alt="company logo" />
             <div className="container-full-height text-centerd d-flex">
               <div className="content m-auto">
                 <div className="email-content">
                   <div className="w-75 m-auto text-center">
-                    <img src="./assets/img/icons/activated.png" alt="Mail icon" />
+                    <img src={`${process.env.PUBLIC_URL}/assets/img/icons/activated.png`} alt="Mail icon" />
                     <h3>
                       <Translate content="label.forgotPassword"/>
                     </h3>

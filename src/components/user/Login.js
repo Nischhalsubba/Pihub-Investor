@@ -83,7 +83,7 @@ class Login extends Component {
                             </header>
                             <img
                                 className="signin-banner__thumb"
-                                src="/assets/img/signin-image.png"
+                                src={`${process.env.PUBLIC_URL}/assets/img/signin-image.png`}
                                 alt="Perfect Investment"
                             />
                         </div>

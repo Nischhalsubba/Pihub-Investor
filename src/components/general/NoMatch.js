@@ -12,7 +12,7 @@ const NoMatch = () => {
                                 {/* <span>:( 404 - Page Not Found.</span> */}
                                 <Translate content='pagenot' />
                             </h1>
-                            <img src="/assets/images/logo.png" alt="" className="mb-4" />
+                            <img src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} alt="" className="mb-4" />
                             {/* <h5 className="mb-4">
                                 The page you are looking for might have been removed had its
                                 name changed or is temporarily unavailable.{' '}

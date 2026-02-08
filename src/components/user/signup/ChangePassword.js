@@ -11,7 +11,7 @@ class ChangePassword extends Component {
     return errors.map((err, index) => {
       return (
         <li className="d-flex mb-1" key={index}>
-          <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
+          <img src={`${process.env.PUBLIC_URL}/assets/img/icons/bx-check-circle.svg`} alt="alt" />
           <span className="pl-2 green-text">{err}</span>
         </li>
 
@@ -36,12 +36,12 @@ class ChangePassword extends Component {
     if (!this.state.submit) {
       return (
         <Fragment>
-          <img className="company-logo company-logo-email" src="./assets/img/logo.png" alt="company logo" />
+          <img className="company-logo company-logo-email" src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} alt="company logo" />
           <div className="container-full-height text-centerd d-flex">
             <div className="content m-auto">
               <div className="email-content">
                 <div className="w-75 m-auto text-center">
-                  <img src="./assets/img/icons/activated.png" alt="Mail icon" />
+                  <img src={`${process.env.PUBLIC_URL}/assets/img/icons/activated.png`} alt="Mail icon" />
                   <h3>Change Password ?</h3>
                   <p>Enter an email associated with your account.</p>
                 </div>
@@ -72,12 +72,12 @@ class ChangePassword extends Component {
     } else {
       return (
         <Fragment>
-          <img className="company-logo company-logo-email" src="./assets/img/logo.png" alt="company logo" />
+          <img className="company-logo company-logo-email" src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} alt="company logo" />
           <div className="container-full-height text-centerd d-flex">
             <div className="content m-auto">
               <div className="email-content">
                 <div className="w-75 m-auto text-center">
-                  <img src="./assets/img/icons/activated.png" alt="Mail icon" />
+                  <img src={`${process.env.PUBLIC_URL}/assets/img/icons/activated.png`} alt="Mail icon" />
                   <h3>Reset Your Password</h3>
                   {/* <p>Enter an email associated with your account.</p> */}
                 </div>

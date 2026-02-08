@@ -1,23 +1,37 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import { isDemo, mockRequest } from '../_api/mock';
 
-let clientWithForm;
-axios.interceptors.request.use(
+const API_HEADER_FROM = process.env.REACT_APP_API_HEADER_FROM || 'investor';
+
+const formClient = axios.create();
+
+formClient.interceptors.request.use(
   async config => {
-    //if token in localstorage and has not expired add to all axios call
-    if (localStorage.getItem('token')) {
-      const { exp } = jwt.decode(localStorage.getItem('token'));
-      if (exp * 1000 > Date.now()) {
-        config.headers.Authorization =
-          `Bearer ` + localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded = jwt.decode(token);
+      if (decoded && decoded.exp && decoded.exp * 1000 > Date.now()) {
+        config.headers.Authorization = `Bearer ${token}`;
       }
     }
-    config.headers.From = process.env.REACT_APP_API_HEADER_FROM;
+    config.headers.From = API_HEADER_FROM;
     config.headers['Content-Type'] = 'multipart/form-data';
     return config;
   },
-  error => {
-    return Promise.reject(error);
-  }
+  error => Promise.reject(error)
 );
-export default (clientWithForm = axios);
+
+const clientWithForm = {
+  get: (url, config) =>
+    isDemo() ? mockRequest('get', url, null, config) : formClient.get(url, config),
+  post: (url, data, config) =>
+    isDemo() ? mockRequest('post', url, data, config) : formClient.post(url, data, config),
+  put: (url, data, config) =>
+    isDemo() ? mockRequest('put', url, data, config) : formClient.put(url, data, config),
+  delete: (url, config) =>
+    isDemo() ? mockRequest('delete', url, null, config) : formClient.delete(url, config),
+  all: promises => Promise.all(promises)
+};
+
+export default clientWithForm;
