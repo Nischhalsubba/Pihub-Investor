@@ -4,6 +4,7 @@ import { getNotificationList, markAsRead } from '../../actions/notification';
 import Translate from 'react-translate-component'
 import { motion } from 'framer-motion';
 import AnimatedCard from '../general/AnimatedCard';
+import Subheader from '../general/Subheader';
 
 const listVariants = {
   hidden: { opacity: 0, y: 6 },
@@ -74,12 +75,10 @@ class Notifications extends Component {
     if (this.props.list) {
       return (
         <Fragment>
-          <div className="content-head">
-            <div className="content-head-left">
-              {/* <h1 className="content-head__title">Notifications</h1> */}
-              <Translate content='label.notifications' component="h1" className="content-head__title" />
-            </div>
-          </div>
+          <Subheader
+            heading={<Translate content='label.notifications' />}
+            subtitle={<Translate content="summary.notificationsSubtitle" />}
+          />
           <AnimatedCard className="content-body mt-2">
             <motion.ul className="notification p-0" variants={listVariants} initial="hidden" animate="visible">
               {this.props.list.notificationList
@@ -92,11 +91,10 @@ class Notifications extends Component {
     } else {
       return (
         <Fragment>
-          <div className="content-head">
-            <div className="content-head-left">
-            <Translate content='label.notifications' component="h1" className="content-head__title" />
-            </div>
-          </div>
+          <Subheader
+            heading={<Translate content='label.notifications' />}
+            subtitle={<Translate content="summary.notificationsSubtitle" />}
+          />
           <AnimatedCard className="content-body mt-2">
             <motion.ul className="notification p-0" variants={listVariants} initial="hidden" animate="visible">
               <span><Translate content="placeholder.justASecond"/></span>

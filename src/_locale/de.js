@@ -194,5 +194,24 @@ export default {
             accepted_by_creditor: 'Akzeptiert'
         },
         product: {}
+    },
+    summary: {
+        totalProducts: 'Total products',
+        openProducts: 'Open offers',
+        approvedProducts: 'Approved',
+        requestedProducts: 'Pending requests',
+        productsSubtitle: 'Track offerings, request flow, and investor activity in one workspace.',
+        notificationsSubtitle: 'Stay on top of product activity and credit requests in real time.',
+        totalRequests: 'Total requests',
+        openRequests: 'Open requests',
+        approvedRequests: 'Approved requests',
+        investedRequests: 'Invested requests',
+        creditRequestsSubtitle: 'Review incoming borrower requests and respond without delay.',
+        investedSubtitle: 'Track confirmed investments and portfolio momentum.',
+        totalInvested: 'Invested products',
+        totalAmount: 'Total invested',
+        averageDuration: 'Average duration',
+        filterStatus: 'Status',
+        filterSearch: 'Search'
     }
 };

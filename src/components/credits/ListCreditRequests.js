@@ -9,6 +9,7 @@ import Translate from 'react-translate-component'
 import {dDigit} from '../../_utils/misc';
 import {matchesInvestorStatus} from '../../_status'
 import AnimatedCard from '../general/AnimatedCard';
+import { motion } from 'framer-motion';
 const Translator = require('react-translate-component');
 
 class ListCreditRequests extends Component {
@@ -73,9 +74,58 @@ class ListCreditRequests extends Component {
             const {
                 creditRequests: {data}
             } = this.props.list;
+            const statusCounts = (data || []).reduce(
+                (acc, item) => {
+                    acc.total += 1;
+                    if (item.status) {
+                        acc[item.status] = (acc[item.status] || 0) + 1;
+                    }
+                    return acc;
+                },
+                {
+                    total: 0,
+                    open: 0,
+                    approved: 0,
+                    invested: 0,
+                    requested: 0
+                }
+            );
+            const summaryItems = [
+                { key: 'total', label: <Translate content="summary.totalRequests" />, value: statusCounts.total, tone: 'neutral' },
+                { key: 'open', label: <Translate content="summary.openRequests" />, value: statusCounts.open, tone: 'info' },
+                { key: 'approved', label: <Translate content="summary.approvedRequests" />, value: statusCounts.approved, tone: 'success' },
+                { key: 'invested', label: <Translate content="summary.investedRequests" />, value: statusCounts.invested, tone: 'warning' }
+            ];
             return (
                 <Fragment>
-                    <Subheader heading={<Translate content='label.creditrequests'/>}/>
+                    <Subheader
+                        heading={<Translate content='label.creditrequests'/>}
+                        subtitle={<Translate content="summary.creditRequestsSubtitle" />}
+                    />
+                    <div className="summary-grid">
+                        {summaryItems.map((item, index) => {
+                            const percentage = statusCounts.total
+                                ? Math.round((item.value / statusCounts.total) * 100)
+                                : 0;
+                            return (
+                                <AnimatedCard
+                                    key={item.key}
+                                    className={`summary-card summary-card--${item.tone}`}
+                                    delay={index * 0.04}
+                                >
+                                    <span className="summary-label">{item.label}</span>
+                                    <span className="summary-value">{item.value}</span>
+                                    <div className="summary-meter" aria-hidden="true">
+                                        <motion.span
+                                            initial={{ width: 0 }}
+                                            animate={{ width: `${percentage}%` }}
+                                            transition={{ duration: 0.4, ease: 'easeOut' }}
+                                        />
+                                    </div>
+                                </AnimatedCard>
+                            );
+                        })}
+                    </div>
                     <AnimatedCard className="content-body">
                         <table
                             className="table tablesaw-stack"
