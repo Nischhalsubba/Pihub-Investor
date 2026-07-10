@@ -1,7 +1,10 @@
 {
-  "name": "credittech",
+  "name": "pihub-investor-credittech-frontend",
   "version": "0.1.0",
   "private": true,
+  "description": "A legacy Create React App frontend for a Pihub/CreditTech investor platform with authentication, verification gates, product workflows, credit request views, multilingual support, Redux state, and Docker deployment support.",
+  "author": "Bhusan Thapa, Anuj Shakya, Nischhal Raj Subba",
+  "license": "UNLICENSED",
   "dependencies": {
     "axios": "^0.19.0",
     "counterpart": "^0.18.6",
