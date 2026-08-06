@@ -1,5 +1,86 @@
 # Frontend: CreditTech
 
+<!-- interactive-readme-standard:start -->
+
+> [!NOTE]
+> **Branch-specific documentation:** this section is maintained for [`staging`](https://github.com/Nischhalsubba/Pihub-Investor/tree/staging). It is generated from the files present on this branch and preserves the project-authored README below.
+
+<details open>
+<summary><strong>Interactive repository guide</strong></summary>
+
+## Branch overview
+
+| Item | Value |
+|---|---|
+| Repository | [`Nischhalsubba/Pihub-Investor`](https://github.com/Nischhalsubba/Pihub-Investor) |
+| Branch | [`staging`](https://github.com/Nischhalsubba/Pihub-Investor/tree/staging) |
+| Detected stack | React, Docker, Docker Compose, JavaScript, CSS, HTML |
+| Detected manifests | package.json, Dockerfile, docker-compose.yml |
+| Documentation policy | Every maintained branch must explain purpose, setup, structure, architecture, flows, testing, delivery, security, and ownership. |
+
+## Repository structure
+
+```mermaid
+flowchart TD
+    ROOT["Pihub-Investor / staging"]
+    ROOT --> P0["public/"]
+    ROOT --> P1["src/"]
+    ROOT --> P2[".gitignore"]
+    ROOT --> P3[".gitlab-ci.yml"]
+    ROOT --> P4["docker-compose.yml"]
+    ROOT --> P5["Dockerfile"]
+    ROOT --> P6["Dockerfile.dev"]
+    ROOT --> P7["nginx.conf"]
+    ROOT --> P8["package-lock.json"]
+    ROOT --> P9["package.json"]
+    ROOT --> P10["yarn.lock"]
+```
+
+The diagram is generated from the branch's actual top-level files and directories. Use the branch link above for complete source navigation.
+
+## Website or application structure
+
+```mermaid
+flowchart TD
+    APP["Pihub-Investor"]
+    APP --> R0["public"]
+    R0 --> F0["public/index.html"]
+```
+
+## Application and responsibility flow
+
+```mermaid
+flowchart LR
+    ACTOR["User / contributor"]
+    ACTOR --> A0["Interface: public, src"]
+    A0 --> DELIVERY["Delivery: Dockerfile, docker-compose.yml"]
+```
+
+## Change-to-delivery flow
+
+```mermaid
+flowchart LR
+    CHANGE["Change on staging"]
+    CHECK["Validate: npm run start, npm run build, npm run test"]
+    REVIEW["Review documentation and architecture impact"]
+    RELEASE["Merge, release, or deploy according to this branch"]
+    CHANGE --> CHECK --> REVIEW --> RELEASE
+```
+
+## README requirements for this branch
+
+- Explain what this branch contains and how it differs from the default branch.
+- Keep installation, configuration, usage, testing, deployment, security, support, and license information accurate.
+- Document repository, website or application, API, data, authentication, background-job, and deployment flows when they exist.
+- Prefer Mermaid diagrams and expandable `<details>` sections for visual navigation.
+- Link diagrams and modules to real source paths; never invent missing components.
+- Preserve project-specific documentation and update diagrams whenever architecture or major paths change.
+- Treat secrets, private infrastructure, customer data, and credentials as prohibited README content.
+
+</details>
+
+<!-- interactive-readme-standard:end -->
+
 ### Configuration
 Please create .env* file  if it already doesn't exist. A sample environment file is ``.dist-env``
 
