@@ -1,24 +1,58 @@
-# Pihub Investor / CreditTech Frontend
-
 <!-- interactive-readme-standard:start -->
 
-> [!NOTE]
-> **Branch-specific documentation:** this section is maintained for [`develop`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop). It is generated from the files present on this branch and preserves the project-authored README below.
+<div align="center">
 
-<details open>
-<summary><strong>Interactive repository guide</strong></summary>
+# Pihub-Investor
 
-## Branch overview
+**Branch-aware technical guide for [`develop`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop)**
 
-| Item | Value |
+<p><img alt="branch: develop" src="https://img.shields.io/static/v1?label=&message=branch%3A%20develop&color=5965F2&style=flat-square"> <img alt="React" src="https://img.shields.io/static/v1?label=&message=React&color=24292F&style=flat-square"> <img alt="Docker" src="https://img.shields.io/static/v1?label=&message=Docker&color=24292F&style=flat-square"> <img alt="Docker Compose" src="https://img.shields.io/static/v1?label=&message=Docker%20Compose&color=24292F&style=flat-square"> <img alt="JavaScript" src="https://img.shields.io/static/v1?label=&message=JavaScript&color=24292F&style=flat-square"> <img alt="Sass" src="https://img.shields.io/static/v1?label=&message=Sass&color=24292F&style=flat-square"> <img alt="CSS" src="https://img.shields.io/static/v1?label=&message=CSS&color=24292F&style=flat-square"> <img alt="docs: branch-aware" src="https://img.shields.io/static/v1?label=&message=docs%3A%20branch-aware&color=8250DF&style=flat-square"></p>
+
+<p>
+  <a href="https://github.com/Nischhalsubba/Pihub-Investor/tree/develop"><strong>Browse source</strong></a> ·
+  <a href="https://github.com/Nischhalsubba/Pihub-Investor/issues"><strong>Issues</strong></a> ·
+  <a href="https://github.com/Nischhalsubba/Pihub-Investor/codespaces/new?ref=develop"><strong>Open in Codespaces</strong></a>
+</p>
+
+</div>
+
+> [!IMPORTANT]
+> This guide is generated from the files actually present on `develop`. It links to detected source paths, preserves project-authored notes, and avoids claiming components that were not found.
+
+## At a glance
+
+| Item | Detected value |
 |---|---|
-| Repository | [`Nischhalsubba/Pihub-Investor`](https://github.com/Nischhalsubba/Pihub-Investor) |
-| Branch | [`develop`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop) |
-| Detected stack | React, Docker, Docker Compose, JavaScript, Sass, CSS, HTML |
-| Detected manifests | package.json, Dockerfile, docker-compose.yml |
-| Documentation policy | Every maintained branch must explain purpose, setup, structure, architecture, flows, testing, delivery, security, and ownership. |
+| Purpose | A legacy Create React App frontend for a Pihub/CreditTech investor platform with authentication, verification gates, product workflows, credit request views, multilingual support, Redux state, and Docker deployment support. |
+| Branch role | Default branch |
+| Stack | React, Docker, Docker Compose, JavaScript, Sass, CSS, HTML |
+| Manifests | package.json, Dockerfile, docker-compose.yml |
+| Prerequisites | Node.js, Yarn |
+| Delivery | Dockerfile, docker-compose.yml, GitHub Actions |
+| License | No license file detected |
 
-## Repository structure
+## Branch scope
+
+This is the repository's default branch.
+
+
+
+## Quick start
+
+```bash
+yarn install
+yarn start
+yarn build
+yarn test
+```
+
+### Configuration surface
+
+- No committed environment example file was detected.
+
+> Never commit secrets, private keys, production credentials, customer data, or unredacted infrastructure details.
+
+## Repository map
 
 ```mermaid
 flowchart TD
@@ -40,9 +74,13 @@ flowchart TD
     ROOT --> P14["yarn.lock"]
 ```
 
-The diagram is generated from the branch's actual top-level files and directories. Use the branch link above for complete source navigation.
+| Responsibility | Detected source paths |
+|---|---|
+| Interface | [`public`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop/public), [`src`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop/src) |
+| Documentation | [`docs`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop/docs) |
+| Delivery | [`.github`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop/.github) |
 
-## Website or application structure
+## Website or application map
 
 ```mermaid
 flowchart TD
@@ -51,41 +89,135 @@ flowchart TD
     R0 --> F0["public/index.html"]
 ```
 
-## Application and responsibility flow
+## Architecture and responsibility flow
 
 ```mermaid
 flowchart LR
-    ACTOR["User / contributor"]
-    ACTOR --> A0["Interface: public, src"]
+    USER["User / contributor"]
+    USER --> A0["Interface: public, src"]
     A0 --> A1["Documentation: docs"]
     A1 --> A2["Delivery: .github"]
     A2 --> DELIVERY["Delivery: Dockerfile, docker-compose.yml, GitHub Actions"]
 ```
 
-## Change-to-delivery flow
+<details>
+<summary><strong>Authentication and authorization flow</strong></summary>
 
 ```mermaid
 flowchart LR
-    CHANGE["Change on develop"]
-    CHECK["Validate: npm run start, npm run build, npm run test"]
-    REVIEW["Review documentation and architecture impact"]
-    RELEASE["Merge, release, or deploy according to this branch"]
-    CHANGE --> CHECK --> REVIEW --> RELEASE
+    USER["User"] --> SIGNIN["Sign-in or identity step"]
+    SIGNIN --> VERIFY["Verify credentials / session"]
+    VERIFY --> AUTHORIZE["Resolve permissions"]
+    AUTHORIZE --> PROTECTED["Protected feature or data"]
+    VERIFY -->|failure| RECOVER["Error or recovery path"]
 ```
 
-## README requirements for this branch
+Relevant detected files: [`src/reducers/auth.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/src/reducers/auth.js), [`src/actions/login.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/src/actions/login.js), [`src/components/_auth/RequireInvestorAuth.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/src/components/_auth/RequireInvestorAuth.js), [`src/components/_auth/RequireVerfication.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/src/components/_auth/RequireVerfication.js), [`src/components/_auth/RequireNoAuth.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/src/components/_auth/RequireNoAuth.js), [`src/components/user/Login.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/src/components/user/Login.js).
 
-- Explain what this branch contains and how it differs from the default branch.
-- Keep installation, configuration, usage, testing, deployment, security, support, and license information accurate.
-- Document repository, website or application, API, data, authentication, background-job, and deployment flows when they exist.
-- Prefer Mermaid diagrams and expandable `<details>` sections for visual navigation.
-- Link diagrams and modules to real source paths; never invent missing components.
-- Preserve project-specific documentation and update diagrams whenever architecture or major paths change.
-- Treat secrets, private infrastructure, customer data, and credentials as prohibited README content.
+> The diagram expresses the responsibility sequence only. Confirm exact providers, token formats, roles, and recovery behavior in the linked source.
+
+</details>
+
+## Quality, security, and operations
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+### Quality
+
+- No conventional test directory was detected automatically.
+
+Detected commands:
+- `yarn start`
+- `yarn build`
+- `yarn test`
+
+</td>
+<td width="33%" valign="top">
+
+### Security
+
+- No dedicated security policy or automated dependency configuration was detected.
+
+Review authentication, authorization, input validation, dependency updates, secret handling, and failure recovery before release.
+
+</td>
+<td width="34%" valign="top">
+
+### Observability
+
+- No dedicated observability integration was detected automatically.
+
+Define useful logs, metrics, traces, alerts, and rollback signals for production-facing branches.
+
+</td>
+</tr>
+</table>
+
+## Delivery flow
+
+```mermaid
+flowchart LR
+    CHANGE["Change on develop"] --> CHECK["Tests and quality checks"]
+    CHECK --> REVIEW["Review architecture and documentation impact"]
+    REVIEW --> BUILD["Build or package"]
+    BUILD --> DEPLOY["Deploy or release"]
+    DEPLOY --> VERIFY["Verify health and rollback readiness"]
+```
+
+### Automation detected
+
+- [`.github/workflows/apply-interactive-readme.yml`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/.github/workflows/apply-interactive-readme.yml)
+
+## Contribution flow
+
+```mermaid
+flowchart LR
+    FORK["Create branch"] --> CHANGE["Make focused change"]
+    CHANGE --> TEST["Run relevant checks"]
+    TEST --> DOCS["Update README and diagrams"]
+    DOCS --> PR["Open pull request"]
+    PR --> REVIEW["Review and iterate"]
+    REVIEW --> MERGE["Merge when ready"]
+```
+
+- Keep changes focused and explain architectural consequences.
+- Run the checks relevant to the changed area.
+- Update diagrams whenever routes, modules, data models, authentication, jobs, or delivery paths change.
+- Add screenshots or recordings for visual behavior changes when useful.
+- Use issues for reproducible defects and pull requests for reviewable changes.
+
+## Ownership and support
+
+| Topic | Source |
+|---|---|
+| Repository | [`Nischhalsubba/Pihub-Investor`](https://github.com/Nischhalsubba/Pihub-Investor) |
+| Branch | [`develop`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop) |
+| Ownership | No CODEOWNERS file detected |
+| Contributing | Use the contribution flow above |
+| Support | [Open or review issues](https://github.com/Nischhalsubba/Pihub-Investor/issues) |
+| License | No license file detected |
+
+<details>
+<summary><strong>Documentation maintenance checklist</strong></summary>
+
+- [ ] Purpose and branch scope are accurate.
+- [ ] Setup and configuration commands still work.
+- [ ] Repository, application, API, data, authentication, job, and deployment diagrams match the code.
+- [ ] Tests, security controls, observability, and rollback behavior are documented.
+- [ ] Links point to real files on this branch.
+- [ ] No secrets or private operational details are exposed.
 
 </details>
 
 <!-- interactive-readme-standard:end -->
+
+<!-- project-authored-notes:start -->
+<details>
+<summary><strong>Project-authored notes preserved from this branch</strong></summary>
+
+# Pihub Investor / CreditTech Frontend
 
 > A React-based investor and credit-product frontend for a CreditTech / Pihub-style platform, using Create React App, Redux, protected routes, multilingual support, product workflows, credit-request views, profile management, and Docker deployment options.
 
@@ -609,3 +741,6 @@ Important considerations:
 ## Maintainer Note
 
 This repository is currently maintained under **Nischhalsubba/Pihub-Investor** and represents the investor-facing frontend direction for the CreditTech/Pihub product context.
+
+</details>
+<!-- project-authored-notes:end -->
