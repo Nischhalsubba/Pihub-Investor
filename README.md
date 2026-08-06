@@ -1,5 +1,92 @@
 # Pihub Investor / CreditTech Frontend
 
+<!-- interactive-readme-standard:start -->
+
+> [!NOTE]
+> **Branch-specific documentation:** this section is maintained for [`develop`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop). It is generated from the files present on this branch and preserves the project-authored README below.
+
+<details open>
+<summary><strong>Interactive repository guide</strong></summary>
+
+## Branch overview
+
+| Item | Value |
+|---|---|
+| Repository | [`Nischhalsubba/Pihub-Investor`](https://github.com/Nischhalsubba/Pihub-Investor) |
+| Branch | [`develop`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop) |
+| Detected stack | React, Docker, Docker Compose, JavaScript, Sass, CSS, HTML |
+| Detected manifests | package.json, Dockerfile, docker-compose.yml |
+| Documentation policy | Every maintained branch must explain purpose, setup, structure, architecture, flows, testing, delivery, security, and ownership. |
+
+## Repository structure
+
+```mermaid
+flowchart TD
+    ROOT["Pihub-Investor / develop"]
+    ROOT --> P0[".github/"]
+    ROOT --> P1["docs/"]
+    ROOT --> P2["public/"]
+    ROOT --> P3["src/"]
+    ROOT --> P4[".dist"]
+    ROOT --> P5[".dist-env"]
+    ROOT --> P6[".gitignore"]
+    ROOT --> P7[".gitlab-ci.yml"]
+    ROOT --> P8["docker-compose.yml"]
+    ROOT --> P9["Dockerfile"]
+    ROOT --> P10["Dockerfile.dev"]
+    ROOT --> P11["nginx.conf"]
+    ROOT --> P12["package-lock.json"]
+    ROOT --> P13["package.json"]
+    ROOT --> P14["yarn.lock"]
+```
+
+The diagram is generated from the branch's actual top-level files and directories. Use the branch link above for complete source navigation.
+
+## Website or application structure
+
+```mermaid
+flowchart TD
+    APP["Pihub-Investor"]
+    APP --> R0["public"]
+    R0 --> F0["public/index.html"]
+```
+
+## Application and responsibility flow
+
+```mermaid
+flowchart LR
+    ACTOR["User / contributor"]
+    ACTOR --> A0["Interface: public, src"]
+    A0 --> A1["Documentation: docs"]
+    A1 --> A2["Delivery: .github"]
+    A2 --> DELIVERY["Delivery: Dockerfile, docker-compose.yml, GitHub Actions"]
+```
+
+## Change-to-delivery flow
+
+```mermaid
+flowchart LR
+    CHANGE["Change on develop"]
+    CHECK["Validate: npm run start, npm run build, npm run test"]
+    REVIEW["Review documentation and architecture impact"]
+    RELEASE["Merge, release, or deploy according to this branch"]
+    CHANGE --> CHECK --> REVIEW --> RELEASE
+```
+
+## README requirements for this branch
+
+- Explain what this branch contains and how it differs from the default branch.
+- Keep installation, configuration, usage, testing, deployment, security, support, and license information accurate.
+- Document repository, website or application, API, data, authentication, background-job, and deployment flows when they exist.
+- Prefer Mermaid diagrams and expandable `<details>` sections for visual navigation.
+- Link diagrams and modules to real source paths; never invent missing components.
+- Preserve project-specific documentation and update diagrams whenever architecture or major paths change.
+- Treat secrets, private infrastructure, customer data, and credentials as prohibited README content.
+
+</details>
+
+<!-- interactive-readme-standard:end -->
+
 > A React-based investor and credit-product frontend for a CreditTech / Pihub-style platform, using Create React App, Redux, protected routes, multilingual support, product workflows, credit-request views, profile management, and Docker deployment options.
 
 [![React](https://img.shields.io/badge/React-16.8-61DAFB?style=for-the-badge&logo=react&logoColor=111111)](#tech-stack)
