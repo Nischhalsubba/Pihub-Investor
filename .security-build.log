@@ -6,7 +6,7 @@ Creating an optimized production build...
 Browserslist: caniuse-lite is outdated. Please run next command `yarn upgrade`
 Failed to compile.
 
-./src/actions/login.js
+./src/actions/formDataRequest.js
 Cannot find module: 'jsonwebtoken'. Make sure this package is installed.
 
 You can install this package by running: yarn add jsonwebtoken.
@@ -21,4 +21,4 @@ npm ERR! Failed at the pihub-investor-credittech-frontend@0.1.0 build script.
 npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
 
 npm ERR! A complete log of this run can be found in:
-npm ERR!     /home/runner/.npm/_logs/2026-08-07T04_00_21_073Z-debug.log
+npm ERR!     /home/runner/.npm/_logs/2026-08-07T04_02_43_666Z-debug.log
