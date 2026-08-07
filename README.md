@@ -4,27 +4,27 @@
 
 # Pihub-Investor
 
-**Branch-aware technical guide for [`develop`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop)**
+**Branch-aware technical guide for [`agent/security-legacy-deps`](https://github.com/Nischhalsubba/Pihub-Investor/tree/agent/security-legacy-deps)**
 
-<p><img alt="branch: develop" src="https://img.shields.io/static/v1?label=&message=branch%3A%20develop&color=5965F2&style=flat-square"> <img alt="React" src="https://img.shields.io/static/v1?label=&message=React&color=24292F&style=flat-square"> <img alt="Docker" src="https://img.shields.io/static/v1?label=&message=Docker&color=24292F&style=flat-square"> <img alt="Docker Compose" src="https://img.shields.io/static/v1?label=&message=Docker%20Compose&color=24292F&style=flat-square"> <img alt="JavaScript" src="https://img.shields.io/static/v1?label=&message=JavaScript&color=24292F&style=flat-square"> <img alt="Sass" src="https://img.shields.io/static/v1?label=&message=Sass&color=24292F&style=flat-square"> <img alt="CSS" src="https://img.shields.io/static/v1?label=&message=CSS&color=24292F&style=flat-square"> <img alt="docs: branch-aware" src="https://img.shields.io/static/v1?label=&message=docs%3A%20branch-aware&color=8250DF&style=flat-square"></p>
+<p><img alt="branch: agent/security-legacy-deps" src="https://img.shields.io/static/v1?label=&message=branch%3A%20agent%2Fsecurity-legacy-deps&color=5965F2&style=flat-square"> <img alt="React" src="https://img.shields.io/static/v1?label=&message=React&color=24292F&style=flat-square"> <img alt="Docker" src="https://img.shields.io/static/v1?label=&message=Docker&color=24292F&style=flat-square"> <img alt="Docker Compose" src="https://img.shields.io/static/v1?label=&message=Docker%20Compose&color=24292F&style=flat-square"> <img alt="JavaScript" src="https://img.shields.io/static/v1?label=&message=JavaScript&color=24292F&style=flat-square"> <img alt="Sass" src="https://img.shields.io/static/v1?label=&message=Sass&color=24292F&style=flat-square"> <img alt="CSS" src="https://img.shields.io/static/v1?label=&message=CSS&color=24292F&style=flat-square"> <img alt="docs: branch-aware" src="https://img.shields.io/static/v1?label=&message=docs%3A%20branch-aware&color=8250DF&style=flat-square"></p>
 
 <p>
-  <a href="https://github.com/Nischhalsubba/Pihub-Investor/tree/develop"><strong>Browse source</strong></a> ·
+  <a href="https://github.com/Nischhalsubba/Pihub-Investor/tree/agent/security-legacy-deps"><strong>Browse source</strong></a> ·
   <a href="https://github.com/Nischhalsubba/Pihub-Investor/issues"><strong>Issues</strong></a> ·
-  <a href="https://github.com/Nischhalsubba/Pihub-Investor/codespaces/new?ref=develop"><strong>Open in Codespaces</strong></a>
+  <a href="https://github.com/Nischhalsubba/Pihub-Investor/codespaces/new?ref=agent%2Fsecurity-legacy-deps"><strong>Open in Codespaces</strong></a>
 </p>
 
 </div>
 
 > [!IMPORTANT]
-> This guide is generated from the files actually present on `develop`. It links to detected source paths, preserves project-authored notes, and avoids claiming components that were not found.
+> This guide is generated from the files actually present on `agent/security-legacy-deps`. It links to detected source paths, preserves project-authored notes, and avoids claiming components that were not found.
 
 ## At a glance
 
 | Item | Detected value |
 |---|---|
 | Purpose | A legacy Create React App frontend for a Pihub/CreditTech investor platform with authentication, verification gates, product workflows, credit request views, multilingual support, Redux state, and Docker deployment support. |
-| Branch role | Default branch |
+| Branch role | Compared with `develop` |
 | Stack | React, Docker, Docker Compose, JavaScript, Sass, CSS, HTML |
 | Manifests | package.json, Dockerfile, docker-compose.yml |
 | Prerequisites | Node.js, Yarn |
@@ -33,7 +33,7 @@
 
 ## Branch scope
 
-This is the repository's default branch.
+No branch-specific file differences were detected against the default branch at generation time.
 
 
 
@@ -56,7 +56,7 @@ yarn test
 
 ```mermaid
 flowchart TD
-    ROOT["Pihub-Investor / develop"]
+    ROOT["Pihub-Investor / agent/security-legacy-deps"]
     ROOT --> P0[".github/"]
     ROOT --> P1["docs/"]
     ROOT --> P2["public/"]
@@ -76,9 +76,9 @@ flowchart TD
 
 | Responsibility | Detected source paths |
 |---|---|
-| Interface | [`public`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop/public), [`src`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop/src) |
-| Documentation | [`docs`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop/docs) |
-| Delivery | [`.github`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop/.github) |
+| Interface | [`public`](https://github.com/Nischhalsubba/Pihub-Investor/tree/agent/security-legacy-deps/public), [`src`](https://github.com/Nischhalsubba/Pihub-Investor/tree/agent/security-legacy-deps/src) |
+| Documentation | [`docs`](https://github.com/Nischhalsubba/Pihub-Investor/tree/agent/security-legacy-deps/docs) |
+| Delivery | [`.github`](https://github.com/Nischhalsubba/Pihub-Investor/tree/agent/security-legacy-deps/.github) |
 
 ## Website or application map
 
@@ -112,7 +112,7 @@ flowchart LR
     VERIFY -->|failure| RECOVER["Error or recovery path"]
 ```
 
-Relevant detected files: [`src/reducers/auth.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/src/reducers/auth.js), [`src/actions/login.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/src/actions/login.js), [`src/components/_auth/RequireInvestorAuth.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/src/components/_auth/RequireInvestorAuth.js), [`src/components/_auth/RequireVerfication.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/src/components/_auth/RequireVerfication.js), [`src/components/_auth/RequireNoAuth.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/src/components/_auth/RequireNoAuth.js), [`src/components/user/Login.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/src/components/user/Login.js).
+Relevant detected files: [`src/reducers/auth.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/agent/security-legacy-deps/src/reducers/auth.js), [`src/actions/login.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/agent/security-legacy-deps/src/actions/login.js), [`src/components/_auth/RequireInvestorAuth.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/agent/security-legacy-deps/src/components/_auth/RequireInvestorAuth.js), [`src/components/_auth/RequireVerfication.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/agent/security-legacy-deps/src/components/_auth/RequireVerfication.js), [`src/components/_auth/RequireNoAuth.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/agent/security-legacy-deps/src/components/_auth/RequireNoAuth.js), [`src/components/user/Login.js`](https://github.com/Nischhalsubba/Pihub-Investor/blob/agent/security-legacy-deps/src/components/user/Login.js).
 
 > The diagram expresses the responsibility sequence only. Confirm exact providers, token formats, roles, and recovery behavior in the linked source.
 
@@ -159,7 +159,7 @@ Define useful logs, metrics, traces, alerts, and rollback signals for production
 
 ```mermaid
 flowchart LR
-    CHANGE["Change on develop"] --> CHECK["Tests and quality checks"]
+    CHANGE["Change on agent/security-legacy-deps"] --> CHECK["Tests and quality checks"]
     CHECK --> REVIEW["Review architecture and documentation impact"]
     REVIEW --> BUILD["Build or package"]
     BUILD --> DEPLOY["Deploy or release"]
@@ -168,7 +168,7 @@ flowchart LR
 
 ### Automation detected
 
-- [`.github/workflows/apply-interactive-readme.yml`](https://github.com/Nischhalsubba/Pihub-Investor/blob/develop/.github/workflows/apply-interactive-readme.yml)
+- [`.github/workflows/apply-interactive-readme.yml`](https://github.com/Nischhalsubba/Pihub-Investor/blob/agent/security-legacy-deps/.github/workflows/apply-interactive-readme.yml)
 
 ## Contribution flow
 
@@ -193,7 +193,7 @@ flowchart LR
 | Topic | Source |
 |---|---|
 | Repository | [`Nischhalsubba/Pihub-Investor`](https://github.com/Nischhalsubba/Pihub-Investor) |
-| Branch | [`develop`](https://github.com/Nischhalsubba/Pihub-Investor/tree/develop) |
+| Branch | [`agent/security-legacy-deps`](https://github.com/Nischhalsubba/Pihub-Investor/tree/agent/security-legacy-deps) |
 | Ownership | No CODEOWNERS file detected |
 | Contributing | Use the contribution flow above |
 | Support | [Open or review issues](https://github.com/Nischhalsubba/Pihub-Investor/issues) |
