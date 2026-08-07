@@ -1,16 +1,41 @@
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
 const API_HEADER_FROM = 'investor'
+
+function decodeJwtPayload(token) {
+  try {
+    const payload = token.split('.')[1];
+    if (!payload) {
+      return null;
+    }
+
+    const normalized = payload.replace(/-/g, '+').replace(/_/g, '/');
+    const padded = normalized + '='.repeat((4 - (normalized.length % 4)) % 4);
+    const json = decodeURIComponent(
+      atob(padded)
+        .split('')
+        .map(character =>
+          `%${('00' + character.charCodeAt(0).toString(16)).slice(-2)}`
+        )
+        .join('')
+    );
+
+    return JSON.parse(json);
+  } catch (error) {
+    return null;
+  }
+}
 
 let client;
 axios.interceptors.request.use(
   async config => {
-    //if token in localstorage and has not expired add to all axios call
-    if (localStorage.getItem('token')) {
-      const { exp } = jwt.decode(localStorage.getItem('token'));
-      if (exp * 1000 > Date.now()) {
-        config.headers.Authorization =
-          `Bearer ` + localStorage.getItem('token');
+    // If a token exists and its decoded expiry is still valid, add it to API calls.
+    // This intentionally decodes the JWT payload without verifying its signature,
+    // matching the previous jsonwebtoken.decode() behavior in the browser.
+    const token = localStorage.getItem('token');
+    if (token) {
+      const payload = decodeJwtPayload(token);
+      if (payload && payload.exp && payload.exp * 1000 > Date.now()) {
+        config.headers.Authorization = `Bearer ${token}`;
       }
     }
     config.headers.From = API_HEADER_FROM;
