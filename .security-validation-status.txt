@@ -2,4 +2,4 @@ npm6=success
 lock=success
 install=success
 tests=success
-build=failure
+build=success
