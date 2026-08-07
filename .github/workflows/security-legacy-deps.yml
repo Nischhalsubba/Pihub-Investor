@@ -1,0 +1,54 @@
+name: Legacy dependency security validation
+
+on:
+  push:
+    branches:
+      - agent/security-legacy-deps
+    paths:
+      - package.json
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-lock:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/security-legacy-deps
+          fetch-depth: 0
+
+      - name: Set up Node.js 16
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+
+      - name: Use npm 6 for lockfile v1 compatibility
+        run: npm install --global npm@6.14.18
+
+      - name: Regenerate lockfile
+        run: npm install --package-lock-only --ignore-scripts
+
+      - name: Install from regenerated lockfile
+        run: npm ci
+
+      - name: Run tests
+        env:
+          CI: true
+        run: npm test -- --watchAll=false --passWithNoTests
+
+      - name: Build
+        run: npm run build
+
+      - name: Commit validated lockfile
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Regenerate lockfile for legacy security updates"
+          git push origin HEAD:agent/security-legacy-deps
