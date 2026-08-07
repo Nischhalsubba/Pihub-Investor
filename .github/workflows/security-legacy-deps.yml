@@ -7,8 +7,7 @@ on:
     paths:
       - package.json
       - src/actions/index.js
-      - src/components/_auth/RequireInvestorAuth.js
-      - src/components/_auth/RequireNoAuth.js
+      - src/components/_auth/*.js
       - .github/workflows/security-legacy-deps.yml
 
 permissions:
