@@ -1,6 +1,29 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import jwt from "jsonwebtoken";
+
+function decodeJwtPayload(token) {
+    try {
+        const payload = token.split('.')[1];
+        if (!payload) {
+            return null;
+        }
+
+        const normalized = payload.replace(/-/g, '+').replace(/_/g, '/');
+        const padded = normalized + '='.repeat((4 - (normalized.length % 4)) % 4);
+        const json = decodeURIComponent(
+            atob(padded)
+                .split('')
+                .map(character =>
+                    `%${('00' + character.charCodeAt(0).toString(16)).slice(-2)}`
+                )
+                .join('')
+        );
+
+        return JSON.parse(json);
+    } catch (error) {
+        return null;
+    }
+}
 
 export default ChildComponent => {
     class ComposedComponent extends Component {
@@ -15,8 +38,8 @@ export default ChildComponent => {
         shouldNavigateAway() {
             // give false condition
             if (this.props.auth) {
-                const {exp} = jwt.decode(this.props.auth);
-                if ((exp * 1000) > Date.now()) {
+                const payload = decodeJwtPayload(this.props.auth);
+                if (payload && payload.exp && (payload.exp * 1000) > Date.now()) {
                     this.props.history.push('/');
                 }
             }
