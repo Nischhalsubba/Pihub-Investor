@@ -57,6 +57,8 @@ jobs:
         id: build
         if: steps.tests.outcome == 'success'
         continue-on-error: true
+        env:
+          CI: false
         run: |
           set -o pipefail
           npm run build 2>&1 | tee .security-build.log
