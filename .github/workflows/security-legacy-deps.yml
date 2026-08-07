@@ -6,7 +6,7 @@ on:
       - agent/security-legacy-deps
     paths:
       - package.json
-      - src/actions/index.js
+      - src/actions/*.js
       - src/components/_auth/*.js
       - .github/workflows/security-legacy-deps.yml
 
