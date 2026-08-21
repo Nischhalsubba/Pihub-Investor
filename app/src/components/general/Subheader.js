@@ -1,19 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default props => (
+const Subheader = ({ heading, kicker, description, buttonLabel, link }) => (
   <div className="content-head" data-motion="page-head">
     <div className="content-head-left">
-      <div className="content-head-kicker">Opportunity intelligence</div>
-      <h1 className="content-head__title">{props.heading}</h1>
-      <p className="content-head-copy">
-        Review credit opportunities with a clearer view of range, duration, sector exposure and current status.
-      </p>
+      {kicker ? <div className="content-head-kicker">{kicker}</div> : null}
+      <h1 className="content-head__title">{heading}</h1>
+      {description ? <p className="content-head-copy">{description}</p> : null}
     </div>
-    {props.buttonLabel ? (
+    {buttonLabel && link ? (
       <div className="content-head-right">
-        <Link className="btn btn-primary" to={props.link}>{props.buttonLabel}</Link>
+        <Link className="btn btn-primary" to={link}>{buttonLabel}</Link>
       </div>
     ) : null}
   </div>
 );
+
+export default Subheader;
