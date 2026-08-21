@@ -1,10 +1,13 @@
 const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-const reducedMotion = reducedMotionQuery.matches;
 const lowPower = Boolean(navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
 
 let activePress = null;
 let threeSession = null;
+let threeCanvas = null;
+let threeStarting = false;
 let syncFrame = null;
+
+const shouldReduceMotion = () => reducedMotionQuery.matches;
 
 function getGsap() {
   return window.gsap || null;
@@ -19,7 +22,7 @@ function wasAnimated(element) {
 }
 
 function animateAuthIfNeeded() {
-  if (reducedMotion) return;
+  if (shouldReduceMotion()) return;
   const gsap = getGsap();
   if (!gsap) return;
 
@@ -53,7 +56,7 @@ function animateAuthIfNeeded() {
 }
 
 function animateRoute() {
-  if (reducedMotion) return;
+  if (shouldReduceMotion()) return;
   const gsap = getGsap();
   if (!gsap) return;
 
@@ -69,7 +72,7 @@ function animateRoute() {
     );
   }
 
-  const metricCards = Array.from(document.querySelectorAll('[data-motion="metric-grid"] .metric-card')).slice(0, 4);
+  const metricCards = Array.from(document.querySelectorAll('[data-motion="metric-grid"] .metric-card,[data-motion="metric-grid"] > article')).slice(0, 6);
   if (metricCards.length) {
     gsap.fromTo(
       metricCards,
@@ -78,12 +81,12 @@ function animateRoute() {
     );
   }
 
-  const tableShell = document.querySelector('[data-motion="table-shell"]');
-  if (tableShell) {
+  const surfaces = Array.from(document.querySelectorAll('[data-motion="table-shell"]')).slice(0, 4);
+  if (surfaces.length) {
     gsap.fromTo(
-      tableShell,
+      surfaces,
       { y: 10, autoAlpha: 0 },
-      { y: 0, autoAlpha: 1, duration: .32, delay: .07, clearProps: 'transform,opacity,visibility' }
+      { y: 0, autoAlpha: 1, duration: .32, stagger: .035, delay: .07, clearProps: 'transform,opacity,visibility' }
     );
   }
 
@@ -103,11 +106,10 @@ function animateRoute() {
 }
 
 function initPressFeedback() {
-  if (reducedMotion) return;
-
   document.addEventListener('pointerdown', event => {
+    if (shouldReduceMotion()) return;
     const gsap = getGsap();
-    if (!gsap) return;
+    if (!gsap || !event.target || !event.target.closest) return;
     const target = event.target.closest('.btn,.header-notification,.dropdown-toggle,.status-segment,.sidebar-action');
     if (!target) return;
     activePress = target;
@@ -117,7 +119,7 @@ function initPressFeedback() {
   const release = () => {
     if (!activePress) return;
     const gsap = getGsap();
-    if (gsap) {
+    if (gsap && !shouldReduceMotion()) {
       gsap.to(activePress, {
         scale: 1,
         duration: .16,
@@ -125,6 +127,8 @@ function initPressFeedback() {
         overwrite: 'auto',
         clearProps: 'transform'
       });
+    } else {
+      activePress.style.transform = '';
     }
     activePress = null;
   };
@@ -135,11 +139,11 @@ function initPressFeedback() {
 }
 
 async function createCapitalField(canvas) {
-  if (!canvas || reducedMotion || lowPower) return null;
+  if (!canvas || shouldReduceMotion() || lowPower) return null;
 
   try {
     const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js');
-    if (!document.documentElement.contains(canvas)) return null;
+    if (!document.documentElement.contains(canvas) || shouldReduceMotion()) return null;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(42, 1, .1, 50);
@@ -272,8 +276,8 @@ async function createCapitalField(canvas) {
 
     const renderFrame = () => {
       if (!running) return;
-      const elapsed = clock.getElapsedTime();
       const delta = Math.min(clock.getDelta(), .05);
+      const elapsed = clock.elapsedTime;
       surfaceMaterial.uniforms.uTime.value = elapsed;
       root.rotation.y += (pointerX - root.rotation.y) * Math.min(1, delta * 2.5);
       root.rotation.x += ((-.08 - pointerY) - root.rotation.x) * Math.min(1, delta * 2.5);
@@ -284,7 +288,7 @@ async function createCapitalField(canvas) {
     };
 
     const start = () => {
-      if (running) return;
+      if (running || shouldReduceMotion()) return;
       running = true;
       clock.start();
       frame = window.requestAnimationFrame(renderFrame);
@@ -292,12 +296,13 @@ async function createCapitalField(canvas) {
 
     const stop = () => {
       running = false;
+      clock.stop();
       if (frame) window.cancelAnimationFrame(frame);
       frame = null;
     };
 
     const onVisibility = () => {
-      if (document.hidden) stop();
+      if (document.hidden || shouldReduceMotion()) stop();
       else if (document.documentElement.contains(canvas)) start();
     };
     document.addEventListener('visibilitychange', onVisibility);
@@ -324,19 +329,35 @@ async function createCapitalField(canvas) {
   }
 }
 
+function teardownCapitalField() {
+  if (threeSession) threeSession();
+  threeSession = null;
+  threeCanvas = null;
+  threeStarting = false;
+}
+
 async function syncCapitalField() {
   const canvas = document.getElementById('capital-field');
 
-  if (!canvas) {
-    if (threeSession) {
-      threeSession();
-      threeSession = null;
-    }
+  if (!canvas || shouldReduceMotion() || lowPower) {
+    if (threeSession || threeCanvas) teardownCapitalField();
     return;
   }
 
-  if (threeSession || reducedMotion || lowPower) return;
-  threeSession = await createCapitalField(canvas);
+  if (threeSession && threeCanvas === canvas) return;
+  if (threeSession && threeCanvas !== canvas) teardownCapitalField();
+  if (threeStarting) return;
+
+  threeStarting = true;
+  threeCanvas = canvas;
+  const cleanup = await createCapitalField(canvas);
+  threeStarting = false;
+
+  if (canvas !== threeCanvas || !document.documentElement.contains(canvas)) {
+    if (cleanup) cleanup();
+    return;
+  }
+  threeSession = cleanup;
 }
 
 function syncExperience() {
@@ -351,21 +372,29 @@ function syncExperience() {
 function init() {
   initPressFeedback();
   window.addEventListener('pihub:route-ready', animateRoute);
+  window.addEventListener('load', animateRoute, { once: true });
 
   const root = document.getElementById('root');
+  let observer = null;
   if (root && 'MutationObserver' in window) {
-    const observer = new MutationObserver(syncExperience);
+    observer = new MutationObserver(syncExperience);
     observer.observe(root, { childList: true, subtree: true });
-    window.addEventListener('pagehide', () => observer.disconnect(), { once: true });
   }
+
+  const onMotionPreferenceChange = () => {
+    if (shouldReduceMotion()) teardownCapitalField();
+    else syncExperience();
+  };
+  if (reducedMotionQuery.addEventListener) reducedMotionQuery.addEventListener('change', onMotionPreferenceChange);
 
   syncExperience();
   window.requestAnimationFrame(animateRoute);
 
   window.addEventListener('pagehide', () => {
-    if (threeSession) threeSession();
-    threeSession = null;
+    teardownCapitalField();
+    if (observer) observer.disconnect();
     window.removeEventListener('pihub:route-ready', animateRoute);
+    if (reducedMotionQuery.removeEventListener) reducedMotionQuery.removeEventListener('change', onMotionPreferenceChange);
   }, { once: true });
 }
 
