@@ -1,87 +1,62 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { confirmEmail } from '../../../actions/confirmEmail';
 import { withRouter, Link } from 'react-router-dom';
-import Translate from 'react-translate-component'
+import Translate from 'react-translate-component';
+import AuthShell from '../AuthShell';
+import SignupProgress from './SignupProgress';
+
+const Translator = require('react-translate-component');
+
 class Approval extends Component {
-    state = { invalid: false }
-    componentDidMount() {
-        document.title = "Approval"
-        const { hash } = this.props.match.params;
-        this.props.confirmEmail(hash, () => {
-            this.props.history.push('/signup/activated')
-        }, () => this.setState({ invalid: true }));
-    }
+  state = { invalid: false };
 
-    render() {
-        if (!this.state.invalid) {
-            return (
-                <Fragment>
-                    <Link to="/signup"> <img className="company-logo company-logo-email" src="/assets/img/logo.png" alt="company logo" /></Link>
-                    <div className="container-full-height text-centerd d-flex">
-                        <div className="content m-auto">
-                            <div className="email-staging d-flex justify-content-center justify-content-between position-relative mb-5">
-                                <span className="line"></span>
-                                <div className="indicator-container d-flex flex-column align-items-center">
-                                    <div className="indicator d-flex justify-content-center align-items-center connect"><span>1</span></div>
-                                    {/* <span className="mt-3">Confirm Email</span> */}
-                                    <Translate content='label.confirmemail' component="span" className="mt-3" />
-                                    <hr />
-                                </div>
-                                <div className="indicator-container d-flex flex-column align-items-center">
-                                    <div className="indicator active d-flex justify-content-center align-items-center"><span>2</span></div>
-                                    {/* <span className="mt-3">Admin Approval</span> */}
-                                    <Translate content='label.adminapproval' component="span" className="mt-3" />
-                                </div>
-                                <div className="indicator-container d-flex flex-column align-items-center">
-                                    <div className="indicator d-flex justify-content-center align-items-center"><span>3</span></div>
-                                    {/* <span
-                                        className="mt-3">Activation </span> */}
-                                        <Translate content='label.activation' component="span" className="mt-3" />
-                                </div>
-                            </div>
-                            <div className="email-content text-center m-auto"> <img src="/assets/img/icons/admin-approval.png"
-                                alt="Mail icon" />
-                                {/* <h3>Just one more step, Admin Approval</h3> */}
-                                <Translate content='label.justonemore' component="h3" />
-                                {/* <p className="w-75 m-auto">Our admin needs to confirm the account first. We will send you an Email when its
-                                done</p> */}
-                                <Translate content='label.ouradminneed' component="p" className="w-75 m-auto" />
-                            </div>
-                        </div>
-                    </div>
-                </Fragment>
-            );
-        } else {
-            return (
-                <Fragment>
-                    <Link to="/signup">
-                        <img className="company-logo company-logo-email" src="/assets/img/logo.png" alt="company logo" /></Link>
-                    <div className="container-full-height text-centerd d-flex">
-                        <div className="content m-auto">
-                            {/* <div className="email-staging d-flex justify-content-center justify-content-between position-relative mb-5">
-                                <span className="line"></span>
-                                
-                              
-                             
-                            </div> */}
-                            <div className="email-content text-center m-auto"> <img src="/assets/img/icons/admin-approval.png"
-                                alt="Mail icon" />
-                                {/* <h3>We cant verify your email address.</h3> */}
-                                <Translate content='label.wecant' component="h3" />
-                                {/* <p className="w-75 m-auto">The confirmation link has expired. </p><p>You can ask for a new validation link here.</p> */}
-                                <Translate content='label.theconfirm' component="p" className="w-75 m-auto" />
-                                <Translate content='label.youcanask' component="p" />
-                            </div>
-                        </div>
-                    </div>
-                </Fragment>
-            );
+  componentDidMount() {
+    document.title = 'Approval';
+    const { hash } = this.props.match.params;
+    this.props.confirmEmail(
+      hash,
+      () => this.props.history.push('/signup/activated'),
+      () => this.setState({ invalid: true })
+    );
+  }
 
-        }
+  render() {
+    const isGerman = Translator.getLocale() === 'de';
 
-    }
+    return (
+      <AuthShell
+        eyebrow={isGerman ? 'Registrierung' : 'Account setup'}
+        title={this.state.invalid ? (isGerman ? 'Bestätigung fehlgeschlagen' : 'Confirmation failed') : (isGerman ? 'E-Mail bestätigt' : 'Email confirmed')}
+        description={this.state.invalid ? <Translate content="label.theconfirm" /> : <Translate content="label.ouradminneed" />}
+        visualEyebrow={isGerman ? 'Schritt 2 von 3' : 'Step 2 of 3'}
+        visualTitle={isGerman ? 'Nach der E-Mail-Bestätigung folgt die Kontofreigabe.' : 'After email confirmation, account approval is next.'}
+        visualDescription={isGerman ? 'Der Status wird aktualisiert, sobald die Freigabe abgeschlossen ist.' : 'The account status updates when approval is complete.'}
+        proofItems={[{ label: isGerman ? 'E-Mail' : 'Email' }, { label: isGerman ? 'Freigabe' : 'Approval' }, { label: isGerman ? 'Aktivierung' : 'Activation' }]}
+      >
+        <SignupProgress stage={2} />
+        {this.state.invalid ? (
+          <div className="auth-status-card auth-status-card-error" role="alert">
+            <span className="auth-status-icon" aria-hidden="true"><i className="bx bx-x" /></span>
+            <div>
+              <Translate content="label.wecant" component="h2" />
+              <p><Translate content="label.theconfirm" /></p>
+              <p><Translate content="label.youcanask" /></p>
+              <Link className="btn btn-secondary" to="/signup">{isGerman ? 'Registrierung öffnen' : 'Open signup'}</Link>
+            </div>
+          </div>
+        ) : (
+          <div className="auth-status-card" role="status" aria-live="polite">
+            <span className="auth-status-icon auth-status-icon-spinner" aria-hidden="true"><i className="bx bx-loader-alt" /></span>
+            <div>
+              <Translate content="label.justonemore" component="h2" />
+              <p><Translate content="label.ouradminneed" /></p>
+            </div>
+          </div>
+        )}
+      </AuthShell>
+    );
+  }
 }
-
 
 export default connect(null, { confirmEmail })(withRouter(Approval));
