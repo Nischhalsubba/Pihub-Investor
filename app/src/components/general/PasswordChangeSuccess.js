@@ -1,13 +1,24 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import Translate from 'react-translate-component'
-export default props => {
+
+const Translator = require('react-translate-component');
+
+const PasswordChangeSuccess = () => {
+  const isGerman = Translator.getLocale() === 'de';
+
   return (
-    <Fragment>
-      
-      <Translate content='label.passwordChange' />
-      <br />
-      <Link to='/login'><Translate content='label.login' /></Link> <Translate content='label.newPassword' />
-      </Fragment>
+    <main className="standalone-status-page">
+      <section className="standalone-status-card" role="status">
+        <span className="standalone-status-icon standalone-status-icon-success" aria-hidden="true"><i className="bx bx-check" /></span>
+        <div>
+          <span className="standalone-status-eyebrow">{isGerman ? 'Sicherheit' : 'Security'}</span>
+          <h1>{isGerman ? 'Passwort geändert' : 'Password changed'}</h1>
+          <p>{isGerman ? 'Ihr neues Passwort ist gespeichert. Verwenden Sie es bei der nächsten Anmeldung.' : 'Your new password has been saved. Use it the next time you sign in.'}</p>
+          <Link className="btn btn-primary" to="/login">{isGerman ? 'Zur Anmeldung' : 'Go to login'}</Link>
+        </div>
+      </section>
+    </main>
   );
-}
+};
+
+export default PasswordChangeSuccess;
