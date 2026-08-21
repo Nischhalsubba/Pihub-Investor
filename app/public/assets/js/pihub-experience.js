@@ -1,157 +1,372 @@
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const lowPower = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2;
+const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+const reducedMotion = reducedMotionQuery.matches;
+const lowPower = Boolean(navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
 
-function initGsap() {
-  if (reducedMotion || !window.gsap) return;
-  const { gsap } = window;
+let activePress = null;
+let threeSession = null;
+let syncFrame = null;
+
+function getGsap() {
+  return window.gsap || null;
+}
+
+function markAnimated(element) {
+  if (element) element.dataset.piAnimated = 'true';
+}
+
+function wasAnimated(element) {
+  return element && element.dataset.piAnimated === 'true';
+}
+
+function animateAuthIfNeeded() {
+  if (reducedMotion) return;
+  const gsap = getGsap();
+  if (!gsap) return;
+
+  const authCard = document.querySelector('[data-motion="auth-card"]');
+  if (authCard && !wasAnimated(authCard)) {
+    markAnimated(authCard);
+    const pieces = authCard.querySelectorAll('.auth-brand,.auth-eyebrow,.page-title,.page-desc,.form-signin,.auth-foot');
+    gsap.from(pieces, {
+      y: 16,
+      autoAlpha: 0,
+      duration: .46,
+      stagger: .045,
+      ease: 'power3.out',
+      clearProps: 'transform,opacity,visibility'
+    });
+  }
+
+  const visualCopy = document.querySelector('[data-motion="auth-visual-copy"]');
+  if (visualCopy && !wasAnimated(visualCopy)) {
+    markAnimated(visualCopy);
+    gsap.from(visualCopy.children, {
+      y: 14,
+      autoAlpha: 0,
+      duration: .52,
+      stagger: .05,
+      delay: .12,
+      ease: 'power3.out',
+      clearProps: 'transform,opacity,visibility'
+    });
+  }
+}
+
+function animateRoute() {
+  if (reducedMotion) return;
+  const gsap = getGsap();
+  if (!gsap) return;
+
   gsap.defaults({ ease: 'power3.out', overwrite: 'auto' });
 
   const pageHead = document.querySelector('[data-motion="page-head"]');
   if (pageHead) {
-    const children = pageHead.querySelectorAll('.content-head-kicker,.content-head__title,.content-head-copy,.content-head-right');
-    gsap.fromTo(children,
-      { y: 18, autoAlpha: 0 },
-      { y: 0, autoAlpha: 1, duration: .58, stagger: .065, clearProps: 'transform,opacity,visibility' }
+    const pieces = pageHead.querySelectorAll('.content-head-kicker,.content-head__title,.content-head-copy,.content-head-right');
+    gsap.fromTo(
+      pieces,
+      { y: 12, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: .34, stagger: .035, clearProps: 'transform,opacity,visibility' }
     );
   }
 
-  const header = document.querySelector('[data-motion="header-context"]');
-  if (header) gsap.from(header, { y: -8, autoAlpha: 0, duration: .42 });
+  const metricCards = Array.from(document.querySelectorAll('[data-motion="metric-grid"] .metric-card')).slice(0, 4);
+  if (metricCards.length) {
+    gsap.fromTo(
+      metricCards,
+      { y: 10, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: .3, stagger: .035, delay: .04, clearProps: 'transform,opacity,visibility' }
+    );
+  }
 
-  const rows = document.querySelectorAll('.content-body tbody tr');
+  const tableShell = document.querySelector('[data-motion="table-shell"]');
+  if (tableShell) {
+    gsap.fromTo(
+      tableShell,
+      { y: 10, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: .32, delay: .07, clearProps: 'transform,opacity,visibility' }
+    );
+  }
+
+  const rows = Array.from(document.querySelectorAll('.table-shell tbody tr')).slice(0, 8);
   if (rows.length) {
-    gsap.from(rows, { y: 12, autoAlpha: 0, duration: .38, stagger: .035, delay: .08, clearProps: 'transform,opacity,visibility' });
+    gsap.fromTo(
+      rows,
+      { y: 7, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: .24, stagger: .028, delay: .11, clearProps: 'transform,opacity,visibility' }
+    );
   }
 
-  const authCard = document.querySelector('[data-motion="auth-card"]');
-  if (authCard) {
-    const pieces = authCard.querySelectorAll('.auth-brand,.auth-eyebrow,.page-title,.page-desc,.form-signin,.auth-foot');
-    gsap.from(pieces, { y: 24, autoAlpha: 0, duration: .72, stagger: .075, clearProps: 'transform,opacity,visibility' });
+  const headerContext = document.querySelector('[data-motion="header-context"]');
+  if (headerContext) {
+    gsap.fromTo(headerContext, { y: -5, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .24, clearProps: 'transform,opacity,visibility' });
   }
-
-  const visualCopy = document.querySelector('[data-motion="auth-visual-copy"]');
-  if (visualCopy) gsap.from(visualCopy.children, { y: 20, autoAlpha: 0, duration: .72, stagger: .08, delay: .26, clearProps: 'transform,opacity,visibility' });
-
-  document.querySelectorAll('.btn,.header-notification,.dropdown-toggle').forEach(el => {
-    el.addEventListener('pointerdown', () => gsap.to(el, { scale: .98, duration: .12, ease: 'power2.out' }));
-    const release = () => gsap.to(el, { scale: 1, duration: .2, ease: 'power3.out', clearProps: 'transform' });
-    el.addEventListener('pointerup', release);
-    el.addEventListener('pointercancel', release);
-    el.addEventListener('pointerleave', release);
-  });
 }
 
-async function initCapitalField() {
-  const canvas = document.getElementById('capital-field');
-  if (!canvas || reducedMotion || lowPower) return;
+function initPressFeedback() {
+  if (reducedMotion) return;
+
+  document.addEventListener('pointerdown', event => {
+    const gsap = getGsap();
+    if (!gsap) return;
+    const target = event.target.closest('.btn,.header-notification,.dropdown-toggle,.status-segment,.sidebar-action');
+    if (!target) return;
+    activePress = target;
+    gsap.to(target, { scale: .985, duration: .1, ease: 'power2.out', overwrite: 'auto' });
+  });
+
+  const release = () => {
+    if (!activePress) return;
+    const gsap = getGsap();
+    if (gsap) {
+      gsap.to(activePress, {
+        scale: 1,
+        duration: .16,
+        ease: 'power3.out',
+        overwrite: 'auto',
+        clearProps: 'transform'
+      });
+    }
+    activePress = null;
+  };
+
+  document.addEventListener('pointerup', release);
+  document.addEventListener('pointercancel', release);
+  window.addEventListener('blur', release);
+}
+
+async function createCapitalField(canvas) {
+  if (!canvas || reducedMotion || lowPower) return null;
 
   try {
     const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js');
+    if (!document.documentElement.contains(canvas)) return null;
+
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(42, 1, .1, 100);
-    camera.position.set(0, 0, 8.5);
+    const camera = new THREE.PerspectiveCamera(42, 1, .1, 50);
+    camera.position.set(0, .15, 7.4);
 
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance'
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.setClearColor(0x000000, 0);
+    if ('outputColorSpace' in renderer && THREE.SRGBColorSpace) renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    const group = new THREE.Group();
-    scene.add(group);
+    const root = new THREE.Group();
+    root.rotation.x = -.08;
+    scene.add(root);
 
-    const nodeGeometry = new THREE.IcosahedronGeometry(.055, 1);
-    const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0xc9a45e, transparent: true, opacity: .72 });
-    const nodes = [];
-    const positions = [];
-    const count = 32;
+    const surfaceGeometry = new THREE.PlaneGeometry(7.6, 5.4, 42, 30);
+    const surfaceMaterial = new THREE.ShaderMaterial({
+      transparent: true,
+      wireframe: true,
+      uniforms: {
+        uTime: { value: 0 },
+        uAccent: { value: new THREE.Color(0x4979ee) },
+        uOpacity: { value: .115 }
+      },
+      vertexShader: `
+        uniform float uTime;
+        varying float vWave;
+        void main() {
+          vec3 p = position;
+          float waveA = sin((p.x * 1.25) + (uTime * 0.34)) * 0.09;
+          float waveB = cos((p.y * 1.55) - (uTime * 0.26)) * 0.07;
+          p.z += waveA + waveB;
+          vWave = waveA + waveB;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uAccent;
+        uniform float uOpacity;
+        varying float vWave;
+        void main() {
+          float strength = clamp(0.72 + vWave * 1.8, 0.42, 1.0);
+          gl_FragColor = vec4(uAccent * strength, uOpacity);
+        }
+      `
+    });
+    const surface = new THREE.Mesh(surfaceGeometry, surfaceMaterial);
+    surface.rotation.x = -1.03;
+    surface.position.set(.7, .85, -1.7);
+    root.add(surface);
 
-    for (let i = 0; i < count; i += 1) {
-      const angle = i * 2.399963;
-      const radius = 1.15 + (i % 8) * .22;
-      const x = Math.cos(angle) * radius * 1.22;
-      const y = Math.sin(angle) * radius * .75;
-      const z = Math.sin(i * .73) * 1.15;
-      const node = new THREE.Mesh(nodeGeometry, nodeMaterial.clone());
-      node.position.set(x, y, z);
-      node.material.opacity = .34 + (i % 5) * .09;
-      group.add(node);
-      nodes.push(node);
-      positions.push(new THREE.Vector3(x, y, z));
+    const pointCount = 56;
+    const pointPositions = new Float32Array(pointCount * 3);
+    const vectors = [];
+    for (let i = 0; i < pointCount; i += 1) {
+      const angle = i * 2.399963229728653;
+      const radius = 1.15 + (i % 9) * .24;
+      const x = Math.cos(angle) * radius * 1.35 + .4;
+      const y = Math.sin(angle) * radius * .72 - .2;
+      const z = Math.sin(i * .63) * .9 + .2;
+      pointPositions[i * 3] = x;
+      pointPositions[i * 3 + 1] = y;
+      pointPositions[i * 3 + 2] = z;
+      vectors.push(new THREE.Vector3(x, y, z));
     }
 
-    const linePoints = [];
-    for (let i = 0; i < count; i += 1) {
-      for (let j = i + 1; j < count; j += 1) {
-        if (positions[i].distanceTo(positions[j]) < 1.5) linePoints.push(positions[i], positions[j]);
+    const pointsGeometry = new THREE.BufferGeometry();
+    pointsGeometry.setAttribute('position', new THREE.BufferAttribute(pointPositions, 3));
+    const pointsMaterial = new THREE.PointsMaterial({
+      color: 0x82a5ff,
+      size: .055,
+      sizeAttenuation: true,
+      transparent: true,
+      opacity: .68,
+      depthWrite: false
+    });
+    const points = new THREE.Points(pointsGeometry, pointsMaterial);
+    root.add(points);
+
+    const lineVertices = [];
+    for (let i = 0; i < vectors.length; i += 1) {
+      for (let j = i + 1; j < vectors.length; j += 1) {
+        if (vectors[i].distanceToSquared(vectors[j]) < 1.25) {
+          lineVertices.push(vectors[i].x, vectors[i].y, vectors[i].z, vectors[j].x, vectors[j].y, vectors[j].z);
+        }
       }
     }
-    const lineGeometry = new THREE.BufferGeometry().setFromPoints(linePoints);
-    const lineMaterial = new THREE.LineBasicMaterial({ color: 0x9d814c, transparent: true, opacity: .12 });
-    group.add(new THREE.LineSegments(lineGeometry, lineMaterial));
-
-    const ringGeometry = new THREE.TorusGeometry(2.25, .008, 8, 160);
-    const ringMaterial = new THREE.MeshBasicMaterial({ color: 0xc39a50, transparent: true, opacity: .18 });
-    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-    ring.rotation.x = 1.18;
-    ring.rotation.y = .18;
-    group.add(ring);
+    const lineGeometry = new THREE.BufferGeometry();
+    lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(lineVertices, 3));
+    const lineMaterial = new THREE.LineBasicMaterial({ color: 0x3d68c9, transparent: true, opacity: .13, depthWrite: false });
+    const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+    root.add(lines);
 
     let pointerX = 0;
     let pointerY = 0;
-    const onPointer = e => {
-      const rect = canvas.getBoundingClientRect();
-      pointerX = ((e.clientX - rect.left) / rect.width - .5) * .35;
-      pointerY = ((e.clientY - rect.top) / rect.height - .5) * .22;
+    const container = canvas.parentElement;
+    const onPointerMove = event => {
+      const rect = container.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      pointerX = ((event.clientX - rect.left) / rect.width - .5) * .18;
+      pointerY = ((event.clientY - rect.top) / rect.height - .5) * .11;
     };
-    canvas.parentElement.addEventListener('pointermove', onPointer, { passive: true });
+    container.addEventListener('pointermove', onPointerMove, { passive: true });
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      const width = Math.max(rect.width, 1);
-      const height = Math.max(rect.height, 1);
+      const width = Math.max(1, Math.round(rect.width));
+      const height = Math.max(1, Math.round(rect.height));
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
     };
-    const observer = new ResizeObserver(resize);
-    observer.observe(canvas);
+
+    let resizeObserver = null;
+    if ('ResizeObserver' in window) {
+      resizeObserver = new ResizeObserver(resize);
+      resizeObserver.observe(canvas);
+    } else {
+      window.addEventListener('resize', resize);
+    }
     resize();
 
     const clock = new THREE.Clock();
-    let frame;
-    const animate = () => {
-      const t = clock.getElapsedTime();
-      group.rotation.y += (pointerX - group.rotation.y) * .025;
-      group.rotation.x += (-pointerY - group.rotation.x) * .025;
-      ring.rotation.z = t * .035;
-      nodes.forEach((node, i) => {
-        node.scale.setScalar(.86 + Math.sin(t * .8 + i * .7) * .12);
-      });
-      renderer.render(scene, camera);
-      frame = requestAnimationFrame(animate);
-    };
-    animate();
+    let frame = null;
+    let running = true;
 
-    const cleanup = () => {
-      cancelAnimationFrame(frame);
-      observer.disconnect();
-      canvas.parentElement.removeEventListener('pointermove', onPointer);
-      nodeGeometry.dispose();
-      nodes.forEach(node => node.material.dispose());
+    const renderFrame = () => {
+      if (!running) return;
+      const elapsed = clock.getElapsedTime();
+      const delta = Math.min(clock.getDelta(), .05);
+      surfaceMaterial.uniforms.uTime.value = elapsed;
+      root.rotation.y += (pointerX - root.rotation.y) * Math.min(1, delta * 2.5);
+      root.rotation.x += ((-.08 - pointerY) - root.rotation.x) * Math.min(1, delta * 2.5);
+      points.rotation.z = Math.sin(elapsed * .09) * .035;
+      lines.rotation.z = points.rotation.z;
+      renderer.render(scene, camera);
+      frame = window.requestAnimationFrame(renderFrame);
+    };
+
+    const start = () => {
+      if (running) return;
+      running = true;
+      clock.start();
+      frame = window.requestAnimationFrame(renderFrame);
+    };
+
+    const stop = () => {
+      running = false;
+      if (frame) window.cancelAnimationFrame(frame);
+      frame = null;
+    };
+
+    const onVisibility = () => {
+      if (document.hidden) stop();
+      else if (document.documentElement.contains(canvas)) start();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    frame = window.requestAnimationFrame(renderFrame);
+
+    return () => {
+      stop();
+      document.removeEventListener('visibilitychange', onVisibility);
+      container.removeEventListener('pointermove', onPointerMove);
+      if (resizeObserver) resizeObserver.disconnect();
+      else window.removeEventListener('resize', resize);
+      surfaceGeometry.dispose();
+      surfaceMaterial.dispose();
+      pointsGeometry.dispose();
+      pointsMaterial.dispose();
       lineGeometry.dispose();
       lineMaterial.dispose();
-      ringGeometry.dispose();
-      ringMaterial.dispose();
       renderer.dispose();
+      if (renderer.forceContextLoss) renderer.forceContextLoss();
     };
-    window.addEventListener('pagehide', cleanup, { once: true });
   } catch (error) {
     canvas.style.display = 'none';
+    return null;
   }
 }
 
+async function syncCapitalField() {
+  const canvas = document.getElementById('capital-field');
+
+  if (!canvas) {
+    if (threeSession) {
+      threeSession();
+      threeSession = null;
+    }
+    return;
+  }
+
+  if (threeSession || reducedMotion || lowPower) return;
+  threeSession = await createCapitalField(canvas);
+}
+
+function syncExperience() {
+  if (syncFrame) window.cancelAnimationFrame(syncFrame);
+  syncFrame = window.requestAnimationFrame(() => {
+    syncFrame = null;
+    animateAuthIfNeeded();
+    syncCapitalField();
+  });
+}
+
 function init() {
-  initGsap();
-  initCapitalField();
+  initPressFeedback();
+  window.addEventListener('pihub:route-ready', animateRoute);
+
+  const root = document.getElementById('root');
+  if (root && 'MutationObserver' in window) {
+    const observer = new MutationObserver(syncExperience);
+    observer.observe(root, { childList: true, subtree: true });
+    window.addEventListener('pagehide', () => observer.disconnect(), { once: true });
+  }
+
+  syncExperience();
+  window.requestAnimationFrame(animateRoute);
+
+  window.addEventListener('pagehide', () => {
+    if (threeSession) threeSession();
+    threeSession = null;
+    window.removeEventListener('pihub:route-ready', animateRoute);
+  }, { once: true });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
