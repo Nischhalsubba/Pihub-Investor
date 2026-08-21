@@ -1,158 +1,130 @@
-import React, {Component, Fragment} from 'react';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Subheader from '../general/Subheader';
-import {getCreditRequestList} from '../../actions/credits';
+import { getCreditRequestList } from '../../actions/credits';
 import Pagination from '../general/Pagination';
 import Spinner from '../general/Spinner';
-import Translate from 'react-translate-component'
-import {dDigit} from '../../_utils/misc';
-import {matchesInvestorStatus} from '../../_status'
+import Translate from 'react-translate-component';
+import { dDigit } from '../../_utils/misc';
+import { matchesInvestorStatus } from '../../_status';
+
 const Translator = require('react-translate-component');
 
 class ListCreditRequests extends Component {
-    componentDidMount() {
-        this.props.getCreditRequestList(1);
+  componentDidMount() {
+    this.props.getCreditRequestList(1);
+  }
+
+  formatDate = value => {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '—';
+    return `${dDigit(date.getDate())}.${dDigit(date.getMonth() + 1)}.${date.getFullYear()}`;
+  };
+
+  renderStatus = status => {
+    const meta = matchesInvestorStatus[status];
+    if (!meta) return <span className="badge badge-light">{status || '—'}</span>;
+    return <span className={`badge ${meta.class}`}><Translate content={meta.translation_key} /></span>;
+  };
+
+  renderData = data => {
+    if (!data.length) {
+      return (
+        <tr>
+          <td colSpan="6">
+            <div className="data-empty">
+              <i className="bx bx-receipt" aria-hidden="true" />
+              <strong><Translate content="placeholder.noCreditRequests" /></strong>
+              <span>{Translator.getLocale() === 'de' ? 'Neue Kreditanfragen erscheinen hier.' : 'New credit requests will appear here.'}</span>
+            </div>
+          </td>
+        </tr>
+      );
     }
 
-    renderData = data => {
-        if (data.length === 0) {
-            return <span><Translate content="placeholder.noCreditRequests"/> </span>;
-        }
-        return data.map((product, index) => {
-            let date = new Date(product.created_on);
-            let deadline = new Date(product.deadline);
-            return (
-                <tr key={index}>
-                    <td>
-                        {' '}
-                        {product.status === 'invested' ?
-                            <Link to={{
-                                pathname: '/creditor/detail', state:
-                                    {
-                                        productId: product.product_id,
-                                        appId: product.application_id
-                                    }
-                            }}>
-                                {product.creditor_name}
-                            </Link>
-                            :
-                            <Link to={{
-                                pathname: '/application',
-                                state: {pId: product.product_id, aId: product.application_id, product: product.name}
-                            }}>
-                                {product.creditor_name}
-                            </Link>
-                        }
-                    </td>
-                    <td>
+    return data.map(product => {
+      const detailPath = product.status === 'invested' ? '/creditor/detail' : '/application';
+      const detailState = product.status === 'invested'
+        ? { productId: product.product_id, appId: product.application_id }
+        : { pId: product.product_id, aId: product.application_id, product: product.name };
+      const rowKey = product.application_id || `${product.product_id}-${product.created_on}`;
 
-                        <Link
-                            to={{pathname: '/product', state: {id: product.product_id}}}> {product.product_title}</Link>
-                    </td>
-                    <td>{product.service ? product.service.name[Translator.getLocale()] : <Translate content="placeholder.notAvailable"/>}</td>
-                    <td>{`${dDigit(date.getDate())}.${dDigit(date.getMonth() + 1)}.${date.getFullYear()}`}</td>
-                    {/* <td className="text-right-piehub-table">{product.number_of_request}</td> */}
-                    <td className="text-md-right text-left">{`${dDigit(deadline.getDate())}.${dDigit(deadline.getMonth() + 1)}.${deadline.getFullYear()}`}</td>
-                    {/* <td className="text-right-piehub-table font-weight-bold">
-            €{product.max_credit_amount || 100000}
-          </td> */}
-                    <td className="text-right-piehub-table font-weight-bold">
-            <span className={`badge ${matchesInvestorStatus[product.status].class}`}>
-              <Translate content={matchesInvestorStatus[product.status].translation_key}/>
-            </span>
-                    </td>
+      return (
+        <tr key={rowKey}>
+          <td>
+            <Link className="entity-title" to={{ pathname: detailPath, state: detailState }}>{product.creditor_name}</Link>
+            {product.application_id ? <small className="entity-meta">#{product.application_id}</small> : null}
+          </td>
+          <td>
+            <Link to={{ pathname: '/product', state: { id: product.product_id } }}>{product.product_title}</Link>
+            <small className="entity-meta">#{product.product_id}</small>
+          </td>
+          <td>{product.service ? product.service.name[Translator.getLocale()] : <Translate content="placeholder.notAvailable" />}</td>
+          <td className="data-nowrap mono-value">{this.formatDate(product.created_on)}</td>
+          <td className="data-nowrap mono-value">{this.formatDate(product.deadline)}</td>
+          <td>{this.renderStatus(product.status)}</td>
+        </tr>
+      );
+    });
+  };
+
+  render() {
+    if (!this.props.list || !this.props.list.creditRequests) {
+      return <div className="data-loading" role="status" aria-live="polite"><Spinner /></div>;
+    }
+
+    const data = this.props.list.creditRequests.data || [];
+    const invested = data.filter(item => item.status === 'invested').length;
+
+    return (
+      <Fragment>
+        <Subheader heading={<Translate content="label.creditrequests" />} />
+
+        <section className="metric-grid metric-grid-compact" aria-label="Credit request summary" data-motion="metric-grid">
+          <article className="metric-card">
+            <span className="metric-label">{Translator.getLocale() === 'de' ? 'Anfragen' : 'Requests'}</span>
+            <strong>{data.length}</strong>
+            <small>{Translator.getLocale() === 'de' ? 'Auf dieser Seite' : 'On this page'}</small>
+          </article>
+          <article className="metric-card metric-card-success">
+            <span className="metric-label"><Translate content="label.invested" /></span>
+            <strong>{invested}</strong>
+            <small>{Translator.getLocale() === 'de' ? 'Abgeschlossene Investitionen' : 'Converted to investment'}</small>
+          </article>
+        </section>
+
+        <section className="table-shell" data-motion="table-shell" aria-label="Credit requests">
+          <div className="table-caption">
+            <div>
+              <strong><Translate content="label.creditrequests" /></strong>
+              <span>{data.length} {Translator.getLocale() === 'de' ? 'Ergebnisse auf dieser Seite' : 'results on this page'}</span>
+            </div>
+          </div>
+          <div className="table-scroll">
+            <table className="table" data-tablesaw-mode="stack">
+              <thead>
+                <tr>
+                  <th><Translate content="column.creditorsname" /></th>
+                  <th><Translate content="column.productname" /></th>
+                  <th><Translate content="column.services" /></th>
+                  <th><Translate content="column.createdon" /></th>
+                  <th><Translate content="label.deadline" /></th>
+                  <th><Translate content="column.status" /></th>
                 </tr>
-            );
-        });
-    };
-
-    render() {
-        if (this.props.list) {
-            const {
-                creditRequests: {data}
-            } = this.props.list;
-            return (
-                <Fragment>
-                    <Subheader heading={<Translate content='label.creditrequests'/>}/>
-                    <div className="content-body">
-                        <table
-                            className="table tablesaw-stack"
-                            data-tablesaw-mode="stack"
-                            data-tablesaw-minimap="data-tablesaw-minimap"
-                        >
-                            <thead>
-                            <tr>
-                                <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
-                                    <Translate content='column.creditorsname'/>
-                                    {/* Kreditnehmer */}
-                                </th>
-                                <th
-                                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                    data-tablesaw-priority="persist"
-                                    scope="col"
-                                >
-                                    {/* <Translate content='column.industry' /> */}
-                                    <Translate content='column.productname'/>
-
-                                </th>
-                                <th
-                                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                    data-tablesaw-priority="persist"
-                                    scope="col"
-                                >
-                                    <Translate content='column.services'/>
-                                    {/* Kreditart */}
-                                </th>
-                                <th
-                                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                    data-tablesaw-priority="persist"
-                                    scope="col"
-                                >
-                                    <Translate
-                                        content='column.createdon'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                </th>
-                                <th
-                                    className="text-md-right text-left"
-                                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                    scope="col"
-                                >
-                                    {/* Fristablauf */}
-                                    <Translate content='label.deadline'/>
-                                </th>
-                                {/* <th
-                    className="text-right-piehub-table"
-                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                    scope="col"
-                  >
-                    <Translate content='column.investedamount' />
-                  </th> */}
-                                <th
-                                    className="text-right-piehub-table"
-                                    data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                                    scope="col"
-                                >
-                                    <Translate content='column.status'/>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>{this.renderData(data)}</tbody>
-                        </table>
-                        <Pagination url="creditRequest"/>
-                    </div>
-                </Fragment>
-            );
-        } else {
-            return <Spinner/>
-        }
-    }
+              </thead>
+              <tbody>{this.renderData(data)}</tbody>
+            </table>
+          </div>
+          <Pagination url="creditRequest" />
+        </section>
+      </Fragment>
+    );
+  }
 }
 
 function mapStateToProps(state) {
-    return {list: state.creditRequests};
+  return { list: state.creditRequests };
 }
 
-export default connect(
-    mapStateToProps,
-    {getCreditRequestList}
-)(ListCreditRequests);
+export default connect(mapStateToProps, { getCreditRequestList })(ListCreditRequests);
