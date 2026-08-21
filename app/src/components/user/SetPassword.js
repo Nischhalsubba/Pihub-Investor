@@ -1,103 +1,83 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { inputField } from '../../_formFields'
+import { inputField } from '../../_formFields';
 import { changePasswordWithToken } from '../../actions/password';
 import * as validation from '../../_utils/validate';
+import AuthShell from './AuthShell';
+
+const Translator = require('react-translate-component');
+
 class SetPassword extends Component {
-  componentDidMount() {
-    const { token } = this.props.match.params;
-  }
-  displayErrors = errors => {
-    return errors.map((err, index) => {
-      return (
-        <li className="d-flex mb-1" key={index}>
-          <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
-          <span className="pl-2 green-text">{err}</span>
-        </li>
-
-
-      );
-    })
-  }
   onSubmit = formProps => {
-    formProps.token = this.props.match.params.token;
-    this.props.changePasswordWithToken(formProps, () => {
-      this.props.history.push('/password-change-success')
-    })
-  }
+    const payload = { ...formProps, token: this.props.match.params.token };
+    this.props.changePasswordWithToken(payload, () => this.props.history.push('/password-change-success'));
+  };
+
+  renderError = error => {
+    if (!error) return null;
+    const values = Array.isArray(error) ? error : Object.keys(error).map(key => error[key]).filter(Boolean);
+    if (!values.length) return null;
+    return <div className="auth-error" role="alert"><ul className="auth-error-list">{values.map((value, index) => <li key={`${value}-${index}`}>{value}</li>)}</ul></div>;
+  };
+
   render() {
     const { handleSubmit } = this.props;
+    const isGerman = Translator.getLocale() === 'de';
+
     return (
-      <Fragment>
-        <Fragment>
-          <img className="company-logo company-logo-email" src="./assets/img/logo.png" alt="company logo" />
-          <div className="container-full-height text-centerd d-flex">
-            <div className="content m-auto">
-              <div className="email-content">
-                <div className="w-75 m-auto text-center">
-                  <img src="./assets/img/icons/activated.png" alt="Mail icon" />
-                  <h3>Reset Your Password</h3>
-                  {/* <p>Enter an email associated with your account.</p> */}
-                </div>
-                <div className="w-75 m-auto">
-                  <form className="form-signin" onSubmit={handleSubmit(this.onSubmit)}>
-
-                    <div className="form-group text-left w-75">
-                      {/* <label htmlFor="email-address">Email Address</label>
-                    <input className="form-control" type="email" name="email-address" /> */}
-                      <Field
-                        type='password'
-                        name='password'
-                        component={inputField}
-                        className='form-control'
-                        placeholder='New Password'
-
-                      />
-                    </div> <div className="form-group text-left w-75">
-                      {/* <label htmlFor="email-address">Email Address</label>
-                    <input className="form-control" type="email" name="email-address" /> */}
-                      <Field
-                        type='password'
-                        name='password_confirmation'
-                        component={inputField}
-                        className='form-control'
-                        placeholder='Retype password'
-                      />
-                    </div>
-                    {this.props.errMsg ? this.displayErrors(this.props.errMsg) : null}
-
-                    <button className="btn btn-primary btn-form" type="submit">
-                      Submit
-                  </button>
-                  </form>
-                </div>
-              </div>
-            </div>
+      <AuthShell
+        eyebrow={isGerman ? 'Kontowiederherstellung' : 'Account recovery'}
+        title={isGerman ? 'Neues Passwort festlegen' : 'Set a new password'}
+        description={isGerman ? 'Wählen Sie ein neues Passwort und bestätigen Sie es, um den Kontozugang wiederherzustellen.' : 'Choose a new password and confirm it to restore account access.'}
+        visualEyebrow={isGerman ? 'Sicherer Zugang' : 'Secure access'}
+        visualTitle={isGerman ? 'Ein kontrollierter Schritt zurück in Ihren Arbeitsbereich.' : 'One controlled step back into your workspace.'}
+        visualDescription={isGerman ? 'Die Änderung betrifft Ihre Zugangsdaten, nicht Ihre Produkte, Anfragen oder investierten Positionen.' : 'The change affects your credentials, not your products, requests or invested positions.'}
+        proofItems={[{ label: isGerman ? 'Passwort' : 'Password' }, { label: isGerman ? 'Bestätigen' : 'Confirm' }, { label: isGerman ? 'Anmelden' : 'Sign in' }]}
+      >
+        <form className="form-signin" onSubmit={handleSubmit(this.onSubmit)} noValidate>
+          <div className="form-group">
+            <Field
+              type="password"
+              name="password"
+              component={inputField}
+              className="form-control"
+              label={isGerman ? 'Neues Passwort' : 'New password'}
+              autoComplete="new-password"
+            />
           </div>
-        </Fragment>
-      </Fragment>
+          <div className="form-group">
+            <Field
+              type="password"
+              name="password_confirmation"
+              component={inputField}
+              className="form-control"
+              label={isGerman ? 'Passwort bestätigen' : 'Confirm password'}
+              autoComplete="new-password"
+            />
+          </div>
+          {this.renderError(this.props.errMsg)}
+          <button className="btn btn-primary btn-form" type="submit">{isGerman ? 'Passwort speichern' : 'Save password'}</button>
+        </form>
+      </AuthShell>
     );
   }
 }
+
 function validate(values) {
   const errors = {};
+  errors.password = validation.required(values.password) || validation.password(values.password);
+  if (!values.password_confirmation) errors.password_confirmation = '* Required';
+  else if (values.password !== values.password_confirmation) errors.password_confirmation = '* Password Mismatch';
+  return errors;
+}
 
-  errors.password = validation.required(values.password);
-  errors.password = validation.password(values.password);
-  if (values.password !== values.password_confirmation) {
-    errors.password_confirmation = '* Pass Mismatch!'
-  }
+function mapStateToProps(state) {
+  return { errMsg: state.errors || state.error };
 }
 
 export default compose(
-  connect(
-    null,
-    { changePasswordWithToken }
-  ),
-  reduxForm({
-    validate,
-    form: 'forgotPassword'
-  })
+  connect(mapStateToProps, { changePasswordWithToken }),
+  reduxForm({ validate, form: 'setPassword' })
 )(SetPassword);
