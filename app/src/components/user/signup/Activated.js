@@ -1,53 +1,41 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Translate from 'react-translate-component'
+import Translate from 'react-translate-component';
+import AuthShell from '../AuthShell';
+import SignupProgress from './SignupProgress';
+
+const Translator = require('react-translate-component');
+
 class SignUpActivated extends Component {
+  componentDidMount() {
+    document.title = 'Welcome';
+  }
 
-    componentDidMount() {
-        document.title = "Welcome"
-    }
+  render() {
+    const isGerman = Translator.getLocale() === 'de';
 
-    render() {
-        return (
-            <Fragment>
-                <img className="company-logo company-logo-email" src="/assets/img/logo.png" alt="company logo" />
-                <div className="container-full-height text-centerd d-flex">
-                    <div className="content m-auto">
-                        <div className="email-staging d-flex justify-content-center justify-content-between position-relative mb-5">
-                            <span className="line"></span>
-                            <div className="indicator-container d-flex flex-column align-items-center">
-                                <div className="indicator d-flex justify-content-center align-items-center connect"><span>1</span></div>
-                                {/* <span className="mt-3">Confirm Email</span> */}
-                                <Translate content='label.confirmemail' component="span" className="mt-3" />
-                                <hr />
-                            </div>
-                            <div className="indicator-container d-flex flex-column align-items-center">
-                                <div className="indicator d-flex justify-content-center align-items-center"><span>2</span></div>
-                                {/* <span
-                                className="mt-3">Admin Approval</span> */}
-                                <Translate content='label.adminapproval' component="span" className="mt-3" />
-                            </div>
-                            <div className="indicator-container d-flex flex-column align-items-center">
-                                <div className="indicator active d-flex justify-content-center align-items-center"><span>3</span></div>
-                                {/* <span className="mt-3">Activation </span> */}
-                                <Translate content='label.activation' component="span" className="mt-3" />
-                            </div>
-                        </div>
-                        <div className="email-content text-center w-75 m-auto"> <img src="/assets/img/icons/activated.png"
-                            alt="Mail icon" />
-                            {/* <h3>Wow, Welcome to Pihub</h3> */}
-                            <Translate content='label.wow' component="h3" />
-                            {/* <p>Your account has been activated. From now on you can use our service freely</p> */}
-                            <Translate content='label.youraccounthasbeen' component="p" />
-                            <br />
-                            <Link to="/login">  Einloggen</Link>
-                        </div>
-                    </div>
-                </div>
-            </Fragment>
-        );
-    }
+    return (
+      <AuthShell
+        eyebrow={isGerman ? 'Registrierung abgeschlossen' : 'Account setup complete'}
+        title={isGerman ? 'Konto aktiviert' : 'Account activated'}
+        description={<Translate content="label.youraccounthasbeen" />}
+        visualEyebrow={isGerman ? 'Schritt 3 von 3' : 'Step 3 of 3'}
+        visualTitle={isGerman ? 'Ihr Investorenzugang ist bereit.' : 'Your investor workspace is ready.'}
+        visualDescription={isGerman ? 'Sie können sich jetzt anmelden und mit Produkten, Anfragen und investierten Positionen arbeiten.' : 'You can now sign in and work with products, requests and invested positions.'}
+        proofItems={[{ label: isGerman ? 'E-Mail' : 'Email' }, { label: isGerman ? 'Freigabe' : 'Approval' }, { label: isGerman ? 'Aktiv' : 'Active' }]}
+      >
+        <SignupProgress stage={3} />
+        <div className="auth-status-card auth-status-card-success" role="status">
+          <span className="auth-status-icon" aria-hidden="true"><i className="bx bx-check" /></span>
+          <div>
+            <Translate content="label.wow" component="h2" />
+            <p><Translate content="label.youraccounthasbeen" /></p>
+            <Link className="btn btn-primary" to="/login">{isGerman ? 'Anmelden' : 'Sign in'}</Link>
+          </div>
+        </div>
+      </AuthShell>
+    );
+  }
 }
 
-
-export default (SignUpActivated);
+export default SignUpActivated;
