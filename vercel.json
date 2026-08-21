@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm ci --prefix app --legacy-peer-deps",
+  "buildCommand": "NODE_OPTIONS=--openssl-legacy-provider npm --prefix app run build",
+  "outputDirectory": "app/build",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
