@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "name": "PiHub Investor V3",
+    "description": "Institutional financial operating interface for opportunity, credit-request and investment workflows.",
+    "source_references": ["PiHub legacy workflow", "Stripe Dashboard patterns", "Ramp finance workspace patterns", "Brex dashboard patterns", "UI/UX Pro Max financial dashboard guidance"],
+    "created_at": "2026-08-21"
+  },
+  "design_system": {
+    "color": {
+      "palette_type": "cool neutral with cobalt accent",
+      "primary": {"hex": "#2457E6", "role": "primary actions, selected controls, links"},
+      "secondary": {"hex": "#0B1220", "role": "navigation shell and high-emphasis structural surfaces"},
+      "accent": {"hex": "#38BDF8", "role": "rare visual accent in authentication WebGL and focus details"},
+      "neutral": {"scale": ["#FFFFFF", "#F8FAFC", "#F5F7FA", "#E2E8F0", "#CBD5E1", "#94A3B8", "#64748B", "#475569", "#0F172A", "#0B1220"], "usage": "cool neutral hierarchy for canvas, surfaces, borders and text"},
+      "semantic": {"success": "#15803D", "warning": "#B45309", "error": "#B42318", "info": "#175CD3"},
+      "surface": {"background": "#F5F7FA", "card": "#FFFFFF", "elevated": "#FFFFFF"},
+      "contrast_strategy": "dark-on-light workspace with high-contrast midnight navigation; body text AA or better"
+    },
+    "typography": {
+      "type_scale": {
+        "display": {"size": "36px", "weight": "600", "line_height": "1.12", "tracking": "-0.02em"},
+        "heading_1": {"size": "30px", "weight": "600", "line_height": "1.2", "tracking": "-0.015em"},
+        "heading_2": {"size": "24px", "weight": "600", "line_height": "1.25", "tracking": "-0.01em"},
+        "heading_3": {"size": "18px", "weight": "600", "line_height": "1.35", "tracking": "0"},
+        "body": {"size": "15px", "weight": "400", "line_height": "1.55", "tracking": "0"},
+        "body_small": {"size": "13px", "weight": "400", "line_height": "1.5", "tracking": "0"},
+        "caption": {"size": "11px", "weight": "500", "line_height": "1.4", "tracking": "0.01em"},
+        "overline": {"size": "10px", "weight": "600", "line_height": "1.3", "tracking": "0.08em"}
+      },
+      "font_families": {"heading": "IBM Plex Sans", "body": "IBM Plex Sans", "mono": "IBM Plex Mono"},
+      "font_style_notes": "serious humanist-grotesk sans with mono numerals for amounts, dates and IDs"
+    },
+    "spacing": {"base_unit": "4px", "scale": ["4px", "8px", "12px", "16px", "20px", "24px", "32px", "40px", "48px", "64px"], "content_density": "compact-comfortable", "section_rhythm": "24-32px between related workspace sections; 40-48px only for top-level page separation"},
+    "layout": {"grid_system": "12-column responsive grid with fixed desktop rail", "max_content_width": "1600px", "columns": "12 desktop / 8 tablet / 4 mobile", "gutter": "24px desktop, 20px tablet, 16px mobile", "breakpoints": ["375px", "768px", "1024px", "1440px"], "alignment_tendency": "strict grid"},
+    "shape": {"border_radius": {"small": "8px", "medium": "12px", "large": "16px", "pill": "999px"}, "border_usage": "subtle 1px borders on product surfaces and controls", "divider_style": "cool neutral 1px separators"},
+    "elevation": {"shadow_style": "soft diffused and sparse", "levels": {"low": "0 1px 2px rgba(15,23,42,.04)", "medium": "0 8px 24px rgba(15,23,42,.06)", "high": "0 20px 50px rgba(15,23,42,.10)"}, "depth_cues": "borders and surface tone first, shadow second"},
+    "iconography": {"style": "outline", "stroke_weight": "consistent optical 1.75-2px", "size_scale": ["16px", "18px", "20px", "24px"], "preferred_set": "existing Boxicons until a controlled Lucide migration"},
+    "motion": {"easing": "cubic-bezier(0.2,0,0,1) / GSAP power3.out", "duration_scale": {"micro": "120ms", "normal": "220ms", "macro": "360ms"}, "entrance_pattern": "10-18px translate plus opacity, hero first, supporting content staggered 35-45ms", "exit_pattern": "shorter 140-200ms opacity/translate with power2.in", "philosophy": "minimal functional corporate-premium motion with no bounce"},
+    "components": {"button_style": "10px radius, cobalt primary, neutral secondary, explicit hover/focus/active/disabled states", "input_style": "44-48px, visible label, white surface, neutral border and cobalt focus ring", "card_style": "border-first white surfaces with low shadow and compact headers", "navigation_pattern": "232px persistent desktop rail; compact horizontal navigation on small screens", "modal_style": "centered elevated white sheet with 50% black scrim and clear close action", "list_style": "dense table/list with subtle row hover, sticky header when possible, mono numeric columns", "component_notes": "pills only for status and segmented controls; no ornamental cards"}
+  },
+  "design_style": {
+    "aesthetic": {"mood": ["precise", "controlled", "modern", "calm", "high-trust"], "visual_metaphor": "institutional financial command desk", "era_influence": "contemporary 2025-2026 financial operations software", "genre": "enterprise fintech dashboard", "personality_traits": ["meticulous", "quiet", "confident", "fast"], "adjectives": ["clean", "data-first", "cool", "restrained", "professional"]},
+    "visual_language": {"complexity": "moderate", "ornamentation": "minimal", "whitespace_usage": "controlled and functional", "visual_weight_distribution": "navigation and page heading establish structure, tables and metrics carry most visual weight", "focal_strategy": "progressive reveal with one primary action per view", "contrast_level": "high", "texture_usage": "none in workflow surfaces"},
+    "composition": {"hierarchy_method": "typographic hierarchy, spacing and surface grouping", "balance_type": "asymmetric but grid-disciplined", "flow_direction": "top-left to right then down through data", "grouping_strategy": "task-oriented surface groups", "negative_space_role": "separates decision areas and keeps dense data readable"},
+    "imagery": {"photo_treatment": "none in core app", "illustration_style": "abstract data topology only on authentication", "graphic_elements": "subtle grid, hairline dividers and restrained status marks", "pattern_usage": "very subtle technical grid on auth visual only", "image_shape": "functional rectangular assets, 10-12px radius where used"},
+    "interaction_feel": {"feedback_style": "immediate and quiet", "hover_behavior": "background/border shift with maximum 1-2px transform on focal controls", "transition_personality": "snappy controlled glide", "loading_style": "skeleton or compact progress state", "microinteraction_density": "low-medium"},
+    "brand_voice_in_ui": {"tone": "clear and factual", "formality": "professional", "cta_style": "direct imperative", "empty_state_approach": "explain why it is empty and provide the next useful action", "error_tone": "specific, calm and recovery-oriented"}
+  },
+  "visual_effects": {
+    "overview": {"effect_intensity": "subtle-accent", "performance_tier": "medium with optional WebGL auth scene", "fallback_strategy": "disable WebGL and spatial motion for reduced-motion or low-power devices; keep static gradient/grid", "primary_technology": "GSAP for UI motion and Three.js for authentication-only brand scene"},
+    "background_effects": {"type": "technical-grid", "description": "static cool grid and soft radial gradient on authentication visual", "technology": "CSS", "params": {"color_palette": ["#0B1220", "#2457E6", "#38BDF8"], "speed": "none", "density": "low", "opacity": "0.08", "blend_mode": "normal"}},
+    "particle_systems": {"enabled": true, "type": "connected-nodes", "description": "low-count capital-topology points on auth only", "technology": "Three.js Points/LineSegments", "params": {"count": "48-64", "shape": "small circular points", "size_range": "1-3px apparent", "movement_pattern": "slow field drift", "color_behavior": "muted cobalt/cyan", "interaction": "subtle pointer parallax", "spawn_area": "authentication visual"}},
+    "3d_elements": {"enabled": true, "type": "scene-bg", "description": "abstract risk/capital topology with one shader-displaced surface and connected point field", "technology": "Three.js", "params": {"renderer": "WebGLRenderer alpha=true, antialias=true, DPR capped at 1.5", "lighting": "not required for shader/points; optional soft ambient for basic meshes", "camera": "PerspectiveCamera ~42deg, restrained depth", "materials": "ShaderMaterial for surface, PointsMaterial/LineBasicMaterial for topology", "geometry": "low-segment plane plus point/line buffers", "post_processing": [], "interaction_model": "subtle pointer-derived rotation, no direct manipulation"}},
+    "shader_effects": {"enabled": true, "type": "wave", "description": "very low amplitude vertex displacement on authentication topology surface", "technology": "Three.js ShaderMaterial", "params": {"uniforms": ["uTime", "uAccent", "uOpacity"], "vertex_manipulation": "small sinusoidal displacement", "fragment_output": "cobalt/cyan alpha gradient", "noise_type": "none", "distortion": "low"}},
+    "scroll_effects": {"parallax": {"enabled": false, "layers": "0", "depth_range": "0", "speed_curve": "none"}, "scroll_triggered_animations": {"enabled": false, "trigger_points": [], "animation_type": "none", "scrub_behavior": "none"}, "scroll_morphing": {"enabled": false, "description": "not appropriate for dense financial workflow"}},
+    "text_effects": {"type": "none", "description": "text remains immediately readable", "technology": "none", "params": {"split_strategy": "none", "animation_per_unit": "none", "stagger": "none", "effect_style": "none"}},
+    "cursor_effects": {"enabled": false, "type": "none", "description": "standard cursor for predictable enterprise interaction", "params": {"shape": "system", "size": "system", "blend_mode": "normal", "trail": "none", "interaction_zone": "none"}},
+    "image_effects": {"type": "none", "description": "no decorative image effects in app", "technology": "none", "params": {"filter_pipeline": "none", "hover_transform": "none", "reveal_animation": "none", "distortion_type": "none"}},
+    "glassmorphism_neumorphism": {"enabled": false, "style": "none", "params": {"blur_radius": "0", "transparency": "0", "border_treatment": "standard solid border", "shadow_type": "soft diffused", "light_source_angle": "none"}},
+    "canvas_drawings": {"enabled": false, "type": "none", "description": "Three.js covers the only advanced visual scene", "technology": "none", "params": {"draw_method": "none", "animation_loop": "none", "color_scheme": "none", "responsiveness": "none", "interaction": "none"}},
+    "svg_animations": {"enabled": false, "type": "none", "description": "no decorative SVG animation required", "params": {"animation_method": "none", "path_morphing": "none", "stroke_animation": "none", "filter_effects": "none"}},
+    "composite_notes": "Core workflow remains CSS/React-first. GSAP animates only hierarchy and state. Three.js is isolated to the unauthenticated visual panel, disposed on page hide, and disabled under reduced-motion or low-power conditions."
+  }
+}
