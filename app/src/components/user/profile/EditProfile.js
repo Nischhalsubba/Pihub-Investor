@@ -1,294 +1,185 @@
 import React, { Component, Fragment } from 'react';
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { getProfile, editProfile } from '../../../actions/profile'
-import Translate from 'react-translate-component'
+import { getProfile, editProfile } from '../../../actions/profile';
+import Translate from 'react-translate-component';
+import Subheader from '../../general/Subheader';
+import { inputField, renderDropzoneField } from '../../../_formFields/';
 
-import Subheader from '../../general/Subheader'
-import { inputField, renderDropzoneField } from '../../../_formFields/'
+const Translator = require('react-translate-component');
+
 class EditProfile extends Component {
-	state = { file: null, pic: null }
-	componentDidMount() {
-		this.props.getProfile();
-	}
-	componentDidUpdate(prevProps, prevState) {
-		if (this.state.file !== prevState.file) {
-			this.setState({
-				pic: URL.createObjectURL(this.state.file)
-			})
-		}
-	}
-	onSubmit = formProps => {
-		if (this.state.file) {
-			formProps.company_logo = this.state.file;
-		}
-		this.props.editProfile(formProps, () => this.props.history.push('/user/profile'))
-	}
-	render() {
-		const { handleSubmit } = this.props;
+  state = { file: null, previewUrl: null };
 
-		return (
-			<Fragment>
-				{/* <Subheader buttonLabel="Change Profile Picture" /> */}
+  componentDidMount() {
+    this.props.getProfile();
+  }
 
-				<div className="content-head">
-					<div className="content-head-left w-100">
-						<div className="d-flex align-items-center">
-							<div className="item position-relative">
-								{this.props.initialValues ? <Fragment>
-									<img src={this.state.pic || this.props.initialValues.company_logo_link || null} alt="alt" width="120px" height="120px" />
-									<img className="verify" src="/assets/img/verify.png" alt="alt" />
-								</Fragment>
-									: null
-								}
-							</div>
-							<div className="item ml-4 position-relative">
-								<input className="btn btn-outline-light position-absolute z-index-1" type="file" accept="image/x-png,image/gif,image/jpeg" name="" onChange={e => this.setState({ file: e.target.files[0] })} />
-								{/* <span className="btn btn-outline-light position-absolute">Change profile picture</span> */}
-							</div>
-						</div>
-					</div>
-				</div>
-				<div className="content-body">
-					<form className="form-signup" onSubmit={handleSubmit(this.onSubmit)}>
-						<div className="row mt-4">
-							<div className="col-12 col-sm-12 col-md-12">
-								<div className="form-group">
-									<Field
-										name="company_name"
-										type="text"
-										component={inputField}
-										label="Company Name"
-										className="form-control"
-										placeholder="Company Name inc."
-									/>
-								</div>
-							</div>
-						</div>
+  componentWillUnmount() {
+    if (this.state.previewUrl) URL.revokeObjectURL(this.state.previewUrl);
+  }
 
-						<div className="row mt-4">
-							<div className="col-12 col-sm-12 col-md-12">
-								<div className="form-group">
-									<Field
-										name="headquarter"
-										type="text"
-										component={inputField}
-										label="Headquarter"
-										className="form-control"
-										placeholder="Berlin"
-									/>
-								</div>
-							</div>
-						</div>
+  onFileChange = event => {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    if (this.state.previewUrl) URL.revokeObjectURL(this.state.previewUrl);
+    this.setState({ file, previewUrl: URL.createObjectURL(file) });
+  };
 
-						<div className="row mt-4">
-							<div className="col-12 col-sm-6 col-md-6">
-								<div className="form-group">
-									<Field
-										name="street_address"
-										type="text"
-										component={inputField}
-										label="Street Address"
-										className="form-control"
-										placeholder='Hight Street'
-									/>
-								</div>
-							</div>
-							<div className="col-12 col-sm-6 col-md-6">
-								<div className="form-group">
-									<Field
-										name="zip_code"
-										type="text"
-										component={inputField}
-										label="Zip/Postal Code"
-										className="form-control"
-										placeholder="SE18 1EA"
-									/>
-								</div>
-							</div>
-						</div>
-						<div className="row mt-4">
-							<div className="col-12 col-sm-12 col-md-12">
-								<div className="form-group">
-									<label>Investor Categories</label>
-									<Field name="category" component="select" className='form-control'>
-										<option value="bank">Bank</option>
-										<option value="sparkasse">Sparkasse</option>
-										<option value="kreditfons">Kreditfons</option>
-										<option value="family-office">Family Office</option>
-									</Field>
-								</div>
-							</div>
-						</div>
+  onSubmit = formProps => {
+    const payload = { ...formProps };
+    if (this.state.file) payload.company_logo = this.state.file;
+    this.props.editProfile(payload, () => this.props.history.push('/user/profile'));
+  };
 
+  renderContactFields = index => {
+    const isGerman = Translator.getLocale() === 'de';
+    return (
+      <fieldset className="profile-edit-contact" key={index}>
+        <legend>{isGerman ? `Ansprechpartner ${index}` : `Contact ${index}`}</legend>
+        <Field
+          name={`contact_name_${index}`}
+          type="text"
+          component={inputField}
+          label={isGerman ? 'Name' : 'Name'}
+          className="form-control"
+          autoComplete="name"
+        />
+        <Field
+          name={`contact_email_${index}`}
+          type="email"
+          component={inputField}
+          label="Email"
+          className="form-control"
+          autoComplete="email"
+        />
+        <Field
+          name={`contact_phone_no_${index}`}
+          type="tel"
+          component={inputField}
+          label={isGerman ? 'Telefon' : 'Phone'}
+          className="form-control"
+          autoComplete="tel"
+        />
+      </fieldset>
+    );
+  };
 
-						<div className="row mt-4">
-							<div className="col-4 col-sm-12 col-md-4">
-								<label htmlFor="">Contact Person</label>
-								<div className="form-group">
+  render() {
+    const { handleSubmit, initialValues } = this.props;
+    const isGerman = Translator.getLocale() === 'de';
+    const logo = this.state.previewUrl || (initialValues && initialValues.company_logo_link);
+    const companyName = initialValues && initialValues.company_name ? initialValues.company_name : 'PiHub';
+    const initials = companyName.split(/\s+/).filter(Boolean).slice(0, 2).map(value => value.charAt(0).toUpperCase()).join('');
 
-									<Field
-										name="contact_name_1"
-										type="text"
-										component={inputField}
-										className="form-control"
-										placeholder='Contact Name'
-									/>
-									<Field
-										name="contact_email_1"
-										type="email"
-										component={inputField}
-										className="form-control"
-										placeholder="contact@email.com"
-									/>
+    return (
+      <Fragment>
+        <Subheader heading={isGerman ? 'Profil bearbeiten' : 'Edit profile'} />
 
-									<Field
-										name="contact_phone_no_1"
-										type="text"
-										component={inputField}
-										className="form-control"
-										placeholder="+1 1234567890"
-									/>
-								</div>
-							</div>
-							<div className="col-4 col-sm-12 col-md-4">
-								<label htmlFor="">Contact Person</label>
-								<div className="form-group">
-									<Field
-										name="contact_name_2"
-										type="text"
-										component={inputField}
-										className="form-control"
-										placeholder='Contact Name-2'
-									/>
-									<Field
-										name="contact_email_2"
-										type="email"
-										component={inputField}
-										className="form-control"
-										placeholder="contact2@email.com"
+        <form className="profile-edit-form" onSubmit={handleSubmit(this.onSubmit)}>
+          <section className="profile-edit-logo-panel">
+            <div className="profile-logo" aria-hidden="true">
+              {logo ? <img src={logo} alt="" /> : <span>{initials || 'PI'}</span>}
+            </div>
+            <div>
+              <strong>{isGerman ? 'Unternehmenslogo' : 'Company logo'}</strong>
+              <span>{isGerman ? 'PNG, JPG oder GIF. Das Bild wird nur nach dem Speichern übernommen.' : 'PNG, JPG or GIF. The image is applied when you save the profile.'}</span>
+              <label className="btn btn-secondary profile-file-button">
+                <i className="bx bx-upload" aria-hidden="true" />
+                {isGerman ? 'Bild auswählen' : 'Choose image'}
+                <input type="file" accept="image/png,image/gif,image/jpeg" onChange={this.onFileChange} />
+              </label>
+            </div>
+          </section>
 
-									/>
+          <section className="profile-edit-section" aria-labelledby="company-section-title">
+            <div className="profile-edit-section-head">
+              <span>01</span>
+              <div>
+                <h2 id="company-section-title">{isGerman ? 'Unternehmen' : 'Company'}</h2>
+                <p>{isGerman ? 'Grundlegende Unternehmens- und Standortdaten.' : 'Core company and location information.'}</p>
+              </div>
+            </div>
+            <div className="profile-edit-grid">
+              <div className="profile-edit-field profile-edit-field-wide">
+                <Field name="company_name" type="text" component={inputField} label={isGerman ? 'Unternehmensname' : 'Company name'} className="form-control" />
+              </div>
+              <div className="profile-edit-field">
+                <Field name="headquarter" type="text" component={inputField} label={isGerman ? 'Hauptsitz' : 'Headquarters'} className="form-control" />
+              </div>
+              <div className="profile-edit-field">
+                <Field name="category" component="select" className="form-control">
+                  <option value="bank">Bank</option>
+                  <option value="sparkasse">Sparkasse</option>
+                  <option value="kreditfons">Kreditfons</option>
+                  <option value="family-office">Family Office</option>
+                </Field>
+                <span className="profile-edit-helper">{isGerman ? 'Investorenkategorie' : 'Investor category'}</span>
+              </div>
+              <div className="profile-edit-field">
+                <Field name="street_address" type="text" component={inputField} label={isGerman ? 'Straße' : 'Street address'} className="form-control" autoComplete="street-address" />
+              </div>
+              <div className="profile-edit-field">
+                <Field name="zip_code" type="text" component={inputField} label={isGerman ? 'Postleitzahl' : 'Postal code'} className="form-control" autoComplete="postal-code" />
+              </div>
+            </div>
+          </section>
 
-									<Field
-										name="contact_phone_no_2"
-										type="text"
-										component={inputField}
-										className="form-control"
-										placeholder="+1 1234567890"
+          <section className="profile-edit-section" aria-labelledby="contacts-section-title">
+            <div className="profile-edit-section-head">
+              <span>02</span>
+              <div>
+                <h2 id="contacts-section-title">{isGerman ? 'Ansprechpartner' : 'Contacts'}</h2>
+                <p>{isGerman ? 'Pflegen Sie nur Personen, die für Investitions- oder Kreditprozesse relevant sind.' : 'Keep only the people relevant to investment or credit workflows.'}</p>
+              </div>
+            </div>
+            <div className="profile-edit-contacts">
+              {[1, 2, 3].map(this.renderContactFields)}
+            </div>
+          </section>
 
-									/>
-								</div>
-							</div>
-							<div className="col-4 col-sm-12 col-md-4">
-								<label htmlFor="">Contact Person</label>
-								<div className="form-group">
-									<Field
-										name="contact_name_3"
-										type="text"
-										component={inputField}
-										className="form-control"
-										placeholder='Contact Name -3'
+          <section className="profile-edit-section" aria-labelledby="links-section-title">
+            <div className="profile-edit-section-head">
+              <span>03</span>
+              <div>
+                <h2 id="links-section-title">{isGerman ? 'Links und Dokumente' : 'Links and documents'}</h2>
+                <p>{isGerman ? 'Optionale öffentliche Profile und Unternehmensunterlagen.' : 'Optional public profiles and company documentation.'}</p>
+              </div>
+            </div>
+            <div className="profile-edit-grid">
+              <div className="profile-edit-field">
+                <Field name="facebook_link" type="url" component={inputField} label="Facebook" className="form-control" placeholder="https://facebook.com/..." />
+              </div>
+              <div className="profile-edit-field">
+                <Field name="twitter_link" type="url" component={inputField} label="Twitter" className="form-control" placeholder="https://twitter.com/..." />
+              </div>
+              <div className="profile-edit-field profile-edit-field-wide">
+                <Field name="linked_in_link" type="url" component={inputField} label="LinkedIn" className="form-control" placeholder="https://linkedin.com/..." />
+              </div>
+              <div className="profile-edit-field profile-edit-field-wide">
+                <strong className="profile-edit-upload-label"><Translate content="label.fileupload" /></strong>
+                <Field name="document" component={renderDropzoneField} type="file" className="file-uploader file-uploader--small dropzone" />
+              </div>
+            </div>
+          </section>
 
-									/>
-									<Field
-										name="contact_email_3"
-										type="email"
-										component={inputField}
-										className="form-control"
-										placeholder="contact3@email.com"
-
-									/>
-
-									<Field
-										name="contact_phone_no_3"
-										type="text"
-										component={inputField}
-										className="form-control"
-										placeholder="+1 1234567890"
-
-									/>
-								</div>
-							</div>
-						</div>
-						<div className="row mt-4">
-							<div className="col-12 col-sm-12 col-md-12">
-								<label htmlFor="">Social Media</label>
-								<div className="form-group d-flex align-items-center">
-									<label className="m-0" htmlFor="">
-										Facebook &nbsp;&nbsp;
-									</label>
-									<Field
-										name="facebook_link"
-										type="text"
-										component={inputField}
-										className="ml-2 form-control"
-										placeholder="https://www.facebook.com/"
-									/>
-
-								</div>
-								<div className="form-group d-flex align-items-center">
-									<label className="m-0" htmlFor="">
-										Twitter &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									</label>
-
-									<Field
-										name="twitter_link"
-										type="text"
-										component={inputField}
-										className="ml-2 form-control"
-										placeholder="https://www.twitter.com/"
-
-									/>
-								</div>
-								<div className="form-group d-flex align-items-center">
-									<label className="m-0" htmlFor="">
-										Linkedin &nbsp;&nbsp;&nbsp;&nbsp;
-									</label>
-									<Field
-										name="linked_in_link"
-										type="text"
-										component={inputField}
-										className="ml-2 form-control"
-										placeholder="https://www.linkedin.com/"
-
-									/>
-
-								</div>
-							</div>
-						</div>
-						<div className="row mt-4">
-							<div className="col">
-								<div className="form-group">
-									<strong> <Translate content='label.fileupload' component="label" /></strong>
-									<Field
-										name="document"
-										component={renderDropzoneField}
-										type="file"
-										className="file-uploader file-uploader--small dropzone"
-									/>
-									{/* {files ? this.displayFiles(files) : null} */}
-								</div>
-							</div>
-						</div>
-						<button className="btn btn-primary">Update</button>
-					</form>
-				</div>
-			</Fragment >
-		);
-	}
+          <div className="profile-edit-actions">
+            <button className="btn btn-primary" type="submit">{isGerman ? 'Änderungen speichern' : 'Save changes'}</button>
+          </div>
+        </form>
+      </Fragment>
+    );
+  }
 }
 
-
 EditProfile = reduxForm({
-	form: 'editProfile'
-})(EditProfile)
+  form: 'editProfile',
+  enableReinitialize: true
+})(EditProfile);
 
 EditProfile = connect(
-	state => ({
-		initialValues: state.profile
-	}),
-	{ getProfile, editProfile }
-)(EditProfile)
+  state => ({ initialValues: state.profile }),
+  { getProfile, editProfile }
+)(EditProfile);
 
-export default EditProfile
+export default EditProfile;
