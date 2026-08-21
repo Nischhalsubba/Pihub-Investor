@@ -8,6 +8,10 @@ import * as validation from '../../../_utils/validate';
 import Subheader from '../../general/Subheader';
 
 const Translator = require('react-translate-component');
+const confirmPassword = (value, values) => {
+  if (!value) return '* Required';
+  return value === values.password ? undefined : '* Password Mismatch';
+};
 
 class ChangePassword extends Component {
   state = { step: 'verify', token: null };
@@ -52,15 +56,39 @@ class ChangePassword extends Component {
           <form className="account-form-body" onSubmit={handleSubmit(this.onSubmit)} noValidate>
             {verifyStep ? (
               <div className="form-group">
-                <Field name="email" type="email" component={inputField} label="Email" className="form-control" autoComplete="email" />
+                <Field
+                  name="email"
+                  type="email"
+                  component={inputField}
+                  label="Email"
+                  className="form-control"
+                  autoComplete="email"
+                  validate={[validation.required, validation.newEmail]}
+                />
               </div>
             ) : (
               <React.Fragment>
                 <div className="form-group">
-                  <Field name="password" type="password" component={inputField} label={isGerman ? 'Neues Passwort' : 'New password'} className="form-control" autoComplete="new-password" />
+                  <Field
+                    name="password"
+                    type="password"
+                    component={inputField}
+                    label={isGerman ? 'Neues Passwort' : 'New password'}
+                    className="form-control"
+                    autoComplete="new-password"
+                    validate={[validation.required, validation.password]}
+                  />
                 </div>
                 <div className="form-group">
-                  <Field name="password_confirmation" type="password" component={inputField} label={isGerman ? 'Passwort bestätigen' : 'Confirm password'} className="form-control" autoComplete="new-password" />
+                  <Field
+                    name="password_confirmation"
+                    type="password"
+                    component={inputField}
+                    label={isGerman ? 'Passwort bestätigen' : 'Confirm password'}
+                    className="form-control"
+                    autoComplete="new-password"
+                    validate={confirmPassword}
+                  />
                 </div>
               </React.Fragment>
             )}
@@ -73,22 +101,11 @@ class ChangePassword extends Component {
   }
 }
 
-function validate(values) {
-  const errors = {};
-  if (values.email) errors.email = validation.newEmail(values.email);
-  if (values.password || values.password_confirmation) {
-    errors.password = validation.required(values.password) || validation.password(values.password);
-    if (!values.password_confirmation) errors.password_confirmation = '* Required';
-    else if (values.password !== values.password_confirmation) errors.password_confirmation = '* Password Mismatch';
-  }
-  return errors;
-}
-
 function mapStateToProps(state) {
   return { errMsg: state.errors || state.error };
 }
 
 export default compose(
   connect(mapStateToProps, { getTokenForEmail, changePasswordWithToken }),
-  reduxForm({ validate, form: 'changePassword' })
+  reduxForm({ form: 'changePassword' })
 )(ChangePassword);
