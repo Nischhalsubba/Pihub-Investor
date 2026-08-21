@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Subheader = ({ heading, kicker, description, buttonLabel, link }) => (
+const Subheader = ({ heading, kicker, description, buttonLabel, link, linkState }) => (
   <div className="content-head" data-motion="page-head">
     <div className="content-head-left">
       {kicker ? <div className="content-head-kicker">{kicker}</div> : null}
@@ -10,7 +10,7 @@ const Subheader = ({ heading, kicker, description, buttonLabel, link }) => (
     </div>
     {buttonLabel && link ? (
       <div className="content-head-right">
-        <Link className="btn btn-primary" to={link}>{buttonLabel}</Link>
+        <Link className="btn btn-primary" to={linkState ? { pathname: link, state: linkState } : link}>{buttonLabel}</Link>
       </div>
     ) : null}
   </div>
