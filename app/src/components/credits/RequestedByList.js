@@ -1,146 +1,106 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {getApplicationList} from '../../actions/application';
-import {changeStatus} from '../../actions/changeStatus';
-import {Link, withRouter} from 'react-router-dom';
-import Translate from 'react-translate-component'
-import {ToEuro} from '../general/CurrencyFormatter';
-import {dDigit} from '../../_utils/misc'
-import Moment from 'react-moment';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getApplicationList } from '../../actions/application';
+import { Link, withRouter } from 'react-router-dom';
+import Translate from 'react-translate-component';
+import { ToEuro } from '../general/CurrencyFormatter';
+import { dDigit } from '../../_utils/misc';
+import { matchesInvestorStatus } from '../../_status';
+
+const Translator = require('react-translate-component');
 
 class RequestedByList extends Component {
-    state = {list: []};
+  state = { list: [] };
 
-    componentDidMount() {
-        this.props.getApplicationList(this.props.id);
+  componentDidMount() {
+    this.props.getApplicationList(this.props.id);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) this.props.getApplicationList(this.props.id);
+    if (prevProps.data !== this.props.data && this.props.data && this.props.data.list) {
+      this.setState({ list: this.props.data.list.data || [] });
     }
+  }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.id !== prevProps.id) {
-            this.props.getApplicationList(this.props.id);
-        }
-        if (prevProps.data !== this.props.data) {
-            this.setState({list: this.props.data.list.data});
-        }
-    }
+  formatDate = value => {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '—';
+    return `${dDigit(date.getDate())}.${dDigit(date.getMonth() + 1)}.${date.getFullYear()}`;
+  };
 
-    renderListOfRequester = (list, name) => {
-        if (list.length === 0) {
-            return <tr>
-                <td><Translate content="placeholder.noCreditRequests"/></td>
-            </tr>;
-        }
-        return list.map((data, index) => {
-            let date = new Date(data.deadline)
-            return (
-                <tr key={index}>
-                    <td>
-                        {data.status === 'invested' ?
-                            <Link to={{
-                                pathname: '/creditor/detail', state:
-                                    {
-                                        productId: this.props.id,
-                                        appId: data.id
-                                    }
-                            }}>
-                                {data.requested_by}
-                            </Link>
-                            :
-                            <Link to={{
-                                pathname: '/application',
-                                state: {pId: this.props.id, aId: data.id, product: name}
-                            }}>
-                                {data.requested_by}
-                            </Link>
-                        }
-                    </td>
-                    <td>
-            <span>{dDigit(date.getDate())}.
-                {`${dDigit(date.getMonth() + 1)}.${date.getFullYear()}`}</span>
-                    </td>
-                    <td>
-                        <span>{data.duration} Months</span>
-                    </td>
-                    <td className="text-right-piehub-table font-weight-bold">
-                        <ToEuro amount={data.requested_amount}/>
-                    </td>
-                    <td className="text-right-piehub-table font-weight-bold">
-                        {data.status === 'rejected' ? <span className="badge badge-warning">Abgelehnt</span> :
-                            <span className="badge badge-success">In Bearbeitung</span>}
-                    </td>
+  renderStatus = status => {
+    const meta = matchesInvestorStatus[status];
+    return meta
+      ? <span className={`badge ${meta.class}`}><Translate content={meta.translation_key} /></span>
+      : <span className="badge badge-light">{status || '—'}</span>;
+  };
 
-                    {
-                        this.props.errMsg ? (
-                            <small>
-                                <font/>
-                                {this.props.errMsg.error}
-                            </small>
-                        ) : null
-                    }
-                </tr>
-            );
-        });
-    };
-
-    render() {
-        return (
-            <div className="requests mt-5">
-                {/* <h4>Credit Requests</h4> */}
-                <Translate content='label.creditrequests' component="h4"/>
-                <hr/>
-                <table
-                    className="table tablesaw-stack"
-                    data-tablesaw-mode="stack"
-                    data-tablesaw-minimap="data-tablesaw-minimap"
-                >
-                    <thead>
-                    <tr>
-                        <th data-tablesaw-sortable-col="data-tablesaw-sortable-col">
-                            <Translate content='label.Kreditorname'/>
-                        </th>
-                        <th
-                            data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                            scope="col"
-                        >
-                            <Translate content='label.deadline'/>
-                            {/* Fristablauf */}
-                        </th>
-                        <th
-                            data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                            scope="col"
-                        >
-                            <Translate content='label.timeduration'/>
-                            {/* Laufzeil */}
-                        </th>
-                        <th
-                            className="text-left text-md-right"
-                            data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                            scope="col"
-                        >
-                            <Translate content='column.investedamount'/>
-                            {/* Kreditbetrag */}
-                        </th>
-                        <th
-                            className="text-left text-md-right"
-                            data-tablesaw-sortable-col="data-tablesaw-sortable-col"
-                            scope="col"
-                        >
-                            <Translate content='column.status'/>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>{this.renderListOfRequester(this.state.list, this.props.name)}</tbody>
-                </table>
+  renderList = (list, name) => {
+    if (!list.length) {
+      return (
+        <tr>
+          <td colSpan="5">
+            <div className="data-empty data-empty-compact">
+              <strong><Translate content="placeholder.noCreditRequests" /></strong>
             </div>
-        );
+          </td>
+        </tr>
+      );
     }
+
+    return list.map(data => {
+      const target = data.status === 'invested'
+        ? { pathname: '/creditor/detail', state: { productId: this.props.id, appId: data.id } }
+        : { pathname: '/application', state: { pId: this.props.id, aId: data.id, product: name } };
+
+      return (
+        <tr key={data.id}>
+          <td><Link className="entity-title" to={target}>{data.requested_by}</Link><small className="entity-meta">#{data.id}</small></td>
+          <td className="data-nowrap mono-value">{this.formatDate(data.deadline)}</td>
+          <td className="data-nowrap"><span className="mono-value">{data.duration}</span> <Translate content="label.months" /></td>
+          <td className="data-nowrap money-value"><ToEuro amount={data.requested_amount} /></td>
+          <td>{this.renderStatus(data.status)}</td>
+        </tr>
+      );
+    });
+  };
+
+  render() {
+    const isGerman = Translator.getLocale() === 'de';
+    const list = this.state.list;
+
+    return (
+      <section className="table-shell requested-by-shell" data-motion="table-shell" aria-label={isGerman ? 'Kreditanfragen' : 'Credit requests'}>
+        <div className="table-caption">
+          <div>
+            <strong><Translate content="label.creditrequests" /></strong>
+            <span>{list.length} {isGerman ? 'Anfragen für dieses Produkt' : 'requests for this product'}</span>
+          </div>
+          <small>EUR</small>
+        </div>
+        <div className="table-scroll">
+          <table className="table" data-tablesaw-mode="stack">
+            <thead>
+              <tr>
+                <th><Translate content="label.Kreditorname" /></th>
+                <th><Translate content="label.deadline" /></th>
+                <th><Translate content="label.timeduration" /></th>
+                <th><Translate content="column.requestedamount" /></th>
+                <th><Translate content="column.status" /></th>
+              </tr>
+            </thead>
+            <tbody>{this.renderList(list, this.props.name)}</tbody>
+          </table>
+        </div>
+        {this.props.errMsg && this.props.errMsg.error ? <div className="inline-error" role="alert">{this.props.errMsg.error}</div> : null}
+      </section>
+    );
+  }
 }
 
 function mapStateToProps(state) {
-    return {data: state.applicationList, errMsg: state.error};
+  return { data: state.applicationList, errMsg: state.error };
 }
 
-export default connect(
-    mapStateToProps,
-    {getApplicationList, changeStatus}
-)(withRouter(RequestedByList));
+export default connect(mapStateToProps, { getApplicationList })(withRouter(RequestedByList));
