@@ -13,6 +13,31 @@ counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
 counterpart.setLocale(localStorage.getItem('language') || navigator.language.split('-')[0] || 'de');
 
+const getPageContext = pathname => {
+  if (pathname === '/products' || pathname === '/' || pathname === '/product' || pathname === '/edit-product') {
+    return { icon: 'bx bx-grid-alt', label: 'sidebar.products' };
+  }
+  if (pathname === '/credit-request' || pathname === '/application') {
+    return { icon: 'bx bx-receipt', label: 'label.creditrequests' };
+  }
+  if (pathname === '/products-invested' || pathname === '/creditor/detail') {
+    return { icon: 'bx bx-line-chart', label: 'sidebar.invested_products' };
+  }
+  if (pathname === '/add-product') {
+    return { icon: 'bx bx-plus-circle', label: 'button.addnewproduct' };
+  }
+  if (pathname === '/notifications') {
+    return { icon: 'bx bx-bell', label: 'label.notifications' };
+  }
+  if (pathname === '/user/profile') {
+    return { icon: 'bx bx-user', label: 'label.profile' };
+  }
+  if (pathname === '/user/edit-profile') {
+    return { icon: 'bx bx-edit', label: 'label.editprofile' };
+  }
+  return { icon: 'bx bx-grid-alt', label: 'sidebar.product' };
+};
+
 class Header extends Component {
   state = { language: localStorage.getItem('language') || navigator.language.split('-')[0] || 'de' };
 
@@ -27,22 +52,34 @@ class Header extends Component {
   }
 
   render() {
+    const context = getPageContext(this.props.location.pathname);
+
     return (
       <header className="site-header">
         <div className="header-context" data-motion="header-context">
-          <span className="header-context-mark" aria-hidden="true" />
-          <div className="header-context-copy">
-            <small>Private capital workspace</small>
-            <strong>Investor operations</strong>
-          </div>
+          <span className="header-context-icon" aria-hidden="true">
+            <i className={context.icon} />
+          </span>
+          <span className="header-context-copy">
+            <small>Workspace</small>
+            <strong><Translate content={context.label} /></strong>
+          </span>
         </div>
 
         <nav className="header-actions" aria-label="Account actions">
           <ul>
             <li>
               <ul className="language-changer" aria-label="Language">
-                <li><button type="button" onClick={() => this.onChange('en')} aria-pressed={this.state.language === 'en'}><img src="/assets/img/gb.svg" alt="" />EN</button></li>
-                <li><button type="button" onClick={() => this.onChange('de')} aria-pressed={this.state.language === 'de'}><img src="/assets/img/de.svg" alt="" />DE</button></li>
+                <li>
+                  <button type="button" onClick={() => this.onChange('en')} aria-pressed={this.state.language === 'en'}>
+                    <img src="/assets/img/gb.svg" alt="" />EN
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onClick={() => this.onChange('de')} aria-pressed={this.state.language === 'de'}>
+                    <img src="/assets/img/de.svg" alt="" />DE
+                  </button>
+                </li>
               </ul>
             </li>
             <li className="header-actions__item">
@@ -59,7 +96,9 @@ class Header extends Component {
                 <Link className="dropdown-item" to="/user/profile"><Translate content="label.profile" /></Link>
                 <Link className="dropdown-item" to="/user/edit-profile"><Translate content="label.editprofile" /></Link>
                 <Link className="dropdown-item" to="/change-password"><Translate content="label.resetpassword" /></Link>
-                <button className="dropdown-item" type="button" onClick={() => this.props.logout(() => this.props.history.push('/login'))}><Translate content="label.logout" /></button>
+                <button className="dropdown-item" type="button" onClick={() => this.props.logout(() => this.props.history.push('/login'))}>
+                  <Translate content="label.logout" />
+                </button>
               </div>
             </li>
           </ul>
