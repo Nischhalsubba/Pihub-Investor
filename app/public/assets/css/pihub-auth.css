@@ -1,0 +1,67 @@
+.auth-world-wide-form { grid-template-columns: minmax(500px, 52%) minmax(0, 48%); }
+.auth-world-wide-form .auth-form-panel { align-items: flex-start; min-height: 100vh; padding-top: 42px; padding-bottom: 42px; }
+.auth-card-wide { width: min(100%, 620px); }
+.auth-card-wide .auth-brand { margin-bottom: 34px; }
+.auth-signup-form { display: grid; gap: 0; }
+.auth-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.auth-phone-field > label { display: block; margin-bottom: 6px; color: var(--pi-text-secondary); font-size: 12px; font-weight: 500; }
+.auth-phone-field .react-tel-input { font-family: var(--pi-font-sans); }
+.auth-phone-field .react-tel-input .form-control {
+  width: 100%;
+  min-height: 50px;
+  padding-left: 48px;
+  border: 1px solid var(--pi-border-strong);
+  border-radius: 10px;
+  background: var(--pi-surface);
+  color: var(--pi-text);
+  font-family: var(--pi-font-sans);
+  font-size: 14px;
+  box-shadow: none;
+}
+.auth-phone-field .react-tel-input .form-control:focus { border-color: var(--pi-primary); box-shadow: 0 0 0 3px rgba(36, 87, 230, .12); }
+.auth-phone-field .react-tel-input .flag-dropdown { border: 1px solid var(--pi-border-strong); border-radius: 10px 0 0 10px; background: var(--pi-surface-subtle); }
+.auth-phone-field .react-tel-input .selected-flag { border-radius: 9px 0 0 9px; }
+.auth-terms { margin: 2px 0 12px; color: var(--pi-text-secondary); font-size: 12px; }
+.auth-error-list { margin: 0; padding-left: 18px; }
+.auth-error-list li + li { margin-top: 3px; }
+
+.auth-success {
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 22px 0;
+}
+.auth-success-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+  border: 1px solid #c6ead4;
+  border-radius: 12px;
+  background: var(--pi-success-bg);
+  color: var(--pi-success);
+}
+.auth-success-icon i { font-size: 24px; }
+.auth-success h2 { margin: 0; color: var(--pi-text); font-size: 20px; font-weight: 600; }
+.auth-success p { max-width: 440px; margin: 8px 0 0; color: var(--pi-text-secondary); font-size: 13px; line-height: 1.6; }
+.auth-success .btn { margin-top: 20px; }
+
+.auth-world-no-visual { display: block; background: var(--pi-bg); }
+.auth-world-no-visual .auth-form-panel { min-height: 100vh; }
+
+@media (max-width: 960px) {
+  .auth-world-wide-form { grid-template-columns: minmax(450px, 56%) minmax(0, 44%); }
+}
+
+@media (max-width: 820px) {
+  .auth-world-wide-form { display: block; }
+  .auth-world-wide-form .auth-form-panel { padding-top: 32px; padding-bottom: 32px; }
+}
+
+@media (max-width: 560px) {
+  .auth-form-grid { grid-template-columns: 1fr; gap: 0; }
+  .auth-card-wide { width: 100%; }
+}
