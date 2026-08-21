@@ -1,0 +1,97 @@
+.signup-progress {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+}
+.signup-progress li {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--pi-text-tertiary);
+}
+.signup-progress li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: calc(100% - 1px);
+  top: 14px;
+  width: 9px;
+  height: 1px;
+  background: var(--pi-border);
+}
+.signup-progress-marker {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border: 1px solid var(--pi-border-strong);
+  border-radius: 8px;
+  background: var(--pi-surface);
+  color: var(--pi-text-tertiary);
+  font-family: var(--pi-font-mono);
+  font-size: 10px;
+  font-weight: 500;
+}
+.signup-progress-label {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.signup-progress li.is-current { color: var(--pi-text); }
+.signup-progress li.is-current .signup-progress-marker { border-color: #9db6fb; background: #eef3ff; color: var(--pi-primary); box-shadow: 0 0 0 3px rgba(36, 87, 230, .08); }
+.signup-progress li.is-complete { color: var(--pi-text-secondary); }
+.signup-progress li.is-complete .signup-progress-marker { border-color: #b7e5c8; background: var(--pi-success-bg); color: var(--pi-success); }
+.signup-progress li.is-complete::after { background: #b7e5c8; }
+
+.auth-status-card {
+  min-height: 180px;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 18px;
+  border: 1px solid var(--pi-border);
+  border-radius: var(--pi-radius-md);
+  background: var(--pi-surface-subtle);
+}
+.auth-status-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #c6dfff;
+  border-radius: 11px;
+  background: var(--pi-info-bg);
+  color: var(--pi-info);
+}
+.auth-status-icon i { font-size: 22px; }
+.auth-status-card h2 { margin: 1px 0 6px; color: var(--pi-text); font-size: 17px; font-weight: 600; }
+.auth-status-card p { max-width: 460px; margin: 0; color: var(--pi-text-secondary); font-size: 12px; line-height: 1.6; }
+.auth-status-card p + p { margin-top: 7px; }
+.auth-status-card .btn { margin-top: 16px; }
+.auth-status-note { margin-top: 14px; color: var(--pi-text-tertiary); font-size: 11px; }
+.auth-status-note a { color: var(--pi-primary); font-weight: 500; }
+.auth-status-card-success .auth-status-icon { border-color: #b7e5c8; background: var(--pi-success-bg); color: var(--pi-success); }
+.auth-status-card-error .auth-status-icon { border-color: #efc3be; background: var(--pi-danger-bg); color: var(--pi-danger); }
+.auth-status-icon-spinner i { animation: pi-status-spin 1s linear infinite; }
+@keyframes pi-status-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 480px) {
+  .signup-progress { grid-template-columns: 1fr; gap: 7px; }
+  .signup-progress li:not(:last-child)::after { left: 14px; top: 28px; width: 1px; height: 8px; }
+  .signup-progress-label { white-space: normal; }
+  .auth-status-card { grid-template-columns: 1fr; min-height: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-status-icon-spinner i { animation: none; }
+}
