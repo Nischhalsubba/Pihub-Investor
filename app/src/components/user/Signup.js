@@ -7,196 +7,133 @@ import { signup } from '../../actions/signup';
 import { clearError } from '../../actions/clearError';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import ReactPhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/dist/style.css'
+import ReactPhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/dist/style.css';
 import Translate from 'react-translate-component';
-class Signup extends Component {
+import AuthShell from './AuthShell';
 
-  state = { phone: 'a' }
+const Translator = require('react-translate-component');
+
+class Signup extends Component {
+  state = { phone: '', phoneError: null };
+
   componentDidMount() {
     this.props.clearError();
-
   }
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.errMsg !== prevProps.errMsg) {
-  //     console.log(this.props.errMsg)
-  //   }
-  // }
-  onSubmit = formProps => {
 
-    this.props.signup(formProps, () => {
-      this.props.history.push('/signup/confirm-email');
-    });
-  };
-  handleOnChange = (value) => {
-    this.setState({ phone: value })
-  };
-  displayErrors = errors => {
-    if (errors && Array.isArray(errors)) {
-      return errors.map((err, index) => {
-        return (
-          <li className="d-flex mb-1" key={index}>
-            <img src="assets/img/icons/bx-check-circle.svg" alt="alt" />
-            <span className="pl-2 green-text">{err}</span>
-          </li>
-        );
-      })
+  onSubmit = formProps => {
+    const isGerman = Translator.getLocale() === 'de';
+    if (!this.state.phone) {
+      this.setState({ phoneError: isGerman ? 'Bitte geben Sie eine Telefonnummer ein.' : 'Please enter a phone number.' });
+      return;
     }
 
-  }
+    const payload = { ...formProps, phone_number: this.state.phone };
+    this.props.signup(payload, () => this.props.history.push('/signup/confirm-email'));
+  };
+
+  displayErrors = errors => {
+    if (!errors) return null;
+    const values = Array.isArray(errors) ? errors : Object.keys(errors).map(key => errors[key]).filter(Boolean);
+    if (!values.length) return null;
+    return (
+      <div className="auth-error" role="alert">
+        <ul className="auth-error-list">
+          {values.map((error, index) => <li key={`${error}-${index}`}>{error}</li>)}
+        </ul>
+      </div>
+    );
+  };
+
   render() {
     const { handleSubmit } = this.props;
+    const isGerman = Translator.getLocale() === 'de';
+
     return (
-      <div className="container-full-width">
-        <div className="panel-container">
-          <div className="feature-container feature-container--signup">
-            <img className="company-logo" src="/assets/img/logo.png" alt="company logo" />
-
-            <div className="feature-sidebar">
-              <div className="feature-ours">
-
-                <Translate content='label.theperfect' component="h3" className="feature-ours__title" />
-                <Translate content='label.atcredittech' component="h2" className="feature-ours__sub-title" />
-
-              </div>
+      <AuthShell
+        wide
+        eyebrow={isGerman ? 'Investorenzugang erstellen' : 'Create investor access'}
+        title={<Translate content="label.signupto" />}
+        description={<Translate content="label.enteryourdetails" />}
+        visualEyebrow={isGerman ? 'Ein Zugang, ein Arbeitsbereich' : 'One account, one workspace'}
+        visualTitle={isGerman ? 'Von der Kreditanfrage bis zur investierten Position.' : 'From credit request to invested position.'}
+        visualDescription={isGerman ? 'PiHub bündelt produktbezogene Prüfungen, Anfragen und Portfoliopositionen in einem konsistenten Arbeitsbereich.' : 'PiHub keeps product review, requests and portfolio positions in one consistent workspace.'}
+        proofItems={[
+          { label: isGerman ? 'Prüfen' : 'Review' },
+          { label: isGerman ? 'Entscheiden' : 'Decide' },
+          { label: isGerman ? 'Verfolgen' : 'Track' }
+        ]}
+      >
+        <form className="form-signin auth-signup-form" onSubmit={handleSubmit(this.onSubmit)} noValidate>
+          <div className="auth-form-grid">
+            <div className="form-group">
+              <Field name="fname" type="text" component={inputField} label={<Translate content="label.firstname" />} className="form-control" autoComplete="given-name" />
+            </div>
+            <div className="form-group">
+              <Field name="lname" type="text" component={inputField} label={<Translate content="label.lastname" />} className="form-control" autoComplete="family-name" />
             </div>
           </div>
-          <div className="main-container">
-            <div className="signup-form-container">
-              <header className="page-header">
-                {/* <h1 className="page-title">
-                  Sign Up to Credit Tech as an Investor
-                </h1> */}
-                <Translate content='label.signupto' component="h1" className="page-title" />
-                {/* <p className="page-desc">Enter your details below</p> */}
-                <Translate content='label.enteryourdetails' component="p" className="page-desc" />
-              </header>
-              <form
-                className="form-signup"
-                onSubmit={handleSubmit(this.onSubmit)}
-              >
-                <div className="row">
-                  <div className="col">
-                    <div className="form-group">
-                      <Field
-                        name="fname"
-                        type="text"
-                        component={inputField}
-                        label={<Translate content='label.firstname' />}
-                        className="form-control"
-                      />
-                    </div>
-                  </div>
 
-                  <div className="col">
-                    <div className="form-group">
-                      <Field
-                        name="lname"
-                        type="text"
-                        component={inputField}
-                        label={<Translate content='label.lastname' />}
-                        className="form-control"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <Field
-                    name="company_name"
-                    type="text"
-                    component={inputField}
-                    label={<Translate content='label.companyname' />}
-                    className="form-control"
-                  />
-                </div>
-                <div className="form-group">
-                  <Field
-                    name="email"
-                    type="email"
-                    component={inputField}
-                    label={<Translate content='label.emailaddress' />}
-                    className="form-control"
-                  />
-                </div>
-                <div className="form-group">
-                  <Field
-                    name="password"
-                    type="password"
-                    component={inputField}
-                    label={<Translate content='label.password' />}
-                    className="form-control"
-                  />
-                </div>
-                <div className="form-group">
-                  <Field
-                    name="password_confirmation"
-                    type="password"
-                    component={inputField}
-                    label={<Translate content='label.confirmpassword' />}
-                    className="form-control"
-                  />
-                </div>
-                <div className="form-group">
+          <div className="form-group">
+            <Field name="company_name" type="text" component={inputField} label={<Translate content="label.companyname" />} className="form-control" autoComplete="organization" />
+          </div>
+          <div className="form-group">
+            <Field name="email" type="email" component={inputField} label={<Translate content="label.emailaddress" />} className="form-control" autoComplete="email" />
+          </div>
 
-                  <Translate content='label.phonenumber' component="label" />
-                  <ReactPhoneInput defaultCountry={'de'} regions={'europe'} value={this.state.phone} onChange={(value) => this.setState({ phone: value })} inputExtraProps={{
-                    name: 'phone',
-                    required: true,
-                    autoFocus: true
-                  }} />
-
-                </div>
-
-                <Field
-                  name="agreed_term"
-                  component={checkBox}
-                  type="checkbox"
-                />
-                {this.props.errMsg ? <ul className="p-0 mt-2">{this.displayErrors(this.props.errMsg)}</ul> : null}
-                <Translate content='button.signup' className="btn btn-primary btn-form" type="submit" component="button" />
-              </form>
-              <br />
-              {/* Already have an account ?  */}
-              <Translate content="label.alreadyhaveanaccount" />&nbsp;<Link to="/login"><strong><Translate content="label.login" /></strong></Link>
+          <div className="auth-form-grid">
+            <div className="form-group">
+              <Field name="password" type="password" component={inputField} label={<Translate content="label.password" />} className="form-control" autoComplete="new-password" />
+            </div>
+            <div className="form-group">
+              <Field name="password_confirmation" type="password" component={inputField} label={<Translate content="label.confirmpassword" />} className="form-control" autoComplete="new-password" />
             </div>
           </div>
+
+          <div className="form-group auth-phone-field">
+            <Translate content="label.phonenumber" component="label" />
+            <ReactPhoneInput
+              defaultCountry="de"
+              regions="europe"
+              value={this.state.phone}
+              onChange={phone => this.setState({ phone, phoneError: null })}
+              inputExtraProps={{ name: 'phone_number', required: true, autoComplete: 'tel' }}
+            />
+            {this.state.phoneError ? <div className="error-text" role="alert">{this.state.phoneError}</div> : null}
+          </div>
+
+          <div className="auth-terms"><Field name="agreed_term" component={checkBox} type="checkbox" /></div>
+
+          {this.displayErrors(this.props.errMsg)}
+          <Translate content="button.signup" className="btn btn-primary btn-form" type="submit" component="button" />
+        </form>
+
+        <div className="auth-foot">
+          <Translate content="label.alreadyhaveanaccount" />&nbsp;
+          <Link to="/login"><strong><Translate content="label.login" /></strong></Link>
         </div>
-      </div >
+      </AuthShell>
     );
   }
 }
+
 function validate(values) {
   const errors = {};
   errors.fname = validation.required(values.fname);
   errors.lname = validation.required(values.lname);
-  // errors.company_name = validation.required(values.company_name);
-  errors.email = validation.newEmail(values.email);
-
-  if (!values.email) {
-    errors.email = '* Required';
-  }
-  errors.password = validation.required(values.password);
-  errors.password = validation.password(values.password)
-  errors.confirm_password = validation.required(values.password_confirmation);
-  if (values.password !== values.password_confirmation) {
-    errors.password_confirmation = '* Password Mismatch';
-  }
-  errors.phone_number = validation.phoneNumber(values.phone_number);
-  if (!values.agreed_term) {
-    errors.agreed_term = '* Please accept Terms and Conditions';
-  }
+  errors.email = values.email ? validation.newEmail(values.email) : '* Required';
+  errors.password = validation.required(values.password) || validation.password(values.password);
+  if (!values.password_confirmation) errors.password_confirmation = '* Required';
+  else if (values.password !== values.password_confirmation) errors.password_confirmation = '* Password Mismatch';
+  if (!values.agreed_term) errors.agreed_term = '* Please accept Terms and Conditions';
   return errors;
 }
+
 function mapStateToProps(state) {
-  return { errMsg: state.errors }
+  return { errMsg: state.errors };
 }
+
 export default compose(
-  connect(
-    mapStateToProps,
-    { signup, clearError }
-  ),
-  reduxForm({
-    validate,
-    form: 'signup'
-  })
+  connect(mapStateToProps, { signup, clearError }),
+  reduxForm({ validate, form: 'signup' })
 )(Signup);
