@@ -11,14 +11,10 @@ import de from '../../_locale/de';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
-counterpart.setLocale(
-  localStorage.getItem('language') || navigator.language.split('-')[0] || 'de'
-);
+counterpart.setLocale(localStorage.getItem('language') || navigator.language.split('-')[0] || 'de');
 
 class Header extends Component {
-  state = {
-    language: localStorage.getItem('language') || navigator.language.split('-')[0] || 'de'
-  };
+  state = { language: localStorage.getItem('language') || navigator.language.split('-')[0] || 'de' };
 
   onChange = language => {
     counterpart.setLocale(language);
@@ -33,23 +29,20 @@ class Header extends Component {
   render() {
     return (
       <header className="site-header">
-        <Link className="logo-container" to="/products" aria-label="Pihub Investor home">
-          <img src="/assets/img/logo.png" alt="Pihub" />
-        </Link>
+        <div className="header-context" data-motion="header-context">
+          <span className="header-context-mark" aria-hidden="true" />
+          <div className="header-context-copy">
+            <small>Private capital workspace</small>
+            <strong>Investor operations</strong>
+          </div>
+        </div>
+
         <nav className="header-actions" aria-label="Account actions">
           <ul>
             <li>
               <ul className="language-changer" aria-label="Language">
-                <li>
-                  <button type="button" onClick={() => this.onChange('en')} aria-pressed={this.state.language === 'en'}>
-                    <img src="/assets/img/gb.svg" alt="" />English
-                  </button>
-                </li>
-                <li>
-                  <button type="button" onClick={() => this.onChange('de')} aria-pressed={this.state.language === 'de'}>
-                    <img src="/assets/img/de.svg" alt="" />Deutsch
-                  </button>
-                </li>
+                <li><button type="button" onClick={() => this.onChange('en')} aria-pressed={this.state.language === 'en'}><img src="/assets/img/gb.svg" alt="" />EN</button></li>
+                <li><button type="button" onClick={() => this.onChange('de')} aria-pressed={this.state.language === 'de'}><img src="/assets/img/de.svg" alt="" />DE</button></li>
               </ul>
             </li>
             <li className="header-actions__item">
@@ -66,9 +59,7 @@ class Header extends Component {
                 <Link className="dropdown-item" to="/user/profile"><Translate content="label.profile" /></Link>
                 <Link className="dropdown-item" to="/user/edit-profile"><Translate content="label.editprofile" /></Link>
                 <Link className="dropdown-item" to="/change-password"><Translate content="label.resetpassword" /></Link>
-                <button className="dropdown-item" type="button" onClick={() => this.props.logout(() => this.props.history.push('/login'))}>
-                  <Translate content="label.logout" />
-                </button>
+                <button className="dropdown-item" type="button" onClick={() => this.props.logout(() => this.props.history.push('/login'))}><Translate content="label.logout" /></button>
               </div>
             </li>
           </ul>
@@ -82,7 +73,4 @@ function mapStateToProps(state) {
   return { count: state.notificationCount, language: state.language };
 }
 
-export default connect(
-  mapStateToProps,
-  { getNotificationCount, logout, changeLanguage }
-)(withRouter(Header));
+export default connect(mapStateToProps, { getNotificationCount, logout, changeLanguage })(withRouter(Header));
