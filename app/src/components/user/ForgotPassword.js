@@ -1,88 +1,81 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { inputField } from '../../_formFields'
+import { Link } from 'react-router-dom';
+import { inputField } from '../../_formFields';
 import { getTokenForEmail } from '../../actions/password';
+import * as validation from '../../_utils/validate';
 import Translate from 'react-translate-component';
+import AuthShell from './AuthShell';
+
+const Translator = require('react-translate-component');
+
 class ForgotPassword extends Component {
-  state = { submit: false, email: null }
+  state = { submitted: false, email: null };
+
   onSubmit = formProps => {
-    this.props.getTokenForEmail(formProps, () => {
-      this.setState({ submit: true, email: formProps.email })
-    })
-  }
+    this.props.getTokenForEmail(formProps, () => this.setState({ submitted: true, email: formProps.email }));
+  };
+
+  renderError = error => {
+    if (!error) return null;
+    const message = Array.isArray(error) ? error.join(' ') : (error.errors || error.error || String(error));
+    return <div className="auth-error" role="alert">{message}</div>;
+  };
+
   render() {
     const { handleSubmit } = this.props;
-    if (this.state.submit) {
-      return (
-        <Fragment>
-          <img className="company-logo company-logo-email" src="./assets/img/logo.png" alt="company logo" />
-          <div className="container-full-height text-centerd d-flex">
-            <div className="content m-auto">
-              <div className="email-content text-center w-75 m-auto">
-                <img src="./assets/img/icons/mail.png" alt="Mail icon" />
-                <h3>We just sent you an email</h3>
-                <p>An Email with an instructions to reset your email has been sent to
-                 <b>{this.state.email}</b>
-                </p>
-              </div>
-            </div>
-          </div>
-        </Fragment>
-      );
-    } else {
-      return (
-        <Fragment>
-          <Fragment>
-            <img className="company-logo company-logo-email" src="./assets/img/logo.png" alt="company logo" />
-            <div className="container-full-height text-centerd d-flex">
-              <div className="content m-auto">
-                <div className="email-content">
-                  <div className="w-75 m-auto text-center">
-                    <img src="./assets/img/icons/activated.png" alt="Mail icon" />
-                    <h3>
-                      <Translate content="label.forgotPassword"/>
-                    </h3>
-                    <p><Translate content="label.enterEmailForgotten"/></p>
-                  </div>
-                  <div className="w-75 m-auto">
-                    <form className="form-signin" onSubmit={handleSubmit(this.onSubmit)}>
-                      <div className="form-group text-left w-75">
-                        {/* <label htmlFor="email-address">Email Address</label>
-                        <input className="form-control" type="email" name="email-address" /> */}
-                        <Field
-                          type='email'
-                          name='email'
-                          component={inputField}
-                          className='form-control'
-                          placeholder='Email'
-                        />
-                      </div>
-                      {this.props.errMsg ? this.displayErrors(this.props.errMsg) : null}
-                      <button className="btn btn-primary btn-form" type="submit">
-                        Submit
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Fragment>
-        </Fragment>
-      );
-    }
+    const isGerman = Translator.getLocale() === 'de';
 
+    return (
+      <AuthShell
+        eyebrow={isGerman ? 'Kontowiederherstellung' : 'Account recovery'}
+        title={<Translate content="label.forgotPassword" />}
+        description={isGerman ? 'Geben Sie die E-Mail-Adresse Ihres Kontos ein. Wir senden Ihnen einen Link zum Zurücksetzen des Passworts.' : 'Enter the email address associated with your account. We will send you a password-reset link.'}
+        visualEyebrow={isGerman ? 'Sicherer Wiederzugang' : 'Secure recovery'}
+        visualTitle={isGerman ? 'Zugriff wiederherstellen, ohne den Arbeitsfluss zu verlieren.' : 'Restore access without losing your workflow.'}
+        visualDescription={isGerman ? 'Der Wiederherstellungsprozess ändert nur Ihre Zugangsdaten. Ihre Investorendaten und Arbeitsbereiche bleiben erhalten.' : 'Recovery changes only your access credentials. Your investor data and workspaces remain unchanged.'}
+        proofItems={[{ label: isGerman ? 'E-Mail' : 'Email' }, { label: isGerman ? 'Link' : 'Reset link' }, { label: isGerman ? 'Zugang' : 'Access' }]}
+      >
+        {this.state.submitted ? (
+          <div className="auth-success" role="status" aria-live="polite">
+            <span className="auth-success-icon" aria-hidden="true"><i className="bx bx-envelope" /></span>
+            <h2>{isGerman ? 'E-Mail gesendet' : 'Email sent'}</h2>
+            <p>
+              {isGerman ? 'Anweisungen zum Zurücksetzen des Passworts wurden an ' : 'Password-reset instructions were sent to '}
+              <strong>{this.state.email}</strong>.
+            </p>
+            <Link className="btn btn-secondary" to="/login">{isGerman ? 'Zurück zur Anmeldung' : 'Back to login'}</Link>
+          </div>
+        ) : (
+          <form className="form-signin" onSubmit={handleSubmit(this.onSubmit)} noValidate>
+            <div className="form-group">
+              <Field
+                type="email"
+                name="email"
+                component={inputField}
+                className="form-control"
+                label={<Translate content="label.emailaddress" />}
+                validate={[validation.required, validation.newEmail]}
+                autoComplete="email"
+              />
+            </div>
+            {this.renderError(this.props.errMsg)}
+            <button className="btn btn-primary btn-form" type="submit">{isGerman ? 'Reset-Link senden' : 'Send reset link'}</button>
+            <div className="auth-foot"><Link to="/login">{isGerman ? 'Zurück zur Anmeldung' : 'Back to login'}</Link></div>
+          </form>
+        )}
+      </AuthShell>
+    );
   }
 }
 
+function mapStateToProps(state) {
+  return { errMsg: state.errors || state.error };
+}
 
 export default compose(
-  connect(
-    null,
-    { getTokenForEmail }
-  ),
-  reduxForm({
-    form: 'forgotPassword'
-  })
+  connect(mapStateToProps, { getTokenForEmail }),
+  reduxForm({ form: 'forgotPassword' })
 )(ForgotPassword);
