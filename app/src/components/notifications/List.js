@@ -27,11 +27,12 @@ class Notifications extends Component {
 
   renderNotification = notifications => {
     if (!notifications.length) {
+      const isGerman = Translator.getLocale() === 'de';
       return (
         <li className="notification-empty">
           <i className="bx bx-bell-off" aria-hidden="true" />
-          <strong><Translate content="label.youdont" /></strong>
-          <span>{Translator.getLocale() === 'de' ? 'Neue Benachrichtigungen erscheinen hier.' : 'New notifications will appear here.'}</span>
+          <strong>{isGerman ? 'Keine neuen Benachrichtigungen' : 'No new notifications'}</strong>
+          <span>{isGerman ? 'Neue Benachrichtigungen erscheinen hier.' : 'New notifications will appear here.'}</span>
         </li>
       );
     }
