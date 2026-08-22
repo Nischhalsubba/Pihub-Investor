@@ -1,0 +1,298 @@
+/* PiHub Investor UI QA hardening — applied last in the cascade.
+   Purpose: correct legacy cascade collisions, restore readable analytical density,
+   and keep the approved non-template visual language intact. */
+
+:root {
+  --ap-sidebar: 244px;
+  --ap-topbar: 62px;
+  /* Small analytical labels still need WCAG AA contrast. */
+  --ap-ink-500: #5f6d83;
+  --ap-ink-400: #657286;
+}
+
+html { font-size: 16px; }
+body { font-size: 14px; line-height: 1.5; }
+
+/* 1. Cascade isolation: legacy selectors must never repaint the whole nav. */
+.ap-sidebar .ap-nav > ul > li,
+.ap-sidebar .ap-nav > ul > li:hover,
+.ap-sidebar .ap-nav > ul > li.current-menu {
+  background: transparent !important;
+}
+.ap-sidebar .ap-nav > ul > li > ul { padding: 0 !important; }
+.ap-sidebar .ap-nav ul li ul li a::before { content: none !important; }
+.ap-sidebar .ap-nav.nav-sidebar li a.ap-nav-item {
+  padding: 0 18px !important;
+  color: #8fa0b8;
+}
+.ap-sidebar .ap-nav.nav-sidebar li.current-menu > a.ap-nav-item {
+  color: #f8faff;
+  background: linear-gradient(90deg, rgba(95,128,255,.10), rgba(95,128,255,0) 80%) !important;
+}
+
+/* 2. Shell and header: preserve alignment despite legacy float/flex rules. */
+.ap-workspace { padding-left: 30px !important; padding-right: 30px !important; }
+.ap-main { max-width: 1480px; padding-top: 30px; }
+.ap-topbar.site-header {
+  min-height: var(--ap-topbar);
+  margin-left: -30px;
+  margin-right: -30px;
+  padding-left: 30px;
+  padding-right: 30px;
+  grid-template-columns: minmax(220px, 1fr) auto !important;
+}
+.ap-topbar .ap-context { justify-self: start !important; margin: 0 !important; float: none !important; }
+.ap-topbar .ap-top-actions { justify-self: end !important; margin: 0 !important; float: none !important; }
+.ap-topbar .ap-context-code { font-size: 10px; }
+.ap-topbar .ap-context-copy small { font-size: 9px; }
+.ap-topbar .ap-context-copy strong { font-size: 13px; }
+.ap-command-trigger { height: 38px; min-width: 210px; font-size: 11px; }
+.ap-command-trigger kbd { font-size: 9px; }
+.ap-language.language-changer button { min-width: 40px; min-height: 36px; font-size: 10px; }
+.ap-icon-btn.header-notification,
+.ap-user-button.dropdown-toggle { width: 38px; height: 38px; }
+
+/* 3. Sidebar: readable labels, stable active state, proper targets. */
+.ap-brand.sidebar-brand { min-height: 76px; height: 76px; }
+.ap-brand-copy strong { font-size: 13px; }
+.ap-brand-copy small { font-size: 9px; }
+.ap-nav-meta.sidebar-section-label { font-size: 9px; padding-top: 22px; }
+.ap-nav.nav-sidebar li a.ap-nav-item { min-height: 52px; }
+.ap-nav-label { font-size: 12px; }
+.ap-nav-index { font-size: 9px; }
+.ap-nav-action.sidebar-action { min-height: 44px; font-size: 11px; }
+.ap-system-line { font-size: 9px; }
+
+/* 4. Page hierarchy: analytical, not miniature. */
+.ap-page-head.content-head { grid-template-columns: 58px minmax(0, 1fr) auto; gap: 20px; padding-bottom: 26px; }
+.ap-folio { min-height: 56px; font-size: 8px; }
+.ap-folio b { font-size: 11px; }
+.ap-page-title .content-head-kicker { font-size: 9px; }
+.ap-page-title .content-head__title { font-size: clamp(28px, 2.4vw, 36px); line-height: 1.08; }
+.ap-page-title .content-head-copy { margin-top: 8px; font-size: 12px; line-height: 1.55; }
+.ap-primary.btn,
+.btn.btn-primary { min-height: 42px; padding: 0 15px; font-size: 10px; }
+
+/* 5. Summary tape + query controls. */
+.ap-capital-tape { min-height: 98px; margin-bottom: 20px; }
+.ap-metric { padding: 16px 18px 14px; }
+.ap-metric-label { font-size: 9px; }
+.ap-metric-label i { width: 5px; height: 5px; }
+.ap-metric strong { margin-top: 9px; font-size: 27px; }
+.ap-metric strong.ap-metric-money { font-size: 20px; }
+.ap-metric strong.ap-metric-date { font-size: 18px; }
+.ap-metric small { margin-top: 7px; font-size: 10px; }
+.ap-query-line { min-height: 58px; margin-bottom: 18px; grid-template-columns: 54px minmax(260px, 1fr) auto auto; gap: 14px; }
+.ap-query-index { font-size: 9px; }
+.ap-query-input i { font-size: 17px; }
+.ap-query-input input { height: 40px; padding-left: 27px; font-size: 12px; }
+.ap-filter-tabs { gap: 18px; min-height: 40px; }
+.ap-filter-tabs button { min-height: 40px; font-size: 10px; }
+.ap-search-submit { height: 38px; padding: 0 14px; font-size: 9px; }
+
+/* 6. Opportunity ledger + inspector. */
+.ap-board-grid { grid-template-columns: minmax(0, 1fr) 330px; }
+.ap-ledger-caption,
+.ap-section-rule { min-height: 56px; padding-top: 10px; padding-bottom: 10px; }
+.ap-ledger-caption strong,
+.ap-section-rule strong { font-size: 12px; }
+.ap-ledger-caption span,
+.ap-section-rule span { font-size: 10px; }
+.ap-ledger-caption small,
+.ap-section-rule small { font-size: 8px; }
+.ap-ledger-head,
+.ap-ledger-row { grid-template-columns: minmax(185px, 1.35fr) .95fr .86fr .68fr 1.02fr .72fr 24px; gap: 12px; }
+.ap-ledger-head { min-height: 38px; font-size: 8px; }
+.ap-ledger-row { min-height: 68px; padding-top: 10px; padding-bottom: 10px; font-size: 11px; }
+.ap-issuer a { font-size: 12px; }
+.ap-issuer small,
+.ap-queue-primary small,
+.ap-position-main small { margin-top: 5px; font-size: 9px; }
+.ap-sector { gap: 7px; }
+.ap-status { font-size: 9px; }
+.ap-row-arrow { font-size: 18px; }
+.ap-ledger-pagination { min-height: 56px; }
+.ap-main .pagination .page-item .page-link,
+.ap-main .pagination a,
+.ap-main .pagination button { min-width: 36px; height: 36px; font-size: 10px; }
+.ap-inspector { padding: 18px 0 24px 20px; }
+.ap-inspector-kicker { font-size: 8px; }
+.ap-inspector h3 { margin-top: 9px; font-size: 18px; }
+.ap-inspector-id { font-size: 9px; }
+.ap-inspector-section { margin-top: 20px; padding-top: 13px; }
+.ap-inspector-section h4,
+.ap-profile-module h3,
+.ap-analysis-rail h3 { font-size: 11px; }
+.ap-data-pair { min-height: 36px; font-size: 10px; }
+.ap-data-pair b { font-size: 10px; }
+.ap-inspector-link { min-height: 40px; font-size: 10px; }
+.ap-inspector-empty { font-size: 11px; }
+
+/* 7. Requests, invested positions and profile modules. */
+.ap-queue-layout,
+.ap-position-layout { grid-template-columns: minmax(0, 1fr) 310px; gap: 28px; }
+.ap-queue-head,
+.ap-queue-row { gap: 12px; }
+.ap-queue-head { min-height: 38px; font-size: 8px; }
+.ap-queue-row { min-height: 64px; font-size: 10px; }
+.ap-queue-id { font-size: 9px; }
+.ap-queue-primary strong { font-size: 11px; }
+.ap-analysis-label { font-size: 8px; }
+.ap-analysis-block strong { font-size: 23px; }
+.ap-analysis-block strong.ap-analysis-text { font-size: 12px; }
+.ap-analysis-block p { font-size: 10px; }
+.ap-maturity-row { min-height: 58px; }
+.ap-maturity-copy strong { font-size: 11px; }
+.ap-maturity-copy small { font-size: 9px; }
+.ap-maturity-row > .ap-mono { font-size: 10px; }
+.ap-position-head { min-height: 38px; font-size: 8px; }
+.ap-position-row { min-height: 64px; font-size: 10px; }
+.ap-position-main strong { font-size: 11px; }
+.ap-identity-name h2 { font-size: 22px; }
+.ap-identity-name p { font-size: 11px; }
+.ap-verified { font-size: 9px; }
+.ap-identity-cell label { font-size: 8px; }
+.ap-identity-cell strong,
+.ap-identity-cell a { font-size: 11px; }
+.ap-profile-links a { font-size: 10px; }
+
+/* 8. Legacy tables/forms still used by detail, edit, notifications and auth. */
+.ap-main .table { font-size: 12px; }
+.ap-main .table thead th { font-size: 9px; }
+.ap-main .badge { font-size: 9px; }
+.ap-main form.form-signup > .row { grid-template-columns: 46px repeat(2, minmax(0, 1fr)); gap: 16px; padding: 18px 0; }
+.ap-main form.form-signup > .row::before { font-size: 9px; }
+.ap-main .form-group > label,
+.ap-main .field-label,
+.ap-main form label strong { font-size: 9px; }
+.ap-main .form-control,
+.ap-main select.form-control,
+.ap-main textarea.form-control,
+.ap-main .rw-widget-input,
+.ap-main .choices__inner,
+.ap-main .react-select__control { min-height: 44px; font-size: 13px; }
+.ap-main textarea.form-control { min-height: 112px; }
+.ap-main form.form-signup .btn[type="submit"],
+.ap-main form.form-signup button[type="submit"] { min-height: 44px; }
+.auth-card .form-group label,
+.auth-phone-field > label { font-size: 9px; }
+.auth-card .form-control,
+.auth-phone-field .react-tel-input .form-control { min-height: 48px !important; font-size: 14px; }
+.auth-card .page-desc { font-size: 13px; }
+.auth-card .btn-form { min-height: 46px; font-size: 10px; }
+.auth-meta,
+.auth-foot,
+.auth-terms { font-size: 11px; }
+.auth-error { font-size: 11px; }
+.auth-visual-copy p { font-size: 12px; }
+.auth-visual-copy > span { font-size: 9px; }
+.auth-proof small { font-size: 8px; }
+
+/* 9. Accessibility / interaction hardening. */
+.ap-shell a,
+.ap-shell button,
+.ap-shell [role="button"],
+.ap-command-layer button { touch-action: manipulation; }
+.ap-ledger-row,
+.ap-queue-row,
+.ap-position-row { scroll-margin-top: 84px; }
+.ap-ledger,
+.ap-queue,
+.ap-position-list { overscroll-behavior-inline: contain; -webkit-overflow-scrolling: touch; }
+.ap-ledger-row:focus-visible,
+.ap-queue-row:focus-visible,
+.ap-position-row:focus-visible { outline: 2px solid var(--ap-signal) !important; outline-offset: -2px; }
+
+/* 10. Responsive QA breakpoints. */
+@media (max-width: 1320px) {
+  :root { --ap-sidebar: 216px; }
+  .ap-board-grid { grid-template-columns: 1fr; }
+  .ap-ledger { border-right: 0; }
+  .ap-inspector { border-top: 1px solid var(--ap-ink-950); padding: 18px 0 22px; display: grid; grid-template-columns: minmax(220px, .75fr) repeat(2, minmax(240px, 1fr)); gap: 0 26px; }
+  .ap-inspector > .ap-inspector-kicker,
+  .ap-inspector > h3,
+  .ap-inspector > .ap-inspector-id,
+  .ap-inspector > .ap-inspector-link { grid-column: 1; }
+  .ap-inspector > .ap-inspector-section { margin-top: 0; grid-row: 1 / span 4; }
+  .ap-inspector > .ap-inspector-section:nth-of-type(1) { grid-column: 2; }
+  .ap-inspector > .ap-inspector-section:nth-of-type(2) { grid-column: 3; }
+  .ap-queue-layout,
+  .ap-position-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 980px) {
+  :root { --ap-sidebar: 100%; --ap-topbar: 58px; }
+  .ap-workspace { padding-left: 18px !important; padding-right: 18px !important; }
+  .ap-topbar.site-header { margin-left: -18px; margin-right: -18px; padding-left: 18px; padding-right: 18px; }
+  .ap-main { padding-top: 24px; }
+  .ap-board-grid { display: block; }
+  .ap-ledger { overflow-x: auto; }
+  .ap-ledger-head,
+  .ap-ledger-row { min-width: 880px; }
+  .ap-inspector { display: block; }
+  .ap-inspector > .ap-inspector-section { margin-top: 18px; }
+  .ap-query-line { grid-template-columns: minmax(0, 1fr) auto; }
+  .ap-query-index { display: none; }
+  .ap-query-input { grid-column: 1; }
+  .ap-search-submit { grid-column: 2; }
+  .ap-filter-tabs { grid-column: 1 / -1; overflow-x: auto; padding-bottom: 2px; }
+}
+@media (max-width: 620px) {
+  body { font-size: 16px; }
+  .ap-workspace { padding-left: 12px !important; padding-right: 12px !important; }
+  .ap-topbar.site-header { margin-left: -12px; margin-right: -12px; padding-left: 10px; padding-right: 10px; }
+  .ap-page-head.content-head { grid-template-columns: 42px minmax(0, 1fr); gap: 12px; }
+  .ap-page-action { grid-column: 2; width: 100%; }
+  .ap-page-action .btn { width: 100%; }
+  .ap-page-title .content-head__title { font-size: 26px; }
+  .ap-page-title .content-head-copy { font-size: 13px; }
+  .ap-capital-tape { grid-template-columns: 1fr; }
+  .ap-metric { min-height: 82px; border-left: 0; border-top: 1px solid var(--ap-hair); }
+  .ap-metric:first-child { border-top: 0; }
+  .ap-query-line { display: flex; flex-wrap: wrap; gap: 10px; }
+  .ap-query-input { width: calc(100% - 86px); flex: 1 1 220px; }
+  .ap-query-input input,
+  .ap-main .form-control,
+  .ap-main select.form-control,
+  .ap-main textarea.form-control,
+  .ap-main .rw-widget-input,
+  .ap-main .choices__inner,
+  .auth-card .form-control,
+  .auth-phone-field .react-tel-input .form-control,
+  .ap-command-search input { font-size: 16px !important; }
+  .ap-search-submit { min-width: 76px; height: 44px; }
+  .ap-filter-tabs { width: 100%; gap: 20px; }
+  .ap-filter-tabs button { min-height: 44px; font-size: 11px; }
+  .ap-ledger-head,
+  .ap-ledger-row { min-width: 860px; }
+  .ap-ledger-row { font-size: 12px; }
+  .ap-ledger-head { font-size: 9px; }
+  .ap-main form.form-signup > .row { grid-template-columns: 34px minmax(0, 1fr); }
+  .ap-main form.form-signup > .row > [class*="col-"] { grid-column: 2 !important; }
+  .ap-main form.form-signup > .row > [class*="col-"] + [class*="col-"] { margin-top: 14px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ap-shell *,
+  .ap-shell *::before,
+  .ap-shell *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* Profile people, command palette and empty states were also below readable scale. */
+.ap-person { min-height: 50px; grid-template-columns: 32px minmax(0, 1fr); gap: 10px; }
+.ap-person-id { width: 30px; height: 30px; font-size: 9px; }
+.ap-person strong { font-size: 11px; }
+.ap-person a { margin-top: 3px; font-size: 10px; }
+.ap-note { font-size: 10px; line-height: 1.6; }
+.ap-command { width: min(620px, calc(100% - 32px)); }
+.ap-command-search { min-height: 54px; }
+.ap-command-search input { font-size: 13px; }
+.ap-command-search kbd,
+.ap-command-row kbd,
+.ap-command-footer { font-size: 9px; }
+.ap-command-section-label { font-size: 9px; }
+.ap-command-row { min-height: 52px; grid-template-columns: 52px minmax(0, 1fr) auto; }
+.ap-command-code { font-size: 9px; }
+.ap-command-copy strong { font-size: 11px; }
+.ap-command-copy small { font-size: 9px; }
+.ap-command-empty { font-size: 11px; }
+.ap-empty strong { font-size: 13px; }
+.ap-empty span { font-size: 11px; }
