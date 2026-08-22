@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import counterpart from 'counterpart';
 import en from './_locale/en';
 import de from './_locale/de';
+import { getStoredToken } from './_utils/authToken';
 
 import App from './components/App';
 import reducers from './reducers';
@@ -61,7 +62,7 @@ const store = createStore(
   reducers,
   {
     auth: {
-      authenticated: localStorage.getItem('token')
+      authenticated: getStoredToken()
     }
   },
   applyMiddleware(reduxThunk)
