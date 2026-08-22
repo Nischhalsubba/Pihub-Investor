@@ -1,5 +1,8 @@
-// const API_URL = process.env.REACT_APP_API_URL;
-let API_URL = 'http://api.credittech.diagonal.solutions/api'
+const API_URL =
+  process.env.NODE_ENV === 'production'
+    ? '/credittech-api'
+    : process.env.REACT_APP_API_URL || 'http://api.credittech.diagonal.solutions/api';
+
 export const routes = {
   login: `${API_URL}/login`,
   signup: `${API_URL}/register`,
