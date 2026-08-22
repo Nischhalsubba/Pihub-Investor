@@ -14,9 +14,30 @@ const getErrorMessage = (error, fallback) => {
     const data = error.response.data;
     if (typeof data.message === 'string') return data.message;
     if (typeof data.error === 'string') return data.error;
+    if (data.error && typeof data.error.message === 'string') return data.error.message;
     if (typeof data.errors === 'string') return data.errors;
   }
   return fallback;
+};
+
+const toDisplayText = value => {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'string' || typeof value === 'number') return String(value);
+  if (typeof value !== 'object') return '';
+  const candidates = [value.en, value.de, value.label, value.name, value.title];
+  for (let index = 0; index < candidates.length; index += 1) {
+    if (typeof candidates[index] === 'string' || typeof candidates[index] === 'number') return String(candidates[index]);
+  }
+  return '';
+};
+
+const extractDisplayNames = list => {
+  if (!Array.isArray(list)) return [];
+  return list.map(item => {
+    if (item && typeof item === 'object' && item.label !== undefined) return toDisplayText(item.label);
+    if (item && typeof item === 'object' && item.name !== undefined) return toDisplayText(item.name);
+    return toDisplayText(item);
+  }).filter(Boolean);
 };
 
 const normalizeProductsPayload = rawData => {
@@ -62,27 +83,12 @@ export const getProductsList = (page, status, product_title) => async dispatch =
     }
 
     const payload = normalizeProductsPayload(response ? response.data : null);
-    dispatch({
-      type: PRODUCTS_LIST,
-      payload
-    });
-    dispatch({
-      type: PAGINATION,
-      payload: payload.meta || {}
-    });
+    dispatch({ type: PRODUCTS_LIST, payload });
+    dispatch({ type: PAGINATION, payload: payload.meta || {} });
   } catch (e) {
-    dispatch({
-      type: PRODUCTS_LIST,
-      payload: { data: [], meta: {} }
-    });
-    dispatch({
-      type: PAGINATION,
-      payload: {}
-    });
-    dispatch({
-      type: ERROR,
-      payload: getErrorMessage(e, 'Unable to load products right now.')
-    });
+    dispatch({ type: PRODUCTS_LIST, payload: { data: [], meta: {} } });
+    dispatch({ type: PAGINATION, payload: {} });
+    dispatch({ type: ERROR, payload: getErrorMessage(e, 'Unable to load products right now.') });
   }
 };
 
@@ -98,58 +104,50 @@ export const addProduct = (details, callback) => async dispatch => {
     body.set('min_credit_amount', details.min_credit_amount);
     body.set('max_credit_amount', details.max_credit_amount);
     body.set('min_sales_creditor', details.min_sales_creditor);
-    if(details.files){
+    if (details.files) {
       details.files.map((file, index) => {
         body.append(`files[${index}]`, file);
         return file;
       });
-    }else{
+    } else {
       body.append('files', null);
     }
 
-    if (details.colatoral === 'true') {
-      body.set('collatoral', 1);
-    } else {
-      body.set('collatoral', 0);
-    }
-    if (details.credit === 'true') {
-      body.set('rating_for_credit', 1);
-    } else {
-      body.set('rating_for_credit', 0);
-    }
+    body.set('collatoral', details.colatoral === 'true' ? 1 : 0);
+    body.set('rating_for_credit', details.credit === 'true' ? 1 : 0);
     body.set('ratings', JSON.stringify(details.ratings));
     body.set('min_time_duration', details.min_duration);
     body.set('max_time_duration', details.max_duration);
 
     const response = await clientWithForm.post(routes.addProduct, body);
-    if (response) {
-      callback();
-    }
+    if (response) callback();
   } catch (e) {
-    dispatch({
-      type: ERROR,
-      payload: getErrorMessage(e, 'Unable to add product now')
-    });
+    dispatch({ type: ERROR, payload: getErrorMessage(e, 'Unable to add product now') });
   }
 };
 
 export const getProductById = id => async dispatch => {
   try {
     const response = await client.get(`${routes.getProductById}/${id}`);
-    let detail = response.data.data;
-    detail.states = extractNames(response.data.data.states);
-    detail.County = extractNames(response.data.data.counties);
-    detail.undefined = extractNames(response.data.data.industries);
-    detail.services = [{ value: response.data.data.service.id, label: response.data.data.service.name }];
-    dispatch({
-      type: SINGLE_PRODUCT,
-      payload: response.data.data
-    });
+    const raw = response && response.data && response.data.data;
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
+      throw new Error('Product detail response is empty.');
+    }
+
+    const detail = {
+      ...raw,
+      product_title: toDisplayText(raw.product_title) || 'Untitled product',
+      states: extractDisplayNames(raw.states),
+      County: extractDisplayNames(raw.counties),
+      undefined: extractDisplayNames(raw.industries),
+      services: raw.service
+        ? [{ value: raw.service.id, label: toDisplayText(raw.service.name) || toDisplayText(raw.service) || 'Service' }]
+        : []
+    };
+
+    dispatch({ type: SINGLE_PRODUCT, payload: detail });
   } catch (e) {
-    dispatch({
-      type: ERROR,
-      payload: getErrorMessage(e, 'Unable to load product details.')
-    });
+    dispatch({ type: ERROR, payload: getErrorMessage(e, 'Unable to load product details.') });
   }
 };
 
@@ -190,16 +188,8 @@ export const updateProduct = (details, id, callback) => async dispatch => {
     body.set('min_time_duration', details.min_time_duration);
     body.set('max_time_duration', details.max_time_duration);
 
-    if (details.colatoral === 'true') {
-      body.set('collatoral', 1);
-    } else {
-      body.set('collatoral', 0);
-    }
-    if (details.credit === 'true') {
-      body.set('rating_for_credit', 1);
-    } else {
-      body.set('rating_for_credit', 0);
-    }
+    body.set('collatoral', details.colatoral === 'true' ? 1 : 0);
+    body.set('rating_for_credit', details.credit === 'true' ? 1 : 0);
     body.append('ratings', JSON.stringify(details.ratings));
     if (details.files) {
       details.files.map((file, index) => {
@@ -210,41 +200,26 @@ export const updateProduct = (details, id, callback) => async dispatch => {
       body.append('files[0]', null);
     }
     const response = await clientWithForm.post(`${routes.addProduct}/${id}`, body);
-    if (response) {
-      callback();
-    }
+    if (response) callback();
   } catch (e) {
-    dispatch({
-      type: ERROR,
-      payload: getErrorMessage(e, 'Unable to edit product now')
-    });
+    dispatch({ type: ERROR, payload: getErrorMessage(e, 'Unable to edit product now') });
   }
 };
 
 export const deleteProduct = (id, callback) => async dispatch => {
   try {
     const response = await client.delete(`${routes.addProduct}/${id}`);
-    if (response) {
-      callback();
-    }
+    if (response) callback();
   } catch (e) {
-    dispatch({
-      type: ERROR,
-      payload: getErrorMessage(e, 'Unable to delete product now')
-    });
+    dispatch({ type: ERROR, payload: getErrorMessage(e, 'Unable to delete product now') });
   }
 };
 
 export const postponeProduct = (id, status, callback) => async dispatch => {
   try {
     const response = await client.put(`${routes.products}/${id}/status`, { action: status });
-    if (response) {
-      callback();
-    }
+    if (response) callback();
   } catch (e) {
-    dispatch({
-      type: ERROR,
-      payload: getErrorMessage(e, 'Unable to update product status now')
-    });
+    dispatch({ type: ERROR, payload: getErrorMessage(e, 'Unable to update product status now') });
   }
 };

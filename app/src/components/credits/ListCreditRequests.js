@@ -11,6 +11,20 @@ import { matchesInvestorStatus } from '../../_status';
 
 const Translator = require('react-translate-component');
 
+const toText = value => {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'string' || typeof value === 'number') return String(value);
+  if (typeof value !== 'object') return '';
+
+  const locale = Translator.getLocale();
+  const candidates = [value[locale], value.en, value.de, value.label, value.title, value.name];
+  for (let index = 0; index < candidates.length; index += 1) {
+    const candidate = candidates[index];
+    if (typeof candidate === 'string' || typeof candidate === 'number') return String(candidate);
+  }
+  return '';
+};
+
 class ListCreditRequests extends Component {
   componentDidMount() {
     this.props.getCreditRequestList(1);
@@ -23,13 +37,15 @@ class ListCreditRequests extends Component {
   };
 
   renderStatus = status => {
-    const meta = matchesInvestorStatus[status];
-    if (!meta) return <span className="badge badge-light">{status || '—'}</span>;
+    const normalizedStatus = toText(status);
+    const meta = matchesInvestorStatus[normalizedStatus];
+    if (!meta) return <span className="badge badge-light">{normalizedStatus || '—'}</span>;
     return <span className={`badge ${meta.class}`}><Translate content={meta.translation_key} /></span>;
   };
 
   renderData = data => {
-    if (!data.length) {
+    const rows = Array.isArray(data) ? data.filter(item => item && typeof item === 'object') : [];
+    if (!rows.length) {
       return (
         <tr>
           <td colSpan="6">
@@ -43,27 +59,35 @@ class ListCreditRequests extends Component {
       );
     }
 
-    return data.map(product => {
-      const detailPath = product.status === 'invested' ? '/creditor/detail' : '/application';
-      const detailState = product.status === 'invested'
-        ? { productId: product.product_id, appId: product.application_id }
-        : { pId: product.product_id, aId: product.application_id, product: product.name };
-      const rowKey = product.application_id || `${product.product_id}-${product.created_on}`;
+    return rows.map((product, index) => {
+      const status = toText(product.status);
+      const detailPath = status === 'invested' ? '/creditor/detail' : '/application';
+      const productId = product.product_id || product.id || '';
+      const applicationId = product.application_id || `DEMO-APP-${index + 1}`;
+      const productTitle = toText(product.product_title) || toText(product.name) || 'Untitled product';
+      const creditorName = toText(product.creditor_name) || toText(product.requested_by) || 'Demo creditor';
+      const serviceName = product.service && product.service.name !== undefined
+        ? toText(product.service.name)
+        : toText(product.service);
+      const detailState = status === 'invested'
+        ? { productId, appId: applicationId, pId: productId, aId: applicationId }
+        : { pId: productId, aId: applicationId, product: productTitle };
+      const rowKey = applicationId || `${productId}-${index}`;
 
       return (
         <tr key={rowKey}>
           <td>
-            <Link className="entity-title" to={{ pathname: detailPath, state: detailState }}>{product.creditor_name}</Link>
-            {product.application_id ? <small className="entity-meta">#{product.application_id}</small> : null}
+            <Link className="entity-title" to={{ pathname: detailPath, state: detailState }}>{creditorName}</Link>
+            {applicationId ? <small className="entity-meta">#{applicationId}</small> : null}
           </td>
           <td>
-            <Link to={{ pathname: '/product', state: { id: product.product_id } }}>{product.product_title}</Link>
-            <small className="entity-meta">#{product.product_id}</small>
+            <Link to={{ pathname: '/product', state: { id: productId } }}>{productTitle}</Link>
+            {productId ? <small className="entity-meta">#{productId}</small> : null}
           </td>
-          <td>{product.service ? product.service.name[Translator.getLocale()] : <Translate content="placeholder.notAvailable" />}</td>
+          <td>{serviceName || <Translate content="placeholder.notAvailable" />}</td>
           <td className="data-nowrap mono-value">{this.formatDate(product.created_on)}</td>
           <td className="data-nowrap mono-value">{this.formatDate(product.deadline)}</td>
-          <td>{this.renderStatus(product.status)}</td>
+          <td>{this.renderStatus(status)}</td>
         </tr>
       );
     });
@@ -74,8 +98,9 @@ class ListCreditRequests extends Component {
       return <div className="data-loading" role="status" aria-live="polite"><Spinner /></div>;
     }
 
-    const data = this.props.list.creditRequests.data || [];
-    const invested = data.filter(item => item.status === 'invested').length;
+    const rawData = this.props.list.creditRequests.data;
+    const data = Array.isArray(rawData) ? rawData.filter(item => item && typeof item === 'object') : [];
+    const invested = data.filter(item => toText(item.status) === 'invested').length;
 
     return (
       <Fragment>

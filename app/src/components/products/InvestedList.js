@@ -9,6 +9,20 @@ import { ToEuro } from '../general/CurrencyFormatter';
 
 const Translator = require('react-translate-component');
 
+const toText = value => {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'string' || typeof value === 'number') return String(value);
+  if (typeof value !== 'object') return '';
+
+  const locale = Translator.getLocale();
+  const candidates = [value[locale], value.en, value.de, value.label, value.title, value.name];
+  for (let index = 0; index < candidates.length; index += 1) {
+    const candidate = candidates[index];
+    if (typeof candidate === 'string' || typeof candidate === 'number') return String(candidate);
+  }
+  return '';
+};
+
 class InvestedList extends Component {
   state = { investments: null };
 
@@ -18,7 +32,8 @@ class InvestedList extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.investments !== this.props.investments && this.props.investments) {
-      this.setState({ investments: this.props.investments.list || [] });
+      const list = Array.isArray(this.props.investments.list) ? this.props.investments.list : [];
+      this.setState({ investments: list.filter(item => item && typeof item === 'object') });
     }
   }
 
@@ -26,6 +41,12 @@ class InvestedList extends Component {
     const amount = Number(investment.invested_amount);
     return total + (Number.isFinite(amount) ? amount : 0);
   }, 0);
+
+  formatDate = value => {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '—';
+    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+  };
 
   renderList = investments => {
     if (!investments.length) {
@@ -42,25 +63,27 @@ class InvestedList extends Component {
       );
     }
 
-    return investments.map(investment => {
-      const investedDate = new Date(investment.invested_on);
-      const rowKey = investment.application_id || `${investment.product_id}-${investment.invested_on}`;
+    return investments.map((investment, index) => {
+      const productId = investment.product_id || investment.id || '';
+      const applicationId = investment.application_id || `DEMO-APP-${index + 1}`;
+      const creditorName = toText(investment.creditor_name) || toText(investment.requested_by) || 'Demo creditor';
+      const productTitle = toText(investment.product_title) || toText(investment.name) || 'Untitled product';
+      const rowKey = applicationId || `${productId}-${index}`;
+
       return (
         <tr key={rowKey}>
           <td>
-            <Link className="entity-title" to={{ pathname: '/creditor/detail', state: { pId: investment.product_id, aId: investment.application_id } }}>
-              {investment.creditor_name}
+            <Link className="entity-title" to={{ pathname: '/creditor/detail', state: { pId: productId, aId: applicationId, productId, appId: applicationId } }}>
+              {creditorName}
             </Link>
           </td>
           <td>
-            <Link to={{ pathname: '/product', state: { id: investment.product_id } }}>{investment.product_title}</Link>
-            <small className="entity-meta">#{investment.product_id}</small>
+            <Link to={{ pathname: '/product', state: { id: productId } }}>{productTitle}</Link>
+            {productId ? <small className="entity-meta">#{productId}</small> : null}
           </td>
-          <td className="data-nowrap mono-value">
-            {investedDate.getDate()}.{investedDate.getMonth() + 1}.{investedDate.getFullYear()}
-          </td>
+          <td className="data-nowrap mono-value">{this.formatDate(investment.invested_on)}</td>
           <td className="data-nowrap money-value"><ToEuro amount={investment.invested_amount} /></td>
-          <td className="data-nowrap"><span className="mono-value">{investment.duration}</span> <Translate content="label.months" /></td>
+          <td className="data-nowrap"><span className="mono-value">{toText(investment.duration) || '—'}</span> <Translate content="label.months" /></td>
         </tr>
       );
     });
