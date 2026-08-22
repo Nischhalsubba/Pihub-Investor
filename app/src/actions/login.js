@@ -22,6 +22,45 @@ function extractToken(response) {
   return null;
 }
 
+function getErrorText(value) {
+  if (typeof value === 'string') {
+    return value;
+  }
+
+  if (value && typeof value === 'object') {
+    if (typeof value.message === 'string') {
+      return value.message;
+    }
+    if (typeof value.error === 'string') {
+      return value.error;
+    }
+    if (typeof value.detail === 'string') {
+      return value.detail;
+    }
+  }
+
+  return '';
+}
+
+function getSigninErrorMessage(error) {
+  const responseData = error && error.response && error.response.data;
+  const candidates = [
+    responseData && responseData.error,
+    responseData && responseData.message,
+    responseData && responseData.errors,
+    error && error.message
+  ];
+
+  for (let index = 0; index < candidates.length; index += 1) {
+    const message = getErrorText(candidates[index]);
+    if (message) {
+      return message;
+    }
+  }
+
+  return 'Unable to reach the sign-in service. Please try again in a moment.';
+}
+
 export const signin = ({ email, password }, callback) => async dispatch => {
   dispatch({
     type: AUTH_ERROR,
@@ -63,15 +102,9 @@ export const signin = ({ email, password }, callback) => async dispatch => {
   } catch (e) {
     localStorage.removeItem('token');
     dispatch({ type: AUTH_USER, payload: undefined });
-
-    const responseData = e && e.response && e.response.data;
-    const backendError = responseData && (responseData.error || responseData.message);
-
     dispatch({
       type: AUTH_ERROR,
-      payload:
-        backendError ||
-        'Unable to reach the sign-in service. Please try again in a moment.'
+      payload: getSigninErrorMessage(e)
     });
     return;
   }
