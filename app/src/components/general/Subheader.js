@@ -25,15 +25,29 @@ const defaultDescription = pathname => {
   return null;
 };
 
-const Subheader = ({ heading, kicker, description, buttonLabel, link, linkState, location }) => {
+const defaultBack = pathname => {
+  if (/^\/opportunities\/[^/]+\/edit\/?$/.test(pathname)) {
+    const id = pathname.split('/')[2];
+    return { to: `/opportunities/${id}`, label: 'Back to opportunity' };
+  }
+  if (/^\/opportunities\/[^/]+\/?$/.test(pathname)) return { to: '/products', label: 'Back to opportunities' };
+  if (/^\/credit-requests\/[^/]+\/[^/]+\/?$/.test(pathname)) return { to: '/credit-request', label: 'Back to credit requests' };
+  if (/^\/positions\/[^/]+\/[^/]+\/?$/.test(pathname)) return { to: '/products-invested', label: 'Back to invested positions' };
+  if (pathname === '/user/edit-profile') return { to: '/user/profile', label: 'Back to profile' };
+  return null;
+};
+
+const Subheader = ({ heading, kicker, description, buttonLabel, link, linkState, backTo, backLabel, location }) => {
   const safeHeading = safeContent(heading);
   const safeKicker = safeContent(kicker);
   const safeDescription = safeContent(description) || defaultDescription(location.pathname);
   const safeButtonLabel = safeContent(buttonLabel);
+  const back = backTo ? { to: backTo, label: safeContent(backLabel) || 'Back' } : defaultBack(location.pathname);
 
   return (
     <header className="content-head ap-page-head" data-motion="page-head">
       <div className="content-head-left ap-page-title">
+        {back ? <Link className="ap-inspector-link" to={back.to}><span aria-hidden="true">←</span>{back.label}</Link> : null}
         {safeKicker ? <div className="content-head-kicker">{safeKicker}</div> : null}
         <h1 className="content-head__title">{safeHeading}</h1>
         {safeDescription ? <p className="content-head-copy">{safeDescription}</p> : null}

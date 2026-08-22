@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { isTokenExpired, normalizeToken } from '../../_utils/authToken';
+import { clearStoredToken, isTokenExpired, normalizeToken } from '../../_utils/authToken';
 
 export default ChildComponent => {
   class ComposedComponent extends Component {
@@ -14,15 +14,8 @@ export default ChildComponent => {
 
     shouldNavigateAway() {
       const token = normalizeToken(this.props.auth);
-
-      if (!token) {
-        localStorage.removeItem('token');
-        this.props.history.replace('/login');
-        return;
-      }
-
-      if (isTokenExpired(token)) {
-        localStorage.removeItem('token');
+      if (!token || isTokenExpired(token)) {
+        clearStoredToken();
         this.props.history.replace('/login');
       }
     }
@@ -32,11 +25,5 @@ export default ChildComponent => {
     }
   }
 
-  function mapStateToProps(state) {
-    return {
-      auth: state.auth.authenticated
-    };
-  }
-
-  return connect(mapStateToProps)(ComposedComponent);
+  return connect(state => ({ auth: state.auth.authenticated }))(ComposedComponent);
 };

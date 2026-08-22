@@ -3,9 +3,9 @@ import { Link, withRouter } from 'react-router-dom';
 import Translate from 'react-translate-component';
 
 const items = [
-  { to: '/products', icon: 'bx bx-grid-alt', label: 'sidebar.products', matches: ['/', '/products', '/product', '/edit-product'] },
-  { to: '/credit-request', icon: 'bx bx-receipt', label: 'sidebar.credit_requested_products', matches: ['/credit-request', '/application'] },
-  { to: '/products-invested', icon: 'bx bx-line-chart', label: 'sidebar.invested_products', matches: ['/products-invested', '/creditor/detail'] },
+  { to: '/products', icon: 'bx bx-grid-alt', label: 'sidebar.products', matches: ['/', '/products', '/product', '/edit-product', '/opportunities'] },
+  { to: '/credit-request', icon: 'bx bx-receipt', label: 'sidebar.credit_requested_products', matches: ['/credit-request', '/application', '/credit-requests'] },
+  { to: '/products-invested', icon: 'bx bx-line-chart', label: 'sidebar.invested_products', matches: ['/products-invested', '/creditor/detail', '/positions'] },
   { to: '/user/profile', icon: 'bx bx-user', label: 'label.profile', matches: ['/user/profile', '/user/edit-profile', '/change-password'] }
 ];
 
@@ -16,7 +16,6 @@ const routeMatches = (pathname, matches) => matches.some(path => {
 
 const Sidebar = ({ location }) => {
   const demo = String(process.env.REACT_APP_DEMO || '').toLowerCase() === 'true';
-
   return (
     <aside className="sidebar ap-sidebar" aria-label="Primary navigation">
       <Link className="sidebar-brand ap-brand" to="/products" aria-label="PiHub Investor home">
@@ -41,7 +40,7 @@ const Sidebar = ({ location }) => {
         </ul></li></ul>
       </nav>
 
-      <div className="ap-nav-divider" aria-hidden="true" />
+      <div className="ap-nav-divider" />
       <Link className="sidebar-action ap-nav-action" to="/add-product">
         <i className="bx bx-plus" aria-hidden="true" />
         <span><Translate content="button.addnewproduct" /></span>

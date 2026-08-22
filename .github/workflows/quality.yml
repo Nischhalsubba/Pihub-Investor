@@ -37,5 +37,4 @@ jobs:
       - name: Build legacy CRA frontend
         env:
           CI: "false"
-          NODE_OPTIONS: --openssl-legacy-provider
         run: npm run build
