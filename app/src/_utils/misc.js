@@ -1,169 +1,72 @@
 import en from './../_locale/en';
 import de from './../_locale/de';
 
-export const extractNames = (list) => {
-  var r = [];
-  list.map(l => {
-    if (l.label) {
-      r.push(l.label);
+const listOf = value => Array.isArray(value) ? value : [];
 
-    } else {
-      r.push(l.name)
-    }
-  })
-  return r
-}
+export const extractNames = list => listOf(list)
+  .map(item => item && (item.label !== undefined ? item.label : item.name))
+  .filter(value => value !== undefined && value !== null);
 
 export const extractId = (list, mainList) => {
-  var r = [];
-  if (list) {
-    list.map((name) => {
-      return mainList.map((main) => {
-        if (main.id) {
-          if (name === main.label) {
-            r.push(main.id)
-          }
-        } else if (main.value) {
-          if (name === main.label) {
-            r.push(main.value)
-          }
-        }
+  const source = listOf(mainList);
+  if (!Array.isArray(list)) return source.map(item => item && (item.id !== undefined ? item.id : item.value)).filter(value => value !== undefined);
+  const selected = new Set(list.map(String));
+  return source
+    .filter(item => item && selected.has(String(item.label)))
+    .map(item => item.id !== undefined ? item.id : item.value)
+    .filter(value => value !== undefined);
+};
 
-      })
-    })
-  } else {
-    return mainList.map((m) => {
-      if (m.id !== 'undefined') {
-        return r.push(m.id)
+export const splitService = array => {
+  const source = listOf(array);
+  return {
+    en: source.map(item => ({ value: item.id, label: item.name && item.name.en ? item.name.en : '' })),
+    de: source.map(item => ({ value: item.id, label: item.name && item.name.de ? item.name.de : '' }))
+  };
+};
 
-      }
-    })
-  }
-
-  return r;
-}
-
-export const splitService = (array) => {
-  var english = [];
-  var german = [];
-  array.map((arr) => {
-    var en = { value: arr.id, label: arr.name.en };
-    var de = { value: arr.id, label: arr.name.de };
-    english.push(en);
-    german.push(de);
-  });
-  var result = { en: english, de: german };
-  return result;
-
-}
-
-export const splitIndustries = (array) => {
-  let english = [en.placeholder.selectAll];
-  let german = [de.placeholder.selectAll];
-  array.map(arr => {
-    english.push(arr.name.en);
-    german.push(arr.name.de);
-  });
-  let result = { en: english, de: german };
-  return result;
-}
+export const splitIndustries = array => {
+  const source = listOf(array);
+  return {
+    en: [en.placeholder.selectAll, ...source.map(item => item.name && item.name.en).filter(Boolean)],
+    de: [de.placeholder.selectAll, ...source.map(item => item.name && item.name.de).filter(Boolean)]
+  };
+};
 
 export const getId = (mainList, list, language) => {
-  let result = [];
-  if (list) {
-    list.map(m => {
-      return mainList.map(ml => {
-        if (ml.name[`${language}`] === m) {
-          result.push(ml.id);
-        }
-      })
-    })
-  } else {
-    mainList.map(ml => {
-      result.push(ml.id)
-    })
-  }
-  return result;
-}
-
-
-export const dDigit = number => {
-  return (number = ('0' + number).slice(-2));
+  const source = listOf(mainList);
+  if (!Array.isArray(list)) return source.map(item => item.id).filter(value => value !== undefined);
+  const selected = new Set(list.map(String));
+  return source
+    .filter(item => item && item.name && selected.has(String(item.name[language])))
+    .map(item => item.id);
 };
 
+export const dDigit = number => (`0${number}`).slice(-2);
 
 export const extractIdCounty = (list, mainList) => {
-  var result = [];
-  mainList.map((mL) => {
-    return list.map(l => {
-      if (l === mL.name) {
-        return result.push(mL.id)
-      }
-    })
-  });
-  return result;
-}
-
-export const renameKeys = (keysMap, mainObj) => {
-  return mainObj.map(obj => {
-    return Object.keys(obj).reduce((acc, key) => {
-
-      const renamedObject = {
-        [keysMap[key] || key]: obj[key]
-      };
-
-
-      return {
-        ...acc,
-        ...renamedObject
-      };
-    }, {});
-  })
-
+  const selected = new Set(listOf(list).map(String));
+  return listOf(mainList)
+    .filter(item => item && selected.has(String(item.name)))
+    .map(item => item.id);
 };
 
+export const renameKeys = (keysMap, mainObj) => listOf(mainObj).map(obj => Object.keys(obj || {}).reduce((acc, key) => ({
+  ...acc,
+  [keysMap[key] || key]: obj[key]
+}), {}));
 
 export const extractIdForName = (list, mainList) => {
-  var r =[];
-
-  if (list) {
-    list.map((name) => {
-      return mainList.map((main) => {
-        if (main.id) {
-          if (name === main.name) {
-            r.push(main.id)
-          }
-        } else if (main.value) {
-          if (name === main.name) {
-            r.push(main.value)
-          }
-        }
-
-      })
-    })
-  } else {
-    return mainList.map((m) => {
-      if (m.id !== 'undefined') {
-        return r.push(m.id)
-
-      }
-    })
-  }
-
-  return r;
-}
-
+  const source = listOf(mainList);
+  if (!Array.isArray(list)) return source.map(item => item && (item.id !== undefined ? item.id : item.value)).filter(value => value !== undefined);
+  const selected = new Set(list.map(String));
+  return source
+    .filter(item => item && selected.has(String(item.name)))
+    .map(item => item.id !== undefined ? item.id : item.value)
+    .filter(value => value !== undefined);
+};
 
 export const findId = (list, mainList) => {
-  var r = [];
-  if (list) {
-    list.map(l => {
-      return mainList.map(mL => {
-        if (l === mL.name) {
-          return r.push(mL.id)
-        }
-      })
-    })
-  }
-  return r;
-}
+  const selected = new Set(listOf(list).map(String));
+  return listOf(mainList).filter(item => item && selected.has(String(item.name))).map(item => item.id);
+};
