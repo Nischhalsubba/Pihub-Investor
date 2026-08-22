@@ -36,14 +36,10 @@ const normalizeNotificationCount = value => {
   return 0;
 };
 
-const getPageContext = pathname => {
-  if (pathname === '/products' || pathname === '/' || pathname === '/product' || pathname === '/edit-product') return { code: 'OB/01', label: 'sidebar.products', eyebrow: 'Opportunity book' };
-  if (pathname === '/credit-request' || pathname === '/application') return { code: 'CR/02', label: 'label.creditrequests', eyebrow: 'Review queue' };
-  if (pathname === '/products-invested' || pathname === '/creditor/detail') return { code: 'IP/03', label: 'sidebar.invested_products', eyebrow: 'Live book' };
-  if (pathname === '/user/profile' || pathname === '/user/edit-profile' || pathname === '/change-password') return { code: 'IPR/04', label: 'label.profile', eyebrow: 'Entity record' };
-  if (pathname === '/add-product') return { code: 'NO/05', label: 'button.addnewproduct', eyebrow: 'Opportunity registration' };
-  if (pathname === '/notifications') return { code: 'NT/06', label: 'label.notifications', eyebrow: 'Activity' };
-  return { code: 'PI/00', label: 'sidebar.product', eyebrow: 'Investor workspace' };
+const getCommandShortcut = () => {
+  if (typeof navigator === 'undefined') return 'Ctrl K';
+  const platform = `${navigator.platform || ''} ${navigator.userAgent || ''}`;
+  return /Mac|iPhone|iPad|iPod/i.test(platform) ? '⌘K' : 'Ctrl K';
 };
 
 class Header extends Component {
@@ -62,30 +58,25 @@ class Header extends Component {
   openCommand = () => window.dispatchEvent(new CustomEvent('pihub:command-open'));
 
   render() {
-    const context = getPageContext(this.props.location.pathname);
     const notificationCount = normalizeNotificationCount(this.props.count);
+    const shortcut = getCommandShortcut();
+
     return (
       <header className="site-header ap-topbar">
-        <div className="header-context ap-context" data-motion="header-context">
-          <span className="ap-context-code">{context.code}</span>
-          <span className="ap-context-rule" aria-hidden="true" />
-          <span className="header-context-copy ap-context-copy">
-            <small>{context.eyebrow}</small>
-            <strong><Translate content={context.label} /></strong>
-          </span>
-        </div>
-
-        <nav className="header-actions ap-top-actions" aria-label="Account actions">
+        <div className="ap-topbar-spacer" aria-hidden="true" />
+        <nav className="header-actions ap-top-actions" aria-label="Workspace utilities">
           <ul>
             <li>
-              <button className="ap-command-trigger" type="button" onClick={this.openCommand} aria-label="Open command menu">
-                <i className="bx bx-search" aria-hidden="true" /><span>Command</span><kbd>⌘K</kbd>
+              <button className="ap-command-trigger" type="button" onClick={this.openCommand} aria-label={`Open command menu, ${shortcut}`}>
+                <i className="bx bx-search" aria-hidden="true" />
+                <span>Command</span>
+                <kbd>{shortcut}</kbd>
               </button>
             </li>
             <li>
               <ul className="language-changer ap-language" aria-label="Language">
-                <li><button type="button" onClick={() => this.onChange('en')} aria-pressed={this.state.language === 'en'}><img src="/assets/img/gb.svg" alt="" />EN</button></li>
-                <li><button type="button" onClick={() => this.onChange('de')} aria-pressed={this.state.language === 'de'}><img src="/assets/img/de.svg" alt="" />DE</button></li>
+                <li><button type="button" onClick={() => this.onChange('en')} aria-pressed={this.state.language === 'en'} aria-label="Use English">EN</button></li>
+                <li><button type="button" onClick={() => this.onChange('de')} aria-pressed={this.state.language === 'de'} aria-label="Deutsch verwenden">DE</button></li>
               </ul>
             </li>
             <li className="header-actions__item">

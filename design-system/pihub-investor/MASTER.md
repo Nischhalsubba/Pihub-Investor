@@ -1,123 +1,246 @@
-# PiHub Investor Design System — Analytical Precision
+# PiHub Investor Design System
+
+Status: **Canonical**
+
+This document is the source of truth for the PiHub Investor interface. Older design notes, screenshots and exploratory design-DNA files are historical references only when they conflict with this file.
 
 ## Product thesis
-PiHub is an institutional investor workspace for evaluating credit opportunities, reviewing requests, and monitoring invested positions. The interface prioritizes analytical clarity, decision speed, trust, and dense but legible information over consumer-style delight.
 
-## Visual thesis
-Hybrid command center: a midnight navigation and command layer paired with a light analytical workspace. The visual identity is built from ledgers, rules, rails, continuous metric tapes, editorial folios, and persistent research/decision inspectors. Avoid rounded active-nav pills, bento-card walls, floating KPI tiles, decorative gradients, oversized radii, and generic segmented-control styling.
+PiHub is a professional investor workspace for credit opportunities, decision queues and invested positions. The UI optimizes for analytical precision, trust and fast decision-making.
 
-## Interaction thesis
-Corporate/premium motion. Interactions are immediate, restrained, and causal. Use 120ms micro feedback, 190ms state transitions, and 320ms page entrances with `cubic-bezier(.2,0,0,1)`. Exits are faster. No bounce or elastic overshoot in data surfaces. Reduced-motion removes translation/stagger and preserves direct state changes.
+The product is not a consumer investing app, a generic SaaS dashboard, or a decorative trading terminal.
 
-## Tokens
+## Non-negotiable rule: every pixel earns its place
+
+A visible UI element must do at least one of the following:
+
+1. communicate data;
+2. communicate state;
+3. explain structure or hierarchy;
+4. enable an action;
+5. improve orientation or recovery.
+
+If its only justification is "it looks sophisticated", remove it.
+
+Therefore operational screens do **not** use decorative technical grids, permanent route numbers, editorial folios, ornamental lines, fake telemetry, gratuitous glass, or 3D scenery.
+
+## Visual system
+
+### Shell
+
+- Midnight navigation rail for stable workspace orientation.
+- Light analytical workspace for reading and comparison.
+- Flat surfaces and hairline separators before cards and shadows.
+- Content should use available desktop width instead of floating as a narrow centered dashboard.
+- One active-navigation signal: a slim signal-blue edge. Do not stack edge + underline + numbered index + colored icon for the same state.
+
 ### Color
-- night-1000: #050A12
-- night-950: #07101C
-- night-900: #0A1423
-- night-850: #0D192B
-- night-800: #112039
-- ink-950: #0A1020
-- ink-850: #182236
-- ink-700: #354158
-- ink-600: #536078
-- ink-500: #738097
-- ink-400: #9AA5B7
-- fog-200: #D9E0E9
-- fog-150: #E5EAF0
-- fog-100: #EEF2F6
-- fog-50: #F6F8FA
-- paper: #FBFCFD
-- white: #FFFFFF
-- signal: #5F80FF (lines/fills)
-- signal-text: #4868D7 (accessible small text/action text)
-- signal-2: #87A3FF
-- signal-soft: #EDF1FF
-- positive: #0B7D63
-- positive-soft: #E6F5F0
-- warning: #A96912 (marks)
-- warning-text: #965D0C (accessible small text)
-- warning-soft: #FFF2DF
-- danger: #C23F48
-- danger-soft: #FFF0F1
-- info: #2D7390
+
+- Night 950: `#07101C`
+- Ink 950: `#0A1020`
+- Ink 700: `#354158`
+- Ink 600: `#536078`
+- Fog 100: `#EEF2F6`
+- Fog 50: `#F6F8FA`
+- Paper: `#FBFCFD`
+- Signal: `#5F80FF`
+- Positive: `#0B7D63`
+- Warning: `#A96912`
+- Danger: `#C23F48`
+
+Status meaning must never rely on color alone. Always pair color with text and, where useful, shape/iconography.
 
 ### Typography
-- Heading/body: IBM Plex Sans
-- Financial/data: IBM Plex Mono
-- H1: 28–32px / 600 / tight tracking
-- H2: 20–24px / 600
-- H3: 12–14px / 600
-- Body: 12–14px / 400–500
-- Label/overline: 8–10px / 600 / uppercase / 0.06–0.12em tracking
-- Financial numbers: tabular figures in IBM Plex Mono
 
-### Spacing
-4px base. Primary scale: 4, 8, 12, 16, 20, 24, 32, 40.
-Dense working surfaces use 8–16px gaps; page sections use 20–32px.
+- Primary: IBM Plex Sans.
+- Numerical/technical metadata: IBM Plex Mono.
+- Body text: 13–15px desktop, 16px minimum for mobile form controls.
+- Never shrink operational copy to create the appearance of density.
+- Monetary values use tabular/monospaced numerals where comparison benefits.
+- Uppercase mono labels are reserved for short metadata, not prose.
 
 ### Shape
-- Operational controls: 2–4px radius
-- Small utility surfaces: 4–6px radius
-- No pill-shaped navigation selections
-- Pills reserved only for compact semantic status tags
-- Borders/rules are preferred to shadows for structure
 
-### Elevation
-- Low: 0 1px 2px rgba(7,16,30,.04)
-- Medium: 0 8px 24px rgba(7,16,30,.07)
-- High/menu: 0 18px 50px rgba(5,10,18,.24)
-- Primary depth cues are contrast, dividers, and overlapping rails, not card shadows
+- Operational controls: 2–4px radius.
+- Data tables/ledgers: mostly square geometry.
+- Avoid card-within-card nesting.
+- Use spacing, grouping and separators before containers.
 
-### Motion
-- micro: 120ms
-- normal: 190ms
-- macro: 320ms
-- entrance: y 6–12px + opacity, ease-out
-- exit: 120–180ms, ease-in
-- row stagger: 24–32ms, max first 8 rows
-- press scale: .985
-- no bounce on tables, forms, or navigation
+## Information architecture
 
-## Components
-### Navigation
-Midnight fixed rail. Active state is indicated by a 2px edge signal, baseline trace, brighter label/icon, and index emphasis. Never draw a rounded active container.
+Primary workspace destinations:
 
-### Top bar
-Compact contextual title/code, command entry, language control, notification, profile. Utility-first; avoid decorative boxed icon clusters.
+1. Opportunities
+2. Credit requests
+3. Invested positions
+4. Institution profile
 
-### Page heading
-Editorial folio number + title/description + at most one primary action. Strict horizontal alignment.
+Primary creation action:
 
-### Metric tape
-Continuous ruled band, not detached cards. Metrics separated by vertical dividers and semantic micro-markers.
+- New opportunity
 
-### Ledger/table
-Flat analytical sheet with hairline dividers, mono IDs and financial values, predictable column rhythm, keyboard focus, and selected-row edge signal. Avoid floating-card table containers.
+Future target home/overview:
 
-### Inspector / side analysis
-Persistent right rail for selected opportunity/request/position analysis. Border-left structure, no card wall.
+- decisions requiring attention;
+- upcoming maturities/payment events;
+- capital exposure/concentration;
+- recent activity and operational alerts.
 
-### Forms
-Numbered docket sections with visible labels, compact inputs, direct helper/error text, and strong section rules. Long forms preserve context and use a validation/submission summary when practical.
+## Page anatomy
 
-### Profile
-Institutional entity record, not a settings card grid. Identity hero + data sheet + relationship/access rail.
+Operational pages use:
 
-## Accessibility and responsiveness
-- WCAG AA contrast for normal text.
-- All functionality keyboard reachable; visible 2px focus indicator.
-- Icon-only controls receive accessible names.
-- Touch targets at least 44px on compact/mobile breakpoints.
-- `prefers-reduced-motion` removes spatial animation and decorative grids.
-- Breakpoints: 375, 768, 1024, 1440.
-- Mobile uses horizontal nav strip or drawer-like rail and horizontally scrollable ledgers; no crushed desktop table.
+1. Task title
+2. One concise explanatory sentence when needed
+3. One primary page action when needed
+4. Decision-relevant summary metrics
+5. Primary working surface
+6. Contextual detail only when it adds information not already visible
 
-## Forbidden patterns
-- Rounded active navigation pills
-- Bento grid as default layout
-- Purple/pink AI gradients
-- Oversized radius on every surface
-- KPI card wall when a single analytical tape works
-- Decoration-only animation or continuous motion in working screens
-- 3D/WebGL inside dense operational views
-- Emojis as structural icons
+Do not repeat the same route name in the sidebar, top bar, a folio and the page title. The page title is authoritative.
+
+## Navigation and utilities
+
+Sidebar:
+
+- text + icon destinations;
+- slim active edge;
+- no permanent route numbers;
+- no decorative baseline trace;
+- creation action separated from destinations;
+- demo/live environment indicator may remain because it changes how data should be interpreted.
+
+Top bar:
+
+- command menu;
+- language;
+- notifications;
+- account menu.
+
+The top bar does not repeat the current page title. Keyboard shortcut labels must match the user's platform.
+
+## Data-heavy screens
+
+### Opportunities
+
+The table/ledger is the primary surface. It should support:
+
+- search;
+- status filters;
+- sortable columns;
+- URL-persisted view state;
+- clear active filter/reset state;
+- a detail inspector only when it adds information not already in the row;
+- native table semantics or complete equivalent ARIA semantics;
+- sticky headers for long result sets;
+- export/saved views when backed by real data needs.
+
+### Credit requests
+
+Prioritize decisions rather than repeat counts. Target decision fields include:
+
+- requested amount;
+- deadline/SLA;
+- counterparty;
+- facility;
+- risk/rating;
+- current decision state;
+- owner/assignee when available.
+
+### Invested positions
+
+Show portfolio information that changes decisions. Maturity visualizations require a real scale or axis. Never use a full-width bar that implies 100% without defining what 100% means.
+
+## Forms
+
+Long institutional forms must be task-grouped, not decorated with fake step numbers.
+
+Required behavior:
+
+- persistent visible labels;
+- required/optional clarity;
+- exact numeric fields for exact financial values;
+- inline error message associated to the input;
+- error summary after failed submit for long forms;
+- focus the first invalid field;
+- disabled/loading state while saving;
+- save-success confirmation;
+- draft/autosave for long workflows when persistence is available;
+- unsaved-change protection;
+- Cancel/Back path;
+- sticky action region on long forms;
+- upload constraints, selected-file state and progress/error state.
+
+Range sliders may supplement numeric inputs only when approximate exploration is useful. They are not the primary input for precise credit amounts.
+
+## Motion
+
+Motion style: restrained analytical feedback.
+
+- press feedback: 100–160ms;
+- control/state transition: 160–220ms;
+- panel/inspector continuity: 180–260ms;
+- page transition: 220–320ms maximum;
+- enter uses ease-out; exit uses ease-in;
+- animate transforms and opacity where possible;
+- no bounce, elastic motion, decorative looping, or animation on every data refresh.
+
+The application should have **one** GSAP orchestration layer. Motion must respect `prefers-reduced-motion` and must not carry information that disappears when motion is disabled.
+
+## Three.js policy
+
+Three.js is allowed only in authentication/onboarding atmosphere where it cannot compete with financial data. It must:
+
+- have a static/reduced-motion fallback;
+- cap device pixel ratio;
+- pause when hidden;
+- dispose renderer, geometry and materials;
+- never run continuously behind operational tables/forms.
+
+## Accessibility and interaction
+
+- WCAG AA contrast: 4.5:1 normal text, 3:1 large text/UI graphics where applicable.
+- 44×44px minimum touch targets where practical.
+- complete keyboard access.
+- visible `:focus-visible` state.
+- correct label/input association.
+- semantic buttons for actions and links for navigation.
+- status never conveyed by color alone.
+- modal/command palette traps focus and restores focus on close.
+- reduced-motion support.
+- mobile form controls at least 16px to avoid browser zoom.
+
+## Responsive targets
+
+Validate at minimum:
+
+- 375px
+- 768px
+- 1024px
+- 1440px
+- 1920px
+
+Desktop analytical density must not become microscopic text. On small screens, prioritize essential columns and explicit horizontal scrolling over crushed layouts.
+
+## Engineering guardrails
+
+- New design work must not add another global CSS patch layer without consolidating an older one.
+- New motion work must not add another global animation runtime.
+- New entity detail routes should be URL-addressable by ID.
+- Search/filter/sort state should move toward URL parameters.
+- Demo data belongs behind an explicit demo adapter and must never masquerade as production persistence.
+- CI must run on both `main` and `develop`, including tests and a production build.
+
+## Review checklist
+
+Before merging a UI change, ask:
+
+- What user decision does this element support?
+- Is any information repeated without adding context?
+- Can the task be completed with keyboard only?
+- Does refresh/deep-linking preserve the user's place?
+- Are loading, empty, error and success states covered?
+- Is the interaction understandable without animation?
+- Is the text readable at 100% browser zoom?
+- Does the layout still work at 375/768/1024/1440/1920?
+- Did this change reduce or increase CSS/interaction complexity?
