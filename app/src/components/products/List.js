@@ -5,7 +5,6 @@ import * as actions from '../../actions/product';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Pagination from '../general/Pagination';
-import { ToEuro } from '../general/CurrencyFormatter';
 
 const Translator = require('react-translate-component');
 
@@ -26,23 +25,40 @@ const toDisplayText = value => {
 const localizedText = value => {
   if (value === null || value === undefined) return '';
   if (typeof value === 'string' || typeof value === 'number') return String(value);
-
   if (typeof value === 'object') {
     const locale = Translator.getLocale();
     const candidates = [value[locale], value.en, value.de, value.label, value.name, value.title];
     for (let index = 0; index < candidates.length; index += 1) {
       const candidate = candidates[index];
-      if (typeof candidate === 'string' || typeof candidate === 'number') {
-        return String(candidate);
-      }
+      if (typeof candidate === 'string' || typeof candidate === 'number') return String(candidate);
     }
   }
-
   return '';
 };
 
+const formatEuro = value => {
+  const amount = Number(value);
+  if (!Number.isFinite(amount)) return '—';
+  return new Intl.NumberFormat(Translator.getLocale() === 'de' ? 'de-DE' : 'en-IE', {
+    style: 'currency', currency: 'EUR', maximumFractionDigits: 0
+  }).format(amount);
+};
+
+const statusLabel = status => {
+  const locale = Translator.getLocale();
+  const labels = {
+    approved: locale === 'de' ? 'Genehmigt' : 'Approved',
+    requested: locale === 'de' ? 'Angefragt' : 'Requested',
+    invested: locale === 'de' ? 'Investiert' : 'Invested',
+    suspended: locale === 'de' ? 'Ausgesetzt' : 'Suspended',
+    rejected: locale === 'de' ? 'Abgelehnt' : 'Rejected',
+    open: locale === 'de' ? 'Offen' : 'Open'
+  };
+  return labels[status] || status || '—';
+};
+
 class ProductsList extends Component {
-  state = { status: '', product_title: '' };
+  state = { status: '', product_title: '', selectedId: null };
 
   componentDidMount() {
     this.props.getProductsList();
@@ -51,6 +67,13 @@ class ProductsList extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.status !== this.state.status) {
       this.props.getProductsList(1, this.state.status, this.state.product_title);
+    }
+
+    if (prevProps.data !== this.props.data) {
+      const products = this.getProducts();
+      if (products.length && !products.some(product => String(product.id) === String(this.state.selectedId))) {
+        this.setState({ selectedId: products[0].id });
+      }
     }
   }
 
@@ -67,94 +90,94 @@ class ProductsList extends Component {
     invested: products.filter(product => product.status === 'invested').length
   });
 
-  renderStatus = status => {
-    const map = {
-      requested: ['badge-warning', 'label.requested'],
-      approved: ['badge-success', 'label.approved'],
-      rejected: ['badge-danger', 'label.rejected'],
-      invested: ['badge-success', 'label.invested'],
-      open: ['badge-info', 'label.open'],
-      postponed: ['badge-secondary', 'label.postponed'],
-      deleted: ['badge-light', 'label.deleted'],
-      suspended: ['badge-info', 'label.suspended']
-    };
-    const normalizedStatus = typeof status === 'string' ? status : '';
-    const value = map[normalizedStatus];
-    return value
-      ? <span className={`badge ${value[0]}`}><Translate content={value[1]} /></span>
-      : <span className="badge badge-light">{normalizedStatus || '—'}</span>;
+  getIndustries = product => {
+    const industries = Array.isArray(product && product.industries) ? product.industries.filter(Boolean) : [];
+    return industries.map(industry => localizedText(industry && industry.name !== undefined ? industry.name : industry)).filter(Boolean);
   };
 
-  renderIndustries = product => {
-    const industries = Array.isArray(product.industries) ? product.industries.filter(Boolean) : [];
+  getService = product => product && product.service
+    ? localizedText(product.service.name !== undefined ? product.service.name : product.service)
+    : '';
 
-    return (
-      <div className="industry-stack">
-        {industries.slice(0, 2).map((industry, index) => {
-          const label = localizedText(industry && industry.name !== undefined ? industry.name : industry);
-          return (
-            <span key={`${toDisplayText(product.id) || 'product'}-industry-${index}`}>
-              {label || <Translate content="placeholder.notAvailable" />}
-            </span>
-          );
-        })}
-        {industries.length > 2 ? <small>+{industries.length - 2}</small> : null}
-      </div>
-    );
+  handleSearch = event => {
+    event.preventDefault();
+    this.props.getProductsList(1, this.state.status, this.state.product_title.trim());
   };
 
-  renderList = products => {
+  selectProduct = product => this.setState({ selectedId: product.id });
+
+  renderLedgerRows = products => {
     if (!products.length) {
-      return (
-        <tr>
-          <td colSpan="6">
-            <div className="data-empty">
-              <i className="bx bx-search-alt" aria-hidden="true" />
-              <strong><Translate content="label.youdonot" /></strong>
-              <span>Adjust the status or search filter to review another result set.</span>
-            </div>
-          </td>
-        </tr>
-      );
+      return <div className="ap-empty"><i className="bx bx-search-alt" aria-hidden="true" /><strong>No opportunities match this view.</strong><span>Adjust the status or search terms and try again.</span></div>;
     }
 
     return products.map((product, index) => {
       const productId = toDisplayText(product.id);
       const title = localizedText(product.product_title) || toDisplayText(product.product_title) || 'Untitled product';
-      const serviceName = product.service && product.service.name !== undefined
-        ? localizedText(product.service.name)
-        : localizedText(product.service);
-      const minDuration = toDisplayText(product.min_time_duration);
-      const maxDuration = toDisplayText(product.max_time_duration);
-
+      const service = this.getService(product) || '—';
+      const industries = this.getIndustries(product);
+      const location = Array.isArray(product.states) && product.states[0] ? localizedText(product.states[0].name || product.states[0]) : '';
+      const selected = String(product.id) === String(this.state.selectedId);
       return (
-        <tr key={productId || `product-${index}`}>
-          <td>
-            <Link className="entity-title" to={{ pathname: '/product', state: { id: product.id } }}>
-              {title}
-            </Link>
-            {productId ? <small className="entity-meta">#{productId}</small> : null}
-          </td>
-          <td>
-            {serviceName || <Translate content="placeholder.notAvailable" />}
-          </td>
-          <td>{this.renderIndustries(product)}</td>
-          <td className="data-nowrap">
-            <span className="mono-value">{minDuration || '—'}–{maxDuration || '—'}</span>{' '}
-            <Translate content="label.months" />
-          </td>
-          <td className="data-nowrap">
-            <span className="money-range"><ToEuro amount={product.min_credit_amount} /> <span>–</span> <ToEuro amount={product.max_credit_amount} /></span>
-          </td>
-          <td>{this.renderStatus(product.status)}</td>
-        </tr>
+        <div
+          className={selected ? 'ap-ledger-row is-selected' : 'ap-ledger-row'}
+          role="row"
+          tabIndex="0"
+          aria-selected={selected}
+          key={productId || `product-${index}`}
+          onClick={() => this.selectProduct(product)}
+          onKeyDown={event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              this.selectProduct(product);
+            }
+          }}
+        >
+          <div className="ap-issuer" role="cell">
+            <Link to={{ pathname: '/product', state: { id: product.id } }} onClick={event => event.stopPropagation()}>{title}</Link>
+            <small>{product.product_code || productId || '—'}{location ? ` / ${location}` : ''}</small>
+          </div>
+          <span role="cell">{service}</span>
+          <span className="ap-sector" role="cell"><i aria-hidden="true" />{industries[0] || '—'}{industries.length > 1 ? <small> +{industries.length - 1}</small> : null}</span>
+          <span className="ap-mono" role="cell">{toDisplayText(product.min_time_duration) || '—'}–{toDisplayText(product.max_time_duration) || '—'}m</span>
+          <span className="ap-mono" role="cell">{formatEuro(product.min_credit_amount)}–{formatEuro(product.max_credit_amount)}</span>
+          <span className={`ap-status ap-status-${product.status || 'neutral'}`} role="cell"><i aria-hidden="true" />{statusLabel(product.status)}</span>
+          <span className="ap-row-arrow" aria-hidden="true">›</span>
+        </div>
       );
     });
   };
 
-  handleSearch = event => {
-    event.preventDefault();
-    this.props.getProductsList(1, this.state.status, this.state.product_title.trim());
+  renderInspector = product => {
+    if (!product) {
+      return <aside className="ap-inspector"><div className="ap-inspector-empty">Select an opportunity to inspect its credit parameters.</div></aside>;
+    }
+    const title = localizedText(product.product_title) || 'Untitled product';
+    const industries = this.getIndustries(product);
+    const collateral = product.collatoral !== undefined ? product.collatoral : product.collateral;
+    const collateralLabel = collateral === 1 || collateral === true ? 'Required' : collateral === 0 || collateral === false ? 'Not required' : '—';
+
+    return (
+      <aside className="ap-inspector" aria-label="Opportunity analysis">
+        <div className="ap-inspector-kicker">Selected opportunity</div>
+        <h3>{title}</h3>
+        <div className="ap-inspector-id">{product.product_code || product.id || '—'}</div>
+        <div className="ap-inspector-section">
+          <h4>Capital parameters</h4>
+          <div className="ap-data-pair"><span>Credit band</span><b>{formatEuro(product.min_credit_amount)}–{formatEuro(product.max_credit_amount)}</b></div>
+          <div className="ap-data-pair"><span>Tenor</span><b>{toDisplayText(product.min_time_duration) || '—'}–{toDisplayText(product.max_time_duration) || '—'}m</b></div>
+          <div className="ap-data-pair"><span>Minimum creditor sales</span><b>{formatEuro(product.min_sales_creditor)}</b></div>
+          <div className="ap-data-pair"><span>Collateral</span><b>{collateralLabel}</b></div>
+        </div>
+        <div className="ap-inspector-section">
+          <h4>Classification</h4>
+          <div className="ap-data-pair"><span>Facility</span><b>{this.getService(product) || '—'}</b></div>
+          <div className="ap-data-pair"><span>Industry</span><b>{industries.join(', ') || '—'}</b></div>
+          <div className="ap-data-pair"><span>Status</span><b className={`ap-text-${product.status || 'neutral'}`}>{statusLabel(product.status)}</b></div>
+        </div>
+        <Link className="ap-inspector-link" to={{ pathname: '/product', state: { id: product.id } }}>Open full opportunity <span aria-hidden="true">↗</span></Link>
+      </aside>
+    );
   };
 
   render() {
@@ -162,98 +185,41 @@ class ProductsList extends Component {
     const totalPage = Number(pagination.totalPage) > 0 ? Number(pagination.totalPage) : 1;
     const products = this.getProducts();
     const summary = this.getSummary(products);
+    const selected = products.find(product => String(product.id) === String(this.state.selectedId)) || products[0] || null;
     const allLabel = Translator.getLocale() === 'de' ? 'Alle' : 'All';
 
     return (
       <Fragment>
-        <Subheader
-          heading={<Translate content="label.allproducts" />}
-          buttonLabel={<Translate content="button.addnewproduct" />}
-          link="/add-product"
-        />
+        <Subheader heading={<Translate content="label.allproducts" />} buttonLabel={<Translate content="button.addnewproduct" />} link="/add-product" />
 
-        <section className="metric-grid" aria-label="Current result summary" data-motion="metric-grid">
-          <article className="metric-card">
-            <span className="metric-label">{Translator.getLocale() === 'de' ? 'Sichtbar' : 'Visible'}</span>
-            <strong>{summary.visible}</strong>
-            <small>{Translator.getLocale() === 'de' ? 'Aktuelle Ergebnisse' : 'Current results'}</small>
-          </article>
-          <article className="metric-card metric-card-success">
-            <span className="metric-label"><Translate content="label.approved" /></span>
-            <strong>{summary.approved}</strong>
-            <small>{Translator.getLocale() === 'de' ? 'Genehmigt' : 'Approved'}</small>
-          </article>
-          <article className="metric-card metric-card-warning">
-            <span className="metric-label"><Translate content="label.requested" /></span>
-            <strong>{summary.requested}</strong>
-            <small>{Translator.getLocale() === 'de' ? 'Zur Prüfung' : 'Awaiting review'}</small>
-          </article>
-          <article className="metric-card metric-card-info">
-            <span className="metric-label"><Translate content="label.invested" /></span>
-            <strong>{summary.invested}</strong>
-            <small>{Translator.getLocale() === 'de' ? 'Investiert' : 'Invested'}</small>
-          </article>
+        <section className="ap-capital-tape" aria-label="Opportunity summary" data-motion="metric-grid">
+          <article className="ap-metric"><span className="ap-metric-label"><i />Visible</span><strong>{summary.visible}</strong><small>Current result set</small></article>
+          <article className="ap-metric ap-metric-positive"><span className="ap-metric-label"><i />Approved</span><strong>{summary.approved}</strong><small>Decision complete</small></article>
+          <article className="ap-metric ap-metric-warning"><span className="ap-metric-label"><i />Requested</span><strong>{summary.requested}</strong><small>Awaiting review</small></article>
+          <article className="ap-metric ap-metric-signal"><span className="ap-metric-label"><i />Invested</span><strong>{summary.invested}</strong><small>Capital deployed</small></article>
         </section>
 
-        <form className="workspace-toolbar" onSubmit={this.handleSearch} aria-label="Opportunity filters">
-          <div className="toolbar-search">
-            <label className="sr-only" htmlFor="opportunity-search">Search opportunities</label>
-            <i className="bx bx-search" aria-hidden="true" />
-            <input
-              id="opportunity-search"
-              className="form-control"
-              type="search"
-              placeholder={Translator.getLocale() === 'de' ? 'Produkte durchsuchen' : 'Search opportunities'}
-              value={this.state.product_title}
-              onChange={event => this.setState({ product_title: event.target.value })}
-            />
-          </div>
-
-          <div className="status-segments" role="group" aria-label="Filter by status">
+        <form className="ap-query-line" onSubmit={this.handleSearch} aria-label="Opportunity filters">
+          <span className="ap-query-index" aria-hidden="true">QRY</span>
+          <div className="ap-query-input"><i className="bx bx-search" aria-hidden="true" /><label className="sr-only" htmlFor="opportunity-search">Search opportunities</label><input id="opportunity-search" type="search" placeholder="Search opportunity, facility or sector" value={this.state.product_title} onChange={event => this.setState({ product_title: event.target.value })} /></div>
+          <div className="ap-filter-tabs" role="group" aria-label="Filter by status">
             {statusOptions.map(option => {
-              const isActive = this.state.status === option.value;
-              return (
-                <button
-                  key={option.value || 'all'}
-                  type="button"
-                  className={isActive ? 'status-segment is-active' : 'status-segment'}
-                  aria-pressed={isActive}
-                  onClick={() => this.setState({ status: option.value })}
-                >
-                  {option.label ? <Translate content={option.label} /> : allLabel}
-                </button>
-              );
+              const active = this.state.status === option.value;
+              return <button key={option.value || 'all'} type="button" className={active ? 'is-active' : ''} aria-pressed={active} onClick={() => this.setState({ status: option.value })}>{option.label ? <Translate content={option.label} /> : allLabel}</button>;
             })}
           </div>
-
-          <Translate content="button.search" component="button" type="submit" className="btn btn-primary toolbar-submit" />
+          <button className="ap-search-submit" type="submit">SEARCH</button>
         </form>
 
-        <section className="table-shell" data-motion="table-shell" aria-label="Opportunity results">
-          <div className="table-caption">
-            <div>
-              <strong>{Translator.getLocale() === 'de' ? 'Produkte' : 'Opportunities'}</strong>
-              <span>{summary.visible} {Translator.getLocale() === 'de' ? 'Ergebnisse auf dieser Seite' : 'results on this page'}</span>
-            </div>
-            <small>EUR</small>
-          </div>
-          <div className="table-scroll">
-            <table className="table" data-tablesaw-mode="stack">
-              <thead>
-                <tr>
-                  <th><Translate content="column.name" /></th>
-                  <th><Translate content="label.service" /></th>
-                  <th><Translate content="label.industries" /></th>
-                  <th><Translate content="column.duration" /></th>
-                  <th>{Translator.getLocale() === 'de' ? 'Kreditspanne' : 'Credit range'}</th>
-                  <th><Translate content="column.status" /></th>
-                </tr>
-              </thead>
-              <tbody>{this.renderList(products)}</tbody>
-            </table>
-          </div>
-          <Pagination totalPage={totalPage} url={page => this.props.getProductsList(page, this.state.status, this.state.product_title.trim())} />
-        </section>
+        <div className="ap-board-grid">
+          <section className="ap-ledger" role="table" aria-label="Opportunity book" data-motion="table-shell">
+            <div className="ap-ledger-caption"><div><strong>Opportunity book</strong><span>{summary.visible} records on this page</span></div><small>EUR</small></div>
+            <div className="ap-ledger-head" role="row"><span>Opportunity</span><span>Facility</span><span>Industry</span><span>Tenor</span><span>Credit</span><span>Status</span><span /></div>
+            <div className="ap-ledger-body">{this.renderLedgerRows(products)}</div>
+            <div className="ap-ledger-pagination"><Pagination totalPage={totalPage} url={page => this.props.getProductsList(page, this.state.status, this.state.product_title.trim())} /></div>
+          </section>
+          {this.renderInspector(selected)}
+        </div>
       </Fragment>
     );
   }

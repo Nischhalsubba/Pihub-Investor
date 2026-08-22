@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Sidebar from './general/Sidebar';
 import Header from './general/Header';
+import CommandPalette from './general/CommandPalette';
 
 class App extends Component {
   mainRef = React.createRef();
@@ -31,15 +32,16 @@ class App extends Component {
 
   render() {
     return (
-      <div className="workspace-shell ct-container">
+      <div className="workspace-shell ct-container ap-shell">
         <a className="skip-link" href="#main-content">Skip to main content</a>
         <Sidebar />
-        <div className="main-content main-content--padded">
+        <div className="main-content main-content--padded ap-workspace">
           <Header />
-          <main id="main-content" className="workspace-main" ref={this.mainRef} tabIndex="-1">
+          <main id="main-content" className="workspace-main ap-main" ref={this.mainRef} tabIndex="-1">
             {this.props.children}
           </main>
         </div>
+        <CommandPalette />
       </div>
     );
   }

@@ -19,56 +19,31 @@ const normalizeNotificationCount = value => {
     const parsed = Number(candidate);
     return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
   };
-
   const direct = readNumber(value);
   if (direct !== null) return direct;
-
   if (value && typeof value === 'object') {
     const candidates = [value.count, value.total, value.unread, value.unread_count, value.data];
     for (let index = 0; index < candidates.length; index += 1) {
       const candidate = candidates[index];
       const parsed = readNumber(candidate);
       if (parsed !== null) return parsed;
-
       if (candidate && typeof candidate === 'object') {
-        const nested = readNumber(
-          candidate.count !== undefined
-            ? candidate.count
-            : candidate.total !== undefined
-              ? candidate.total
-              : candidate.unread_count
-        );
+        const nested = readNumber(candidate.count !== undefined ? candidate.count : candidate.total !== undefined ? candidate.total : candidate.unread_count);
         if (nested !== null) return nested;
       }
     }
   }
-
   return 0;
 };
 
 const getPageContext = pathname => {
-  if (pathname === '/products' || pathname === '/' || pathname === '/product' || pathname === '/edit-product') {
-    return { icon: 'bx bx-grid-alt', label: 'sidebar.products' };
-  }
-  if (pathname === '/credit-request' || pathname === '/application') {
-    return { icon: 'bx bx-receipt', label: 'label.creditrequests' };
-  }
-  if (pathname === '/products-invested' || pathname === '/creditor/detail') {
-    return { icon: 'bx bx-line-chart', label: 'sidebar.invested_products' };
-  }
-  if (pathname === '/add-product') {
-    return { icon: 'bx bx-plus-circle', label: 'button.addnewproduct' };
-  }
-  if (pathname === '/notifications') {
-    return { icon: 'bx bx-bell', label: 'label.notifications' };
-  }
-  if (pathname === '/user/profile') {
-    return { icon: 'bx bx-user', label: 'label.profile' };
-  }
-  if (pathname === '/user/edit-profile') {
-    return { icon: 'bx bx-edit', label: 'label.editprofile' };
-  }
-  return { icon: 'bx bx-grid-alt', label: 'sidebar.product' };
+  if (pathname === '/products' || pathname === '/' || pathname === '/product' || pathname === '/edit-product') return { code: 'OB/01', label: 'sidebar.products', eyebrow: 'Opportunity book' };
+  if (pathname === '/credit-request' || pathname === '/application') return { code: 'CR/02', label: 'label.creditrequests', eyebrow: 'Review queue' };
+  if (pathname === '/products-invested' || pathname === '/creditor/detail') return { code: 'IP/03', label: 'sidebar.invested_products', eyebrow: 'Live book' };
+  if (pathname === '/user/profile' || pathname === '/user/edit-profile' || pathname === '/change-password') return { code: 'IPR/04', label: 'label.profile', eyebrow: 'Entity record' };
+  if (pathname === '/add-product') return { code: 'NO/05', label: 'button.addnewproduct', eyebrow: 'Opportunity registration' };
+  if (pathname === '/notifications') return { code: 'NT/06', label: 'label.notifications', eyebrow: 'Activity' };
+  return { code: 'PI/00', label: 'sidebar.product', eyebrow: 'Investor workspace' };
 };
 
 class Header extends Component {
@@ -84,55 +59,51 @@ class Header extends Component {
     this.props.getNotificationCount();
   }
 
+  openCommand = () => window.dispatchEvent(new CustomEvent('pihub:command-open'));
+
   render() {
     const context = getPageContext(this.props.location.pathname);
     const notificationCount = normalizeNotificationCount(this.props.count);
-
     return (
-      <header className="site-header">
-        <div className="header-context" data-motion="header-context">
-          <span className="header-context-icon" aria-hidden="true">
-            <i className={context.icon} />
-          </span>
-          <span className="header-context-copy">
-            <small>Workspace</small>
+      <header className="site-header ap-topbar">
+        <div className="header-context ap-context" data-motion="header-context">
+          <span className="ap-context-code">{context.code}</span>
+          <span className="ap-context-rule" aria-hidden="true" />
+          <span className="header-context-copy ap-context-copy">
+            <small>{context.eyebrow}</small>
             <strong><Translate content={context.label} /></strong>
           </span>
         </div>
 
-        <nav className="header-actions" aria-label="Account actions">
+        <nav className="header-actions ap-top-actions" aria-label="Account actions">
           <ul>
             <li>
-              <ul className="language-changer" aria-label="Language">
-                <li>
-                  <button type="button" onClick={() => this.onChange('en')} aria-pressed={this.state.language === 'en'}>
-                    <img src="/assets/img/gb.svg" alt="" />EN
-                  </button>
-                </li>
-                <li>
-                  <button type="button" onClick={() => this.onChange('de')} aria-pressed={this.state.language === 'de'}>
-                    <img src="/assets/img/de.svg" alt="" />DE
-                  </button>
-                </li>
+              <button className="ap-command-trigger" type="button" onClick={this.openCommand} aria-label="Open command menu">
+                <i className="bx bx-search" aria-hidden="true" /><span>Command</span><kbd>⌘K</kbd>
+              </button>
+            </li>
+            <li>
+              <ul className="language-changer ap-language" aria-label="Language">
+                <li><button type="button" onClick={() => this.onChange('en')} aria-pressed={this.state.language === 'en'}><img src="/assets/img/gb.svg" alt="" />EN</button></li>
+                <li><button type="button" onClick={() => this.onChange('de')} aria-pressed={this.state.language === 'de'}><img src="/assets/img/de.svg" alt="" />DE</button></li>
               </ul>
             </li>
             <li className="header-actions__item">
-              <Link className="header-notification" to="/notifications" aria-label={`${notificationCount} notifications`}>
+              <Link className="header-notification ap-icon-btn" to="/notifications" aria-label={`${notificationCount} notifications`}>
                 <i className="bx bx-bell" aria-hidden="true" />
                 {notificationCount > 0 ? <span className="notification-count">{notificationCount}</span> : null}
               </Link>
             </li>
             <li className="dropdown">
-              <button className="dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Open account menu">
+              <button className="dropdown-toggle ap-user-button" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Open account menu">
                 <img src="/assets/img/user.png" alt="" />
               </button>
-              <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+              <div className="dropdown-menu dropdown-menu-right ap-account-menu" aria-labelledby="dropdownMenuButton">
                 <Link className="dropdown-item" to="/user/profile"><Translate content="label.profile" /></Link>
                 <Link className="dropdown-item" to="/user/edit-profile"><Translate content="label.editprofile" /></Link>
                 <Link className="dropdown-item" to="/change-password"><Translate content="label.resetpassword" /></Link>
-                <button className="dropdown-item" type="button" onClick={() => this.props.logout(() => this.props.history.push('/login'))}>
-                  <Translate content="label.logout" />
-                </button>
+                <div className="ap-menu-divider" />
+                <button className="dropdown-item" type="button" onClick={() => this.props.logout(() => this.props.history.push('/login'))}><Translate content="label.logout" /></button>
               </div>
             </li>
           </ul>
