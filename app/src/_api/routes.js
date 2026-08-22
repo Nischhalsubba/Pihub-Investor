@@ -1,7 +1,17 @@
+const configuredApiUrl = (process.env.REACT_APP_API_URL || '').trim().replace(/\/$/, '');
+const productionFallback = '/credittech-api';
+const developmentFallback = 'http://api.credittech.diagonal.solutions/api';
+
+// Keep the API endpoint deployment-configurable. In production, only use a
+// configured absolute API URL when it is HTTPS so the browser never creates a
+// mixed-content request. If no live HTTPS endpoint is configured, use the
+// same-origin Vercel proxy as a compatibility fallback.
 const API_URL =
   process.env.NODE_ENV === 'production'
-    ? '/credittech-api'
-    : process.env.REACT_APP_API_URL || 'http://api.credittech.diagonal.solutions/api';
+    ? configuredApiUrl.indexOf('https://') === 0
+      ? configuredApiUrl
+      : productionFallback
+    : configuredApiUrl || developmentFallback;
 
 export const routes = {
   login: `${API_URL}/login`,
