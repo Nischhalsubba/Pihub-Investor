@@ -1,0 +1,140 @@
+/* PiHub Investor — purpose-first UI polish.
+   Every visual signal must communicate structure, state, or action. */
+
+/* Page folio: keep the section index because it maps to navigation/keyboard order.
+   Remove the decorative rule above it; it carried no information. */
+.ap-folio {
+  border-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Sidebar: eliminate the dead zone between the Workspace label and first route. */
+.ap-nav-meta.sidebar-section-label {
+  padding: 14px 18px 4px !important;
+}
+.ap-sidebar .ap-nav {
+  margin: 0 !important;
+  padding: 2px 0 0 !important;
+}
+.ap-sidebar .ap-nav > ul,
+.ap-sidebar .ap-nav > ul > li,
+.ap-sidebar .ap-nav > ul > li > ul {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.ap-sidebar .ap-nav.nav-sidebar li a.ap-nav-item {
+  min-height: 48px;
+}
+.ap-nav-divider {
+  margin-top: 10px !important;
+}
+.ap-nav-action.sidebar-action {
+  margin-top: 6px !important;
+}
+
+/* Top bar: one baseline, two purposeful zones.
+   Left = current workspace context. Right = commands/account utilities. */
+.ap-topbar.site-header {
+  display: grid !important;
+  grid-template-columns: minmax(240px, 1fr) auto !important;
+  align-items: center !important;
+}
+.ap-topbar .ap-context {
+  grid-column: 1;
+  align-self: center !important;
+  justify-self: start !important;
+  min-width: 0;
+}
+.ap-topbar .ap-top-actions {
+  grid-column: 2;
+  align-self: stretch !important;
+  justify-self: end !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.ap-topbar .ap-top-actions > ul {
+  height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  list-style: none !important;
+}
+.ap-topbar .ap-top-actions > ul > li {
+  height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.ap-topbar .ap-language.language-changer {
+  height: 38px;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: stretch !important;
+}
+.ap-topbar .ap-language.language-changer > li {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: stretch !important;
+}
+.ap-topbar .ap-language.language-changer button,
+.ap-topbar .ap-icon-btn.header-notification,
+.ap-topbar .ap-user-button.dropdown-toggle {
+  height: 38px !important;
+  min-height: 38px !important;
+}
+.ap-topbar .ap-user-button.dropdown-toggle {
+  margin-left: 2px;
+}
+
+/* The command control is wider only where there is room for its label and shortcut. */
+@media (min-width: 901px) {
+  .ap-command-trigger {
+    width: 196px;
+    min-width: 196px;
+  }
+}
+
+/* Tablet: preserve the same utility order without letting the command label crowd context. */
+@media (max-width: 900px) {
+  .ap-topbar.site-header {
+    grid-template-columns: minmax(120px, 1fr) auto !important;
+  }
+  .ap-topbar .ap-top-actions > ul {
+    gap: 6px !important;
+  }
+  .ap-command-trigger {
+    width: 44px !important;
+    min-width: 44px !important;
+    padding: 0 !important;
+    grid-template-columns: 1fr !important;
+    place-items: center;
+  }
+  .ap-command-trigger span,
+  .ap-command-trigger kbd {
+    display: none !important;
+  }
+}
+
+/* Small screens already show the page title immediately below the top bar.
+   Hide duplicate context there and devote the bar to actions. */
+@media (max-width: 620px) {
+  .ap-topbar.site-header {
+    grid-template-columns: 1fr !important;
+  }
+  .ap-topbar .ap-context {
+    display: none !important;
+  }
+  .ap-topbar .ap-top-actions {
+    grid-column: 1;
+    width: 100%;
+  }
+  .ap-topbar .ap-top-actions > ul {
+    width: 100%;
+    justify-content: flex-end !important;
+  }
+}
