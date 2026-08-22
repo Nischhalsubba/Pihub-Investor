@@ -27,6 +27,11 @@ function decodeJwtPayload(token) {
 }
 
 export const signin = ({ email, password }, callback) => async dispatch => {
+  dispatch({
+    type: AUTH_ERROR,
+    payload: ''
+  });
+
   try {
     const response = await client.post(routes.login, {
       email,
@@ -47,9 +52,16 @@ export const signin = ({ email, password }, callback) => async dispatch => {
     });
     callback();
   } catch (e) {
+    const backendError =
+      e && e.response && e.response.data && e.response.data.error
+        ? e.response.data.error
+        : null;
+
     dispatch({
       type: AUTH_ERROR,
-      payload: `${e.response.data.error}.`
+      payload:
+        backendError ||
+        'Unable to reach the sign-in service. Please try again in a moment.'
     });
   }
 };
