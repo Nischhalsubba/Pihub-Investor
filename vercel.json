@@ -5,8 +5,23 @@
   "outputDirectory": "app/build",
   "rewrites": [
     {
+      "source": "/credittech-api/:path*",
+      "destination": "http://api.credittech.diagonal.solutions/api/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/credittech-api/:path*",
+      "headers": [
+        {
+          "key": "x-vercel-enable-rewrite-caching",
+          "value": "0"
+        }
+      ]
     }
   ]
 }
