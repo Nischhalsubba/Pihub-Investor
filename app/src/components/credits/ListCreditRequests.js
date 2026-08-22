@@ -95,6 +95,9 @@ class ListCreditRequests extends Component {
     const pending = data.filter(item => toText(item.status) !== 'invested').length;
     const services = Array.from(new Set(data.map(item => item.service && item.service.name !== undefined ? toText(item.service.name) : toText(item.service)).filter(Boolean)));
     const nearest = this.getNearestDeadline(data);
+    const creditMeta = this.props.list && this.props.list.creditRequests ? this.props.list.creditRequests : {};
+    const rawTotalPage = Number(creditMeta.last_page || creditMeta.totalPage || creditMeta.total_pages || 1);
+    const totalPage = Number.isFinite(rawTotalPage) && rawTotalPage > 0 ? rawTotalPage : 1;
 
     return (
       <Fragment>
@@ -112,7 +115,7 @@ class ListCreditRequests extends Component {
             <div className="ap-section-rule"><div><strong>Decision queue</strong><span>{data.length} active records</span></div><small>CR/02</small></div>
             <div className="ap-queue-head"><span>#</span><span>Creditor</span><span>Opportunity</span><span>Facility</span><span>Created</span><span>Deadline</span><span>Status</span><span /></div>
             <div className="ap-queue-body">{this.renderRows(data)}</div>
-            <div className="ap-ledger-pagination"><Pagination url="creditRequest" /></div>
+            <div className="ap-ledger-pagination"><Pagination totalPage={totalPage} url={page => this.props.getCreditRequestList(page)} /></div>
           </section>
 
           <aside className="ap-analysis-rail" aria-label="Queue intelligence">
