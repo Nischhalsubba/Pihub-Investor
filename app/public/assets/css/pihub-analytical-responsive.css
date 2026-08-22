@@ -81,3 +81,19 @@
   .ap-command { animation: none; }
   .ap-shell *, .ap-command-layer * { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+
+/* Mobile form legibility: prevent browser zoom and preserve accessible targets. */
+@media (max-width: 620px) {
+  body { font-size: 14px; }
+  .ap-query-input input,
+  .ap-main .form-control,
+  .ap-main select.form-control,
+  .ap-main textarea.form-control,
+  .ap-main .rw-widget-input,
+  .ap-main .choices__inner,
+  .auth-card .form-control,
+  .auth-phone-field .react-tel-input .form-control,
+  .ap-command-search input { font-size: 16px !important; }
+  .ap-ledger-row, .ap-queue-row, .ap-position-row { font-size: 10px; }
+  .ap-ledger-head, .ap-queue-head, .ap-position-head { font-size: 8px; }
+}

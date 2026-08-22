@@ -18,6 +18,8 @@ const isTypingTarget = target => {
 class CommandPalette extends Component {
   state = { open: false, query: '', activeIndex: 0 };
   inputRef = React.createRef();
+  dialogRef = React.createRef();
+  previousFocus = null;
 
   componentDidMount() {
     window.addEventListener('keydown', this.onGlobalKeyDown);
@@ -35,7 +37,15 @@ class CommandPalette extends Component {
     return COMMANDS.filter(command => `${command.code} ${command.label} ${command.meta} ${command.keywords}`.toLowerCase().indexOf(query) !== -1);
   };
 
+  getFocusable = () => {
+    if (!this.dialogRef.current) return [];
+    return Array.from(this.dialogRef.current.querySelectorAll('input,button:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])'))
+      .filter(element => !element.hasAttribute('hidden'));
+  };
+
   open = () => {
+    if (this.state.open) return;
+    this.previousFocus = document.activeElement;
     this.setState({ open: true, query: '', activeIndex: 0 }, () => {
       window.requestAnimationFrame(() => {
         if (this.inputRef.current) this.inputRef.current.focus();
@@ -43,12 +53,37 @@ class CommandPalette extends Component {
     });
   };
 
-  close = () => this.setState({ open: false, query: '', activeIndex: 0 });
+  close = () => {
+    if (!this.state.open) return;
+    const focusTarget = this.previousFocus;
+    this.setState({ open: false, query: '', activeIndex: 0 }, () => {
+      this.previousFocus = null;
+      if (focusTarget && typeof focusTarget.focus === 'function' && document.documentElement.contains(focusTarget)) {
+        window.requestAnimationFrame(() => focusTarget.focus());
+      }
+    });
+  };
 
   navigate = command => {
     if (!command) return;
     this.close();
     this.props.history.push(command.path);
+  };
+
+  trapFocus = event => {
+    const focusable = this.getFocusable();
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    const active = document.activeElement;
+
+    if (event.shiftKey && (active === first || !this.dialogRef.current.contains(active))) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && active === last) {
+      event.preventDefault();
+      first.focus();
+    }
   };
 
   onGlobalKeyDown = event => {
@@ -64,6 +99,10 @@ class CommandPalette extends Component {
       if (event.key === 'Escape') {
         event.preventDefault();
         this.close();
+        return;
+      }
+      if (event.key === 'Tab') {
+        this.trapFocus(event);
         return;
       }
 
@@ -97,7 +136,7 @@ class CommandPalette extends Component {
     return (
       <div className="ap-command-layer" role="presentation">
         <button className="ap-command-scrim" type="button" aria-label="Close command menu" onClick={this.close} />
-        <section className="ap-command" role="dialog" aria-modal="true" aria-label="PiHub command menu">
+        <section ref={this.dialogRef} className="ap-command" role="dialog" aria-modal="true" aria-label="PiHub command menu">
           <div className="ap-command-search">
             <i className="bx bx-search" aria-hidden="true" />
             <label className="sr-only" htmlFor="pihub-command-search">Search commands</label>
@@ -112,7 +151,7 @@ class CommandPalette extends Component {
             <kbd>ESC</kbd>
           </div>
           <div className="ap-command-section-label">Navigate</div>
-          <div className="ap-command-list" role="listbox" aria-label="Commands">
+          <div className="ap-command-list" aria-label="Commands">
             {commands.length ? commands.map((command, index) => (
               <button
                 type="button"
@@ -120,8 +159,6 @@ class CommandPalette extends Component {
                 className={index === this.state.activeIndex ? 'ap-command-row is-active' : 'ap-command-row'}
                 onMouseEnter={() => this.setState({ activeIndex: index })}
                 onClick={() => this.navigate(command)}
-                role="option"
-                aria-selected={index === this.state.activeIndex}
               >
                 <span className="ap-command-code">{command.code}</span>
                 <span className="ap-command-copy"><strong>{command.label}</strong><small>{command.meta}</small></span>
