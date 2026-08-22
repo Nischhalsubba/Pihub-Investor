@@ -13,6 +13,39 @@ counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
 counterpart.setLocale(localStorage.getItem('language') || navigator.language.split('-')[0] || 'de');
 
+const normalizeNotificationCount = value => {
+  const readNumber = candidate => {
+    if (candidate === null || candidate === undefined || candidate === '') return null;
+    const parsed = Number(candidate);
+    return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
+  };
+
+  const direct = readNumber(value);
+  if (direct !== null) return direct;
+
+  if (value && typeof value === 'object') {
+    const candidates = [value.count, value.total, value.unread, value.unread_count, value.data];
+    for (let index = 0; index < candidates.length; index += 1) {
+      const candidate = candidates[index];
+      const parsed = readNumber(candidate);
+      if (parsed !== null) return parsed;
+
+      if (candidate && typeof candidate === 'object') {
+        const nested = readNumber(
+          candidate.count !== undefined
+            ? candidate.count
+            : candidate.total !== undefined
+              ? candidate.total
+              : candidate.unread_count
+        );
+        if (nested !== null) return nested;
+      }
+    }
+  }
+
+  return 0;
+};
+
 const getPageContext = pathname => {
   if (pathname === '/products' || pathname === '/' || pathname === '/product' || pathname === '/edit-product') {
     return { icon: 'bx bx-grid-alt', label: 'sidebar.products' };
@@ -53,6 +86,7 @@ class Header extends Component {
 
   render() {
     const context = getPageContext(this.props.location.pathname);
+    const notificationCount = normalizeNotificationCount(this.props.count);
 
     return (
       <header className="site-header">
@@ -83,9 +117,9 @@ class Header extends Component {
               </ul>
             </li>
             <li className="header-actions__item">
-              <Link className="header-notification" to="/notifications" aria-label={`${this.props.count || 0} notifications`}>
+              <Link className="header-notification" to="/notifications" aria-label={`${notificationCount} notifications`}>
                 <i className="bx bx-bell" aria-hidden="true" />
-                {this.props.count ? <span className="notification-count">{this.props.count}</span> : null}
+                {notificationCount > 0 ? <span className="notification-count">{notificationCount}</span> : null}
               </Link>
             </li>
             <li className="dropdown">

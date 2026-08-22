@@ -17,6 +17,30 @@ const statusOptions = [
   { value: 'suspended', label: 'label.suspended' }
 ];
 
+const toDisplayText = value => {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'string' || typeof value === 'number') return String(value);
+  return '';
+};
+
+const localizedText = value => {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'string' || typeof value === 'number') return String(value);
+
+  if (typeof value === 'object') {
+    const locale = Translator.getLocale();
+    const candidates = [value[locale], value.en, value.de, value.label, value.name, value.title];
+    for (let index = 0; index < candidates.length; index += 1) {
+      const candidate = candidates[index];
+      if (typeof candidate === 'string' || typeof candidate === 'number') {
+        return String(candidate);
+      }
+    }
+  }
+
+  return '';
+};
+
 class ProductsList extends Component {
   state = { status: '', product_title: '' };
 
@@ -33,7 +57,7 @@ class ProductsList extends Component {
   getProducts = () => {
     const source = this.props.data;
     if (!source || !source.productsList || !Array.isArray(source.productsList.data)) return [];
-    return source.productsList.data;
+    return source.productsList.data.filter(product => product && typeof product === 'object');
   };
 
   getSummary = products => ({
@@ -54,22 +78,30 @@ class ProductsList extends Component {
       deleted: ['badge-light', 'label.deleted'],
       suspended: ['badge-info', 'label.suspended']
     };
-    const value = map[status];
+    const normalizedStatus = typeof status === 'string' ? status : '';
+    const value = map[normalizedStatus];
     return value
       ? <span className={`badge ${value[0]}`}><Translate content={value[1]} /></span>
-      : <span className="badge badge-light">{status || '—'}</span>;
+      : <span className="badge badge-light">{normalizedStatus || '—'}</span>;
   };
 
-  renderIndustries = product => (
-    <div className="industry-stack">
-      {(product.industries || []).slice(0, 2).map((industry, index) => (
-        <span key={`${product.id}-industry-${index}`}>
-          {industry.name ? industry.name[Translator.getLocale()] : <Translate content="placeholder.notAvailable" />}
-        </span>
-      ))}
-      {(product.industries || []).length > 2 ? <small>+{product.industries.length - 2}</small> : null}
-    </div>
-  );
+  renderIndustries = product => {
+    const industries = Array.isArray(product.industries) ? product.industries.filter(Boolean) : [];
+
+    return (
+      <div className="industry-stack">
+        {industries.slice(0, 2).map((industry, index) => {
+          const label = localizedText(industry && industry.name !== undefined ? industry.name : industry);
+          return (
+            <span key={`${toDisplayText(product.id) || 'product'}-industry-${index}`}>
+              {label || <Translate content="placeholder.notAvailable" />}
+            </span>
+          );
+        })}
+        {industries.length > 2 ? <small>+{industries.length - 2}</small> : null}
+      </div>
+    );
+  };
 
   renderList = products => {
     if (!products.length) {
@@ -86,30 +118,38 @@ class ProductsList extends Component {
       );
     }
 
-    return products.map(product => (
-      <tr key={product.id}>
-        <td>
-          <Link className="entity-title" to={{ pathname: '/product', state: { id: product.id } }}>
-            {product.product_title}
-          </Link>
-          <small className="entity-meta">#{product.id}</small>
-        </td>
-        <td>
-          {product.service && product.service.name
-            ? product.service.name[Translator.getLocale()]
-            : <Translate content="placeholder.notAvailable" />}
-        </td>
-        <td>{this.renderIndustries(product)}</td>
-        <td className="data-nowrap">
-          <span className="mono-value">{product.min_time_duration}–{product.max_time_duration}</span>{' '}
-          <Translate content="label.months" />
-        </td>
-        <td className="data-nowrap">
-          <span className="money-range"><ToEuro amount={product.min_credit_amount} /> <span>–</span> <ToEuro amount={product.max_credit_amount} /></span>
-        </td>
-        <td>{this.renderStatus(product.status)}</td>
-      </tr>
-    ));
+    return products.map((product, index) => {
+      const productId = toDisplayText(product.id);
+      const title = localizedText(product.product_title) || toDisplayText(product.product_title) || 'Untitled product';
+      const serviceName = product.service && product.service.name !== undefined
+        ? localizedText(product.service.name)
+        : localizedText(product.service);
+      const minDuration = toDisplayText(product.min_time_duration);
+      const maxDuration = toDisplayText(product.max_time_duration);
+
+      return (
+        <tr key={productId || `product-${index}`}>
+          <td>
+            <Link className="entity-title" to={{ pathname: '/product', state: { id: product.id } }}>
+              {title}
+            </Link>
+            {productId ? <small className="entity-meta">#{productId}</small> : null}
+          </td>
+          <td>
+            {serviceName || <Translate content="placeholder.notAvailable" />}
+          </td>
+          <td>{this.renderIndustries(product)}</td>
+          <td className="data-nowrap">
+            <span className="mono-value">{minDuration || '—'}–{maxDuration || '—'}</span>{' '}
+            <Translate content="label.months" />
+          </td>
+          <td className="data-nowrap">
+            <span className="money-range"><ToEuro amount={product.min_credit_amount} /> <span>–</span> <ToEuro amount={product.max_credit_amount} /></span>
+          </td>
+          <td>{this.renderStatus(product.status)}</td>
+        </tr>
+      );
+    });
   };
 
   handleSearch = event => {
@@ -118,7 +158,8 @@ class ProductsList extends Component {
   };
 
   render() {
-    const { totalPage } = this.props.pagination;
+    const pagination = this.props.pagination || {};
+    const totalPage = Number(pagination.totalPage) > 0 ? Number(pagination.totalPage) : 1;
     const products = this.getProducts();
     const summary = this.getSummary(products);
     const allLabel = Translator.getLocale() === 'de' ? 'Alle' : 'All';
