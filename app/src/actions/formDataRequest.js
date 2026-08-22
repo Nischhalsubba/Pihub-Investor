@@ -1,7 +1,12 @@
 import axios from 'axios';
 import { getStoredToken } from '../_utils/authToken';
+import { demoAxiosAdapter, isDemoMode } from '../_utils/demoMode';
 
 const clientWithForm = axios.create();
+
+if (isDemoMode()) {
+  clientWithForm.defaults.adapter = demoAxiosAdapter;
+}
 
 clientWithForm.interceptors.request.use(
   async config => {
