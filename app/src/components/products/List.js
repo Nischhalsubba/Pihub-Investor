@@ -57,16 +57,29 @@ const statusLabel = status => {
   return labels[status] || status || '—';
 };
 
-class ProductsList extends Component {
-  state = { status: '', product_title: '', selectedId: null };
+const safePage = value => {
+  const page = Number(value);
+  return Number.isFinite(page) && page > 0 ? Math.floor(page) : 1;
+};
 
-  componentDidMount() {
-    this.props.getProductsList();
+class ProductsList extends Component {
+  constructor(props) {
+    super(props);
+    const view = this.readView(props.location);
+    this.state = { status: view.status, product_title: view.product_title, selectedId: null };
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.status !== this.state.status) {
-      this.props.getProductsList(1, this.state.status, this.state.product_title);
+  componentDidMount() {
+    this.loadView(this.readView());
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.location.search !== this.props.location.search) {
+      const view = this.readView();
+      if (view.status !== this.state.status || view.product_title !== this.state.product_title) {
+        this.setState({ status: view.status, product_title: view.product_title });
+      }
+      this.loadView(view);
     }
 
     if (prevProps.data !== this.props.data) {
@@ -74,8 +87,31 @@ class ProductsList extends Component {
       if (products.length && !products.some(product => String(product.id) === String(this.state.selectedId))) {
         this.setState({ selectedId: products[0].id });
       }
+      if (!products.length && this.state.selectedId !== null) this.setState({ selectedId: null });
     }
   }
+
+  readView = (location = this.props.location) => {
+    const params = new URLSearchParams(location && location.search ? location.search : '');
+    const status = params.get('status') || '';
+    const allowedStatus = statusOptions.some(option => option.value === status) ? status : '';
+    return {
+      status: allowedStatus,
+      product_title: params.get('q') || '',
+      page: safePage(params.get('page'))
+    };
+  };
+
+  loadView = view => this.props.getProductsList(view.page, view.status, view.product_title.trim());
+
+  writeView = patch => {
+    const next = { ...this.readView(), ...patch };
+    const params = new URLSearchParams();
+    if (next.status) params.set('status', next.status);
+    if (next.product_title && next.product_title.trim()) params.set('q', next.product_title.trim());
+    if (safePage(next.page) > 1) params.set('page', String(safePage(next.page)));
+    this.props.history.push({ pathname: '/products', search: params.toString() ? `?${params.toString()}` : '' });
+  };
 
   getProducts = () => {
     const source = this.props.data;
@@ -101,7 +137,7 @@ class ProductsList extends Component {
 
   handleSearch = event => {
     event.preventDefault();
-    this.props.getProductsList(1, this.state.status, this.state.product_title.trim());
+    this.writeView({ product_title: this.state.product_title, page: 1 });
   };
 
   selectProduct = product => this.setState({ selectedId: product.id });
@@ -118,6 +154,7 @@ class ProductsList extends Component {
       const industries = this.getIndustries(product);
       const location = Array.isArray(product.states) && product.states[0] ? localizedText(product.states[0].name || product.states[0]) : '';
       const selected = String(product.id) === String(this.state.selectedId);
+      const opportunityPath = `/opportunities/${encodeURIComponent(product.id)}`;
       return (
         <div
           className={selected ? 'ap-ledger-row is-selected' : 'ap-ledger-row'}
@@ -134,7 +171,7 @@ class ProductsList extends Component {
           }}
         >
           <div className="ap-issuer" role="cell">
-            <Link to={{ pathname: '/product', state: { id: product.id } }} onClick={event => event.stopPropagation()}>{title}</Link>
+            <Link to={opportunityPath} onClick={event => event.stopPropagation()}>{title}</Link>
             <small>{product.product_code || productId || '—'}{location ? ` / ${location}` : ''}</small>
           </div>
           <span role="cell">{service}</span>
@@ -149,9 +186,7 @@ class ProductsList extends Component {
   };
 
   renderInspector = product => {
-    if (!product) {
-      return <aside className="ap-inspector"><div className="ap-inspector-empty">Select an opportunity to inspect its credit parameters.</div></aside>;
-    }
+    if (!product) return <aside className="ap-inspector"><div className="ap-inspector-empty">Select an opportunity to inspect its credit parameters.</div></aside>;
     const title = localizedText(product.product_title) || 'Untitled product';
     const industries = this.getIndustries(product);
     const collateral = product.collatoral !== undefined ? product.collatoral : product.collateral;
@@ -175,18 +210,20 @@ class ProductsList extends Component {
           <div className="ap-data-pair"><span>Industry</span><b>{industries.join(', ') || '—'}</b></div>
           <div className="ap-data-pair"><span>Status</span><b className={`ap-text-${product.status || 'neutral'}`}>{statusLabel(product.status)}</b></div>
         </div>
-        <Link className="ap-inspector-link" to={{ pathname: '/product', state: { id: product.id } }}>Open full opportunity <span aria-hidden="true">↗</span></Link>
+        <Link className="ap-inspector-link" to={`/opportunities/${encodeURIComponent(product.id)}`}>Open full opportunity <span aria-hidden="true">↗</span></Link>
       </aside>
     );
   };
 
   render() {
     const pagination = this.props.pagination || {};
-    const totalPage = Number(pagination.totalPage) > 0 ? Number(pagination.totalPage) : 1;
+    const totalPageCandidate = pagination.totalPage || pagination.last_page || pagination.total_pages;
+    const totalPage = Number(totalPageCandidate) > 0 ? Number(totalPageCandidate) : 1;
     const products = this.getProducts();
     const summary = this.getSummary(products);
     const selected = products.find(product => String(product.id) === String(this.state.selectedId)) || products[0] || null;
     const allLabel = Translator.getLocale() === 'de' ? 'Alle' : 'All';
+    const currentPage = this.readView().page;
 
     return (
       <Fragment>
@@ -200,15 +237,14 @@ class ProductsList extends Component {
         </section>
 
         <form className="ap-query-line" onSubmit={this.handleSearch} aria-label="Opportunity filters">
-          <span className="ap-query-index" aria-hidden="true">QRY</span>
           <div className="ap-query-input"><i className="bx bx-search" aria-hidden="true" /><label className="sr-only" htmlFor="opportunity-search">Search opportunities</label><input id="opportunity-search" type="search" placeholder="Search opportunity, facility or sector" value={this.state.product_title} onChange={event => this.setState({ product_title: event.target.value })} /></div>
           <div className="ap-filter-tabs" role="group" aria-label="Filter by status">
             {statusOptions.map(option => {
               const active = this.state.status === option.value;
-              return <button key={option.value || 'all'} type="button" className={active ? 'is-active' : ''} aria-pressed={active} onClick={() => this.setState({ status: option.value })}>{option.label ? <Translate content={option.label} /> : allLabel}</button>;
+              return <button key={option.value || 'all'} type="button" className={active ? 'is-active' : ''} aria-pressed={active} onClick={() => this.writeView({ status: option.value, page: 1 })}>{option.label ? <Translate content={option.label} /> : allLabel}</button>;
             })}
           </div>
-          <button className="ap-search-submit" type="submit">SEARCH</button>
+          <button className="ap-search-submit" type="submit">Search</button>
         </form>
 
         <div className="ap-board-grid">
@@ -216,7 +252,7 @@ class ProductsList extends Component {
             <div className="ap-ledger-caption"><div><strong>Opportunity book</strong><span>{summary.visible} records on this page</span></div><small>EUR</small></div>
             <div className="ap-ledger-head" role="row"><span>Opportunity</span><span>Facility</span><span>Industry</span><span>Tenor</span><span>Credit</span><span>Status</span><span /></div>
             <div className="ap-ledger-body">{this.renderLedgerRows(products)}</div>
-            <div className="ap-ledger-pagination"><Pagination totalPage={totalPage} url={page => this.props.getProductsList(page, this.state.status, this.state.product_title.trim())} /></div>
+            <div className="ap-ledger-pagination"><Pagination totalPage={totalPage} currentPage={currentPage} url={page => this.writeView({ page })} /></div>
           </section>
           {this.renderInspector(selected)}
         </div>

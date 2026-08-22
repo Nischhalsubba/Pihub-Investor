@@ -1,20 +1,18 @@
 import client from './index';
 import { routes } from './../_api/routes';
-import { CREDIT_REQUESTS_LIST, ERROR } from '../actions/types';
+import { CLEAR_ERROR, CREDIT_REQUESTS_LIST, ERROR } from '../actions/types';
+import { getApiErrorMessage, normalizePagedCollection } from '../_utils/api';
+
 export const getCreditRequestList = page => async dispatch => {
+  dispatch({ type: CLEAR_ERROR });
   try {
-    const response = await client.get(
-      `${routes.listCreditRequests}?page=${page}`
-    );
+    const response = await client.get(routes.listCreditRequests, { params: { page: page || 1 } });
     dispatch({
       type: CREDIT_REQUESTS_LIST,
-      payload: response.data
+      payload: normalizePagedCollection(response && response.data, ['creditRequests'])
     });
-  } catch (e) {
-    console.log(e);
-    // dispatch({
-    //   type: ERROR,
-    //   payload: `${e}.`
-    // });
+  } catch (error) {
+    dispatch({ type: CREDIT_REQUESTS_LIST, payload: { data: [], meta: {} } });
+    dispatch({ type: ERROR, payload: getApiErrorMessage(error, 'Unable to load credit requests right now.') });
   }
 };
