@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 const COMMANDS = [
-  { label: 'Opportunity book', meta: 'Review products and facilities', path: '/products', shortcut: 'P', keywords: 'products opportunities facilities book' },
-  { label: 'Credit requests', meta: 'Review and decision queue', path: '/credit-request', shortcut: 'C', keywords: 'credit requests applications review queue' },
-  { label: 'Invested positions', meta: 'Capital deployment and exposure', path: '/products-invested', shortcut: 'I', keywords: 'invested portfolio positions exposure' },
-  { label: 'Institution profile', meta: 'Entity record and contacts', path: '/user/profile', shortcut: 'A', keywords: 'profile institution entity account' },
-  { label: 'Register opportunity', meta: 'Create a financing opportunity', path: '/opportunities/new', shortcut: 'N', keywords: 'new add create register opportunity product' }
+  { label: 'Opportunity book', meta: 'Browse and manage all opportunities.', path: '/products', shortcut: 'P', icon: 'bx bx-bar-chart-square', keywords: 'products opportunities facilities book' },
+  { label: 'Credit requests', meta: 'View and process incoming credit requests.', path: '/credit-request', shortcut: 'C', icon: 'bx bx-receipt', keywords: 'credit requests applications review queue' },
+  { label: 'Invested positions', meta: 'Monitor deployed capital and position exposure.', path: '/products-invested', shortcut: 'I', icon: 'bx bx-line-chart', keywords: 'invested portfolio positions exposure' },
+  { label: 'Institution profile', meta: 'Manage institutional identity and contacts.', path: '/user/profile', shortcut: 'A', icon: 'bx bx-buildings', keywords: 'profile institution entity account contacts' },
+  { label: 'Register opportunity', meta: 'Create a new investment opportunity.', path: '/opportunities/new', shortcut: 'N', icon: 'bx bx-plus', keywords: 'new add create register opportunity product' }
 ];
 
 const isTypingTarget = target => target && (['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName) || target.isContentEditable);
@@ -97,16 +97,18 @@ class CommandPalette extends Component {
       <div className="ap-command-layer" role="presentation">
         <button className="ap-command-scrim" type="button" aria-label="Close command menu" onClick={this.close} />
         <section ref={this.dialogRef} className="ap-command" role="dialog" aria-modal="true" aria-label="PiHub command menu">
-          <div className="ap-command-search"><i className="bx bx-search" aria-hidden="true" /><label className="sr-only" htmlFor="pihub-command-search">Search commands</label><input ref={this.inputRef} id="pihub-command-search" value={this.state.query} onChange={event => this.setState({ query: event.target.value, activeIndex: 0 })} placeholder="Search navigation or action" autoComplete="off" /><kbd>Esc</kbd></div>
+          <div className="ap-command-search"><i className="bx bx-search" aria-hidden="true" /><label className="sr-only" htmlFor="pihub-command-search">Search commands</label><input ref={this.inputRef} id="pihub-command-search" value={this.state.query} onChange={event => this.setState({ query: event.target.value, activeIndex: 0 })} placeholder="Search navigation or action…" autoComplete="off" /><kbd>Esc</kbd></div>
           <div className="ap-command-section-label">Workspace commands</div>
           <div className="ap-command-list" aria-label="Commands">
             {commands.length ? commands.map((command, index) => (
               <button type="button" key={command.path} className={index === this.state.activeIndex ? 'ap-command-row is-active' : 'ap-command-row'} onMouseEnter={() => this.setState({ activeIndex: index })} onClick={() => this.navigate(command)}>
-                <span className="ap-command-copy"><strong>{command.label}</strong><small>{command.meta}</small></span><kbd>Alt {command.shortcut}</kbd>
+                <span className="ap-command-icon" aria-hidden="true"><i className={command.icon} /></span>
+                <span className="ap-command-copy"><strong>{command.label}</strong><small>{command.meta}</small></span>
+                <kbd>Alt {command.shortcut}</kbd>
               </button>
             )) : <div className="ap-command-empty">No matching command.</div>}
           </div>
-          <footer className="ap-command-footer"><span>↑↓ Select</span><span>↵ Open</span><span>Ctrl/Cmd K Toggle</span></footer>
+          <footer className="ap-command-footer"><span>↑↓ navigate</span><span>Enter select</span><span>Ctrl/Cmd K toggle</span></footer>
         </section>
       </div>
     );
