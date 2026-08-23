@@ -78,6 +78,9 @@
 .governance-event strong { font-size: 11px; }
 .governance-event span { color: var(--ap-ink-500); font: 500 9px "IBM Plex Mono", monospace; }
 
+/* Keyboard-hint text is instructional UI, so it must meet normal-text contrast. */
+.ap-command-trigger kbd { color: #4f5f72; }
+
 @media (max-width: 1200px) {
   .overview-grid, .institution-grid { grid-template-columns: 1fr; }
   .decision-table { overflow-x: auto; }
