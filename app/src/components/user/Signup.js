@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import ReactPhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/dist/style.css';
+import 'react-phone-input-2/lib/style.css';
 import Translate from 'react-translate-component';
 import Translator from 'react-translate-component';
 import { signup } from '../../actions/signup';
@@ -38,49 +38,76 @@ const Signup = ({ signup: createAccount, clearError: clear, errMsg }) => {
       phone_number: validation.required(values.phone_number),
       agreed_term: values.agreed_term ? undefined : 'Accept the terms and privacy policy to continue.'
     };
-    return Object.fromEntries(Object.entries(next).filter(([, value]) => value));
+    const cleaned = Object.keys(next).reduce((result, key) => {
+      if (next[key]) result[key] = next[key];
+      return result;
+    }, {});
+    setErrors(cleaned);
+    return cleaned;
   };
 
-  const onSubmit = event => {
+  const submit = async event => {
     event.preventDefault();
-    const next = validate();
-    setErrors(next);
-    if (Object.keys(next).length) return;
+    const nextErrors = validate();
+    if (Object.keys(nextErrors).length) {
+      const first = Object.keys(nextErrors)[0];
+      const node = document.getElementById(`signup-${first}`);
+      if (node && node.focus) node.focus();
+      return;
+    }
+
     setSubmitting(true);
-    Promise.resolve(createAccount(values, () => history.replace('/signup/confirm-email'))).finally(() => setSubmitting(false));
+    const result = await createAccount(values, () => history.push('/signup/confirmation'));
+    if (result === false) setSubmitting(false);
   };
 
   return (
-    <AuthShell wide eyebrow={isGerman ? 'Investorenzugang erstellen' : 'Create investor access'} title={<Translate content="label.signupto" />} description={<Translate content="label.enteryourdetails" />} visualEyebrow={isGerman ? 'Ein Zugang, ein Arbeitsbereich' : 'One account, one workspace'} visualTitle={isGerman ? 'Von der Kreditanfrage bis zur investierten Position.' : 'From credit request to invested position.'} visualDescription={isGerman ? 'PiHub bündelt produktbezogene Prüfungen, Anfragen und Portfoliopositionen in einem konsistenten Arbeitsbereich.' : 'PiHub keeps product review, requests and portfolio positions in one consistent workspace.'} proofItems={[{ label: isGerman ? 'Prüfen' : 'Review' }, { label: isGerman ? 'Entscheiden' : 'Decide' }, { label: isGerman ? 'Verfolgen' : 'Track' }]}>
-      <form className="form-signin auth-signup-form" onSubmit={onSubmit} noValidate>
-        <div className="auth-form-grid">
-          <AuthField id="signup-first-name" name="fname" type="text" label={<Translate content="label.firstname" />} value={values.fname} onChange={update} error={errors.fname} autoComplete="given-name" />
-          <AuthField id="signup-last-name" name="lname" type="text" label={<Translate content="label.lastname" />} value={values.lname} onChange={update} error={errors.lname} autoComplete="family-name" />
+    <AuthShell
+      eyebrow={isGerman ? 'INVESTORENZUGANG ERSTELLEN' : 'CREATE INVESTOR ACCESS'}
+      title={isGerman ? 'Als Investor registrieren' : 'Sign up as an investor'}
+      description={isGerman ? 'Geben Sie Ihre Kontaktdaten ein.' : 'Enter your account and contact details.'}
+      panelEyebrow="ONE ACCOUNT, ONE WORKSPACE"
+      panelTitle="From credit request to invested position."
+      panelCopy="PiHub keeps product review, requests and portfolio positions in one consistent workspace."
+      metrics={[['01', 'Review'], ['02', 'Decide'], ['03', 'Track']]}
+    >
+      <form className="form-signup auth-form" onSubmit={submit} noValidate>
+        <AuthErrorSummary message={errMsg} />
+        <div className="auth-grid-two">
+          <AuthField id="signup-fname" label={isGerman ? 'Vorname' : 'First name'} name="fname" value={values.fname} onChange={update} autoComplete="given-name" error={errors.fname} />
+          <AuthField id="signup-lname" label={isGerman ? 'Nachname' : 'Last name'} name="lname" value={values.lname} onChange={update} autoComplete="family-name" error={errors.lname} />
         </div>
-        <AuthField id="signup-company" name="company_name" type="text" label={<Translate content="label.companyname" />} value={values.company_name} onChange={update} autoComplete="organization" />
-        <AuthField id="signup-email" name="email" type="email" label={<Translate content="label.emailaddress" />} value={values.email} onChange={update} error={errors.email} autoComplete="email" />
-        <div className="auth-form-grid">
-          <AuthField id="signup-password" name="password" type="password" label={<Translate content="label.password" />} value={values.password} onChange={update} error={errors.password} autoComplete="new-password" />
-          <AuthField id="signup-password-confirm" name="password_confirmation" type="password" label={<Translate content="label.confirmpassword" />} value={values.password_confirmation} onChange={update} error={errors.password_confirmation} autoComplete="new-password" />
+        <AuthField id="signup-company_name" label={isGerman ? 'Unternehmen' : 'Company name'} name="company_name" value={values.company_name} onChange={update} autoComplete="organization" error={errors.company_name} />
+        <AuthField id="signup-email" label={isGerman ? 'E-Mail-Adresse' : 'Email address'} name="email" type="email" value={values.email} onChange={update} autoComplete="email" error={errors.email} />
+        <div className="auth-grid-two">
+          <AuthField id="signup-password" label={isGerman ? 'Passwort' : 'Password'} name="password" type="password" value={values.password} onChange={update} autoComplete="new-password" error={errors.password} />
+          <AuthField id="signup-password_confirmation" label={isGerman ? 'Passwort bestätigen' : 'Confirm password'} name="password_confirmation" type="password" value={values.password_confirmation} onChange={update} autoComplete="new-password" error={errors.password_confirmation} />
         </div>
-        <div className="auth-field auth-phone-field">
-          <label htmlFor="signup-phone"><Translate content="label.phonenumber" /></label>
-          <ReactPhoneInput country="de" regions="europe" value={values.phone_number} onChange={phone => { setValues(current => ({ ...current, phone_number: phone })); setErrors(current => ({ ...current, phone_number: undefined })); }} inputProps={{ id: 'signup-phone', name: 'phone_number', required: true, autoComplete: 'tel', 'aria-invalid': Boolean(errors.phone_number) || undefined }} />
-          {errors.phone_number ? <span className="auth-field-error" role="alert">{errors.phone_number}</span> : null}
+        <div className="auth-field">
+          <label htmlFor="signup-phone_number">{isGerman ? 'Telefonnummer' : 'Phone number'}</label>
+          <ReactPhoneInput
+            inputProps={{ id: 'signup-phone_number', name: 'phone_number', autoComplete: 'tel', 'aria-invalid': Boolean(errors.phone_number), 'aria-describedby': errors.phone_number ? 'signup-phone_number-error' : undefined }}
+            country="de"
+            value={values.phone_number}
+            onChange={phone_number => {
+              setValues(current => ({ ...current, phone_number }));
+              setErrors(current => ({ ...current, phone_number: undefined }));
+            }}
+            containerClass="auth-phone"
+            inputClass="form-control"
+          />
+          {errors.phone_number ? <span className="field-error" id="signup-phone_number-error" role="alert">{errors.phone_number}</span> : null}
         </div>
-        <div className="auth-terms">
-          <div className="form-check">
-            <input id="signup-terms" name="agreed_term" type="checkbox" checked={values.agreed_term} onChange={update} aria-invalid={Boolean(errors.agreed_term) || undefined} />
-            <label className="form-check-label" htmlFor="signup-terms"><Translate content="column.iagree" />{' '}<Link to="/terms-and-conditions" target="_blank" rel="noopener noreferrer"><Translate content="column.terms" /></Link>{' '}<Translate content="placeholder.and" />{' '}<a href="https://www.pihub-pi.com/de/datenschutz/" rel="noopener noreferrer" target="_blank"><Translate content="placeholder.privacy_policy" /></a><Translate content="placeholder.privacy_policy_ending" /></label>
-            {errors.agreed_term ? <span className="auth-field-error" role="alert">{errors.agreed_term}</span> : null}
-          </div>
-        </div>
-        <AuthErrorSummary value={errMsg} />
-        <button className="btn btn-primary btn-form" type="submit" disabled={submitting}><Translate content="button.signup" /></button>
+        <label className="auth-check" htmlFor="signup-agreed_term">
+          <input id="signup-agreed_term" type="checkbox" name="agreed_term" checked={values.agreed_term} onChange={update} aria-describedby={errors.agreed_term ? 'signup-agreed_term-error' : undefined} />
+          <span>{isGerman ? 'Ich stimme den Bedingungen und der Datenschutzerklärung zu.' : 'I agree to the terms, conditions and privacy policy.'}</span>
+        </label>
+        {errors.agreed_term ? <span className="field-error" id="signup-agreed_term-error" role="alert">{errors.agreed_term}</span> : null}
+        <button className="btn btn-primary auth-submit" type="submit" disabled={submitting}>{submitting ? (isGerman ? 'WIRD ERSTELLT…' : 'CREATING…') : (isGerman ? 'REGISTRIEREN' : 'SIGN UP')}</button>
+        <p className="auth-switch">{isGerman ? 'Sie haben bereits ein Konto?' : 'Already have an account?'} <Link to="/login">{isGerman ? 'Anmelden' : 'Login'}</Link></p>
       </form>
-      <div className="auth-foot"><Translate content="label.alreadyhaveanaccount" />&nbsp;<Link to="/login"><strong><Translate content="label.login" /></strong></Link></div>
     </AuthShell>
   );
 };
 
-export default connect(state => ({ errMsg: state.errors }), { signup, clearError })(Signup);
+export default connect(state => ({ errMsg: state.auth && state.auth.errorMessage }), { signup, clearError })(Signup);
