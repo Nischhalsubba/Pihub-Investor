@@ -7,7 +7,7 @@ import Translate from 'react-translate-component';
 import Spinner from '../general/Spinner';
 import CreditInfo from './CreditInfo';
 
-const Translator = require('react-translate-component');
+const Translator = Translate;
 const MAX_FILE_SIZE = 8 * 1024 * 1024;
 const ALLOWED_TYPES = ['application/pdf', 'image/png', 'image/jpeg'];
 
