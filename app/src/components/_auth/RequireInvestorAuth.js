@@ -7,15 +7,26 @@ export default ChildComponent => {
     componentDidMount() { this.shouldNavigateAway(); }
     componentDidUpdate() { this.shouldNavigateAway(); }
 
-    shouldNavigateAway() {
+    hasValidSession() {
       const token = normalizeToken(this.props.auth);
-      if (!token || isTokenExpired(token)) {
+      return Boolean(token && !isTokenExpired(token));
+    }
+
+    shouldNavigateAway() {
+      if (!this.hasValidSession()) {
         clearStoredToken();
-        this.props.history.replace('/login');
+        if (this.props.history.location.pathname !== '/login') {
+          this.props.history.replace('/login');
+        }
       }
     }
 
-    render() { return <ChildComponent {...this.props} />; }
+    render() {
+      // Never flash the protected workspace while the router is redirecting an
+      // invalid or cleared session back to the sign-in screen.
+      if (!this.hasValidSession()) return null;
+      return <ChildComponent {...this.props} />;
+    }
   }
 
   return connect(state => ({ auth: state.auth.authenticated }))(ComposedComponent);
