@@ -7,7 +7,7 @@ import { ToEuro } from '../general/CurrencyFormatter';
 import { dDigit } from '../../_utils/misc';
 import { matchesInvestorStatus } from '../../_status';
 
-const Translator = require('react-translate-component');
+const Translator = Translate;
 
 class RequestedByList extends Component {
   state = { list: [] };
