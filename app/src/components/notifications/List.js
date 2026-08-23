@@ -4,7 +4,7 @@ import { getNotificationList, markAsRead } from '../../actions/notification';
 import Translate from 'react-translate-component';
 import Subheader from '../general/Subheader';
 
-const Translator = require('react-translate-component');
+const Translator = Translate;
 
 class Notifications extends Component {
   state = { refresh: false };
