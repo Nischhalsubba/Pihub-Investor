@@ -11,7 +11,7 @@ const MotionController = () => {
     if (!root) return undefined;
 
     const context = gsap.context(() => {
-      const standardTargets = root.querySelectorAll('[data-motion="page-head"], [data-motion="metric-grid"], [data-motion="table"], [data-motion="state"]');
+      const standardTargets = root.querySelectorAll('[data-motion="page-head-react"], [data-motion="metric-grid"], [data-motion="table"], [data-motion="state"]');
       if (standardTargets.length) {
         gsap.fromTo(standardTargets, { autoAlpha: 0, y: 5 }, {
           autoAlpha: 1,
