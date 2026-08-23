@@ -85,8 +85,6 @@ export const getProductsList = (page, status, productTitle) => async dispatch =>
   };
 
   try {
-    // The legacy in-browser demo adapter currently parses the URL directly.
-    // Real API traffic uses Axios params so encoding and query composition are centralized.
     const response = isDemoMode()
       ? await client.get(`${routes.products}?${new URLSearchParams(params).toString()}`)
       : await client.get(routes.products, { params });
@@ -100,13 +98,20 @@ export const getProductsList = (page, status, productTitle) => async dispatch =>
   }
 };
 
-export const addProduct = (details, callback) => async dispatch => {
+export const addProduct = (details, callback, onUploadProgress) => async dispatch => {
   dispatch({ type: CLEAR_ERROR });
   try {
-    const response = await clientWithForm.post(routes.addProduct, buildProductFormData(details));
+    const response = await clientWithForm.post(routes.addProduct, buildProductFormData(details), {
+      onUploadProgress: event => {
+        if (!onUploadProgress || !event || !event.total) return;
+        onUploadProgress(Math.min(100, Math.round((event.loaded / event.total) * 100)));
+      }
+    });
     if (response) callback();
+    return true;
   } catch (error) {
     dispatch({ type: ERROR, payload: getApiErrorMessage(error, 'Unable to add product right now.') });
+    return false;
   }
 };
 
@@ -124,9 +129,10 @@ export const getProductById = id => async dispatch => {
         product_title: toDisplayText(raw.product_title) || 'Untitled product',
         states: extractDisplayNames(raw.states),
         County: extractDisplayNames(raw.counties),
-        // Temporary compatibility for the legacy Edit component. Batch B removes
-        // the unnamed redux-form field and this accidental key entirely.
-        undefined: extractDisplayNames(raw.industries),
+        state_ids: idsFrom(raw.states),
+        county_ids: idsFrom(raw.counties),
+        industry_ids: idsFrom(raw.industries),
+        service_id: raw.service && raw.service.id,
         services: raw.service
           ? [{ value: raw.service.id, label: toDisplayText(raw.service.name) || toDisplayText(raw.service) || 'Service' }]
           : []
@@ -137,16 +143,24 @@ export const getProductById = id => async dispatch => {
   }
 };
 
-export const updateProduct = (details, id, callback) => async dispatch => {
+export const updateProduct = (details, id, callback, onUploadProgress) => async dispatch => {
   dispatch({ type: CLEAR_ERROR });
   try {
     const response = await clientWithForm.post(
       `${routes.addProduct}/${encodeURIComponent(id)}`,
-      buildProductFormData(details, { update: true })
+      buildProductFormData(details, { update: true }),
+      {
+        onUploadProgress: event => {
+          if (!onUploadProgress || !event || !event.total) return;
+          onUploadProgress(Math.min(100, Math.round((event.loaded / event.total) * 100)));
+        }
+      }
     );
     if (response) callback();
+    return true;
   } catch (error) {
     dispatch({ type: ERROR, payload: getApiErrorMessage(error, 'Unable to edit product right now.') });
+    return false;
   }
 };
 
