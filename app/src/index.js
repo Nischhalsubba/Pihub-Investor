@@ -28,6 +28,7 @@ const Signout = React.lazy(() => import('./components/user/Signout'));
 const ChangePassword = React.lazy(() => import('./components/user/signup/ChangePassword'));
 const PasswordChangeSuccess = React.lazy(() => import('./components/general/PasswordChangeSuccess'));
 const TermsCondition = React.lazy(() => import('./components/general/TermsCondition'));
+const Overview = React.lazy(() => import('./components/dashboard/Overview'));
 const ProductsList = React.lazy(() => import('./components/products/List'));
 const AddProduct = React.lazy(() => import('./components/products/Add'));
 const EditProduct = React.lazy(() => import('./components/products/Edit'));
@@ -48,12 +49,9 @@ counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('de', de);
 counterpart.setLocale(localStorage.getItem('language') || navigator.language.split('-')[0] || 'de');
 
-const store = createStore(
-  reducers,
-  { auth: { authenticated: getStoredToken() } },
-  applyMiddleware(reduxThunk)
-);
+const store = createStore(reducers, { auth: { authenticated: getStoredToken() } }, applyMiddleware(reduxThunk));
 
+const AuthOverview = RequireInvestorAuth(RequireVerification(Overview));
 const AuthProductsList = RequireInvestorAuth(RequireVerification(ProductsList));
 const AuthAddProduct = RequireInvestorAuth(RequireVerification(AddProduct));
 const AuthEditProduct = RequireInvestorAuth(RequireVerification(EditProduct));
@@ -70,20 +68,10 @@ const AuthEditProfile = RequireInvestorAuth(EditProfile);
 const AuthUnverified = RequireInvestorAuth(UnverifiedPage);
 const AuthNoMatch = RequireInvestorAuth(NoMatch);
 
-const routePropsWithState = (props, routeState) => ({
-  ...props,
-  location: {
-    ...props.location,
-    state: { ...(props.location.state || {}), ...routeState }
-  }
-});
-
+const routePropsWithState = (props, routeState) => ({ ...props, location: { ...props.location, state: { ...(props.location.state || {}), ...routeState } } });
 const routeId = value => encodeURIComponent(String(value || ''));
 const legacyState = props => props.location && props.location.state ? props.location.state : {};
-
-const LoadingRoute = () => (
-  <div className="data-loading" role="status" aria-live="polite">Loading workspace…</div>
-);
+const LoadingRoute = () => <div className="data-loading" role="status" aria-live="polite">Loading workspace…</div>;
 
 ReactDOM.render(
   <Provider store={store}>
@@ -106,86 +94,26 @@ ReactDOM.render(
 
             <App>
               <Switch>
-                <Route path="/" exact component={AuthProductsList} />
+                <Route path="/" exact component={AuthOverview} />
+                <Route path="/dashboard" exact component={AuthOverview} />
                 <Route exact path="/products" component={AuthProductsList} />
                 <Route exact path="/opportunities" render={() => <Redirect to="/products" />} />
                 <Route exact path="/opportunities/new" component={AuthAddProduct} />
-                <Route
-                  exact
-                  path="/opportunities/:productId/edit"
-                  render={props => <AuthEditProduct {...routePropsWithState(props, { id: props.match.params.productId })} />}
-                />
-                <Route
-                  exact
-                  path="/opportunities/:productId"
-                  render={props => <AuthViewProduct {...routePropsWithState(props, { id: props.match.params.productId })} />}
-                />
-                <Route path="/add-product" component={AuthAddProduct} />
-                <Route
-                  exact
-                  path="/edit-product"
-                  render={props => {
-                    const id = legacyState(props).id;
-                    return id ? <Redirect to={`/opportunities/${routeId(id)}/edit`} /> : <AuthEditProduct {...props} />;
-                  }}
-                />
-                <Route
-                  exact
-                  path="/product"
-                  render={props => {
-                    const id = legacyState(props).id;
-                    return id ? <Redirect to={`/opportunities/${routeId(id)}`} /> : <AuthViewProduct {...props} />;
-                  }}
-                />
+                <Route exact path="/opportunities/:productId/edit" render={props => <AuthEditProduct {...routePropsWithState(props, { id: props.match.params.productId })} />} />
+                <Route exact path="/opportunities/:productId" render={props => <AuthViewProduct {...routePropsWithState(props, { id: props.match.params.productId })} />} />
+                <Route path="/add-product" render={() => <Redirect to="/opportunities/new" />} />
+                <Route exact path="/edit-product" render={props => { const id = legacyState(props).id; return id ? <Redirect to={`/opportunities/${routeId(id)}/edit`} /> : <AuthEditProduct {...props} />; }} />
+                <Route exact path="/product" render={props => { const id = legacyState(props).id; return id ? <Redirect to={`/opportunities/${routeId(id)}`} /> : <AuthViewProduct {...props} />; }} />
                 <Route exact path="/products-invested" component={AuthInvestedList} />
                 <Route exact path="/positions" render={() => <Redirect to="/products-invested" />} />
-                <Route
-                  exact
-                  path="/positions/:productId/:applicationId"
-                  render={props => <AuthCreditorDetail {...routePropsWithState(props, {
-                    productId: props.match.params.productId,
-                    appId: props.match.params.applicationId,
-                    pId: props.match.params.productId,
-                    aId: props.match.params.applicationId
-                  })} />}
-                />
+                <Route exact path="/positions/:productId/:applicationId" render={props => <AuthCreditorDetail {...routePropsWithState(props, { productId: props.match.params.productId, appId: props.match.params.applicationId, pId: props.match.params.productId, aId: props.match.params.applicationId })} />} />
                 <Route exact path="/products-applications" component={AuthAppliedList} />
                 <Route exact path="/product/applications" component={AuthApplicationList} />
                 <Route exact path="/credit-request" component={AuthCreditRequests} />
                 <Route exact path="/credit-requests" render={() => <Redirect to="/credit-request" />} />
-                <Route
-                  exact
-                  path="/credit-requests/:productId/:applicationId"
-                  render={props => <AuthDetailCreditRequest {...routePropsWithState(props, {
-                    productId: props.match.params.productId,
-                    appId: props.match.params.applicationId,
-                    pId: props.match.params.productId,
-                    aId: props.match.params.applicationId
-                  })} />}
-                />
-                <Route
-                  path="/application"
-                  render={props => {
-                    const state = legacyState(props);
-                    const productId = state.pId || state.productId;
-                    const applicationId = state.aId || state.appId;
-                    return productId && applicationId
-                      ? <Redirect to={`/credit-requests/${routeId(productId)}/${routeId(applicationId)}`} />
-                      : <AuthDetailCreditRequest {...props} />;
-                  }}
-                />
-                <Route
-                  exact
-                  path="/creditor/detail"
-                  render={props => {
-                    const state = legacyState(props);
-                    const productId = state.pId || state.productId;
-                    const applicationId = state.aId || state.appId;
-                    return productId && applicationId
-                      ? <Redirect to={`/positions/${routeId(productId)}/${routeId(applicationId)}`} />
-                      : <AuthCreditorDetail {...props} />;
-                  }}
-                />
+                <Route exact path="/credit-requests/:productId/:applicationId" render={props => <AuthDetailCreditRequest {...routePropsWithState(props, { productId: props.match.params.productId, appId: props.match.params.applicationId, pId: props.match.params.productId, aId: props.match.params.applicationId })} />} />
+                <Route path="/application" render={props => { const state = legacyState(props); const productId = state.pId || state.productId; const applicationId = state.aId || state.appId; return productId && applicationId ? <Redirect to={`/credit-requests/${routeId(productId)}/${routeId(applicationId)}`} /> : <AuthDetailCreditRequest {...props} />; }} />
+                <Route exact path="/creditor/detail" render={props => { const state = legacyState(props); const productId = state.pId || state.productId; const applicationId = state.aId || state.appId; return productId && applicationId ? <Redirect to={`/positions/${routeId(productId)}/${routeId(applicationId)}`} /> : <AuthCreditorDetail {...props} />; }} />
                 <Route exact path="/notifications" component={AuthNotifications} />
                 <Route path="/user/profile" component={AuthViewProfile} />
                 <Route path="/user/edit-profile" component={AuthEditProfile} />
