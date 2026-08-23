@@ -10,12 +10,42 @@ const login = async page => {
   try {
     await expect(page.getByRole('heading', { name: 'Overview' })).toBeVisible();
   } catch (error) {
-    const diagnostic = await page.evaluate(() => ({
-      href: window.location.href,
-      hasSessionToken: Boolean(window.sessionStorage.getItem('token')),
-      text: document.body ? document.body.innerText.slice(0, 1800) : '',
-      rootHtml: document.getElementById('root') ? document.getElementById('root').innerHTML.slice(0, 1800) : ''
-    }));
+    const diagnostic = await page.evaluate(() => {
+      const heading = Array.from(document.querySelectorAll('h1')).find(node => node.textContent.trim() === 'Overview');
+      const visibilityChain = [];
+      let node = heading;
+      while (node && visibilityChain.length < 9) {
+        const style = window.getComputedStyle(node);
+        const rect = node.getBoundingClientRect();
+        visibilityChain.push({
+          tag: node.tagName.toLowerCase(),
+          id: node.id || '',
+          className: typeof node.className === 'string' ? node.className : '',
+          display: style.display,
+          visibility: style.visibility,
+          opacity: style.opacity,
+          overflow: style.overflow,
+          position: style.position,
+          transform: style.transform,
+          clipPath: style.clipPath,
+          width: Math.round(rect.width),
+          height: Math.round(rect.height),
+          left: Math.round(rect.left),
+          top: Math.round(rect.top),
+          right: Math.round(rect.right),
+          bottom: Math.round(rect.bottom)
+        });
+        node = node.parentElement;
+      }
+      return {
+        href: window.location.href,
+        hasSessionToken: Boolean(window.sessionStorage.getItem('token')),
+        viewport: { width: document.documentElement.clientWidth, height: document.documentElement.clientHeight },
+        visibilityChain,
+        text: document.body ? document.body.innerText.slice(0, 1800) : '',
+        rootHtml: document.getElementById('root') ? document.getElementById('root').innerHTML.slice(0, 1800) : ''
+      };
+    });
     throw new Error(`Demo login did not reach the Overview workspace. Runtime diagnostic: ${JSON.stringify(diagnostic)}\n${error.message}`);
   }
 };
