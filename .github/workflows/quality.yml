@@ -31,6 +31,8 @@ jobs:
         run: npm ci --legacy-peer-deps --no-audit --no-fund
       - name: Unit tests
         run: npm run test:unit
+      - name: Browser ESM source guard
+        run: node scripts/check-esm-source.mjs
       - name: Production build
         run: npm run build
         env:
