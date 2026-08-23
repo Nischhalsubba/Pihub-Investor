@@ -24,6 +24,16 @@ export default ChildComponent => {
 
       clearStoredToken();
       if (normalizeToken(this.props.auth)) this.props.clearAuth();
+
+      // An invalid/cleared authentication session is a security boundary, not
+      // ordinary in-app navigation. Reloading the public login route resets all
+      // in-memory Redux/router state so a stale authenticated tree cannot remain
+      // mounted behind a changed URL.
+      if (typeof window !== 'undefined' && window.location.pathname !== '/login') {
+        window.location.replace('/login');
+        return;
+      }
+
       this.props.history.replace('/login');
     }
 
