@@ -7,7 +7,7 @@ import Subheader from '../general/Subheader';
 import Translate from 'react-translate-component';
 import { ToEuro } from '../general/CurrencyFormatter';
 
-const Translator = require('react-translate-component');
+const Translator = Translate;
 
 const toText = value => {
   if (value === null || value === undefined) return '';
