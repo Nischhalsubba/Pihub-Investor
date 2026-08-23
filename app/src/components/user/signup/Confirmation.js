@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { getLocale } from '../../../_utils/locale';
 import AuthShell from '../AuthShell';
 import SignupProgress from './SignupProgress';
-
-const Translator = require('react-translate-component');
 
 class Confirmation extends Component {
   componentDidMount() {
@@ -11,7 +10,7 @@ class Confirmation extends Component {
   }
 
   render() {
-    const isGerman = Translator.getLocale() === 'de';
+    const isGerman = getLocale() === 'de';
 
     return (
       <AuthShell
