@@ -12,38 +12,9 @@ on:
       - develop
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  refresh-lockfile:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/remediation/04-modernization-quality'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: app
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: remediation/04-modernization-quality
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 24
-          cache: npm
-          cache-dependency-path: app/package-lock.json
-      - name: Refresh npm lockfile when dependencies change
-        run: npm install --package-lock-only --legacy-peer-deps --ignore-scripts --no-audit --no-fund
-      - name: Commit refreshed lockfile
-        working-directory: .
-        run: |
-          if git diff --quiet -- app/package-lock.json; then
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app/package-lock.json
-          git commit -m "chore(deps): refresh npm lockfile"
-          git push origin HEAD:remediation/04-modernization-quality
-
   frontend-quality:
     runs-on: ubuntu-latest
     defaults:
@@ -57,7 +28,7 @@ jobs:
           cache: npm
           cache-dependency-path: app/package-lock.json
       - name: Install dependencies
-        run: npm install --legacy-peer-deps --no-audit --no-fund
+        run: npm ci --legacy-peer-deps --no-audit --no-fund
       - name: Unit tests
         run: npm run test:unit
       - name: Production build
@@ -72,3 +43,13 @@ jobs:
         run: npm run test:e2e
         env:
           REACT_APP_DEMO: 'true'
+      - name: Upload Playwright diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-diagnostics-${{ github.run_id }}
+          path: |
+            app/playwright-report
+            app/test-results
+          if-no-files-found: ignore
+          retention-days: 7
