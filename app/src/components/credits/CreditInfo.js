@@ -8,7 +8,7 @@ import { dDigit } from '../../_utils/misc';
 import { matchesInvestorStatus } from '../../_status';
 import { downloadToken } from '../../actions/download';
 
-const Translator = require('react-translate-component');
+const Translator = Translate;
 
 class CreditInfo extends Component {
   state = { detail: null };
