@@ -1,19 +1,18 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Field, formValueSelector, reduxForm } from 'redux-form';
 import { uploadFile } from '../../actions/uploadFile';
 import { creditorDetail } from '../../actions/creditor';
 import { downloadToken } from '../../actions/download';
 import Translate from 'react-translate-component';
 import Spinner from '../general/Spinner';
-import * as validation from '../../_utils/validate';
-import { renderDropzoneField } from '../../_formFields';
 import CreditInfo from './CreditInfo';
 
 const Translator = require('react-translate-component');
+const MAX_FILE_SIZE = 8 * 1024 * 1024;
+const ALLOWED_TYPES = ['application/pdf', 'image/png', 'image/jpeg'];
 
 class CreditorDetail extends Component {
-  state = { detail: null, refresh: false };
+  state = { detail: null, refresh: false, files: [], fileError: '', submitting: false };
 
   componentDidMount() {
     if (!this.props.location.state) {
@@ -47,9 +46,30 @@ class CreditorDetail extends Component {
     if (this.props.data) this.setState({ detail: this.props.data.detail });
   };
 
-  onSubmit = formProps => {
+  handleFiles = event => {
+    const files = Array.from(event.target.files || []);
+    const invalid = files.find(file => !ALLOWED_TYPES.includes(file.type) || file.size > MAX_FILE_SIZE);
+    if (invalid) {
+      this.setState({ files: [], fileError: `${invalid.name} must be a PDF, PNG or JPG no larger than 8 MB.` });
+      event.target.value = '';
+      return;
+    }
+    this.setState({ files, fileError: '' });
+  };
+
+  onSubmit = async event => {
+    event.preventDefault();
+    if (!this.state.files.length) {
+      this.setState({ fileError: 'Choose at least one file to upload.' });
+      return;
+    }
     const { pId, aId } = this.getIds();
-    this.props.uploadFile(formProps, pId, aId, () => this.setState({ refresh: !this.state.refresh }));
+    this.setState({ submitting: true, fileError: '' });
+    const ok = await this.props.uploadFile({ files: this.state.files }, pId, aId, () => {
+      this.setState(state => ({ files: [], refresh: !state.refresh }));
+    });
+    this.setState({ submitting: false });
+    if (!ok) this.setState({ fileError: 'The upload could not be completed. Your selected files remain available to retry.' });
   };
 
   renderDocs = docs => {
@@ -71,18 +91,17 @@ class CreditorDetail extends Component {
     ));
   };
 
-  renderSelectedFiles = files => {
-    if (!Array.isArray(files) || !files.length) return null;
+  renderSelectedFiles = () => {
+    if (!this.state.files.length) return null;
     return (
       <div className="selected-files" aria-live="polite">
-        {files.map((file, index) => <span key={`${file.name}-${index}`}><i className="bx bx-file" aria-hidden="true" />{file.name}</span>)}
+        {this.state.files.map((file, index) => <span key={`${file.name}-${index}`}><i className="bx bx-file" aria-hidden="true" />{file.name}</span>)}
       </div>
     );
   };
 
   render() {
     const detail = this.state.detail;
-    const { handleSubmit, files } = this.props;
     const isGerman = Translator.getLocale() === 'de';
 
     if (!detail) return <div className="data-loading" role="status" aria-live="polite"><Spinner /></div>;
@@ -101,22 +120,28 @@ class CreditorDetail extends Component {
           </div>
 
           <div className="investor-files-layout">
-            <form className="investor-upload" onSubmit={handleSubmit(this.onSubmit)}>
+            <form className="investor-upload" onSubmit={this.onSubmit} noValidate>
               <div className="investor-upload-field">
-                <Translate content="label.fileupload" component="label" />
-                <Field
-                  name="files"
-                  component={renderDropzoneField}
+                <label htmlFor="investor-file-upload"><Translate content="label.fileupload" /></label>
+                <input
+                  id="investor-file-upload"
+                  className="form-control"
                   type="file"
-                  validate={validation.required}
-                  className="file-uploader file-uploader--small dropzone"
+                  multiple
+                  accept="application/pdf,image/png,image/jpeg,.pdf,.png,.jpg,.jpeg"
+                  onChange={this.handleFiles}
+                  aria-describedby="investor-file-help investor-file-error"
                 />
-                {this.renderSelectedFiles(files)}
+                <small id="investor-file-help">PDF, PNG or JPG, up to 8 MB per file. Upload only documents appropriate for this position.</small>
+                {this.renderSelectedFiles()}
+                {this.state.fileError ? <span className="field-error" id="investor-file-error" role="alert">{this.state.fileError}</span> : null}
               </div>
 
-              {this.props.errMsg ? <div className="auth-error" role="alert">{this.props.errMsg.errors}</div> : null}
+              {this.props.errMsg ? <div className="auth-error" role="alert">{typeof this.props.errMsg === 'string' ? this.props.errMsg : 'The upload could not be completed.'}</div> : null}
 
-              <Translate content="button.submit" component="button" className="btn btn-primary" type="submit" />
+              <button className="btn btn-primary" type="submit" disabled={this.state.submitting}>
+                {this.state.submitting ? (isGerman ? 'WIRD HOCHGELADEN…' : 'UPLOADING…') : (isGerman ? 'HOCHLADEN' : 'UPLOAD FILES')}
+              </button>
             </form>
 
             <div className="investor-documents">
@@ -130,15 +155,10 @@ class CreditorDetail extends Component {
   }
 }
 
-CreditorDetail = reduxForm({ form: 'creditorDetail' })(CreditorDetail);
-
-const selector = formValueSelector('creditorDetail');
-
 function mapStateToProps(state) {
   return {
     data: state.creditorDetail,
-    files: selector(state, 'files'),
-    errMsg: state.error
+    errMsg: state.errors
   };
 }
 
