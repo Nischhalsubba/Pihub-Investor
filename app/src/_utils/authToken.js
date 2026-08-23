@@ -1,4 +1,6 @@
 const TOKEN_KEY = 'token';
+const SESSION_MARKER_KEY = 'pihub-auth-session-v2';
+const SESSION_MARKER_VALUE = '2';
 
 const getStorage = () => {
   if (typeof window === 'undefined') return null;
@@ -52,8 +54,12 @@ export function setStoredToken(token) {
   const normalizedToken = normalizeToken(token);
   const storage = getStorage();
   if (!storage || !normalizedToken) return false;
+
   storage.setItem(TOKEN_KEY, normalizedToken);
-  // Remove the old persistent token if a user is upgrading from a previous UI.
+  storage.setItem(SESSION_MARKER_KEY, SESSION_MARKER_VALUE);
+
+  // Never allow an older persistent bearer token to become an authentication
+  // fallback. Authentication is scoped to this browser tab/session only.
   window.localStorage.removeItem(TOKEN_KEY);
   return true;
 }
@@ -61,23 +67,24 @@ export function setStoredToken(token) {
 export function clearStoredToken() {
   if (typeof window === 'undefined') return;
   window.sessionStorage.removeItem(TOKEN_KEY);
+  window.sessionStorage.removeItem(SESSION_MARKER_KEY);
   window.localStorage.removeItem(TOKEN_KEY);
 }
 
 export function getStoredToken() {
   if (typeof window === 'undefined') return null;
 
-  // One-time migration from the legacy persistent token. It is moved rather
-  // than copied so a browser restart no longer keeps the bearer credential.
   const storage = getStorage();
-  let token = normalizeToken(storage && storage.getItem(TOKEN_KEY));
-  if (!token) {
-    token = normalizeToken(window.localStorage.getItem(TOKEN_KEY));
-    if (token && storage) storage.setItem(TOKEN_KEY, token);
-    window.localStorage.removeItem(TOKEN_KEY);
-  }
 
-  if (!token || isTokenExpired(token)) {
+  // Retire the old persistent-token path instead of migrating it. Migrating a
+  // stale localStorage token can silently recreate a session after site data or
+  // session state was intentionally reset.
+  window.localStorage.removeItem(TOKEN_KEY);
+
+  const marker = storage && storage.getItem(SESSION_MARKER_KEY);
+  const token = normalizeToken(storage && storage.getItem(TOKEN_KEY));
+
+  if (marker !== SESSION_MARKER_VALUE || !token || isTokenExpired(token)) {
     clearStoredToken();
     return null;
   }
