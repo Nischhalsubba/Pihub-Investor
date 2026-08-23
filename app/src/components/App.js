@@ -20,14 +20,7 @@ const App = () => {
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <Sidebar />
       <div className="main-content main-content--padded ap-workspace">
-        {demoMode ? (
-          <div className="runtime-environment-banner" role="status">
-            <span aria-hidden="true" />
-            <strong>Demo environment</strong>
-            <span>Data and actions are local to this browser and are not live financial records.</span>
-          </div>
-        ) : null}
-        <Header />
+        <Header demoMode={demoMode} />
         <main id="main-content" className="workspace-main ap-main route-motion-scope" ref={mainRef} tabIndex="-1">
           <MotionController />
           <Outlet />
