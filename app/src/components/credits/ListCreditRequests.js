@@ -8,7 +8,7 @@ import Spinner from '../general/Spinner';
 import Translate from 'react-translate-component';
 import { downloadCsv } from '../../_utils/exportCsv';
 
-const Translator = require('react-translate-component');
+const Translator = Translate;
 
 const toText = value => {
   if (value === null || value === undefined) return '';
