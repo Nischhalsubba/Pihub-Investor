@@ -89,74 +89,82 @@ class Header extends Component {
     const accountCategory = titleCase(profile && profile.category ? profile.category : 'Institutional investor');
 
     return (
-      <header className="site-header ap-topbar ap-topbar-v3">
-        <div className="ap-topbar-leading">
-          {demoMode ? (
-            <div
-              className="ap-environment-chip"
-              role="status"
-              aria-label="Demo workspace. Data and actions stay in this browser and are not live financial records."
-            >
-              <span className="ap-environment-dot" aria-hidden="true" />
-              <span className="ap-environment-copy">
-                <strong>Demo workspace</strong>
-                <small>Local browser data · no live records</small>
-              </span>
-            </div>
-          ) : (
-            <div className="ap-environment-chip is-live" role="status" aria-label="Live workspace">
-              <span className="ap-environment-dot" aria-hidden="true" />
-              <span className="ap-environment-copy"><strong>Live workspace</strong><small>Connected institution data</small></span>
-            </div>
-          )}
-        </div>
+      <header className="site-header ap-topbar ap-topbar-v3 ap-topbar-v4">
+        <Link className="ap-global-brand" to="/dashboard" aria-label="PiHub Investor home">
+          <span className="ap-global-brand-mark" aria-hidden="true"><img src="/assets/img/logo.png" alt="" /></span>
+          <span className="ap-global-brand-copy"><strong>PiHub Investor</strong><small>Investor workspace</small></span>
+        </Link>
 
-        <nav className="header-actions ap-top-actions" aria-label="Workspace utilities">
-          <ul className="ap-topbar-controls">
-            <li className="ap-topbar-command-item">
-              <button className="ap-command-trigger ap-command-trigger-v3" type="button" onClick={this.openCommand} aria-label={`Open command menu, ${shortcut}`}>
-                <i className="bx bx-search" aria-hidden="true" />
-                <span className="ap-command-trigger-copy">Search or command</span>
-                <kbd>{shortcut}</kbd>
-              </button>
-            </li>
-            <li>
-              <ul className="language-changer ap-language ap-language-v3" aria-label="Language">
-                <li><button type="button" onClick={() => this.onChange('en')} aria-pressed={this.state.language === 'en'} aria-label="Use English">EN</button></li>
-                <li><button type="button" onClick={() => this.onChange('de')} aria-pressed={this.state.language === 'de'} aria-label="Deutsch verwenden">DE</button></li>
-              </ul>
-            </li>
-            <li className="header-actions__item">
-              <Link className="header-notification ap-icon-btn ap-icon-btn-v3" to="/notifications" aria-label={`${notificationCount} notifications`}>
-                <i className="bx bx-bell" aria-hidden="true" />
-                {notificationCount > 0 ? <span className="notification-count">{notificationCount}</span> : null}
-              </Link>
-            </li>
-            <li className="ap-user-menu" ref={this.accountRef}>
-              <button
-                className="ap-user-button ap-user-button-v3"
-                type="button"
-                aria-haspopup="menu"
-                aria-expanded={accountOpen}
-                aria-controls="account-menu"
-                aria-label="Open account menu"
-                onClick={() => this.setState(state => ({ accountOpen: !state.accountOpen }))}
+        <div className="ap-global-header-main">
+          <div className="ap-topbar-leading">
+            {demoMode ? (
+              <div
+                className="ap-environment-chip"
+                role="status"
+                aria-label="Demo workspace. Data and actions stay in this browser and are not live financial records."
               >
-                <span className="ap-user-avatar"><img src="/assets/img/user.png" alt="" /></span>
-                <span className="ap-user-copy"><strong>{accountName}</strong><small>{accountCategory}</small></span>
-                <i className="bx bx-chevron-down ap-user-chevron" aria-hidden="true" />
-              </button>
-              <div id="account-menu" className={`dropdown-menu dropdown-menu-right ap-account-menu${accountOpen ? ' is-open show' : ''}`} role="menu">
-                <div className="ap-account-menu-head" aria-hidden="true"><strong>{accountName}</strong><span>{accountCategory}</span></div>
-                <Link className="dropdown-item" role="menuitem" to="/user/profile" onClick={this.closeAccount}><i className="bx bx-building" aria-hidden="true" /><Translate content="label.profile" /></Link>
-                <Link className="dropdown-item" role="menuitem" to="/user/edit-profile" onClick={this.closeAccount}><i className="bx bx-edit-alt" aria-hidden="true" /><Translate content="label.editprofile" /></Link>
-                <Link className="dropdown-item" role="menuitem" to="/change-password" onClick={this.closeAccount}><i className="bx bx-lock-alt" aria-hidden="true" /><Translate content="label.resetpassword" /></Link>
-                <div className="ap-menu-divider" role="separator" />
-                <button className="dropdown-item is-danger" role="menuitem" type="button" onClick={() => this.props.logout(() => this.props.history.replace('/login'))}><i className="bx bx-log-out" aria-hidden="true" /><Translate content="label.logout" /></button>
+                <span className="ap-environment-dot" aria-hidden="true" />
+                <span className="ap-environment-copy">
+                  <strong>Demo workspace</strong>
+                  <small>Local browser data · no live records</small>
+                </span>
               </div>
-            </li>
-          </ul>
-        </nav>
+            ) : (
+              <div className="ap-environment-chip is-live" role="status" aria-label="Live workspace">
+                <span className="ap-environment-dot" aria-hidden="true" />
+                <span className="ap-environment-copy"><strong>Live workspace</strong><small>Connected institution data</small></span>
+              </div>
+            )}
+          </div>
+
+          <nav className="header-actions ap-top-actions" aria-label="Workspace utilities">
+            <ul className="ap-topbar-controls">
+              <li className="ap-topbar-command-item">
+                <button className="ap-command-trigger ap-command-trigger-v3" type="button" onClick={this.openCommand} aria-label={`Open command menu, ${shortcut}`}>
+                  <i className="bx bx-search" aria-hidden="true" />
+                  <span className="ap-command-trigger-copy">Search or command</span>
+                  <kbd>{shortcut}</kbd>
+                </button>
+              </li>
+              <li className="ap-language-item">
+                <div className="ap-language-v4" role="group" aria-label="Language selector">
+                  <span className="ap-language-glyph" aria-hidden="true"><i className="bx bx-globe" /></span>
+                  <button type="button" onClick={() => this.onChange('en')} aria-pressed={this.state.language === 'en'} aria-label="Use English" title="English">EN</button>
+                  <button type="button" onClick={() => this.onChange('de')} aria-pressed={this.state.language === 'de'} aria-label="Deutsch verwenden" title="Deutsch">DE</button>
+                </div>
+              </li>
+              <li className="header-actions__item">
+                <Link className="header-notification ap-icon-btn ap-icon-btn-v3" to="/notifications" aria-label={`${notificationCount} notifications`}>
+                  <i className="bx bx-bell" aria-hidden="true" />
+                  {notificationCount > 0 ? <span className="notification-count">{notificationCount}</span> : null}
+                </Link>
+              </li>
+              <li className="ap-user-menu" ref={this.accountRef}>
+                <button
+                  className="ap-user-button ap-user-button-v3"
+                  type="button"
+                  aria-haspopup="menu"
+                  aria-expanded={accountOpen}
+                  aria-controls="account-menu"
+                  aria-label="Open account menu"
+                  onClick={() => this.setState(state => ({ accountOpen: !state.accountOpen }))}
+                >
+                  <span className="ap-user-avatar"><img src="/assets/img/user.png" alt="" /></span>
+                  <span className="ap-user-copy"><strong>{accountName}</strong><small>{accountCategory}</small></span>
+                  <i className="bx bx-chevron-down ap-user-chevron" aria-hidden="true" />
+                </button>
+                <div id="account-menu" className={`dropdown-menu dropdown-menu-right ap-account-menu${accountOpen ? ' is-open show' : ''}`} role="menu">
+                  <div className="ap-account-menu-head" aria-hidden="true"><strong>{accountName}</strong><span>{accountCategory}</span></div>
+                  <Link className="dropdown-item" role="menuitem" to="/user/profile" onClick={this.closeAccount}><i className="bx bx-building" aria-hidden="true" /><Translate content="label.profile" /></Link>
+                  <Link className="dropdown-item" role="menuitem" to="/user/edit-profile" onClick={this.closeAccount}><i className="bx bx-edit-alt" aria-hidden="true" /><Translate content="label.editprofile" /></Link>
+                  <Link className="dropdown-item" role="menuitem" to="/change-password" onClick={this.closeAccount}><i className="bx bx-lock-alt" aria-hidden="true" /><Translate content="label.resetpassword" /></Link>
+                  <div className="ap-menu-divider" role="separator" />
+                  <button className="dropdown-item is-danger" role="menuitem" type="button" onClick={() => this.props.logout(() => this.props.history.replace('/login'))}><i className="bx bx-log-out" aria-hidden="true" /><Translate content="label.logout" /></button>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </header>
     );
   }

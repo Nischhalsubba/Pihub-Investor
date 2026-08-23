@@ -11,7 +11,9 @@ const MotionController = () => {
     if (!root) return undefined;
 
     const context = gsap.context(() => {
-      const standardTargets = root.querySelectorAll('[data-motion="page-head"], [data-motion="metric-grid"], [data-motion="table"], [data-motion="state"]');
+      // Primary page titles render synchronously and are intentionally excluded
+      // from opacity animation so navigation never depends on an animation ticker.
+      const standardTargets = root.querySelectorAll('[data-motion="metric-grid"], [data-motion="table"], [data-motion="state"]');
       if (standardTargets.length) {
         gsap.fromTo(standardTargets, { autoAlpha: 0, y: 5 }, {
           autoAlpha: 1,

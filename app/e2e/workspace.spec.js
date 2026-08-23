@@ -10,12 +10,42 @@ const login = async page => {
   try {
     await expect(page.getByRole('heading', { name: 'Overview' })).toBeVisible();
   } catch (error) {
-    const diagnostic = await page.evaluate(() => ({
-      href: window.location.href,
-      hasSessionToken: Boolean(window.sessionStorage.getItem('token')),
-      text: document.body ? document.body.innerText.slice(0, 1800) : '',
-      rootHtml: document.getElementById('root') ? document.getElementById('root').innerHTML.slice(0, 1800) : ''
-    }));
+    const diagnostic = await page.evaluate(() => {
+      const heading = Array.from(document.querySelectorAll('h1')).find(node => node.textContent.trim() === 'Overview');
+      const visibilityChain = [];
+      let node = heading;
+      while (node && visibilityChain.length < 9) {
+        const style = window.getComputedStyle(node);
+        const rect = node.getBoundingClientRect();
+        visibilityChain.push({
+          tag: node.tagName.toLowerCase(),
+          id: node.id || '',
+          className: typeof node.className === 'string' ? node.className : '',
+          display: style.display,
+          visibility: style.visibility,
+          opacity: style.opacity,
+          overflow: style.overflow,
+          position: style.position,
+          transform: style.transform,
+          clipPath: style.clipPath,
+          width: Math.round(rect.width),
+          height: Math.round(rect.height),
+          left: Math.round(rect.left),
+          top: Math.round(rect.top),
+          right: Math.round(rect.right),
+          bottom: Math.round(rect.bottom)
+        });
+        node = node.parentElement;
+      }
+      return {
+        href: window.location.href,
+        hasSessionToken: Boolean(window.sessionStorage.getItem('token')),
+        viewport: { width: document.documentElement.clientWidth, height: document.documentElement.clientHeight },
+        visibilityChain,
+        text: document.body ? document.body.innerText.slice(0, 1800) : '',
+        rootHtml: document.getElementById('root') ? document.getElementById('root').innerHTML.slice(0, 1800) : ''
+      };
+    });
     throw new Error(`Demo login did not reach the Overview workspace. Runtime diagnostic: ${JSON.stringify(diagnostic)}\n${error.message}`);
   }
 };
@@ -81,9 +111,36 @@ test('institution profile is complete, readable and accessible', async ({ page }
   await expect(page.getByText('Not supplied', { exact: true })).toHaveCount(0);
   await expect(page.getByText('Verification complete', { exact: true }).first()).toBeVisible();
 
-  const navBox = await page.locator('.ap-topbar-v3').boundingBox();
-  expect(navBox, 'Redesigned workspace utility header should have measurable layout').not.toBeNull();
-  expect(navBox.height, `Unexpected utility header height: ${navBox && navBox.height}`).toBeLessThanOrEqual(96);
+  const shellGeometry = await page.evaluate(() => {
+    const header = document.querySelector('.ap-topbar-v4');
+    const sidebar = document.querySelector('.ap-sidebar');
+    const headerRect = header.getBoundingClientRect();
+    const sidebarRect = sidebar.getBoundingClientRect();
+    return {
+      viewportWidth: document.documentElement.clientWidth,
+      header: { left: headerRect.left, right: headerRect.right, width: headerRect.width, bottom: headerRect.bottom },
+      sidebar: { top: sidebarRect.top }
+    };
+  });
+  expect(Math.abs(shellGeometry.header.left), `Header should start at viewport left: ${JSON.stringify(shellGeometry)}`).toBeLessThanOrEqual(1);
+  expect(Math.abs(shellGeometry.header.right - shellGeometry.viewportWidth), `Header should reach viewport right: ${JSON.stringify(shellGeometry)}`).toBeLessThanOrEqual(2);
+  expect(Math.abs(shellGeometry.header.width - shellGeometry.viewportWidth), `Header should span viewport width: ${JSON.stringify(shellGeometry)}`).toBeLessThanOrEqual(2);
+  expect(shellGeometry.sidebar.top, `Sidebar should begin below the global header: ${JSON.stringify(shellGeometry)}`).toBeGreaterThanOrEqual(shellGeometry.header.bottom - 1);
+
+  const navBox = await page.locator('.ap-topbar-v4').boundingBox();
+  expect(navBox, 'Global workspace header should have measurable layout').not.toBeNull();
+  expect(navBox.height, `Unexpected global header height: ${navBox && navBox.height}`).toBeLessThanOrEqual(96);
+
+  await expect(page.locator('.ap-language-v4')).toBeVisible();
+  await expect(page.locator('.ap-language-v4 img')).toHaveCount(0);
+  const english = page.getByRole('button', { name: 'Use English' });
+  const german = page.getByRole('button', { name: 'Deutsch verwenden' });
+  await expect(english).toBeVisible();
+  await expect(german).toBeVisible();
+  await german.click();
+  await expect(german).toHaveAttribute('aria-pressed', 'true');
+  await english.click();
+  await expect(english).toHaveAttribute('aria-pressed', 'true');
 
   const contactBoxes = await page.locator('.profile-v3-person').evaluateAll(nodes => nodes.map(node => Math.round(node.getBoundingClientRect().width)));
   expect(Math.min(...contactBoxes), `Relationship cards are collapsing: ${JSON.stringify(contactBoxes)}`).toBeGreaterThan(220);

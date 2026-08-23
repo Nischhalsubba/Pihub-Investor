@@ -45,7 +45,7 @@ const Subheader = ({ heading, kicker, description, buttonLabel, link, linkState,
   const back = backTo ? { to: backTo, label: safeContent(backLabel) || 'Back' } : defaultBack(location.pathname);
 
   return (
-    <header className="content-head ap-page-head" data-motion="page-head">
+    <header className="content-head ap-page-head">
       <div className="content-head-left ap-page-title">
         {back ? <Link className="ap-inspector-link" to={back.to}><span aria-hidden="true">←</span>{back.label}</Link> : null}
         {safeKicker ? <div className="content-head-kicker">{safeKicker}</div> : null}
