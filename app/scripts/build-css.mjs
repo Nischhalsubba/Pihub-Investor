@@ -29,7 +29,8 @@ const files = [
   'pihub-stabilization.css',
   'pihub-ui-refinement.css',
   'pihub-ui-contrast.css',
-  'pihub-profile-navbar-v3.css'
+  'pihub-profile-navbar-v3.css',
+  'pihub-profile-navbar-v3-contrast.css'
 ];
 
 await mkdir(outputRoot, { recursive: true });
