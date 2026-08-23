@@ -18,9 +18,9 @@ const App = () => {
   return (
     <div className="workspace-shell ct-container ap-shell">
       <a className="skip-link" href="#main-content">Skip to main content</a>
+      <Header demoMode={demoMode} />
       <Sidebar />
       <div className="main-content main-content--padded ap-workspace">
-        <Header demoMode={demoMode} />
         <main id="main-content" className="workspace-main ap-main route-motion-scope" ref={mainRef} tabIndex="-1">
           <MotionController />
           <Outlet />
