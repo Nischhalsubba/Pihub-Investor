@@ -5,6 +5,16 @@
   --pi-topbar-height: 72px;
 }
 
+/* The legacy app shell is a horizontal flex container. Once the header becomes
+   a global sibling of the sidebar/main workspace, that old rule would make the
+   header consume the flex row and collapse the content to zero width. The v4
+   shell owns top-level geometry and restores normal document flow. */
+.workspace-shell.ap-shell {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
 .ap-topbar-v4.site-header {
   position: sticky !important;
   top: 0 !important;
@@ -194,6 +204,8 @@
   }
 
   .main-content.ap-workspace {
+    width: auto !important;
+    min-width: 0 !important;
     min-height: calc(100dvh - var(--pi-topbar-height)) !important;
     margin-left: var(--pi-sidebar-width) !important;
   }
@@ -250,6 +262,8 @@
   }
 
   .main-content.ap-workspace {
+    width: auto !important;
+    min-width: 0 !important;
     min-height: calc(100dvh - var(--pi-topbar-height)) !important;
     margin-left: 0 !important;
   }
