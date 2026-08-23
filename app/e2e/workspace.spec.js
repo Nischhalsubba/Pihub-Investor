@@ -1,12 +1,41 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+const attachBrowserDiagnostics = page => {
+  page.on('pageerror', error => console.error(`[browser:pageerror] ${error.stack || error.message}`));
+  page.on('console', message => {
+    if (message.type() === 'error' || message.type() === 'warning') {
+      console.error(`[browser:${message.type()}] ${message.text()}`);
+    }
+  });
+};
+
+const dumpLoginState = async page => {
+  const state = await page.evaluate(() => ({
+    href: window.location.href,
+    hasSessionToken: Boolean(window.sessionStorage.getItem('token')),
+    hasLegacyToken: Boolean(window.localStorage.getItem('token')),
+    body: (document.body && document.body.innerText ? document.body.innerText : '').slice(0, 3000)
+  }));
+  console.error(`[login:diagnostic] ${JSON.stringify(state)}`);
+};
+
 const login = async page => {
   await page.goto('/login');
   await page.locator('#login-email').fill('qa.investor@example.com');
   await page.locator('#login-password').fill('DemoPassword1!');
-  await page.getByRole('button', { name: /login/i }).click();
-  await expect(page.getByRole('heading', { name: 'Overview' })).toBeVisible();
+
+  try {
+    await Promise.all([
+      page.waitForURL(url => url.pathname === '/dashboard', { timeout: 10000 }),
+      page.getByRole('button', { name: /login/i }).click()
+    ]);
+    await expect(page.locator('main#main-content')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Overview', level: 1 })).toBeVisible();
+  } catch (error) {
+    await dumpLoginState(page);
+    throw error;
+  }
 };
 
 const expectNoCrash = async page => {
@@ -18,6 +47,18 @@ const expectNoSeriousA11y = async page => {
   const blocking = results.violations.filter(item => item.impact === 'critical' || item.impact === 'serious');
   expect(blocking, blocking.map(item => `${item.id}: ${item.help}`).join('\n')).toEqual([]);
 };
+
+test.beforeEach(async ({ page }) => {
+  attachBrowserDiagnostics(page);
+});
+
+test('demo login creates a refresh-safe authenticated session', async ({ page }) => {
+  await login(page);
+  await page.reload();
+  await expect(page).toHaveURL(/\/dashboard$/);
+  await expect(page.locator('main#main-content')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Overview', level: 1 })).toBeVisible();
+});
 
 test('critical workspace routes survive navigation and refresh', async ({ page }) => {
   await login(page);
