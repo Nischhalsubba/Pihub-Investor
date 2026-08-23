@@ -4,7 +4,7 @@ import Translate from 'react-translate-component';
 import AuthShell from '../AuthShell';
 import SignupProgress from './SignupProgress';
 
-const Translator = require('react-translate-component');
+const Translator = Translate;
 
 class ConfirmEmail extends Component {
   componentDidMount() {
