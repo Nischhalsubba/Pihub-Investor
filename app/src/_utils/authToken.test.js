@@ -37,32 +37,45 @@ describe('authToken helpers', () => {
     expect(isTokenExpired(makeToken({ exp: 4102444800 }))).toBe(false);
   });
 
-  test('stores a bearer token only for the browser session', () => {
+  test('stores a bearer token only for the current browser session', () => {
     const token = makeToken({ exp: 4102444800 });
     expect(setStoredToken(token)).toBe(true);
     expect(sessionStorage.getItem('token')).toBe(token);
+    expect(sessionStorage.getItem('pihub-auth-session-v2')).toBe('2');
     expect(localStorage.getItem('token')).toBeNull();
+    expect(getStoredToken()).toBe(token);
   });
 
-  test('migrates and removes a legacy persistent token', () => {
+  test('does not resurrect a legacy persistent token', () => {
     const token = makeToken({ exp: 4102444800 });
     localStorage.setItem('token', token);
-    expect(getStoredToken()).toBe(token);
+    expect(getStoredToken()).toBeNull();
     expect(localStorage.getItem('token')).toBeNull();
-    expect(sessionStorage.getItem('token')).toBe(token);
+    expect(sessionStorage.getItem('token')).toBeNull();
   });
 
-  test('removes an expired stored token', () => {
-    sessionStorage.setItem('token', makeToken({ exp: 1 }));
+  test('rejects a session token when the session marker was cleared', () => {
+    const token = makeToken({ exp: 4102444800 });
+    sessionStorage.setItem('token', token);
     expect(getStoredToken()).toBeNull();
     expect(sessionStorage.getItem('token')).toBeNull();
   });
 
-  test('clears both legacy and session token stores', () => {
+  test('removes an expired stored token and session marker', () => {
+    sessionStorage.setItem('token', makeToken({ exp: 1 }));
+    sessionStorage.setItem('pihub-auth-session-v2', '2');
+    expect(getStoredToken()).toBeNull();
+    expect(sessionStorage.getItem('token')).toBeNull();
+    expect(sessionStorage.getItem('pihub-auth-session-v2')).toBeNull();
+  });
+
+  test('clears legacy, session token and session marker stores', () => {
     sessionStorage.setItem('token', 'session');
+    sessionStorage.setItem('pihub-auth-session-v2', '2');
     localStorage.setItem('token', 'legacy');
     clearStoredToken();
     expect(sessionStorage.getItem('token')).toBeNull();
+    expect(sessionStorage.getItem('pihub-auth-session-v2')).toBeNull();
     expect(localStorage.getItem('token')).toBeNull();
   });
 });
