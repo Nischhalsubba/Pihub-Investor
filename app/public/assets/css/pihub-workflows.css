@@ -2,6 +2,9 @@
 .demo-environment-banner { margin: 0 -32px; padding: 8px 32px; display: flex; gap: 12px; align-items: center; border-bottom: 1px solid #e0b45b; background: #fff5df; color: #68430a; font-size: 11px; }
 .demo-environment-banner strong { font: 600 9px "IBM Plex Mono", monospace; letter-spacing: .08em; }
 
+/* The keyboard shortcut is functional orientation, not decoration. Keep it small but AA-readable. */
+.ap-command-trigger kbd { color: #59687c; font-size: 10px; }
+
 .overview-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(280px, .8fr); gap: 28px; margin-top: 20px; }
 .overview-panel { min-width: 0; border-top: 1px solid var(--ap-ink-950); }
 .overview-attention-list { display: grid; }
