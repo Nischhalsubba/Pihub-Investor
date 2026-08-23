@@ -1,17 +1,36 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, transformWithOxc } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
 
 const truthy = value => ['1', 'true', 'yes', 'on'].includes(String(value || '').trim().toLowerCase());
 
+const legacyJsxInJs = production => ({
+  name: 'pihub-legacy-jsx-in-js',
+  enforce: 'pre',
+  async transform(code, id) {
+    if (!/\/src\/.*\.js$/.test(id)) return null;
+    const result = await transformWithOxc(code, id, {
+      lang: 'jsx',
+      jsx: {
+        runtime: 'automatic',
+        development: !production,
+        refresh: !production
+      }
+    });
+    return { code: result.code, map: result.map };
+  }
+});
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const read = key => process.env[key] !== undefined ? process.env[key] : env[key];
   const demoValue = read('REACT_APP_DEMO') || '';
+  const production = mode === 'production';
 
   return {
     plugins: [
-      react({ include: /src\/.*\.jsx?$/ })
+      legacyJsxInJs(production),
+      react({ include: /\.(jsx|tsx)$/ })
     ],
     resolve: {
       alias: {
@@ -20,29 +39,10 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       __PIHUB_DEMO__: JSON.stringify(truthy(demoValue)),
-      'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),
+      'process.env.NODE_ENV': JSON.stringify(production ? 'production' : 'development'),
       'process.env.REACT_APP_DEMO': JSON.stringify(demoValue),
       'process.env.REACT_APP_API_URL': JSON.stringify(read('REACT_APP_API_URL') || ''),
       'process.env.REACT_APP_API_HEADER_FROM': JSON.stringify(read('REACT_APP_API_HEADER_FROM') || 'investor')
-    },
-    // Build and dependency scanning still need to know that the historical
-    // source tree contains JSX in .js files. The official React plugin owns
-    // the dev/HMR transform before Vite import analysis.
-    oxc: {
-      include: /src\/.*\.jsx?$/,
-      jsx: { runtime: 'automatic' }
-    },
-    build: {
-      outDir: 'dist',
-      emptyOutDir: true,
-      target: 'es2020',
-      sourcemap: false,
-      chunkSizeWarningLimit: 900,
-      rolldownOptions: {
-        moduleTypes: {
-          '.js': 'jsx'
-        }
-      }
     },
     optimizeDeps: {
       rolldownOptions: {
@@ -50,6 +50,13 @@ export default defineConfig(({ mode }) => {
           '.js': 'jsx'
         }
       }
+    },
+    build: {
+      outDir: 'dist',
+      emptyOutDir: true,
+      target: 'es2020',
+      sourcemap: false,
+      chunkSizeWarningLimit: 900
     },
     test: {
       globals: true,
