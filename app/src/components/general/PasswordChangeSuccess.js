@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-const Translator = require('react-translate-component');
+import { getLocale } from '../../_utils/locale';
 
 const PasswordChangeSuccess = () => {
-  const isGerman = Translator.getLocale() === 'de';
+  const isGerman = getLocale() === 'de';
 
   return (
     <main className="standalone-status-page">
