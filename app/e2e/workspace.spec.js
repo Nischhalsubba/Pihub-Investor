@@ -81,9 +81,36 @@ test('institution profile is complete, readable and accessible', async ({ page }
   await expect(page.getByText('Not supplied', { exact: true })).toHaveCount(0);
   await expect(page.getByText('Verification complete', { exact: true }).first()).toBeVisible();
 
-  const navBox = await page.locator('.ap-topbar-v3').boundingBox();
-  expect(navBox, 'Redesigned workspace utility header should have measurable layout').not.toBeNull();
-  expect(navBox.height, `Unexpected utility header height: ${navBox && navBox.height}`).toBeLessThanOrEqual(96);
+  const shellGeometry = await page.evaluate(() => {
+    const header = document.querySelector('.ap-topbar-v4');
+    const sidebar = document.querySelector('.ap-sidebar');
+    const headerRect = header.getBoundingClientRect();
+    const sidebarRect = sidebar.getBoundingClientRect();
+    return {
+      viewportWidth: document.documentElement.clientWidth,
+      header: { left: headerRect.left, right: headerRect.right, width: headerRect.width, bottom: headerRect.bottom },
+      sidebar: { top: sidebarRect.top }
+    };
+  });
+  expect(Math.abs(shellGeometry.header.left), `Header should start at viewport left: ${JSON.stringify(shellGeometry)}`).toBeLessThanOrEqual(1);
+  expect(Math.abs(shellGeometry.header.right - shellGeometry.viewportWidth), `Header should reach viewport right: ${JSON.stringify(shellGeometry)}`).toBeLessThanOrEqual(2);
+  expect(Math.abs(shellGeometry.header.width - shellGeometry.viewportWidth), `Header should span viewport width: ${JSON.stringify(shellGeometry)}`).toBeLessThanOrEqual(2);
+  expect(shellGeometry.sidebar.top, `Sidebar should begin below the global header: ${JSON.stringify(shellGeometry)}`).toBeGreaterThanOrEqual(shellGeometry.header.bottom - 1);
+
+  const navBox = await page.locator('.ap-topbar-v4').boundingBox();
+  expect(navBox, 'Global workspace header should have measurable layout').not.toBeNull();
+  expect(navBox.height, `Unexpected global header height: ${navBox && navBox.height}`).toBeLessThanOrEqual(96);
+
+  await expect(page.locator('.ap-language-v4')).toBeVisible();
+  await expect(page.locator('.ap-language-v4 img')).toHaveCount(0);
+  const english = page.getByRole('button', { name: 'Use English' });
+  const german = page.getByRole('button', { name: 'Deutsch verwenden' });
+  await expect(english).toBeVisible();
+  await expect(german).toBeVisible();
+  await german.click();
+  await expect(german).toHaveAttribute('aria-pressed', 'true');
+  await english.click();
+  await expect(english).toHaveAttribute('aria-pressed', 'true');
 
   const contactBoxes = await page.locator('.profile-v3-person').evaluateAll(nodes => nodes.map(node => Math.round(node.getBoundingClientRect().width)));
   expect(Math.min(...contactBoxes), `Relationship cards are collapsing: ${JSON.stringify(contactBoxes)}`).toBeGreaterThan(220);
