@@ -1,10 +1,8 @@
-
 import { CHANGE_LANGUAGE } from './types';
+import { setLocale } from '../_utils/locale';
 
-export const changeLanguage = language => async dispatch=>{
-    localStorage.setItem('language', language);
-    dispatch({
-        type: CHANGE_LANGUAGE,
-        payload:language
-    });
+export const changeLanguage = language => dispatch => {
+  const locale = setLocale(language);
+  dispatch({ type: CHANGE_LANGUAGE, payload: locale });
+  return locale;
 };

@@ -1,111 +1,67 @@
-import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { inputField } from '../../../_formFields';
+import { useHistory } from 'react-router-dom';
+import Translator from 'react-translate-component';
 import { getTokenForEmail, changePasswordWithToken } from '../../../actions/password';
 import * as validation from '../../../_utils/validate';
+import { AuthErrorSummary, AuthField } from '../AuthFields';
 import Subheader from '../../general/Subheader';
 
-const Translator = require('react-translate-component');
-const confirmPassword = (value, values) => {
-  if (!value) return '* Required';
-  return value === values.password ? undefined : '* Password Mismatch';
-};
+const ChangePassword = ({ getTokenForEmail: verifyEmail, changePasswordWithToken: savePassword, errMsg }) => {
+  const history = useHistory();
+  const [step, setStep] = useState('verify');
+  const [token, setToken] = useState(null);
+  const [values, setValues] = useState({ email: '', password: '', password_confirmation: '' });
+  const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+  const isGerman = Translator.getLocale() === 'de';
+  const verifyStep = step === 'verify';
 
-class ChangePassword extends Component {
-  state = { step: 'verify', token: null };
-
-  onSubmit = formProps => {
-    if (this.state.step === 'verify') {
-      this.props.getTokenForEmail({ email: formProps.email }, token => this.setState({ step: 'reset', token }));
+  const update = event => setValues(current => ({ ...current, [event.target.name]: event.target.value }));
+  const onSubmit = event => {
+    event.preventDefault();
+    if (verifyStep) {
+      const emailError = validation.required(values.email) || validation.newEmail(values.email);
+      setErrors(emailError ? { email: emailError } : {});
+      if (emailError) return;
+      setSubmitting(true);
+      Promise.resolve(verifyEmail({ email: values.email }, nextToken => { setToken(nextToken); setStep('reset'); })).finally(() => setSubmitting(false));
       return;
     }
 
-    const payload = {
-      password: formProps.password,
-      password_confirmation: formProps.password_confirmation,
-      token: this.state.token
+    const next = {
+      password: validation.required(values.password) || validation.password(values.password),
+      password_confirmation: validation.required(values.password_confirmation) || (values.password !== values.password_confirmation ? 'Passwords do not match.' : undefined)
     };
-    this.props.changePasswordWithToken(payload, () => this.props.history.push('/password-change-success'));
+    const clean = Object.fromEntries(Object.entries(next).filter(([, value]) => value));
+    setErrors(clean);
+    if (Object.keys(clean).length) return;
+    setSubmitting(true);
+    Promise.resolve(savePassword({ password: values.password, password_confirmation: values.password_confirmation, token }, () => history.replace('/password-change-success'))).finally(() => setSubmitting(false));
   };
 
-  renderErrors = error => {
-    if (!error) return null;
-    const values = Array.isArray(error) ? error : Object.keys(error).map(key => error[key]).filter(Boolean);
-    if (!values.length) return null;
-    return <div className="auth-error" role="alert"><ul className="auth-error-list">{values.map((value, index) => <li key={`${value}-${index}`}>{value}</li>)}</ul></div>;
-  };
+  return (
+    <div>
+      <Subheader heading={isGerman ? 'Passwort ändern' : 'Change password'} />
+      <section className="account-form-panel" data-motion="table">
+        <div className="account-form-head">
+          <div><h2>{verifyStep ? (isGerman ? 'Konto verifizieren' : 'Verify account') : (isGerman ? 'Neues Passwort' : 'New password')}</h2><p>{verifyStep ? (isGerman ? 'Bestätigen Sie zuerst die E-Mail-Adresse Ihres Kontos.' : 'Confirm the email address associated with your account first.') : (isGerman ? 'Legen Sie anschließend das neue Passwort fest.' : 'Then choose and confirm your new password.')}</p></div>
+        </div>
+        <form className="account-form-body" onSubmit={onSubmit} noValidate>
+          {verifyStep ? (
+            <AuthField id="change-password-email" name="email" type="email" label="Email" value={values.email} onChange={update} error={errors.email} autoComplete="email" />
+          ) : (
+            <React.Fragment>
+              <AuthField id="change-password-new" name="password" type="password" label={isGerman ? 'Neues Passwort' : 'New password'} value={values.password} onChange={update} error={errors.password} autoComplete="new-password" />
+              <AuthField id="change-password-confirm" name="password_confirmation" type="password" label={isGerman ? 'Passwort bestätigen' : 'Confirm password'} value={values.password_confirmation} onChange={update} error={errors.password_confirmation} autoComplete="new-password" />
+            </React.Fragment>
+          )}
+          <AuthErrorSummary value={errMsg} />
+          <button className="btn btn-primary" type="submit" disabled={submitting}>{verifyStep ? (isGerman ? 'Weiter' : 'Continue') : (isGerman ? 'Passwort speichern' : 'Save password')}</button>
+        </form>
+      </section>
+    </div>
+  );
+};
 
-  render() {
-    const { handleSubmit } = this.props;
-    const isGerman = Translator.getLocale() === 'de';
-    const verifyStep = this.state.step === 'verify';
-
-    return (
-      <div>
-        <Subheader heading={isGerman ? 'Passwort ändern' : 'Change password'} />
-        <section className="account-form-panel" data-motion="table-shell">
-          <div className="account-form-head">
-            <span>{verifyStep ? '01' : '02'}</span>
-            <div>
-              <h2>{verifyStep ? (isGerman ? 'Konto verifizieren' : 'Verify account') : (isGerman ? 'Neues Passwort' : 'New password')}</h2>
-              <p>{verifyStep ? (isGerman ? 'Bestätigen Sie zuerst die E-Mail-Adresse Ihres Kontos.' : 'Confirm the email address associated with your account first.') : (isGerman ? 'Legen Sie anschließend das neue Passwort fest.' : 'Then choose and confirm your new password.')}</p>
-            </div>
-          </div>
-          <form className="account-form-body" onSubmit={handleSubmit(this.onSubmit)} noValidate>
-            {verifyStep ? (
-              <div className="form-group">
-                <Field
-                  name="email"
-                  type="email"
-                  component={inputField}
-                  label="Email"
-                  className="form-control"
-                  autoComplete="email"
-                  validate={[validation.required, validation.newEmail]}
-                />
-              </div>
-            ) : (
-              <React.Fragment>
-                <div className="form-group">
-                  <Field
-                    name="password"
-                    type="password"
-                    component={inputField}
-                    label={isGerman ? 'Neues Passwort' : 'New password'}
-                    className="form-control"
-                    autoComplete="new-password"
-                    validate={[validation.required, validation.password]}
-                  />
-                </div>
-                <div className="form-group">
-                  <Field
-                    name="password_confirmation"
-                    type="password"
-                    component={inputField}
-                    label={isGerman ? 'Passwort bestätigen' : 'Confirm password'}
-                    className="form-control"
-                    autoComplete="new-password"
-                    validate={confirmPassword}
-                  />
-                </div>
-              </React.Fragment>
-            )}
-            {this.renderErrors(this.props.errMsg)}
-            <button className="btn btn-primary" type="submit">{verifyStep ? (isGerman ? 'Weiter' : 'Continue') : (isGerman ? 'Passwort speichern' : 'Save password')}</button>
-          </form>
-        </section>
-      </div>
-    );
-  }
-}
-
-function mapStateToProps(state) {
-  return { errMsg: state.errors || state.error };
-}
-
-export default compose(
-  connect(mapStateToProps, { getTokenForEmail, changePasswordWithToken }),
-  reduxForm({ form: 'changePassword' })
-)(ChangePassword);
+export default connect(state => ({ errMsg: state.errors || state.error }), { getTokenForEmail, changePasswordWithToken })(ChangePassword);
