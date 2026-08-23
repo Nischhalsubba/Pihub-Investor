@@ -2,7 +2,10 @@ name: Validate investor frontend
 
 on:
   push:
-    branches: [main, develop]
+    branches:
+      - main
+      - develop
+      - 'remediation/**'
   pull_request:
     branches: [main, develop]
 

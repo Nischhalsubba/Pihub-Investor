@@ -13,7 +13,7 @@ export const getProfile = () => async dispatch => {
   }
 };
 
-export const editProfile = (details, callback) => async dispatch => {
+export const editProfile = (details, callback, onUploadProgress) => async dispatch => {
   dispatch({ type: CLEAR_ERROR });
   try {
     const body = new FormData();
@@ -30,9 +30,16 @@ export const editProfile = (details, callback) => async dispatch => {
     if (details.company_logo) body.append('company_logo', details.company_logo);
 
     body.append('_method', 'put');
-    const response = await client.post(routes.getProfile, body);
+    const response = await client.post(routes.getProfile, body, {
+      onUploadProgress: event => {
+        if (!onUploadProgress || !event || !event.total) return;
+        onUploadProgress(Math.min(100, Math.round((event.loaded / event.total) * 100)));
+      }
+    });
     if (response) callback();
+    return true;
   } catch (error) {
     dispatch({ type: ERROR, payload: getApiErrorMessage(error, 'Unable to save the institution profile.') });
+    return false;
   }
 };
