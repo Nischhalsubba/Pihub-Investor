@@ -15,9 +15,11 @@ export default ChildComponent => {
     shouldNavigateAway() {
       if (!this.hasValidSession()) {
         clearStoredToken();
-        if (this.props.history.location.pathname !== '/login') {
-          this.props.history.replace('/login');
-        }
+        // LegacyElement exposes history.replace but intentionally does not
+        // expose history.location. Protected HOCs are never mounted on the
+        // public login route, so an unconditional replace is both safe and
+        // compatible with the React Router v6 adapter.
+        this.props.history.replace('/login');
       }
     }
 
