@@ -1,13 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Translator from 'react-translate-component';
 import Subheader from '../general/Subheader';
 import Spinner from '../general/Spinner';
 import { getProductsList } from '../../actions/product';
 import { getCreditRequestList } from '../../actions/credits';
 import { getInvestedList } from '../../actions/invested';
-
-const Translator = require('react-translate-component');
 
 const toText = value => {
   if (value === null || value === undefined) return '';
