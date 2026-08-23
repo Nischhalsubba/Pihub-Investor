@@ -1,8 +1,10 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
-const sourceRoot = resolve(process.cwd(), 'style-src');
-const outputRoot = resolve(process.cwd(), 'public/assets/css');
+// The individual source files remain versioned in public/assets/css so they are
+// easy to audit and diff. Runtime HTML loads only the generated bundle.
+const sourceRoot = resolve(process.cwd(), 'public/assets/css');
+const outputRoot = sourceRoot;
 const files = [
   'bootstrap.min.css',
   'boxicon.css',
@@ -38,6 +40,6 @@ for (const file of files) {
   chunks.push(`/* source: ${file} */\n${content}`);
 }
 
-const header = `/* GENERATED FILE — do not edit.\n   Runtime CSS has one deterministic cascade. Edit style-src/* and the ordered manifest in scripts/build-css.mjs. */\n`;
+const header = `/* GENERATED FILE — do not edit.\n   Runtime CSS has one deterministic cascade. Edit the versioned source files and the ordered manifest in scripts/build-css.mjs. */\n`;
 await writeFile(resolve(outputRoot, 'pihub-bundle.css'), `${header}${chunks.join('\n\n')}\n`, 'utf8');
 console.log(`Built pihub-bundle.css from ${files.length} ordered sources.`);
