@@ -1,9 +1,8 @@
 import React from 'react';
-
-const Translator = require('react-translate-component');
+import { getLocale } from '../../../_utils/locale';
 
 const SignupProgress = ({ stage }) => {
-  const isGerman = Translator.getLocale() === 'de';
+  const isGerman = getLocale() === 'de';
   const steps = [
     isGerman ? 'E-Mail bestätigen' : 'Confirm email',
     isGerman ? 'Freigabe' : 'Approval',
