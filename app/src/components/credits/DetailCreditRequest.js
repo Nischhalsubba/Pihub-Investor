@@ -5,7 +5,7 @@ import Translate from 'react-translate-component';
 import { changeStatus } from '../../actions/changeStatus';
 import CreditInfo from './CreditInfo';
 
-const Translator = require('react-translate-component');
+const Translator = Translate;
 
 class DetailCreditRequest extends Component {
   state = { detail: null, refresh: false };
