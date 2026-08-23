@@ -40,6 +40,7 @@ const login = async page => {
       return {
         href: window.location.href,
         hasSessionToken: Boolean(window.sessionStorage.getItem('token')),
+        hasSessionMarker: Boolean(window.sessionStorage.getItem('pihub-auth-session-v2')),
         viewport: { width: document.documentElement.clientWidth, height: document.documentElement.clientHeight },
         visibilityChain,
         text: document.body ? document.body.innerText.slice(0, 1800) : '',
@@ -77,6 +78,33 @@ const getOverflowDiagnostic = async page => page.evaluate(() => {
   return { overflow, viewportWidth, offenders };
 });
 
+const getShellGeometry = async page => page.evaluate(() => {
+  const rect = selector => {
+    const element = document.querySelector(selector);
+    if (!element) return null;
+    const box = element.getBoundingClientRect();
+    return {
+      left: Math.round(box.left),
+      top: Math.round(box.top),
+      right: Math.round(box.right),
+      bottom: Math.round(box.bottom),
+      width: Math.round(box.width),
+      height: Math.round(box.height)
+    };
+  };
+
+  return {
+    viewportWidth: document.documentElement.clientWidth,
+    viewportHeight: document.documentElement.clientHeight,
+    header: rect('.ap-topbar-v4'),
+    brand: rect('.ap-global-brand'),
+    headerMain: rect('.ap-global-header-main'),
+    sidebar: rect('.ap-sidebar'),
+    workspace: rect('.ap-workspace'),
+    main: rect('main#main-content')
+  };
+});
+
 test('critical workspace routes survive navigation and refresh', async ({ page }) => {
   await login(page);
   for (const route of ['/products', '/credit-request', '/products-invested', '/user/profile', '/opportunities/DEMO-001']) {
@@ -86,6 +114,22 @@ test('critical workspace routes survive navigation and refresh', async ({ page }
     await expectNoCrash(page);
     await expect(page.locator('main#main-content')).toBeVisible();
   }
+});
+
+test('clearing browser auth storage returns protected routes to login', async ({ page }) => {
+  await login(page);
+  await expect(page.locator('.ap-topbar-v4')).toBeVisible();
+
+  await page.evaluate(() => {
+    window.sessionStorage.clear();
+    window.localStorage.removeItem('token');
+  });
+  await page.reload();
+
+  await expect(page).toHaveURL(/\/login$/);
+  await expect(page.getByRole('button', { name: /login/i })).toBeVisible();
+  await expect(page.locator('.ap-topbar-v4')).toHaveCount(0);
+  await expect(page.locator('.ap-sidebar')).toHaveCount(0);
 });
 
 test('unknown authenticated routes render a recoverable 404', async ({ page }) => {
@@ -111,25 +155,35 @@ test('institution profile is complete, readable and accessible', async ({ page }
   await expect(page.getByText('Not supplied', { exact: true })).toHaveCount(0);
   await expect(page.getByText('Verification complete', { exact: true }).first()).toBeVisible();
 
-  const shellGeometry = await page.evaluate(() => {
-    const header = document.querySelector('.ap-topbar-v4');
-    const sidebar = document.querySelector('.ap-sidebar');
-    const headerRect = header.getBoundingClientRect();
-    const sidebarRect = sidebar.getBoundingClientRect();
-    return {
-      viewportWidth: document.documentElement.clientWidth,
-      header: { left: headerRect.left, right: headerRect.right, width: headerRect.width, bottom: headerRect.bottom },
-      sidebar: { top: sidebarRect.top }
-    };
-  });
-  expect(Math.abs(shellGeometry.header.left), `Header should start at viewport left: ${JSON.stringify(shellGeometry)}`).toBeLessThanOrEqual(1);
-  expect(Math.abs(shellGeometry.header.right - shellGeometry.viewportWidth), `Header should reach viewport right: ${JSON.stringify(shellGeometry)}`).toBeLessThanOrEqual(2);
-  expect(Math.abs(shellGeometry.header.width - shellGeometry.viewportWidth), `Header should span viewport width: ${JSON.stringify(shellGeometry)}`).toBeLessThanOrEqual(2);
-  expect(shellGeometry.sidebar.top, `Sidebar should begin below the global header: ${JSON.stringify(shellGeometry)}`).toBeGreaterThanOrEqual(shellGeometry.header.bottom - 1);
+  const shell = await getShellGeometry(page);
+  expect(shell.header, `Header missing: ${JSON.stringify(shell)}`).not.toBeNull();
+  expect(shell.brand, `Brand rail missing: ${JSON.stringify(shell)}`).not.toBeNull();
+  expect(shell.headerMain, `Header utility rail missing: ${JSON.stringify(shell)}`).not.toBeNull();
+  expect(shell.sidebar, `Sidebar missing: ${JSON.stringify(shell)}`).not.toBeNull();
+  expect(shell.workspace, `Workspace missing: ${JSON.stringify(shell)}`).not.toBeNull();
+  expect(shell.main, `Main content missing: ${JSON.stringify(shell)}`).not.toBeNull();
 
-  const navBox = await page.locator('.ap-topbar-v4').boundingBox();
-  expect(navBox, 'Global workspace header should have measurable layout').not.toBeNull();
-  expect(navBox.height, `Unexpected global header height: ${navBox && navBox.height}`).toBeLessThanOrEqual(96);
+  expect(Math.abs(shell.header.left), `Header should start at viewport left: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(1);
+  expect(Math.abs(shell.header.right - shell.viewportWidth), `Header should reach viewport right: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(2);
+  expect(Math.abs(shell.header.width - shell.viewportWidth), `Header should span viewport width: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(2);
+  expect(shell.header.height, `Header must stay one row: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(72);
+
+  expect(Math.abs(shell.brand.top - shell.header.top), `Brand and utility header split into separate rows: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(1);
+  expect(Math.abs(shell.brand.bottom - shell.header.bottom), `Brand rail must fill header row: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(2);
+  expect(Math.abs(shell.headerMain.top - shell.header.top), `Header utilities must share the brand row: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(1);
+  expect(Math.abs(shell.headerMain.bottom - shell.header.bottom), `Header utilities must fill header row: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(2);
+  expect(shell.sidebar.top, `Sidebar should begin below the global header: ${JSON.stringify(shell)}`).toBeGreaterThanOrEqual(shell.header.bottom - 1);
+
+  if (shell.viewportWidth > 820) {
+    expect(Math.abs(shell.sidebar.left), `Desktop sidebar should start at viewport left: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(1);
+    expect(Math.abs(shell.workspace.left - shell.sidebar.right), `Workspace must begin exactly after sidebar: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(2);
+    expect(shell.main.width, `Desktop main content collapsed: ${JSON.stringify(shell)}`).toBeGreaterThan(720);
+    expect(shell.main.width, `Desktop main content is unbounded: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(1442);
+    expect(shell.main.left, `Main content escaped workspace: ${JSON.stringify(shell)}`).toBeGreaterThanOrEqual(shell.workspace.left);
+    expect(shell.main.right, `Main content escaped viewport: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(shell.viewportWidth);
+  } else {
+    expect(Math.abs(shell.workspace.left), `Mobile workspace should start at viewport left: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(1);
+  }
 
   await expect(page.locator('.ap-language-v4')).toBeVisible();
   await expect(page.locator('.ap-language-v4 img')).toHaveCount(0);
