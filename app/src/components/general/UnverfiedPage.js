@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import Subheader from './Subheader';
 
-const Translator = require('react-translate-component');
+const Translator = Translate;
 
 const UnverifiedPage = () => {
   const isGerman = Translator.getLocale() === 'de';
