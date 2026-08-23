@@ -6,7 +6,18 @@ const login = async page => {
   await page.locator('#login-email').fill('qa.investor@example.com');
   await page.locator('#login-password').fill('DemoPassword1!');
   await page.getByRole('button', { name: /login/i }).click();
-  await expect(page.getByRole('heading', { name: 'Overview' })).toBeVisible();
+
+  try {
+    await expect(page.getByRole('heading', { name: 'Overview' })).toBeVisible();
+  } catch (error) {
+    const diagnostic = await page.evaluate(() => ({
+      href: window.location.href,
+      hasSessionToken: Boolean(window.sessionStorage.getItem('token')),
+      text: document.body ? document.body.innerText.slice(0, 1800) : '',
+      rootHtml: document.getElementById('root') ? document.getElementById('root').innerHTML.slice(0, 1800) : ''
+    }));
+    throw new Error(`Demo login did not reach the Overview workspace. Runtime diagnostic: ${JSON.stringify(diagnostic)}\n${error.message}`);
+  }
 };
 
 const expectNoCrash = async page => {
