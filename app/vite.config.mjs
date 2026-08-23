@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
+import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
 
 const truthy = value => ['1', 'true', 'yes', 'on'].includes(String(value || '').trim().toLowerCase());
@@ -9,6 +10,9 @@ export default defineConfig(({ mode }) => {
   const demoValue = read('REACT_APP_DEMO') || '';
 
   return {
+    plugins: [
+      react({ include: /src\/.*\.jsx?$/ })
+    ],
     resolve: {
       alias: {
         'react-router-dom': fileURLToPath(new URL('./src/routerCompat.jsx', import.meta.url))
@@ -21,8 +25,9 @@ export default defineConfig(({ mode }) => {
       'process.env.REACT_APP_API_URL': JSON.stringify(read('REACT_APP_API_URL') || ''),
       'process.env.REACT_APP_API_HEADER_FROM': JSON.stringify(read('REACT_APP_API_HEADER_FROM') || 'investor')
     },
-    // This legacy codebase uses JSX in .js files. Oxc handles the transform,
-    // while Rolldown still needs the module type before it can parse imports.
+    // Build and dependency scanning still need to know that the historical
+    // source tree contains JSX in .js files. The official React plugin owns
+    // the dev/HMR transform before Vite import analysis.
     oxc: {
       include: /src\/.*\.jsx?$/,
       jsx: { runtime: 'automatic' }
