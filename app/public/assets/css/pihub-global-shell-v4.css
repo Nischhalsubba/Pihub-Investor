@@ -1,33 +1,50 @@
 /* PiHub Investor global shell v4.
-   Full-width application header with a dedicated brand rail and responsive utility controls. */
+   This file is intentionally last in the generated CSS bundle and is the
+   authoritative owner of application-shell geometry. Legacy styles may skin
+   controls, but they must not reposition the header, sidebar or workspace. */
 
 :root {
-  --pi-topbar-height: 72px;
+  --pi-topbar-height: 68px;
+  --pi-shell-content-max: 1440px;
 }
 
-/* The legacy app shell is a horizontal flex container. Once the header becomes
-   a global sibling of the sidebar/main workspace, that old rule would make the
-   header consume the flex row and collapse the content to zero width. The v4
-   shell owns top-level geometry and restores normal document flow. */
+/* ---------- authoritative application geometry ---------- */
 .workspace-shell.ap-shell {
-  display: block !important;
   width: 100% !important;
   min-width: 0 !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  display: grid !important;
+  grid-template-columns: var(--pi-sidebar-width) minmax(0, 1fr) !important;
+  grid-template-rows: var(--pi-topbar-height) minmax(calc(100vh - var(--pi-topbar-height)), auto) !important;
+  grid-template-rows: var(--pi-topbar-height) minmax(calc(100dvh - var(--pi-topbar-height)), auto) !important;
+  align-items: stretch !important;
+  overflow: visible !important;
+  background: #f6f8fc !important;
 }
 
 .ap-topbar-v4.site-header {
+  grid-column: 1 / -1 !important;
+  grid-row: 1 !important;
+  align-self: stretch !important;
   position: sticky !important;
   top: 0 !important;
+  left: auto !important;
+  right: auto !important;
   z-index: 120 !important;
   width: 100% !important;
+  max-width: none !important;
   height: var(--pi-topbar-height) !important;
   min-height: var(--pi-topbar-height) !important;
+  max-height: var(--pi-topbar-height) !important;
   display: grid !important;
   grid-template-columns: var(--pi-sidebar-width) minmax(0, 1fr) !important;
   align-items: stretch !important;
+  justify-content: stretch !important;
   gap: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
+  overflow: visible !important;
   border: 0 !important;
   border-bottom: 1px solid rgba(13, 24, 48, .09) !important;
   background: #fff !important;
@@ -36,12 +53,15 @@
 }
 
 .ap-global-brand {
+  grid-column: 1 !important;
   min-width: 0;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   gap: 11px;
   padding: 0 18px;
+  overflow: hidden;
   border-right: 1px solid rgba(255, 255, 255, .07);
   background: var(--pi-sidebar);
   color: #fff;
@@ -103,73 +123,157 @@
 }
 
 .ap-global-header-main {
-  min-width: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 10px clamp(16px, 1.8vw, 28px);
-  background: rgba(255, 255, 255, .96);
-  backdrop-filter: blur(18px) saturate(125%);
+  grid-column: 2 !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  margin: 0 !important;
+  padding: 8px clamp(16px, 1.8vw, 28px) !important;
+  overflow: visible !important;
+  background: rgba(255, 255, 255, .97) !important;
+  backdrop-filter: blur(18px) saturate(125%) !important;
 }
 
 .ap-topbar-v4 .ap-topbar-leading {
-  min-width: 0;
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .ap-topbar-v4 .ap-environment-chip {
-  min-height: 40px;
-  max-width: 310px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  border-radius: 11px;
+  min-width: 0 !important;
+  min-height: 38px !important;
+  max-width: 310px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  border-radius: 10px !important;
 }
 
-.ap-topbar-v4 .ap-top-actions {
-  flex: 0 0 auto;
+.ap-topbar-v4 .ap-top-actions,
+.ap-topbar-v4 .header-actions {
+  width: auto !important;
+  min-width: 0 !important;
+  flex: 0 1 auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.ap-topbar-v4 .ap-topbar-controls {
+.ap-topbar-v4 .ap-topbar-controls,
+.ap-topbar-v4 .ap-top-actions > ul {
+  width: auto !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
   flex-wrap: nowrap !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
 }
 
+.ap-topbar-v4 .ap-topbar-controls > li {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  margin: 0 !important;
+}
+
+.sidebar.ap-sidebar {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  align-self: start !important;
+  position: sticky !important;
+  top: var(--pi-topbar-height) !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  inset: auto !important;
+  z-index: 70 !important;
+  width: var(--pi-sidebar-width) !important;
+  min-width: var(--pi-sidebar-width) !important;
+  max-width: var(--pi-sidebar-width) !important;
+  height: calc(100vh - var(--pi-topbar-height)) !important;
+  height: calc(100dvh - var(--pi-topbar-height)) !important;
+  min-height: 0 !important;
+  max-height: calc(100dvh - var(--pi-topbar-height)) !important;
+  margin: 0 !important;
+  padding-top: 18px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+.main-content.ap-workspace {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  align-self: stretch !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  min-height: calc(100vh - var(--pi-topbar-height)) !important;
+  min-height: calc(100dvh - var(--pi-topbar-height)) !important;
+  margin: 0 !important;
+  padding: 0 clamp(24px, 2.2vw, 40px) 56px !important;
+  overflow: visible !important;
+  background: #f6f8fc !important;
+}
+
+.main-content.ap-workspace > .workspace-main.ap-main,
+.ap-workspace > .ap-main {
+  width: min(100%, var(--pi-shell-content-max)) !important;
+  max-width: var(--pi-shell-content-max) !important;
+  min-width: 0 !important;
+  margin: 0 auto !important;
+  padding: 28px 0 56px !important;
+}
+
+.main-content.ap-workspace > .workspace-main.ap-main > *,
+.ap-workspace > .ap-main > * {
+  min-width: 0 !important;
+  max-width: 100%;
+}
+
+/* ---------- language control ---------- */
 .ap-language-v4 {
-  height: 44px;
+  height: 42px;
   display: grid;
-  grid-template-columns: 32px 36px 36px;
+  grid-template-columns: 30px 34px 34px;
   align-items: center;
   padding: 3px;
   border: 1px solid var(--v3-border);
-  border-radius: 11px;
+  border-radius: 10px;
   background: #f8f9fc;
   box-shadow: 0 1px 2px rgba(13, 24, 48, .02);
 }
 
 .ap-language-glyph {
-  width: 32px;
-  height: 34px;
+  width: 30px;
+  height: 32px;
   display: grid;
   place-items: center;
   border-right: 1px solid #e3e8f0;
   color: #687891;
 }
 
-.ap-language-glyph i {
-  font-size: 16px;
-}
+.ap-language-glyph i { font-size: 16px; }
 
 .ap-language-v4 button {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  min-width: 34px;
+  height: 34px;
+  min-height: 34px;
   display: grid;
   place-items: center;
   padding: 0;
   border: 0;
-  border-radius: 8px;
+  border-radius: 7px;
   background: transparent;
   color: #60708a;
   font-size: 10px;
@@ -193,42 +297,49 @@
   z-index: 1;
 }
 
-@media (min-width: 821px) {
-  .sidebar.ap-sidebar {
-    position: fixed !important;
-    inset: var(--pi-topbar-height) auto 0 0 !important;
-    width: var(--pi-sidebar-width) !important;
-    height: auto !important;
-    min-height: 0 !important;
-    padding-top: 18px !important;
+/* ---------- desktop compression without a second header row ---------- */
+@media (max-width: 1320px) and (min-width: 821px) {
+  .ap-global-header-main { gap: 12px !important; }
+  .ap-topbar-v4 .ap-environment-chip { max-width: 210px !important; }
+  .ap-topbar-v4 .ap-environment-copy small { display: none !important; }
+  .ap-topbar-v4 .ap-command-trigger-v3.ap-command-trigger {
+    width: 180px !important;
+    min-width: 180px !important;
   }
-
-  .main-content.ap-workspace {
-    width: auto !important;
-    min-width: 0 !important;
-    min-height: calc(100dvh - var(--pi-topbar-height)) !important;
-    margin-left: var(--pi-sidebar-width) !important;
+  .ap-topbar-v4 .ap-user-button-v3.ap-user-button {
+    min-width: 180px !important;
   }
 }
 
-@media (max-width: 1180px) {
-  .ap-global-header-main { gap: 12px; }
-  .ap-topbar-v4 .ap-environment-chip { max-width: 190px; }
-  .ap-topbar-v4 .ap-environment-copy small { display: none; }
+@media (max-width: 1080px) and (min-width: 821px) {
+  .ap-topbar-v4 .ap-topbar-leading { display: none !important; }
+  .ap-global-header-main { justify-content: flex-end !important; }
+  .ap-topbar-v4 .ap-command-trigger-v3.ap-command-trigger {
+    width: 160px !important;
+    min-width: 160px !important;
+  }
+  .ap-topbar-v4 .ap-user-button-v3.ap-user-button {
+    min-width: 164px !important;
+  }
 }
 
-@media (max-width: 980px) {
-  .ap-global-header-main { padding-left: 14px; padding-right: 14px; }
-}
-
+/* ---------- tablet/mobile shell ---------- */
 @media (max-width: 820px) {
   :root { --pi-topbar-height: 64px; }
 
+  .workspace-shell.ap-shell {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: var(--pi-topbar-height) auto minmax(0, 1fr) !important;
+  }
+
   .ap-topbar-v4.site-header {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
     grid-template-columns: 174px minmax(0, 1fr) !important;
   }
 
   .ap-global-brand {
+    grid-column: 1 !important;
     padding: 0 14px;
   }
 
@@ -244,38 +355,49 @@
   }
 
   .ap-global-header-main {
-    gap: 8px;
-    padding: 8px 12px;
+    grid-column: 2 !important;
+    gap: 8px !important;
+    padding: 7px 12px !important;
   }
 
-  .ap-topbar-v4 .ap-topbar-leading {
-    display: none;
-  }
+  .ap-topbar-v4 .ap-topbar-leading { display: none !important; }
+  .ap-topbar-v4 .ap-topbar-controls,
+  .ap-topbar-v4 .ap-top-actions > ul { gap: 6px !important; }
 
   .sidebar.ap-sidebar {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
     position: relative !important;
-    inset: auto !important;
+    top: auto !important;
     width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
     height: auto !important;
     min-height: 0 !important;
+    max-height: none !important;
     padding-top: 10px !important;
+    overflow: visible !important;
   }
 
   .main-content.ap-workspace {
-    width: auto !important;
-    min-width: 0 !important;
-    min-height: calc(100dvh - var(--pi-topbar-height)) !important;
-    margin-left: 0 !important;
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 18px 40px !important;
+  }
+
+  .main-content.ap-workspace > .workspace-main.ap-main,
+  .ap-workspace > .ap-main {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-top: 22px !important;
   }
 }
 
 @media (max-width: 620px) {
   .ap-topbar-v4.site-header {
     grid-template-columns: 54px minmax(0, 1fr) !important;
-    height: var(--pi-topbar-height) !important;
-    min-height: var(--pi-topbar-height) !important;
-    margin: 0 !important;
-    padding: 0 !important;
   }
 
   .ap-global-brand {
@@ -283,45 +405,59 @@
     padding: 0 10px;
   }
 
-  .ap-global-brand-copy {
-    display: none;
-  }
+  .ap-global-brand-copy { display: none; }
 
   .ap-global-header-main {
-    gap: 6px;
-    padding: 8px 10px;
-  }
-
-  .ap-topbar-v4 .ap-topbar-controls,
-  .ap-topbar-v4 .ap-top-actions > ul {
     gap: 6px !important;
+    padding: 7px 10px !important;
   }
 
   .ap-language-v4 {
-    grid-template-columns: 34px 34px;
-    height: 44px;
+    grid-template-columns: 32px 32px;
+    height: 40px;
     padding: 3px;
   }
 
-  .ap-language-glyph {
-    display: none;
-  }
+  .ap-language-glyph { display: none; }
 
   .ap-language-v4 button {
-    width: 34px;
-    min-width: 34px;
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    min-height: 32px;
   }
+
+  .main-content.ap-workspace { padding-left: 14px !important; padding-right: 14px !important; }
+}
+
+@media (max-width: 470px) {
+  .ap-topbar-v4 .ap-command-trigger-v3.ap-command-trigger {
+    width: 42px !important;
+    min-width: 42px !important;
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    padding: 0 !important;
+  }
+
+  .ap-topbar-v4 .ap-command-trigger-copy,
+  .ap-topbar-v4 .ap-command-trigger-v3 kbd { display: none !important; }
+
+  .ap-topbar-v4 .ap-user-button-v3.ap-user-button {
+    width: 42px !important;
+    min-width: 42px !important;
+    grid-template-columns: 32px !important;
+    padding: 4px !important;
+  }
+
+  .ap-topbar-v4 .ap-user-copy,
+  .ap-topbar-v4 .ap-user-chevron { display: none !important; }
 }
 
 @media (max-width: 390px) {
-  .ap-topbar-v4 .ap-topbar-command-item {
-    display: none !important;
-  }
+  .ap-topbar-v4 .ap-topbar-command-item { display: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ap-global-brand,
-  .ap-language-v4 button {
-    transition-duration: .01ms !important;
-  }
+  .ap-language-v4 button { transition-duration: .01ms !important; }
 }
