@@ -1,12 +1,6 @@
 import { CHANGE_LANGUAGE } from '../actions/types';
+import { getLocale } from '../_utils/locale';
 
-const initialState = localStorage.getItem('language') || navigator.language.split('-')[0] || 'de'
-export default function (state = initialState, action) {
-    switch (action.type) {
-        case CHANGE_LANGUAGE:
-            return action.payload;
-
-        default:
-            return state;
-    }
+export default function reducer(state = getLocale(), action) {
+  return action.type === CHANGE_LANGUAGE ? action.payload : state;
 }

@@ -1,29 +1,12 @@
-export const email = value =>
-  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-    ? 'Invalid email address'
-    : undefined;
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+const STRONG_PASSWORD = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
 
-export const phoneNumber = value =>
-  value && !/^(0|[1-9][0-9]{9})$/i.test(value)
-    ? 'Invalid phone number, must be 10 digits'
-    : undefined;
-export const required = value =>
-  value || typeof value === 'number' ? undefined : '* Required';
-
-export const number = value =>
-  value && isNaN(Number(value)) ? '* Must be a number' : undefined;
-
-export const same = (value1, value2) =>
-  value1 === value2 ? 'Password Mismatch' : undefined;
-var strongRegex = new RegExp(
-  '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
-);
-export const password = value =>
-  value && !strongRegex.test(value)
-    ? `Password must contain atleast one Capital letter, one small letter, one numeric value and must be 8 digit long`
-    : undefined;
-
-var emailRule = new RegExp("^[A-Za-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{1,20}[^\s]+$");
-
-export const newEmail = value =>
-  value && !emailRule.test(value) ? 'Invalid Email!' : undefined;
+export const email = value => value && !EMAIL.test(String(value).trim()) ? 'Enter a valid email address.' : undefined;
+export const newEmail = email;
+export const required = value => (value || typeof value === 'number' ? undefined : 'Required.');
+export const number = value => value !== undefined && value !== null && value !== '' && Number.isNaN(Number(value)) ? 'Enter a number.' : undefined;
+export const phoneNumber = value => value && !/^\+?[0-9 ()-]{7,20}$/.test(String(value)) ? 'Enter a valid phone number.' : undefined;
+export const same = (value1, value2) => value1 === value2 ? undefined : 'Values do not match.';
+export const password = value => value && !STRONG_PASSWORD.test(String(value))
+  ? 'Use at least 8 characters with uppercase, lowercase, number and symbol.'
+  : undefined;

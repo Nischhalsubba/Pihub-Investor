@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 import auth from './auth';
 import user from './user';
 import productsList from './productsList';
@@ -20,7 +19,8 @@ import service from './service';
 import scope from './scope';
 import allStates from './allStates';
 import county from './county';
-const rootReducer = combineReducers({
+
+export default combineReducers({
   user,
   auth,
   language,
@@ -40,8 +40,5 @@ const rootReducer = combineReducers({
   service,
   scope,
   allStates,
-  county,
-  form: formReducer
+  county
 });
-
-export default rootReducer;

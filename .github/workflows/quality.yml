@@ -7,37 +7,68 @@ on:
       - develop
       - 'remediation/**'
   pull_request:
-    branches: [main, develop]
+    branches:
+      - main
+      - develop
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
+  refresh-lockfile:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/remediation/04-modernization-quality'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: remediation/04-modernization-quality
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - name: Refresh npm lockfile when dependencies change
+        run: npm install --package-lock-only --legacy-peer-deps --ignore-scripts --no-audit --no-fund
+      - name: Commit refreshed lockfile
+        working-directory: .
+        run: |
+          if git diff --quiet -- app/package-lock.json; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/package-lock.json
+          git commit -m "chore(deps): refresh npm lockfile"
+          git push origin HEAD:remediation/04-modernization-quality
+
   frontend-quality:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: app
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
-          node-version: 16
+          node-version: 24
           cache: npm
           cache-dependency-path: app/package-lock.json
-
       - name: Install dependencies
-        run: npm ci --no-audit --no-fund
-
-      - name: Run unit tests
-        env:
-          CI: "true"
-        run: npm test -- --watchAll=false --runInBand
-
-      - name: Build legacy CRA frontend
-        env:
-          CI: "false"
+        run: npm install --legacy-peer-deps --no-audit --no-fund
+      - name: Unit tests
+        run: npm run test:unit
+      - name: Production build
         run: npm run build
+        env:
+          REACT_APP_DEMO: 'true'
+      - name: Bundle budget
+        run: npm run check:bundle
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Browser smoke and accessibility tests
+        run: npm run test:e2e
+        env:
+          REACT_APP_DEMO: 'true'

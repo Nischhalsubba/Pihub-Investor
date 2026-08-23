@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import AuthAtmosphere from './AuthAtmosphere';
 
 const AuthShell = ({
   children,
@@ -20,7 +21,6 @@ const AuthShell = ({
           <span className="auth-brand-logo" aria-hidden="true"><img src="/assets/img/logo.png" alt="" /></span>
           <strong>PiHub Investor</strong>
         </Link>
-
         {eyebrow ? <div className="auth-eyebrow">{eyebrow}</div> : null}
         {title ? <h1 className="page-title">{title}</h1> : null}
         {description ? <div className="page-desc">{description}</div> : null}
@@ -30,7 +30,7 @@ const AuthShell = ({
 
     {!hideVisual ? (
       <aside className="auth-visual" aria-hidden="true">
-        <canvas id="capital-field" />
+        <AuthAtmosphere />
         <div className="auth-visual-copy" data-motion="auth-visual-copy">
           {visualEyebrow ? <span>{visualEyebrow}</span> : null}
           {visualTitle ? <h2>{visualTitle}</h2> : null}

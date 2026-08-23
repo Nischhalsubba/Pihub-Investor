@@ -4,13 +4,8 @@ import { clearStoredToken, isTokenExpired, normalizeToken } from '../../_utils/a
 
 export default ChildComponent => {
   class ComposedComponent extends Component {
-    componentDidMount() {
-      this.shouldNavigateAway();
-    }
-
-    componentDidUpdate() {
-      this.shouldNavigateAway();
-    }
+    componentDidMount() { this.shouldNavigateAway(); }
+    componentDidUpdate() { this.shouldNavigateAway(); }
 
     shouldNavigateAway() {
       const token = normalizeToken(this.props.auth);
@@ -20,9 +15,7 @@ export default ChildComponent => {
       }
     }
 
-    render() {
-      return <ChildComponent {...this.props} />;
-    }
+    render() { return <ChildComponent {...this.props} />; }
   }
 
   return connect(state => ({ auth: state.auth.authenticated }))(ComposedComponent);

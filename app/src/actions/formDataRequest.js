@@ -1,11 +1,8 @@
 import axios from 'axios';
 import { clearStoredToken, getStoredToken } from '../_utils/authToken';
-import { isDemoMode } from '../_utils/demoMode';
-import { demoAxiosAdapter } from '../_utils/demoAdapter';
+import { configureDemoAdapter } from '../_utils/configureDemoAdapter';
 
-const clientWithForm = axios.create();
-if (isDemoMode()) clientWithForm.defaults.adapter = demoAxiosAdapter;
-
+const clientWithForm = configureDemoAdapter(axios.create());
 clientWithForm.interceptors.request.use(config => {
   const token = getStoredToken();
   if (token) config.headers.Authorization = `Bearer ${token}`;

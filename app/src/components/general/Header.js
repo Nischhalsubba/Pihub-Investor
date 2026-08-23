@@ -1,36 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import counterpart from 'counterpart';
+import Translate from 'react-translate-component';
 import { getNotificationCount } from '../../actions/notification';
 import { changeLanguage } from '../../actions/changeLanguage';
 import { logout } from '../../actions/login';
-import Translate from 'react-translate-component';
-import en from '../../_locale/en';
-import de from '../../_locale/de';
-
-counterpart.registerTranslations('en', en);
-counterpart.registerTranslations('de', de);
-counterpart.setLocale(localStorage.getItem('language') || navigator.language.split('-')[0] || 'de');
+import { getLocale, setLocale } from '../../_utils/locale';
 
 const normalizeNotificationCount = value => {
-  const readNumber = candidate => {
+  const number = candidate => {
     if (candidate === null || candidate === undefined || candidate === '') return null;
     const parsed = Number(candidate);
     return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
   };
-  const direct = readNumber(value);
+  const direct = number(value);
   if (direct !== null) return direct;
-  if (value && typeof value === 'object') {
-    const candidates = [value.count, value.total, value.unread, value.unread_count, value.data];
-    for (let index = 0; index < candidates.length; index += 1) {
-      const candidate = candidates[index];
-      const parsed = readNumber(candidate);
-      if (parsed !== null) return parsed;
-      if (candidate && typeof candidate === 'object') {
-        const nested = readNumber(candidate.count !== undefined ? candidate.count : candidate.total !== undefined ? candidate.total : candidate.unread_count);
-        if (nested !== null) return nested;
-      }
+  if (!value || typeof value !== 'object') return 0;
+  const candidates = [value.count, value.total, value.unread, value.unread_count, value.data];
+  for (let index = 0; index < candidates.length; index += 1) {
+    const parsed = number(candidates[index]);
+    if (parsed !== null) return parsed;
+    const nested = candidates[index];
+    if (nested && typeof nested === 'object') {
+      const nestedNumber = number(nested.count !== undefined ? nested.count : nested.total !== undefined ? nested.total : nested.unread_count);
+      if (nestedNumber !== null) return nestedNumber;
     }
   }
   return 0;
@@ -43,23 +36,43 @@ const getCommandShortcut = () => {
 };
 
 class Header extends Component {
-  state = { language: localStorage.getItem('language') || navigator.language.split('-')[0] || 'de' };
-
-  onChange = language => {
-    counterpart.setLocale(language);
-    this.setState({ language });
-    this.props.changeLanguage(language);
-  };
+  state = { language: getLocale(), accountOpen: false };
+  accountRef = createRef();
 
   componentDidMount() {
     this.props.getNotificationCount();
+    document.addEventListener('pointerdown', this.handleOutsidePointer);
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('pointerdown', this.handleOutsidePointer);
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleOutsidePointer = event => {
+    if (this.state.accountOpen && this.accountRef.current && !this.accountRef.current.contains(event.target)) {
+      this.setState({ accountOpen: false });
+    }
+  };
+
+  handleKeyDown = event => {
+    if (event.key === 'Escape' && this.state.accountOpen) this.setState({ accountOpen: false });
+  };
+
+  onChange = language => {
+    const locale = setLocale(language);
+    this.setState({ language: locale });
+    this.props.changeLanguage(locale);
+  };
+
   openCommand = () => window.dispatchEvent(new CustomEvent('pihub:command-open'));
+  closeAccount = () => this.setState({ accountOpen: false });
 
   render() {
     const notificationCount = normalizeNotificationCount(this.props.count);
     const shortcut = getCommandShortcut();
+    const { accountOpen } = this.state;
 
     return (
       <header className="site-header ap-topbar">
@@ -68,9 +81,7 @@ class Header extends Component {
           <ul>
             <li>
               <button className="ap-command-trigger" type="button" onClick={this.openCommand} aria-label={`Open command menu, ${shortcut}`}>
-                <i className="bx bx-search" aria-hidden="true" />
-                <span>Command</span>
-                <kbd>{shortcut}</kbd>
+                <i className="bx bx-search" aria-hidden="true" /><span>Command</span><kbd>{shortcut}</kbd>
               </button>
             </li>
             <li>
@@ -85,16 +96,16 @@ class Header extends Component {
                 {notificationCount > 0 ? <span className="notification-count">{notificationCount}</span> : null}
               </Link>
             </li>
-            <li className="dropdown">
-              <button className="dropdown-toggle ap-user-button" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Open account menu">
+            <li className="ap-user-menu" ref={this.accountRef}>
+              <button className="ap-user-button" type="button" aria-haspopup="menu" aria-expanded={accountOpen} aria-controls="account-menu" aria-label="Open account menu" onClick={() => this.setState(state => ({ accountOpen: !state.accountOpen }))}>
                 <img src="/assets/img/user.png" alt="" />
               </button>
-              <div className="dropdown-menu dropdown-menu-right ap-account-menu" aria-labelledby="dropdownMenuButton">
-                <Link className="dropdown-item" to="/user/profile"><Translate content="label.profile" /></Link>
-                <Link className="dropdown-item" to="/user/edit-profile"><Translate content="label.editprofile" /></Link>
-                <Link className="dropdown-item" to="/change-password"><Translate content="label.resetpassword" /></Link>
-                <div className="ap-menu-divider" />
-                <button className="dropdown-item" type="button" onClick={() => this.props.logout(() => this.props.history.push('/login'))}><Translate content="label.logout" /></button>
+              <div id="account-menu" className={`dropdown-menu dropdown-menu-right ap-account-menu${accountOpen ? ' is-open show' : ''}`} role="menu">
+                <Link className="dropdown-item" role="menuitem" to="/user/profile" onClick={this.closeAccount}><Translate content="label.profile" /></Link>
+                <Link className="dropdown-item" role="menuitem" to="/user/edit-profile" onClick={this.closeAccount}><Translate content="label.editprofile" /></Link>
+                <Link className="dropdown-item" role="menuitem" to="/change-password" onClick={this.closeAccount}><Translate content="label.resetpassword" /></Link>
+                <div className="ap-menu-divider" role="separator" />
+                <button className="dropdown-item" role="menuitem" type="button" onClick={() => this.props.logout(() => this.props.history.replace('/login'))}><Translate content="label.logout" /></button>
               </div>
             </li>
           </ul>
@@ -104,8 +115,5 @@ class Header extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { count: state.notificationCount, language: state.language };
-}
-
+const mapStateToProps = state => ({ count: state.notificationCount, language: state.language });
 export default connect(mapStateToProps, { getNotificationCount, logout, changeLanguage })(withRouter(Header));
