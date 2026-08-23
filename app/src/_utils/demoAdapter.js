@@ -1,4 +1,5 @@
 import { demoAxiosAdapter as legacyDemoAxiosAdapter } from './demoMode';
+import { withCompleteDemoProfile } from './demoProfileData';
 
 const PRODUCTS_KEY = 'pihub-demo-products-v2';
 const PROFILE_KEY = 'pihub-demo-profile';
@@ -79,6 +80,12 @@ export const demoAxiosAdapter = config => {
   const path = pathOf(config.url);
   const method = methodOf(config);
 
+  if (method === 'get' && /\/me$/.test(path)) {
+    const profile = withCompleteDemoProfile(readJson(PROFILE_KEY, {}));
+    writeJson(PROFILE_KEY, profile);
+    return makeResponse(config, { data: profile });
+  }
+
   if (method === 'post' && /\/investor\/product$/.test(path)) {
     const body = formObject(config.data);
     const products = readJson(PRODUCTS_KEY, []);
@@ -103,7 +110,7 @@ export const demoAxiosAdapter = config => {
   if (method === 'post' && /\/me$/.test(path)) {
     const body = formObject(config.data);
     const existing = readJson(PROFILE_KEY, {});
-    const next = { ...existing, ...body, status: 'approved' };
+    const next = withCompleteDemoProfile({ ...existing, ...body, status: 'approved' });
     delete next._method;
     writeJson(PROFILE_KEY, next);
     return makeResponse(config, { data: next, message: 'Demo profile updated locally.' });
