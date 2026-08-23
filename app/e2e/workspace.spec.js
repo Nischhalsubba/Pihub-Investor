@@ -6,7 +6,18 @@ const login = async page => {
   await page.locator('#login-email').fill('qa.investor@example.com');
   await page.locator('#login-password').fill('DemoPassword1!');
   await page.getByRole('button', { name: /login/i }).click();
-  await expect(page.getByRole('heading', { name: 'Overview' })).toBeVisible();
+
+  try {
+    await expect(page.getByRole('heading', { name: 'Overview' })).toBeVisible();
+  } catch (error) {
+    const diagnostic = await page.evaluate(() => ({
+      href: window.location.href,
+      hasSessionToken: Boolean(window.sessionStorage.getItem('token')),
+      text: document.body ? document.body.innerText.slice(0, 1800) : '',
+      rootHtml: document.getElementById('root') ? document.getElementById('root').innerHTML.slice(0, 1800) : ''
+    }));
+    throw new Error(`Demo login did not reach the Overview workspace. Runtime diagnostic: ${JSON.stringify(diagnostic)}\n${error.message}`);
+  }
 };
 
 const expectNoCrash = async page => {
@@ -18,6 +29,23 @@ const expectNoSeriousA11y = async page => {
   const blocking = results.violations.filter(item => item.impact === 'critical' || item.impact === 'serious');
   expect(blocking, blocking.map(item => `${item.id}: ${item.help}`).join('\n')).toEqual([]);
 };
+
+const getOverflowDiagnostic = async page => page.evaluate(() => {
+  const viewportWidth = document.documentElement.clientWidth;
+  const overflow = document.documentElement.scrollWidth - viewportWidth;
+  const offenders = Array.from(document.querySelectorAll('body *')).map(element => {
+    const rect = element.getBoundingClientRect();
+    return {
+      tag: element.tagName.toLowerCase(),
+      id: element.id || '',
+      className: typeof element.className === 'string' ? element.className : '',
+      left: Math.round(rect.left),
+      right: Math.round(rect.right),
+      width: Math.round(rect.width)
+    };
+  }).filter(item => item.right > viewportWidth + 2 || item.left < -2).sort((a, b) => (b.right - viewportWidth) - (a.right - viewportWidth)).slice(0, 8);
+  return { overflow, viewportWidth, offenders };
+});
 
 test('critical workspace routes survive navigation and refresh', async ({ page }) => {
   await login(page);
@@ -49,7 +77,7 @@ test('workspace does not create page-level horizontal overflow', async ({ page }
   for (const route of ['/dashboard', '/products', '/credit-request', '/products-invested', '/user/profile', '/opportunities/new']) {
     await page.goto(route);
     await expectNoCrash(page);
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-    expect(overflow).toBeLessThanOrEqual(2);
+    const diagnostic = await getOverflowDiagnostic(page);
+    expect(diagnostic.overflow, `${route} overflow diagnostic: ${JSON.stringify(diagnostic)}`).toBeLessThanOrEqual(2);
   }
 });

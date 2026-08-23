@@ -25,7 +25,8 @@ const files = [
   'pihub-analytical-responsive.css',
   'pihub-qa-polish.css',
   'pihub-purpose-polish.css',
-  'pihub-workflows.css'
+  'pihub-workflows.css',
+  'pihub-stabilization.css'
 ];
 
 await mkdir(outputRoot, { recursive: true });
