@@ -21,15 +21,12 @@ export default defineConfig(({ mode }) => {
       'process.env.REACT_APP_API_URL': JSON.stringify(read('REACT_APP_API_URL') || ''),
       'process.env.REACT_APP_API_HEADER_FROM': JSON.stringify(read('REACT_APP_API_HEADER_FROM') || 'investor')
     },
-    esbuild: {
-      jsx: 'automatic',
-      loader: 'jsx',
-      include: /src\/.*\.jsx?$/
-    },
-    optimizeDeps: {
-      esbuildOptions: {
-        loader: { '.js': 'jsx' }
-      }
+    // This legacy codebase uses JSX in .js files. Vite 8 uses Oxc for JS
+    // transformation, so include those files explicitly instead of relying on
+    // the deprecated esbuild loader compatibility layer.
+    oxc: {
+      include: /src\/.*\.jsx?$/,
+      jsx: { runtime: 'automatic' }
     },
     build: {
       outDir: 'dist',
