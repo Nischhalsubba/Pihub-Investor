@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Prompt } from 'react-router-dom';
 import Select from 'react-select';
+import Translator from 'react-translate-component';
 import { getIndustryList } from '../../actions/industry';
 import { getServiceList } from '../../actions/service';
 import { getAllState, getCounties } from '../../actions/statesCounties';
 import { validateOpportunity } from '../../_utils/opportunityValidation';
-
-const Translator = require('react-translate-component');
 
 const CREDIT_AGENCIES = [
   { id: 1, name: 'Creditreform' },
