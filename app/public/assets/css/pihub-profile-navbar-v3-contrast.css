@@ -1,0 +1,18 @@
+/* Final WCAG AA contrast guard for profile/navbar v3 compact metadata.
+   Loaded after the v3 visual layer so small supporting copy stays readable on light surfaces. */
+
+.profile-v3-card-head p,
+.profile-v3-identity-copy p,
+.profile-v3-subhead span,
+.profile-v3-person-copy > span,
+.profile-v3-audit-copy span,
+.profile-v3-empty,
+.profile-v3-summary-grid span,
+.profile-v3-detail > span,
+.profile-v3-control-grid span,
+.profile-v3-governance-list span,
+.profile-v3-document-copy span,
+.ap-environment-copy small,
+.ap-user-copy small {
+  color: #56647b !important;
+}
