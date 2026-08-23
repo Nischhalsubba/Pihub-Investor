@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Pagination from '../general/Pagination';
 import { downloadCsv } from '../../_utils/exportCsv';
 
-const Translator = require('react-translate-component');
+const Translator = Translate;
 const VIEW_KEY = 'pihub-opportunity-saved-views-v1';
 const COLUMN_KEY = 'pihub-opportunity-columns-v1';
 
