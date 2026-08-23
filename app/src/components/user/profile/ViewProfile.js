@@ -1,10 +1,9 @@
 import React, { Fragment, Component } from 'react';
 import { connect } from 'react-redux';
+import Translator from 'react-translate-component';
 import { getProfile } from '../../../actions/profile';
 import Spinner from '../../general/Spinner';
 import Subheader from '../../general/Subheader';
-
-const Translator = require('react-translate-component');
 
 const valueText = value => {
   if (value === null || value === undefined || value === '') return 'Not supplied';
