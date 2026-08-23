@@ -8,7 +8,7 @@ import Spinner from '../general/Spinner';
 import Translate from 'react-translate-component';
 import { downloadCsv } from '../../_utils/exportCsv';
 
-const Translator = require('react-translate-component');
+const Translator = Translate;
 
 const toText = value => {
   if (value === null || value === undefined) return '';
@@ -120,7 +120,13 @@ class ListCreditRequests extends Component {
       <Subheader heading={<Translate content="label.creditrequests" />} description="Prioritize by deadline, amount and risk context before opening the full decision record." />
       <section className="ap-capital-tape" aria-label="Decision queue summary" data-motion="metric-grid"><article className="ap-metric ap-metric-warning"><span className="ap-metric-label"><i />Pending</span><strong>{pending}</strong><small>Require review</small></article><article className="ap-metric ap-metric-warning"><span className="ap-metric-label"><i />Urgent</span><strong>{urgent}</strong><small>Due within 7 days or overdue</small></article><article className="ap-metric"><span className="ap-metric-label"><i />Requested capital</span><strong className="ap-metric-money">{formatEuro(requestedCapital)}</strong><small>Visible result page</small></article><article className="ap-metric ap-metric-positive"><span className="ap-metric-label"><i />Invested</span><strong>{invested}</strong><small>Converted positions</small></article></section>
       <div className="decision-toolbar"><span>{selectedRows.length ? `${selectedRows.length} selected` : 'Rows are urgency-sorted within the visible page.'}</span><div>{selectedRows.length ? <button className="btn btn-link" type="button" onClick={() => this.setState({ selected: {} })}>Clear selection</button> : null}<button className="btn btn-secondary" type="button" onClick={() => this.exportRows(selectedRows.length ? selectedRows : data)}>{selectedRows.length ? 'Export selected' : 'Export page'}</button></div></div>
-      <section className="decision-table" role="table" aria-label="Credit decision queue" data-motion="table-shell"><div className="decision-head" role="row"><span role="columnheader"><span className="sr-only">Select</span></span><span role="columnheader">Creditor</span><span role="columnheader">Opportunity</span><span role="columnheader">Requested</span><span role="columnheader">Facility</span><span role="columnheader">Risk</span><span role="columnheader">Deadline</span><span role="columnheader">Status</span><span role="columnheader"><span className="sr-only">Open</span></span></div><div>{this.renderRows(data)}</div><div className="ap-ledger-pagination"><Pagination totalPage={totalPage} url={page => this.props.getCreditRequestList(page)} /></div></section>
+      <section className="decision-table" role="table" aria-label="Credit decision queue" data-motion="table-shell">
+        <div className="decision-scroll" tabIndex="0" role="region" aria-label="Scrollable credit decision columns">
+          <div className="decision-head" role="row"><span role="columnheader"><span className="sr-only">Select</span></span><span role="columnheader">Creditor</span><span role="columnheader">Opportunity</span><span role="columnheader">Requested</span><span role="columnheader">Facility</span><span role="columnheader">Risk</span><span role="columnheader">Deadline</span><span role="columnheader">Status</span><span role="columnheader"><span className="sr-only">Open</span></span></div>
+          <div>{this.renderRows(data)}</div>
+        </div>
+        <div className="ap-ledger-pagination"><Pagination totalPage={totalPage} url={page => this.props.getCreditRequestList(page)} /></div>
+      </section>
     </Fragment>;
   }
 }
