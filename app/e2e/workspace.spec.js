@@ -72,6 +72,25 @@ test('login and dashboard have no serious WCAG A/AA violations', async ({ page }
   await expectNoSeriousA11y(page);
 });
 
+test('institution profile is complete, readable and accessible', async ({ page }) => {
+  await login(page);
+  await page.goto('/user/profile');
+  await expect(page.getByRole('heading', { name: 'Institution profile' })).toBeVisible();
+  await expect(page.locator('.institution-profile-v3')).toBeVisible();
+  await expect(page.locator('.profile-v3-person')).toHaveCount(3);
+  await expect(page.getByText('Not supplied', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Verification complete', { exact: true }).first()).toBeVisible();
+
+  const navBox = await page.locator('.ap-topbar-v3').boundingBox();
+  expect(navBox, 'Redesigned workspace utility header should have measurable layout').not.toBeNull();
+  expect(navBox.height, `Unexpected utility header height: ${navBox && navBox.height}`).toBeLessThanOrEqual(96);
+
+  const contactBoxes = await page.locator('.profile-v3-person').evaluateAll(nodes => nodes.map(node => Math.round(node.getBoundingClientRect().width)));
+  expect(Math.min(...contactBoxes), `Relationship cards are collapsing: ${JSON.stringify(contactBoxes)}`).toBeGreaterThan(220);
+
+  await expectNoSeriousA11y(page);
+});
+
 test('workspace does not create page-level horizontal overflow', async ({ page }) => {
   await login(page);
   for (const route of ['/dashboard', '/products', '/credit-request', '/products-invested', '/user/profile', '/opportunities/new']) {
