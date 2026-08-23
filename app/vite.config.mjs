@@ -21,9 +21,8 @@ export default defineConfig(({ mode }) => {
       'process.env.REACT_APP_API_URL': JSON.stringify(read('REACT_APP_API_URL') || ''),
       'process.env.REACT_APP_API_HEADER_FROM': JSON.stringify(read('REACT_APP_API_HEADER_FROM') || 'investor')
     },
-    // This legacy codebase uses JSX in .js files. Vite 8 uses Oxc for JS
-    // transformation, so include those files explicitly instead of relying on
-    // the deprecated esbuild loader compatibility layer.
+    // This legacy codebase uses JSX in .js files. Oxc handles the transform,
+    // while Rolldown still needs the module type before it can parse imports.
     oxc: {
       include: /src\/.*\.jsx?$/,
       jsx: { runtime: 'automatic' }
@@ -33,7 +32,19 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: true,
       target: 'es2020',
       sourcemap: false,
-      chunkSizeWarningLimit: 900
+      chunkSizeWarningLimit: 900,
+      rolldownOptions: {
+        moduleTypes: {
+          '.js': 'jsx'
+        }
+      }
+    },
+    optimizeDeps: {
+      rolldownOptions: {
+        moduleTypes: {
+          '.js': 'jsx'
+        }
+      }
     },
     test: {
       globals: true,
