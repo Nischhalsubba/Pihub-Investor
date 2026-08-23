@@ -73,10 +73,19 @@ class Header extends Component {
     const notificationCount = normalizeNotificationCount(this.props.count);
     const shortcut = getCommandShortcut();
     const { accountOpen } = this.state;
+    const { demoMode } = this.props;
 
     return (
       <header className="site-header ap-topbar">
-        <div className="ap-topbar-spacer" aria-hidden="true" />
+        <div className="ap-topbar-context">
+          {demoMode ? (
+            <div className="runtime-environment-banner" role="status" aria-label="Demo environment">
+              <i className="bx bx-info-circle" aria-hidden="true" />
+              <strong>Demo environment</strong>
+              <span>Data and actions stay in this browser and are not live financial records.</span>
+            </div>
+          ) : null}
+        </div>
         <nav className="header-actions ap-top-actions" aria-label="Workspace utilities">
           <ul>
             <li>
