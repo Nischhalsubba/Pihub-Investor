@@ -44,3 +44,13 @@ jobs:
         run: npm run test:e2e
         env:
           REACT_APP_DEMO: 'true'
+      - name: Preserve Playwright failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-failure-${{ github.run_id }}
+          path: |
+            app/playwright-report/
+            app/test-results/
+          if-no-files-found: warn
+          retention-days: 7
