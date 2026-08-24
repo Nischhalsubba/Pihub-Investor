@@ -29,6 +29,8 @@ const readArray = key => {
   try { const value = localStorage.getItem(key); const parsed = value ? JSON.parse(value) : []; return Array.isArray(parsed) ? parsed : []; } catch (error) { return []; }
 };
 
+export const getDemoWorkspaceProducts = () => readArray(PRODUCTS_KEY).filter(Boolean);
+
 export const rememberDeletedDemoSeed = id => {
   if (typeof localStorage === 'undefined' || !id) return;
   const current = new Set(readArray(DELETED_SEED_KEY).map(String));
