@@ -27,7 +27,9 @@ const Sidebar = ({ location }) => {
 
   const toggleSidebar = () => {
     const next = !collapsed;
-    const targets = document.querySelectorAll('.ap-global-brand, .ap-global-header-main, .ap-sidebar, .ap-workspace');
+    // Let CSS Grid own the workspace column immediately. FLIP animates only the
+    // navigation/header chrome so WebKit never leaves the content rail translated.
+    const targets = document.querySelectorAll('.ap-global-brand, .ap-global-header-main, .ap-sidebar');
     const flipState = captureLayout(targets);
     setSidebarCollapsed(next);
     setCollapsed(next);
