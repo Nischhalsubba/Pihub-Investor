@@ -3,6 +3,7 @@ import { withCompleteDemoProfile } from './demoProfileData';
 
 const PRODUCTS_KEY = 'pihub-demo-products-v2';
 const PROFILE_KEY = 'pihub-demo-profile';
+const NOTIFICATIONS_KEY = 'pihub-demo-notifications-v1';
 const pathOf = url => String(url || '').split('?')[0].replace(/\/$/, '');
 const methodOf = config => String(config.method || 'get').toLowerCase();
 const last = path => decodeURIComponent(String(path).split('/').filter(Boolean).pop() || '');
@@ -12,10 +13,33 @@ const readJson = (key, fallback) => {
 };
 const writeJson = (key, value) => { localStorage.setItem(key, JSON.stringify(value)); return value; };
 
+const DEMO_NOTIFICATIONS = [
+  { id: 'NTF-001', title: 'Credit request awaiting review', notification: 'Nordstern GmbH submitted Expansion Note B for review.', message: 'Decision deadline is 30 September 2026.', is_read: 0, icon: 'bx bx-receipt', link: '/credit-requests/DEMO-002/APP-002', time: 'Today · 09:12' },
+  { id: 'NTF-002', title: 'Portfolio position funded', notification: 'Portfolio Facility C moved into the invested portfolio.', message: '€100,000 is now included in deployed capital.', is_read: 0, icon: 'bx bx-line-chart', link: '/positions/DEMO-003/APP-003', time: 'Yesterday · 16:40' },
+  { id: 'NTF-003', title: 'Compliance review completed', notification: 'Institution compliance review completed successfully.', message: 'KYC and AML evidence remains current.', is_read: 0, icon: 'bx bx-shield-quarter', link: '/user/profile', time: '22 Aug · 14:08' },
+  { id: 'NTF-004', title: 'Opportunity approved', notification: 'Growth Loan A is approved and available for decision workflows.', message: 'All screening facts are complete.', is_read: 1, icon: 'bx bx-check-circle', link: '/opportunities/DEMO-001', time: '20 Aug · 11:30' },
+  { id: 'NTF-005', title: 'Security session recorded', notification: 'A new authenticated workspace session was recorded.', message: 'No action is required.', is_read: 1, icon: 'bx bx-lock-alt', link: '/user/profile', time: '19 Aug · 08:45' }
+];
+
+const readNotifications = () => {
+  const stored = readJson(NOTIFICATIONS_KEY, null);
+  if (Array.isArray(stored) && stored.length) return stored;
+  return writeJson(NOTIFICATIONS_KEY, DEMO_NOTIFICATIONS.map(item => ({ ...item })));
+};
+
 const formObject = data => {
   const result = {};
   if (typeof FormData !== 'undefined' && data instanceof FormData) data.forEach((value, key) => { if (typeof File !== 'undefined' && value instanceof File) return; result[key] = value; });
   return result;
+};
+
+const bodyObject = data => {
+  if (!data) return {};
+  if (typeof data === 'object' && !(typeof FormData !== 'undefined' && data instanceof FormData)) return data;
+  if (typeof data === 'string') {
+    try { return JSON.parse(data); } catch (error) { return {}; }
+  }
+  return {};
 };
 
 const number = value => { const parsed = Number(value); return Number.isFinite(parsed) ? parsed : 0; };
@@ -79,6 +103,24 @@ const supportedRead = path => [
 export const demoAxiosAdapter = config => {
   const path = pathOf(config.url);
   const method = methodOf(config);
+
+  if (method === 'get' && /\/me\/notification\/count-new$/.test(path)) {
+    const unread = readNotifications().filter(item => Number(item.is_read) === 0).length;
+    return makeResponse(config, { count: unread });
+  }
+
+  if (method === 'get' && /\/me\/notifications$/.test(path)) {
+    const data = readNotifications();
+    return makeResponse(config, { data, meta: { totalPage: 1, total: data.length } });
+  }
+
+  if (method === 'post' && /\/me\/notification\/read$/.test(path)) {
+    const body = bodyObject(config.data);
+    const wanted = new Set((Array.isArray(body.notification_ids) ? body.notification_ids : []).map(String));
+    const next = readNotifications().map(item => wanted.has(String(item.id)) ? { ...item, is_read: 1 } : item);
+    writeJson(NOTIFICATIONS_KEY, next);
+    return makeResponse(config, { message: 'Notification status updated locally.' });
+  }
 
   if (method === 'get' && /\/me$/.test(path)) {
     const profile = withCompleteDemoProfile(readJson(PROFILE_KEY, {}));
