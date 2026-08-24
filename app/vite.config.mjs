@@ -4,22 +4,12 @@ import { fileURLToPath, URL } from 'node:url';
 
 const truthy = value => ['1', 'true', 'yes', 'on'].includes(String(value || '').trim().toLowerCase());
 
-const normalizeLegacyBrowserImports = code => code.replace(
-  /const\s+([A-Za-z_$][\w$]*)\s*=\s*require\((['"])react-translate-component\2\);?/g,
-  "import $1 from 'react-translate-component';"
-);
-
 const legacyJsxInJs = production => ({
   name: 'pihub-legacy-jsx-in-js',
   enforce: 'pre',
   async transform(code, id) {
     if (!/\/src\/.*\.js$/.test(id)) return null;
-    // The historical CRA source tree still contains JSX in .js files and a
-    // handful of CommonJS-era imports. Normalize the known browser-safe shape,
-    // then let Oxc parse the module as JSX. Translation package names resolve
-    // to our local compatibility layer below; no deprecated runtime is shipped.
-    const normalizedCode = normalizeLegacyBrowserImports(code);
-    const result = await transformWithOxc(normalizedCode, id, {
+    const result = await transformWithOxc(code, id, {
       lang: 'jsx',
       jsx: {
         runtime: 'automatic',
@@ -38,15 +28,10 @@ export default defineConfig(({ mode }) => {
   const production = mode === 'production';
 
   return {
-    plugins: [
-      legacyJsxInJs(production),
-      react({ include: /\.(jsx|tsx)$/ })
-    ],
+    plugins: [legacyJsxInJs(production), react({ include: /\.(jsx|tsx)$/ })],
     resolve: {
       alias: {
-        'react-router-dom': fileURLToPath(new URL('./src/routerCompat.jsx', import.meta.url)),
-        'react-translate-component': fileURLToPath(new URL('./src/i18n/Translate.jsx', import.meta.url)),
-        'react-interpolate-component': fileURLToPath(new URL('./src/i18n/Interpolate.jsx', import.meta.url))
+        'react-router-dom': fileURLToPath(new URL('./src/routerCompat.jsx', import.meta.url))
       }
     },
     define: {
@@ -56,20 +41,8 @@ export default defineConfig(({ mode }) => {
       'process.env.REACT_APP_API_URL': JSON.stringify(read('REACT_APP_API_URL') || ''),
       'process.env.REACT_APP_API_HEADER_FROM': JSON.stringify(read('REACT_APP_API_HEADER_FROM') || 'investor')
     },
-    optimizeDeps: {
-      rolldownOptions: {
-        moduleTypes: {
-          '.js': 'jsx'
-        }
-      }
-    },
-    build: {
-      outDir: 'dist',
-      emptyOutDir: true,
-      target: 'es2020',
-      sourcemap: false,
-      chunkSizeWarningLimit: 900
-    },
+    optimizeDeps: { rolldownOptions: { moduleTypes: { '.js': 'jsx' } } },
+    build: { outDir: 'dist', emptyOutDir: true, target: 'es2020', sourcemap: false, chunkSizeWarningLimit: 900 },
     test: {
       globals: true,
       environment: 'jsdom',
