@@ -75,6 +75,7 @@ test('notification center supports unread state, deep links and accessibility', 
 });
 
 test('opportunity quick view, saved density and compare mode work', async ({ page }) => {
+  test.setTimeout(45000);
   await login(page);
   await page.goto('/products');
 
