@@ -63,6 +63,7 @@ test('notification center supports unread state, deep links and accessibility', 
   await expect(bell).toBeVisible();
   await bell.click();
   await expect(page.getByRole('dialog', { name: /notifications/i })).toBeVisible();
+  await expect(page.locator('.ap-notification-drawer')).toHaveCSS('opacity', '1');
   await expect(page.getByText(/3 unread updates?/i)).toBeVisible();
   await expect(page.getByText('Credit request awaiting review', { exact: true })).toBeVisible();
   await expectNoSeriousA11y(page);
