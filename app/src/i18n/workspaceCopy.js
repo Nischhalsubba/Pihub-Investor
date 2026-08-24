@@ -1,4 +1,5 @@
-import { getLocale } from '../_utils/locale';
+import { useCallback, useEffect, useState } from 'react';
+import { getLocale, localeEventName } from '../_utils/locale';
 
 const COPY = {
   en: {
@@ -9,4 +10,16 @@ const COPY = {
   }
 };
 
-export const workspaceText = key => (COPY[getLocale()] && COPY[getLocale()][key]) || COPY.en[key] || key;
+const copyFor = (locale, key) => (COPY[locale] && COPY[locale][key]) || COPY.en[key] || key;
+
+export const workspaceText = key => copyFor(getLocale(), key);
+
+export const useWorkspaceCopy = () => {
+  const [locale, setLocaleRevision] = useState(() => getLocale());
+  useEffect(() => {
+    const refresh = event => setLocaleRevision((event.detail && event.detail.locale) || getLocale());
+    window.addEventListener(localeEventName, refresh);
+    return () => window.removeEventListener(localeEventName, refresh);
+  }, []);
+  return useCallback(key => copyFor(locale, key), [locale]);
+};
