@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Translator = require('react-translate-component');
+import Translator from '../../i18n/Translate';
 
 const PasswordChangeSuccess = () => {
   const isGerman = Translator.getLocale() === 'de';

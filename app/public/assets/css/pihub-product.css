@@ -1,3 +1,6 @@
+/* PiHub consolidated layer: pihub-product.css. Generated from contiguous historical sources to preserve cascade order. */
+
+/* consolidated source: pihub-product-suite.css */
 /* PiHub Investor product-suite layer.
    Owns the post-Option-C workspace enhancements: collapsible navigation,
    global search, drawers, keyboard help, toasts, density controls and
@@ -1226,5 +1229,779 @@
   .ap-quick-view-btn,
   .ap-density-toggle button {
     transition-duration: .01ms !important;
+  }
+}
+
+/* consolidated source: pihub-product-suite-data.css */
+/* PiHub Investor product-suite data refinements.
+   Loaded after pihub-product-suite.css. This file owns the final geometry for
+   dense decision tables, portfolio rows, analytics and comparison surfaces. */
+
+/* Dynamic opportunity columns inherit this variable from .ap-ledger. */
+.ap-ledger[style] .ap-ledger-head,
+.ap-ledger[style] .ap-ledger-row {
+  grid-template-columns: var(--ledger-columns) !important;
+}
+
+.ap-ledger-row {
+  outline: none;
+}
+
+.ap-ledger-row:focus-visible {
+  z-index: 2;
+  outline: 2px solid #5f7ef7 !important;
+  outline-offset: -2px !important;
+}
+
+/* Credit queue */
+.ap-credit-view-toolbar,
+.ap-portfolio-toolbar {
+  min-height: 58px;
+  padding: 8px 0;
+  align-items: center;
+}
+
+.ap-credit-filter-row {
+  min-width: 0;
+  flex: 1 1 auto;
+  display: grid !important;
+  grid-template-columns: minmax(260px, 1fr) 160px auto;
+  align-items: center;
+  gap: 8px !important;
+}
+
+.ap-credit-filter-row input,
+.ap-credit-filter-row select {
+  width: 100%;
+  min-height: 40px;
+  margin: 0;
+  padding: 0 11px;
+  border: 1px solid #d6deea;
+  border-radius: 9px;
+  background: #fff;
+  color: #26364e;
+  font-size: 12px;
+}
+
+.ap-credit-filter-row input:focus,
+.ap-credit-filter-row select:focus {
+  outline: 2px solid rgba(79, 111, 247, .28);
+  outline-offset: 1px;
+  border-color: #8ea2f5;
+}
+
+.ap-credit-filter-row .btn {
+  min-height: 40px !important;
+  white-space: nowrap;
+}
+
+.decision-scroll {
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-gutter: stable;
+}
+
+.decision-head,
+.decision-row {
+  grid-template-columns: 34px minmax(132px, 1fr) minmax(150px, 1.12fr) minmax(92px, .74fr) minmax(108px, .8fr) minmax(84px, .62fr) minmax(116px, .78fr) 92px 96px !important;
+  gap: 10px !important;
+}
+
+.decision-row {
+  outline: none;
+}
+
+.decision-row:focus-visible {
+  outline: 2px solid #5f7ef7;
+  outline-offset: -2px;
+}
+
+.decision-open,
+.portfolio-row-actions {
+  min-width: 0;
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.decision-open .row-open-link,
+.portfolio-row-actions .row-open-link {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 5px;
+  white-space: nowrap;
+}
+
+.is-density-compact .decision-row {
+  min-height: 50px !important;
+}
+
+.ap-credit-view-toolbar .data-toolbar-actions,
+.ap-portfolio-toolbar .data-toolbar-actions {
+  min-height: 0;
+  flex: 0 0 auto;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+/* Portfolio */
+.portfolio-head,
+.portfolio-row {
+  grid-template-columns: minmax(210px, 1.48fr) 100px 118px 74px 102px 72px 96px !important;
+  gap: 12px !important;
+}
+
+.portfolio-row {
+  outline: none;
+}
+
+.portfolio-row:focus-visible {
+  outline: 2px solid #5f7ef7;
+  outline-offset: -2px;
+}
+
+.is-density-compact .portfolio-row {
+  min-height: 48px !important;
+}
+
+/* Overview intelligence */
+.overview-grid {
+  align-items: stretch;
+}
+
+.overview-panel {
+  min-height: 0 !important;
+}
+
+.overview-panel > header {
+  min-height: 62px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.overview-attention-list {
+  min-height: 0;
+}
+
+.overview-attention-row {
+  grid-template-columns: minmax(190px, 1.35fr) minmax(100px, .62fr) 86px 18px !important;
+  min-height: 62px;
+  padding-left: 12px;
+  padding-right: 10px;
+  border-radius: 0;
+}
+
+.overview-attention-row b {
+  color: #27354b;
+  font: 600 10.5px "IBM Plex Mono", monospace;
+}
+
+.overview-attention-row em {
+  color: #8d5a0b;
+  font: 600 10px "IBM Plex Mono", monospace;
+  font-style: normal;
+  text-align: right;
+}
+
+.overview-book-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.overview-book-grid > div {
+  min-height: 84px;
+  padding: 18px;
+  border-left: 1px solid #e4eaf2;
+}
+
+.overview-book-grid > div:first-child {
+  border-left: 0;
+}
+
+.overview-book-grid span,
+.overview-book-grid b {
+  display: block;
+}
+
+.overview-book-grid span {
+  color: #68778e;
+  font-size: 11px;
+}
+
+.overview-book-grid b {
+  margin-top: 7px;
+  color: #152139;
+  font-size: 22px;
+}
+
+.ap-capital-trend {
+  display: grid;
+  gap: 12px;
+}
+
+.ap-capital-trend svg {
+  width: 100%;
+  height: 138px;
+  overflow: visible;
+}
+
+.ap-capital-trend line {
+  vector-effect: non-scaling-stroke;
+  stroke: #e4eaf2;
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+
+.ap-capital-trend polyline {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke: #5576f5;
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ap-trend-summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ap-trend-summary strong {
+  color: #162239;
+  font: 700 18px "IBM Plex Mono", monospace;
+}
+
+.ap-trend-summary span {
+  max-width: 270px;
+  color: #697890;
+  font-size: 10.5px;
+  line-height: 1.45;
+  text-align: right;
+}
+
+/* Comparison */
+.ap-compare-table thead th {
+  position: relative;
+  padding-right: 42px;
+}
+
+.ap-compare-table thead th strong,
+.ap-compare-table thead th small {
+  display: block;
+}
+
+.ap-compare-table thead th small {
+  margin-top: 5px;
+  color: #718097;
+  font: 500 9.5px "IBM Plex Mono", monospace;
+}
+
+.ap-compare-remove {
+  position: absolute;
+  top: 11px;
+  right: 10px;
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  min-height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: #78869c;
+  font-size: 16px;
+}
+
+.ap-compare-remove:hover {
+  border-color: #dce3ed;
+  background: #fff;
+  color: #b14848;
+}
+
+.ap-compare-open-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+}
+
+.ap-compare-open-grid .btn {
+  justify-content: center;
+}
+
+/* Autosave action line */
+.opportunity-form-actions > .ap-draft-tools {
+  min-width: min(420px, 100%);
+  margin-right: auto;
+}
+
+.ap-draft-tools .form-action-status {
+  max-width: 320px;
+}
+
+/* Compact empty states should not manufacture giant white areas. */
+.ap-empty-compact {
+  min-height: 130px !important;
+  padding: 24px !important;
+}
+
+/* Motion staging hooks. */
+.ap-bar-track > i,
+.ap-pipeline-strip > span,
+.ap-capital-trend polyline {
+  transform-origin: 0 50%;
+}
+
+@media (max-width: 1260px) {
+  .ap-credit-view-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ap-credit-view-toolbar .data-toolbar-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .decision-head,
+  .decision-row {
+    min-width: 1030px !important;
+  }
+
+  .portfolio-head,
+  .portfolio-row {
+    min-width: 830px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .ap-credit-filter-row {
+    grid-template-columns: minmax(0, 1fr) 150px auto;
+  }
+
+  .overview-book-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .overview-book-grid > div:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid #e4eaf2;
+  }
+
+  .overview-book-grid > div:nth-child(4) {
+    border-top: 1px solid #e4eaf2;
+  }
+}
+
+@media (max-width: 680px) {
+  .ap-credit-filter-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ap-credit-filter-row .btn {
+    width: 100%;
+  }
+
+  .overview-book-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-book-grid > div,
+  .overview-book-grid > div:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid #e4eaf2;
+  }
+
+  .overview-book-grid > div:first-child {
+    border-top: 0;
+  }
+
+  .overview-attention-row {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+  }
+
+  .overview-attention-row > b {
+    display: none;
+  }
+
+  .overview-attention-row > em {
+    text-align: right;
+  }
+
+  .ap-trend-summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .ap-trend-summary span {
+    max-width: none;
+    text-align: left;
+  }
+
+  .opportunity-form-actions > .ap-draft-tools {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* consolidated source: pihub-product-suite-finish.css */
+/* Final product-suite polish. Keep this layer tiny and structural. */
+
+.ap-notification-filters {
+  display: flex;
+  gap: 6px;
+  padding: 10px 12px 8px;
+  overflow-x: auto;
+  border-bottom: 1px solid #edf1f6;
+  background: #fff;
+  scrollbar-width: none;
+}
+
+.ap-notification-filters::-webkit-scrollbar { display: none; }
+
+.ap-notification-filters button {
+  min-height: 34px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 10px;
+  border: 1px solid #dfe6ef;
+  border-radius: 999px;
+  background: #fff;
+  color: #5f6f86;
+  font-size: 10.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ap-notification-filters button span {
+  min-width: 18px;
+  height: 18px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #f1f4f8;
+  color: #5f6f86;
+  font-size: 9px;
+}
+
+.ap-notification-filters button[aria-pressed="true"] {
+  border-color: #ced9ff;
+  background: #f3f6ff;
+  color: #3657c9;
+}
+
+.ap-notification-filters button[aria-pressed="true"] span {
+  background: #e4ebff;
+  color: #3152c0;
+}
+
+.ap-notification-filters button:focus-visible {
+  outline: 2px solid #5f7ef7;
+  outline-offset: 2px;
+}
+
+/* Overlay roots clip animated drawer surfaces and never own document overflow. */
+.ap-notification-layer,
+.ap-context-layer {
+  overflow: hidden;
+}
+
+/* Notification metadata must stay readable on both white and unread-card surfaces. */
+.ap-drawer-kicker {
+  color: #3154c8 !important;
+}
+
+.ap-notification-card-copy small {
+  color: #5f6f86 !important;
+}
+
+/* Role-priority strip turns the detected role into an actual next action. */
+.ap-role-priority {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: -10px 0 22px;
+  padding: 10px 12px 10px 16px;
+  border: 1px solid #dae3f1;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f8faff 0%, #fff 56%);
+}
+
+.ap-role-priority-copy {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.ap-role-priority-icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #eaf0ff;
+  color: #4565d7;
+  font-size: 17px;
+}
+
+.ap-role-priority-copy strong,
+.ap-role-priority-copy span {
+  display: block;
+}
+
+.ap-role-priority-copy strong {
+  color: #223149;
+  font-size: 12px;
+}
+
+.ap-role-priority-copy span {
+  margin-top: 2px;
+  color: #68778f;
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+.ap-role-priority .btn {
+  flex: 0 0 auto;
+  min-height: 36px !important;
+}
+
+/*
+ * Dashboard card-header contract.
+ * This lives in the final cascade so legacy and feature-layer selectors cannot
+ * collapse title + helper text back into one inline run or drop actions below
+ * the heading on wide screens.
+ */
+.overview-panel > header {
+  min-height: 64px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 20px !important;
+  padding: 13px 18px !important;
+  border-bottom: 1px solid #e4eaf2;
+}
+
+.overview-panel > header > div {
+  min-width: 0;
+  display: grid !important;
+  align-content: center;
+  gap: 4px !important;
+}
+
+.overview-panel > header > div > strong,
+.overview-panel > header > div > span {
+  display: block !important;
+  margin: 0 !important;
+}
+
+.overview-panel > header > div > strong {
+  color: #1d2b42;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.overview-panel > header > div > span {
+  color: #5f6f86 !important;
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+.overview-panel > header > a {
+  min-height: 34px;
+  flex: 0 0 auto;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  color: #465a79;
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.overview-panel > header > a:hover {
+  color: #3154c8;
+}
+
+.overview-attention-row > span {
+  min-width: 0;
+  display: grid !important;
+  align-content: center;
+  gap: 4px;
+}
+
+.overview-attention-row > span > strong,
+.overview-attention-row > span > small {
+  display: block !important;
+  margin: 0 !important;
+  line-height: 1.3;
+}
+
+.overview-attention-row > span > strong {
+  color: #34445d;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.overview-attention-row > span > small {
+  color: #5f6f86 !important;
+  font-size: 9.5px;
+}
+
+.overview-actions > a {
+  min-height: 58px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  padding: 0 18px !important;
+}
+
+.overview-actions > a > span {
+  min-width: 0;
+  color: #46556d;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.overview-actions > a > small {
+  flex: 0 0 auto;
+  color: #5f6f86 !important;
+  font: 500 9px "IBM Plex Mono", monospace;
+  white-space: nowrap;
+}
+
+/* Muted analytical labels use one AA-safe text token instead of near-miss grays. */
+.overview-book-grid > div > span,
+.ap-analytics-card header span,
+.ap-trend-summary span,
+.ap-compare-table thead th small {
+  color: #5f6f86 !important;
+}
+
+/*
+ * Opportunity toolbar alignment contract.
+ * Earlier QA CSS gives .ap-query-line an 18px bottom margin. Once the toolbar
+ * became a two-column centered grid that invisible margin shifted the filter
+ * rail upward while the action rail stayed centered. Own the final geometry
+ * here so both halves share one control baseline and one 44px target height.
+ */
+.data-toolbar > .ap-query-line,
+.data-toolbar > .data-toolbar-actions {
+  margin: 0 !important;
+  align-self: center !important;
+}
+
+.data-toolbar > .ap-query-line {
+  min-height: 44px !important;
+}
+
+.data-toolbar > .data-toolbar-actions {
+  min-height: 44px !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+.data-toolbar > .ap-query-line .ap-query-input input,
+.data-toolbar > .ap-query-line .ap-filter-tabs,
+.data-toolbar > .ap-query-line .ap-search-submit,
+.data-toolbar > .data-toolbar-actions > .ap-density-toggle,
+.data-toolbar > .data-toolbar-actions > .btn,
+.data-toolbar > .data-toolbar-actions > .data-menu > summary {
+  height: 44px !important;
+  min-height: 44px !important;
+  box-sizing: border-box;
+}
+
+.data-toolbar > .data-toolbar-actions > .ap-density-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+/* Search results can identify institution contacts explicitly. */
+.ap-command-kind.is-contact {
+  background: #eef8f4;
+  color: #317258;
+}
+
+/*
+ * The sidebar reduces usable workspace width long before a 900px viewport.
+ * Stack the two toolbar rails before they collide, while preserving the
+ * single-row treatment on genuinely wide desktops such as the reported view.
+ */
+@media (max-width: 1440px) {
+  .data-toolbar {
+    grid-template-columns: minmax(0, 1fr) !important;
+    align-items: stretch !important;
+  }
+
+  .data-toolbar > .data-toolbar-actions {
+    width: 100%;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+  }
+}
+
+/* Keep responsive inspector actions in the intentional identity column. */
+@media (max-width: 1320px) {
+  .ap-inspector > .btn.btn-link {
+    grid-column: 1 !important;
+    justify-self: start !important;
+    width: auto !important;
+    max-width: 100%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .ap-role-priority {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ap-role-priority .btn {
+    width: 100%;
+  }
+
+  /* These chips are informational, so wrapping is better than an inaccessible scroll rail. */
+  .ap-role-focus {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .overview-panel > header {
+    min-height: 0 !important;
+    align-items: flex-start !important;
+    flex-direction: column;
+    gap: 10px !important;
+    padding: 14px 16px !important;
+  }
+
+  .overview-panel > header > a {
+    min-height: 30px;
+  }
+
+  .overview-actions > a {
+    min-height: 56px;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
 }

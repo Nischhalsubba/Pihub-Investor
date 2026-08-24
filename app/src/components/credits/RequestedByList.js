@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getApplicationList } from '../../actions/application';
 import { Link, withRouter } from 'react-router-dom';
-import Translate from 'react-translate-component';
+import Translate from '../../i18n/Translate';
 import { ToEuro } from '../general/CurrencyFormatter';
 import { dDigit } from '../../_utils/misc';
 import { matchesInvestorStatus } from '../../_status';
 
-const Translator = require('react-translate-component');
+import Translator from '../../i18n/Translate';
 
 class RequestedByList extends Component {
   state = { list: [] };

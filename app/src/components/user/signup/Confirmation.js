@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import AuthShell from '../AuthShell';
 import SignupProgress from './SignupProgress';
 
-const Translator = require('react-translate-component');
+import Translator from '../../../i18n/Translate';
 
 class Confirmation extends Component {
   componentDidMount() {

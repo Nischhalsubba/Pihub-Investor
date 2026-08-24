@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Translate from 'react-translate-component';
+import Translate from '../../../i18n/Translate';
 import AuthShell from '../AuthShell';
 import SignupProgress from './SignupProgress';
 
-const Translator = require('react-translate-component');
+import Translator from '../../../i18n/Translate';
 
 class ConfirmEmail extends Component {
   componentDidMount() {

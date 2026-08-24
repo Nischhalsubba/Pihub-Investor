@@ -3,7 +3,7 @@ import client from '../../actions/index';
 import { routes } from '../../_api/routes';
 import Subheader from '../general/Subheader';
 
-const Translator = require('react-translate-component');
+import Translator from '../../i18n/Translate';
 
 const text = value => {
   if (value === null || value === undefined) return '';

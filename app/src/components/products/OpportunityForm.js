@@ -9,7 +9,7 @@ import { validateOpportunity } from '../../_utils/opportunityValidation';
 import { isDemoMode } from '../../_utils/demoMode';
 import { showToast } from '../../_utils/workspaceEvents';
 
-const Translator = require('react-translate-component');
+import Translator from '../../i18n/Translate';
 
 const CREDIT_AGENCIES = [
   { id: 1, name: 'Creditreform' },

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Translator = require('react-translate-component');
+import Translator from '../../../i18n/Translate';
 
 const SignupProgress = ({ stage }) => {
   const isGerman = Translator.getLocale() === 'de';
