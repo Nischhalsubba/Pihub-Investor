@@ -35,6 +35,7 @@ const EditProduct = lazy(() => import('./components/products/Edit'));
 const InvestedList = lazy(() => import('./components/products/InvestedList'));
 const AppliedList = lazy(() => import('./components/products/AppliedList'));
 const ViewProduct = lazy(() => import('./components/products/View'));
+const CompareOpportunities = lazy(() => import('./components/products/CompareOpportunities'));
 const ApplicationList = lazy(() => import('./components/products/applications/List'));
 const Notifications = lazy(() => import('./components/notifications/List'));
 const ListCreditRequest = lazy(() => import('./components/credits/ListCreditRequests'));
@@ -56,6 +57,7 @@ const AuthEditProduct = RequireInvestorAuth(RequireVerification(EditProduct));
 const AuthInvestedList = RequireInvestorAuth(RequireVerification(InvestedList));
 const AuthAppliedList = RequireInvestorAuth(AppliedList);
 const AuthViewProduct = RequireInvestorAuth(ViewProduct);
+const AuthCompareOpportunities = RequireInvestorAuth(RequireVerification(CompareOpportunities));
 const AuthApplicationList = RequireInvestorAuth(ApplicationList);
 const AuthDetailCreditRequest = RequireInvestorAuth(DetailCreditRequest);
 const AuthNotifications = RequireInvestorAuth(Notifications);
@@ -120,6 +122,7 @@ const RouterTree = () => (
         <Route path="products" element={<LegacyElement Component={AuthProductsList} />} />
         <Route path="opportunities" element={<Navigate replace to="/products" />} />
         <Route path="opportunities/new" element={<LegacyElement Component={AuthAddProduct} />} />
+        <Route path="opportunities/compare" element={<LegacyElement Component={AuthCompareOpportunities} />} />
         <Route path="opportunities/:productId/edit" element={<LegacyElement Component={AuthEditProduct} routeState={params => ({ id: params.productId })} />} />
         <Route path="opportunities/:productId" element={<LegacyElement Component={AuthViewProduct} routeState={params => ({ id: params.productId })} />} />
         <Route path="add-product" element={<Navigate replace to="/opportunities/new" />} />

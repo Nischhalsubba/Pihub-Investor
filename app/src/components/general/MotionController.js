@@ -15,38 +15,30 @@ const MotionController = () => {
       if (reducedMotion() || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       const anchor = event.target && event.target.closest ? event.target.closest('a[href]') : null;
       if (!anchor || anchor.hasAttribute('download') || (anchor.target && anchor.target !== '_self')) return;
-
       let next;
       try { next = new URL(anchor.href, window.location.href); } catch (error) { return; }
       if (next.origin !== window.location.origin) return;
       const current = new URL(window.location.href);
       if (next.pathname === current.pathname && next.search === current.search && next.hash === current.hash) return;
       if (next.pathname === current.pathname && next.search === current.search && next.hash) return;
-
       const veil = document.querySelector('.route-transition-veil');
       if (!veil) return;
       gsap.killTweensOf(veil);
-      gsap.fromTo(veil, { autoAlpha: 0, y: 6 }, {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.14,
-        ease: 'power2.out',
-        overwrite: 'auto'
-      });
+      gsap.fromTo(veil, { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.14, ease: 'power2.out', overwrite: 'auto' });
     };
 
     const pressTarget = event => {
       if (reducedMotion()) return;
       const target = event.target && event.target.closest
-        ? event.target.closest('button, .btn, .ap-command-trigger, .ap-user-button, .ap-icon-btn, .ap-nav-action, .row-open-link')
+        ? event.target.closest('button, .btn, .ap-command-trigger, .ap-user-button, .ap-icon-btn, .ap-nav-item, .ap-nav-action, .row-open-link, .ap-notification-card, .ap-quick-view-btn')
         : null;
       if (!target || target.disabled || target.getAttribute('aria-disabled') === 'true') return;
-      gsap.to(target, { scale: 0.975, duration: 0.09, ease: 'power1.out', overwrite: 'auto' });
+      gsap.to(target, { scale: 0.975, duration: 0.09, ease: 'power1.out', overwrite: 'auto', transformOrigin: '50% 50%' });
     };
 
     const releaseTarget = event => {
       const target = event.target && event.target.closest
-        ? event.target.closest('button, .btn, .ap-command-trigger, .ap-user-button, .ap-icon-btn, .ap-nav-action, .row-open-link')
+        ? event.target.closest('button, .btn, .ap-command-trigger, .ap-user-button, .ap-icon-btn, .ap-nav-item, .ap-nav-action, .row-open-link, .ap-notification-card, .ap-quick-view-btn')
         : null;
       if (!target) return;
       if (reducedMotion()) {
@@ -76,8 +68,12 @@ const MotionController = () => {
     const veil = root && root.querySelector('.route-transition-veil');
     if (!root || !stage) return undefined;
 
+    const maturityBars = unique(stage.querySelectorAll('.ap-maturity-track > i'));
+    const dataBars = unique(stage.querySelectorAll('.ap-bar-track > i, .ap-pipeline-strip > span'));
+    const trendLines = unique(stage.querySelectorAll('.ap-capital-trend polyline'));
+
     if (reducedMotion()) {
-      gsap.set(stage, { clearProps: 'transform,opacity,visibility' });
+      gsap.set([stage, ...maturityBars, ...dataBars, ...trendLines], { clearProps: 'transform,opacity,visibility' });
       if (veil) gsap.set(veil, { autoAlpha: 0, clearProps: 'transform' });
       return undefined;
     }
@@ -97,90 +93,34 @@ const MotionController = () => {
         '.portfolio-facts',
         '.portfolio-table',
         '.decision-table',
-        '.profile-v3-person'
+        '.profile-v3-person',
+        '.ap-compare-table'
       ].join(',')));
-      const rowTargets = unique(stage.querySelectorAll('.ap-ledger-row, .decision-row, .portfolio-row, .overview-attention-row')).slice(0, 8);
-      const maturityBars = unique(stage.querySelectorAll('.ap-maturity-track > i'));
+      const rowTargets = unique(stage.querySelectorAll('.ap-ledger-row, .decision-row, .portfolio-row, .overview-attention-row, .ap-activity-item')).slice(0, 10);
 
-      gsap.killTweensOf([stage, veil, ...surfaceTargets, ...rowTargets, ...maturityBars]);
+      gsap.killTweensOf([stage, veil, ...surfaceTargets, ...rowTargets, ...maturityBars, ...dataBars, ...trendLines]);
 
       const timeline = gsap.timeline({ defaults: { overwrite: 'auto' } });
-      timeline.fromTo(stage, {
-        autoAlpha: 0.92,
-        y: 14,
-        scale: 0.992,
-        transformOrigin: '50% 0%'
-      }, {
-        autoAlpha: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.42,
-        ease: 'power3.out',
-        clearProps: 'transform,opacity,visibility'
-      }, 0);
+      timeline.fromTo(stage, { autoAlpha: 0.92, y: 14, scale: 0.992, transformOrigin: '50% 0%' }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.42, ease: 'power3.out', clearProps: 'transform,opacity,visibility' }, 0);
 
-      if (pageHead) {
-        timeline.fromTo(pageHead, { y: 18 }, {
-          y: 0,
-          duration: 0.44,
-          ease: 'power3.out',
-          clearProps: 'transform'
-        }, 0.02);
-      }
+      if (pageHead) timeline.fromTo(pageHead, { y: 18 }, { y: 0, duration: 0.44, ease: 'power3.out', clearProps: 'transform' }, 0.02);
 
-      if (surfaceTargets.length) {
-        timeline.fromTo(surfaceTargets, {
-          autoAlpha: 0.72,
-          y: 22,
-          scale: 0.985,
-          transformOrigin: '50% 0%'
-        }, {
-          autoAlpha: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.44,
-          stagger: 0.045,
-          ease: 'power3.out',
-          clearProps: 'transform,opacity,visibility'
-        }, 0.07);
-      }
+      if (surfaceTargets.length) timeline.fromTo(surfaceTargets, { autoAlpha: 0.72, y: 22, scale: 0.985, transformOrigin: '50% 0%' }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.44, stagger: 0.045, ease: 'power3.out', clearProps: 'transform,opacity,visibility' }, 0.07);
 
-      if (rowTargets.length) {
-        timeline.fromTo(rowTargets, { autoAlpha: 0.78, x: 10 }, {
-          autoAlpha: 1,
-          x: 0,
-          duration: 0.34,
-          stagger: 0.035,
-          ease: 'power2.out',
-          clearProps: 'transform,opacity,visibility'
-        }, 0.16);
-      }
+      if (rowTargets.length) timeline.fromTo(rowTargets, { autoAlpha: 0.78, x: 10 }, { autoAlpha: 1, x: 0, duration: 0.34, stagger: 0.035, ease: 'power2.out', clearProps: 'transform,opacity,visibility' }, 0.16);
 
-      if (maturityBars.length) {
-        timeline.fromTo(maturityBars, { scaleX: 0.12, autoAlpha: 0.55, transformOrigin: '0% 50%' }, {
-          scaleX: 1,
-          autoAlpha: 1,
-          duration: 0.52,
-          stagger: 0.05,
-          ease: 'power3.out',
-          clearProps: 'transform,opacity,visibility'
-        }, 0.2);
-      }
+      if (maturityBars.length) timeline.fromTo(maturityBars, { scaleX: 0.12, autoAlpha: 0.55, transformOrigin: '0% 50%' }, { scaleX: 1, autoAlpha: 1, duration: 0.52, stagger: 0.05, ease: 'power3.out', clearProps: 'transform,opacity,visibility' }, 0.2);
 
-      if (veil) {
-        timeline.to(veil, {
-          autoAlpha: 0,
-          y: -5,
-          duration: 0.2,
-          ease: 'power2.in',
-          clearProps: 'transform'
-        }, 0.03);
-      }
+      if (dataBars.length) timeline.fromTo(dataBars, { scaleX: 0.08, autoAlpha: 0.6, transformOrigin: '0% 50%' }, { scaleX: 1, autoAlpha: 1, duration: 0.48, stagger: 0.035, ease: 'power3.out', clearProps: 'transform,opacity,visibility' }, 0.2);
+
+      if (trendLines.length) timeline.fromTo(trendLines, { autoAlpha: 0.2, y: 5 }, { autoAlpha: 1, y: 0, duration: 0.52, ease: 'power3.out', clearProps: 'transform,opacity,visibility' }, 0.22);
+
+      if (veil) timeline.to(veil, { autoAlpha: 0, y: -5, duration: 0.2, ease: 'power2.in', clearProps: 'transform' }, 0.03);
     }, root);
 
     return () => {
       context.revert();
-      gsap.set(stage, { clearProps: 'transform,opacity,visibility' });
+      gsap.set([stage, ...maturityBars, ...dataBars, ...trendLines], { clearProps: 'transform,opacity,visibility' });
       if (veil) gsap.set(veil, { autoAlpha: 0, clearProps: 'transform' });
     };
   }, [location.pathname, location.search]);

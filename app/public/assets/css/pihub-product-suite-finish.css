@@ -1,0 +1,129 @@
+/* Final product-suite polish. Keep this layer tiny and structural. */
+
+.ap-notification-filters {
+  display: flex;
+  gap: 6px;
+  padding: 10px 12px 8px;
+  overflow-x: auto;
+  border-bottom: 1px solid #edf1f6;
+  background: #fff;
+  scrollbar-width: none;
+}
+
+.ap-notification-filters::-webkit-scrollbar { display: none; }
+
+.ap-notification-filters button {
+  min-height: 34px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 10px;
+  border: 1px solid #dfe6ef;
+  border-radius: 999px;
+  background: #fff;
+  color: #5f6f86;
+  font-size: 10.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ap-notification-filters button span {
+  min-width: 18px;
+  height: 18px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #f1f4f8;
+  color: #6a7890;
+  font-size: 9px;
+}
+
+.ap-notification-filters button[aria-pressed="true"] {
+  border-color: #ced9ff;
+  background: #f3f6ff;
+  color: #3657c9;
+}
+
+.ap-notification-filters button[aria-pressed="true"] span {
+  background: #e4ebff;
+  color: #3152c0;
+}
+
+.ap-notification-filters button:focus-visible {
+  outline: 2px solid #5f7ef7;
+  outline-offset: 2px;
+}
+
+/* Role-priority strip turns the detected role into an actual next action. */
+.ap-role-priority {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: -10px 0 22px;
+  padding: 10px 12px 10px 16px;
+  border: 1px solid #dae3f1;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f8faff 0%, #fff 56%);
+}
+
+.ap-role-priority-copy {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.ap-role-priority-icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #eaf0ff;
+  color: #4565d7;
+  font-size: 17px;
+}
+
+.ap-role-priority-copy strong,
+.ap-role-priority-copy span {
+  display: block;
+}
+
+.ap-role-priority-copy strong {
+  color: #223149;
+  font-size: 12px;
+}
+
+.ap-role-priority-copy span {
+  margin-top: 2px;
+  color: #68778f;
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+.ap-role-priority .btn {
+  flex: 0 0 auto;
+  min-height: 36px !important;
+}
+
+/* Search results can identify institution contacts explicitly. */
+.ap-command-kind.is-contact {
+  background: #eef8f4;
+  color: #317258;
+}
+
+@media (max-width: 680px) {
+  .ap-role-priority {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ap-role-priority .btn {
+    width: 100%;
+  }
+}

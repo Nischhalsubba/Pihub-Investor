@@ -52,41 +52,33 @@ export const getNotificationCount = () => async dispatch => {
       payload: normalizeNotificationCount(response.data)
     });
   } catch (e) {
-    dispatch({
-      type: NOTIFICATION_COUNT,
-      payload: 0
-    });
-    dispatch({
-      type: ERROR,
-      payload: getErrorMessage(e, 'Unable to load notification count.')
-    });
+    dispatch({ type: NOTIFICATION_COUNT, payload: 0 });
+    dispatch({ type: ERROR, payload: getErrorMessage(e, 'Unable to load notification count.') });
   }
 };
 
 export const getNotificationList = page => async dispatch => {
   try {
-    const response = await client.get(
-      `${routes.getNotificationList}?page=${page}`
-    );
+    const response = await client.get(`${routes.getNotificationList}?page=${page}`);
     const data = response && response.data ? response.data : {};
-    dispatch({
-      type: LIST_NOTIFICATION,
-      payload: data.data || []
-    });
+    dispatch({ type: LIST_NOTIFICATION, payload: data.data || [] });
   } catch (e) {
-    dispatch({
-      type: ERROR,
-      payload: getErrorMessage(e, 'Unable to load notifications.')
-    });
+    dispatch({ type: ERROR, payload: getErrorMessage(e, 'Unable to load notifications.') });
   }
 };
 
-export const markAsRead = (id, callback) => async dispatch => {
+export const markNotificationsAsRead = (ids, callback) => async dispatch => {
+  const notificationIds = (Array.isArray(ids) ? ids : [ids]).filter(id => id !== null && id !== undefined && id !== '');
+  if (!notificationIds.length) {
+    if (typeof callback === 'function') callback();
+    return;
+  }
   try {
-    let ids = { notification_ids: [id] };
-    const response = await client.post(routes.markAsRead, ids);
-    if (response) {
-      callback();
-    }
-  } catch (e) {}
+    const response = await client.post(routes.markAsRead, { notification_ids: notificationIds });
+    if (response && typeof callback === 'function') callback();
+  } catch (e) {
+    dispatch({ type: ERROR, payload: getErrorMessage(e, 'Unable to update notification status.') });
+  }
 };
+
+export const markAsRead = (id, callback) => markNotificationsAsRead([id], callback);
