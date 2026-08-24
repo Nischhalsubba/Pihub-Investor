@@ -36,7 +36,8 @@ const files = [
   'pihub-option-c-loading.css',
   'pihub-option-c-guardrails.css',
   'pihub-sidebar-anchor-fix.css',
-  'pihub-product-suite.css'
+  'pihub-product-suite.css',
+  'pihub-product-suite-data.css'
 ];
 
 await mkdir(outputRoot, { recursive: true });
