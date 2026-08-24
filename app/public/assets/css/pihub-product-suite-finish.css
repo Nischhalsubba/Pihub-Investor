@@ -36,7 +36,7 @@
   padding: 0 4px;
   border-radius: 999px;
   background: #f1f4f8;
-  color: #6a7890;
+  color: #5f6f86;
   font-size: 9px;
 }
 
@@ -54,6 +54,21 @@
 .ap-notification-filters button:focus-visible {
   outline: 2px solid #5f7ef7;
   outline-offset: 2px;
+}
+
+/* Keep off-canvas overlay animation from contributing to document scroll width. */
+.ap-notification-layer,
+.ap-context-layer {
+  overflow: hidden;
+}
+
+/* Notification metadata must stay readable on both white and unread-card surfaces. */
+.ap-drawer-kicker {
+  color: #3154c8 !important;
+}
+
+.ap-notification-card-copy small {
+  color: #5f6f86 !important;
 }
 
 /* Role-priority strip turns the detected role into an actual next action. */
@@ -148,7 +163,7 @@
 }
 
 .overview-panel > header > div > span {
-  color: #6b7a91;
+  color: #5f6f86 !important;
   font-size: 10.5px;
   line-height: 1.4;
 }
@@ -192,7 +207,7 @@
 }
 
 .overview-attention-row > span > small {
-  color: #718097;
+  color: #5f6f86 !important;
   font-size: 9.5px;
 }
 
@@ -214,9 +229,16 @@
 
 .overview-actions > a > small {
   flex: 0 0 auto;
-  color: #6d7b91;
+  color: #5f6f86 !important;
   font: 500 9px "IBM Plex Mono", monospace;
   white-space: nowrap;
+}
+
+/* Muted analytical labels use one AA-safe text token instead of near-miss grays. */
+.overview-book-grid > div > span,
+.ap-analytics-card header span,
+.ap-trend-summary span {
+  color: #5f6f86 !important;
 }
 
 /*
@@ -264,6 +286,24 @@
   color: #317258;
 }
 
+/*
+ * The sidebar reduces usable workspace width long before a 900px viewport.
+ * Stack the two toolbar rails before they collide, while preserving the
+ * single-row treatment on genuinely wide desktops such as the reported view.
+ */
+@media (max-width: 1440px) {
+  .data-toolbar {
+    grid-template-columns: minmax(0, 1fr) !important;
+    align-items: stretch !important;
+  }
+
+  .data-toolbar > .data-toolbar-actions {
+    width: 100%;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+  }
+}
+
 @media (max-width: 680px) {
   .ap-role-priority {
     align-items: stretch;
@@ -272,6 +312,12 @@
 
   .ap-role-priority .btn {
     width: 100%;
+  }
+
+  /* These chips are informational, so wrapping is better than an inaccessible scroll rail. */
+  .ap-role-focus {
+    flex-wrap: wrap;
+    overflow-x: visible;
   }
 
   .overview-panel > header {
