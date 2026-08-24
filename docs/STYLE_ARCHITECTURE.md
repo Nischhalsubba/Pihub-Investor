@@ -22,9 +22,17 @@ The exact order is declared in `app/scripts/style-manifest.mjs` and compiled by 
 - Prefer the canonical 4/8 spacing rhythm and `--pihub-control: 44px` interaction rail.
 - Keep operational typography readable; never shrink text to make a dense layout appear to fit.
 - Status meaning is text/icon + color, never color alone.
-- GSAP timing is owned by `src/_utils/motion.js`; components should consume that policy rather than inventing new curves.
+- GSAP timing and reduced-motion behavior are owned by `src/_utils/motion.js`; components consume that policy rather than inventing new curves or runtime owners.
 - Three.js remains excluded from operational dashboard/table/form surfaces.
 - `npm run check:styles` fails when the manifest is broken or a new patch-style CSS layer is introduced.
+
+## Regression gates
+
+- Unit/build/bundle validation includes style-architecture and i18n-ownership checks.
+- Playwright runs Chromium desktop/mobile plus Firefox and WebKit desktop.
+- Canonical responsive geometry is checked at 375, 768, 1024, 1440 and 1920 CSS pixels.
+- Chromium visual baselines cover Overview, Opportunities, Credit Requests, Invested Positions and Profile, with additional 768/1024/1920 reference widths.
+- Reduced-motion, keyboard workflows, WCAG A/AA serious/critical findings, and page-level horizontal overflow remain merge blockers.
 
 ## Why historical rules remain grouped
 
