@@ -25,8 +25,8 @@ test('workspace product suite renders decision intelligence and complete demo da
   await expect(page.locator('.ap-analytics-card')).toHaveCount(4);
 
   await page.goto('/products');
-  await expect(page.getByText('Growth Loan A', { exact: true })).toBeVisible();
-  await expect(page.getByText('Healthcare Expansion H', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Growth Loan A', exact: true }).first()).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Healthcare Expansion H', exact: true }).first()).toBeVisible();
 
   await page.goto('/credit-request');
   await expect(page.getByText('Nordstern GmbH', { exact: true })).toBeVisible();
@@ -53,7 +53,7 @@ test('global search, recent records and keyboard routes work', async ({ page }) 
   await page.keyboard.press('Escape');
 
   await page.keyboard.press('Control+K');
-  await expect(page.getByText('Recently viewed', { exact: true }).first()).toBeVisible();
+  await expect(page.getByRole('button', { name: /Growth Loan A/i }).first()).toBeVisible();
   await page.keyboard.press('Escape');
 });
 
@@ -82,9 +82,10 @@ test('opportunity quick view, saved density and compare mode work', async ({ pag
   await expect(compact).toHaveAttribute('aria-pressed', 'true');
 
   await page.getByRole('button', { name: /Quick view Growth Loan A/i }).click();
-  await expect(page.getByRole('dialog', { name: /Growth Loan A/i })).toBeVisible();
-  await expect(page.getByText('Decision context', { exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Close quick view' }).click();
+  const quickView = page.getByRole('dialog', { name: /Growth Loan A/i });
+  await expect(quickView).toBeVisible();
+  await expect(quickView.getByRole('heading', { name: 'Decision context' })).toBeVisible();
+  await quickView.getByRole('button', { name: 'Close quick view' }).click();
 
   await page.getByRole('checkbox', { name: /Select Growth Loan A for comparison/i }).check();
   await page.getByRole('checkbox', { name: /Select Expansion Note B for comparison/i }).check();
@@ -102,7 +103,7 @@ test('opportunity drafts autosave locally in demo mode', async ({ page }) => {
   const title = page.locator('#opportunity-product_title');
   await title.fill('Recovered Demo Opportunity');
   await expect(page.locator('.ap-autosave-status')).toContainText('Autosaved', { timeout: 4000 });
-  const draft = await page.evaluate(() => localStorage.getItem('pihub-opportunity-draft:add:new'));
+  const draft = await page.evaluate(() => localStorage.getItem('pihub-opportunity-draft:create:new'));
   expect(draft).toContain('Recovered Demo Opportunity');
   await page.getByRole('button', { name: 'Discard draft' }).click();
   await expect(title).toHaveValue('');
@@ -115,8 +116,9 @@ test('credit and portfolio rows expose quick review without horizontal page over
     const quick = page.getByRole('button', { name: /Quick view/i }).first();
     await expect(quick).toBeVisible();
     await quick.click();
-    await expect(page.locator('.ap-context-drawer')).toBeVisible();
-    await page.getByRole('button', { name: 'Close quick view' }).click();
+    const drawer = page.locator('.ap-context-drawer');
+    await expect(drawer).toBeVisible();
+    await drawer.getByRole('button', { name: 'Close quick view' }).click();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `${route} created page-level overflow`).toBeLessThanOrEqual(2);
   }
