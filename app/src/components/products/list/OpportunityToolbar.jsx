@@ -1,6 +1,6 @@
 import React from 'react';
 import Translate from '../../../i18n/Translate';
-import { useWorkspaceCopy } from '../../../i18n/workspaceCopy';
+import useWorkspaceCopy from '../../../i18n/useWorkspaceCopy';
 import { statusOptions } from './opportunityListModel';
 import OpportunityViewMenu from './OpportunityViewMenu';
 
