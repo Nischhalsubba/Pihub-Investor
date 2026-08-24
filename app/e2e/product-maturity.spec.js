@@ -23,19 +23,20 @@ test('opportunity workspace uses one View control and mature saved views', async
 
   await page.getByLabel('Saved view name').fill('Priority requested');
   await page.getByRole('button', { name: 'Save view' }).click();
-  await expect(page.getByRole('button', { name: /Priority requested/ })).toBeVisible();
+  const priorityView = page.locator('.ap-saved-view-copy').filter({ hasText: 'Priority requested' }).first();
+  await expect(priorityView).toBeVisible();
 
-  await page.getByRole('button', { name: /Set Priority requested as default/ }).click();
+  await page.getByRole('button', { name: 'Set Priority requested as default' }).click();
   await expect(page.locator('.ap-saved-view-item.is-default')).toContainText('Priority requested');
 
-  await page.getByRole('button', { name: /Rename Priority requested/ }).evaluate(button => {
+  await page.getByRole('button', { name: 'Rename Priority requested' }).evaluate(button => {
     window.prompt = () => 'Credit priorities';
     button.click();
   });
-  await expect(page.getByRole('button', { name: /Credit priorities/ })).toBeVisible();
+  await expect(page.locator('.ap-saved-view-copy').filter({ hasText: 'Credit priorities' }).first()).toBeVisible();
 
-  await page.getByRole('button', { name: /Delete Credit priorities/ }).click();
-  await expect(page.getByRole('button', { name: /Credit priorities/ })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Delete Credit priorities' }).click();
+  await expect(page.locator('.ap-saved-view-copy').filter({ hasText: 'Credit priorities' })).toHaveCount(0);
 });
 
 test('new workspace controls switch immediately between EN and DE', async ({ page }) => {
@@ -64,6 +65,7 @@ test('decision surfaces expose owner risk review and yield context', async ({ pa
   await expect(page.getByRole('columnheader', { name: 'Owner' })).toBeVisible();
   await expect(page.getByText('Jonas Weber', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('Not supplied', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Unassigned', { exact: true })).toHaveCount(0);
 
   await page.goto('/products-invested');
   await expect(page.getByRole('columnheader', { name: 'Yield' })).toBeVisible();
