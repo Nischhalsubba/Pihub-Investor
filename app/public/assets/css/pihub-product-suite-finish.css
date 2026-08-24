@@ -237,7 +237,8 @@
 /* Muted analytical labels use one AA-safe text token instead of near-miss grays. */
 .overview-book-grid > div > span,
 .ap-analytics-card header span,
-.ap-trend-summary span {
+.ap-trend-summary span,
+.ap-compare-table thead th small {
   color: #5f6f86 !important;
 }
 
