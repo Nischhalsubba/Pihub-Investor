@@ -130,12 +130,36 @@
   .ap-decision-meta { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
 }
 
-/* Dense portfolio columns scroll inside their table shell rather than widening the page. */
+/* Dense portfolio columns scroll inside their surface instead of contributing
+   intrinsic width to the document. The outer block owns overflow; the inner
+   ledger keeps a stable analytical width. */
 @media (min-width: 721px) and (max-width: 1200px) {
-  .portfolio-table { min-width: 0 !important; width: 100% !important; max-width: 100% !important; inline-size: 100% !important; max-inline-size: 100% !important; contain: inline-size; overflow-x: auto !important; overflow-y: hidden !important; overscroll-behavior-inline: contain; }
-  .portfolio-table > div:last-child { min-width: 940px; }
+  .portfolio-table {
+    display: block !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    inline-size: 100% !important;
+    max-inline-size: 100% !important;
+    contain: inline-size;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    overscroll-behavior-inline: contain;
+  }
+  .portfolio-table > [role="rowgroup"] {
+    display: block !important;
+    width: 980px !important;
+    min-width: 980px !important;
+    max-width: none !important;
+  }
   .portfolio-head,
-  .portfolio-row { min-width: 940px; }
+  .portfolio-row {
+    box-sizing: border-box !important;
+    width: 980px !important;
+    min-width: 980px !important;
+    max-width: none !important;
+  }
   .ap-portfolio-toolbar { min-width: 0 !important; flex-wrap: wrap !important; }
   .ap-portfolio-toolbar .data-toolbar-actions { min-width: 0 !important; flex-wrap: wrap !important; }
 }
