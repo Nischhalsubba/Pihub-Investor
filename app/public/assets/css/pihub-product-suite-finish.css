@@ -219,6 +219,45 @@
   white-space: nowrap;
 }
 
+/*
+ * Opportunity toolbar alignment contract.
+ * Earlier QA CSS gives .ap-query-line an 18px bottom margin. Once the toolbar
+ * became a two-column centered grid that invisible margin shifted the filter
+ * rail upward while the action rail stayed centered. Own the final geometry
+ * here so both halves share one control baseline and one 44px target height.
+ */
+.data-toolbar > .ap-query-line,
+.data-toolbar > .data-toolbar-actions {
+  margin: 0 !important;
+  align-self: center !important;
+}
+
+.data-toolbar > .ap-query-line {
+  min-height: 44px !important;
+}
+
+.data-toolbar > .data-toolbar-actions {
+  min-height: 44px !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+.data-toolbar > .ap-query-line .ap-query-input input,
+.data-toolbar > .ap-query-line .ap-filter-tabs,
+.data-toolbar > .ap-query-line .ap-search-submit,
+.data-toolbar > .data-toolbar-actions > .ap-density-toggle,
+.data-toolbar > .data-toolbar-actions > .btn,
+.data-toolbar > .data-toolbar-actions > .data-menu > summary {
+  height: 44px !important;
+  min-height: 44px !important;
+  box-sizing: border-box;
+}
+
+.data-toolbar > .data-toolbar-actions > .ap-density-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
 /* Search results can identify institution contacts explicitly. */
 .ap-command-kind.is-contact {
   background: #eef8f4;
