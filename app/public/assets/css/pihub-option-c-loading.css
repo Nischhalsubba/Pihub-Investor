@@ -1,0 +1,85 @@
+/* Option C data-loading bridge.
+   Legacy pages still mount .data-loading + Bootstrap Spinner while Redux data
+   resolves. Convert those page-level states into the same reserved skeleton
+   surface used by lazy-route Suspense, without changing small inline spinners. */
+
+.ap-main .data-loading {
+  position: relative;
+  width: 100%;
+  min-height: 430px;
+  display: block !important;
+  overflow: hidden;
+  border: 1px solid var(--pi-border, #dce4ef);
+  border-radius: var(--pi-radius-card, 16px);
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(120deg, rgba(79, 111, 247, .08), transparent 45%) border-box;
+  box-shadow: var(--pi-shadow-card, 0 12px 30px rgba(13, 24, 48, .04));
+}
+
+.ap-main .data-loading > .d-flex,
+.ap-main .data-loading .spinner-border {
+  visibility: hidden !important;
+}
+
+.ap-main .data-loading::before,
+.ap-main .data-loading::after {
+  content: "";
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  pointer-events: none;
+}
+
+.ap-main .data-loading::before {
+  top: 24px;
+  height: 112px;
+  border-radius: 12px;
+  background:
+    linear-gradient(90deg, #e7ecf3 0 24%, transparent 24% 28%, #e7ecf3 28% 48%, transparent 48% 52%, #e7ecf3 52% 72%, transparent 72% 76%, #e7ecf3 76% 100%);
+  opacity: .78;
+}
+
+.ap-main .data-loading::after {
+  top: 160px;
+  height: 230px;
+  border-radius: 14px;
+  background:
+    linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, .78) 46%, transparent 58%) 0 0 / 220% 100% no-repeat,
+    repeating-linear-gradient(to bottom, #e9edf4 0 12px, transparent 12px 52px);
+  animation: pi-data-loading-shimmer 1.3s linear infinite;
+}
+
+@keyframes pi-data-loading-shimmer {
+  from { background-position: 110% 0, 0 0; }
+  to { background-position: -120% 0, 0 0; }
+}
+
+@media (max-width: 620px) {
+  .ap-main .data-loading {
+    min-height: 360px;
+  }
+
+  .ap-main .data-loading::before,
+  .ap-main .data-loading::after {
+    left: 16px;
+    right: 16px;
+  }
+
+  .ap-main .data-loading::before {
+    height: 92px;
+    background: linear-gradient(#e7ecf3, #e7ecf3);
+  }
+
+  .ap-main .data-loading::after {
+    top: 136px;
+    height: 190px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ap-main .data-loading::after {
+    animation: none !important;
+    background: repeating-linear-gradient(to bottom, #e9edf4 0 12px, transparent 12px 52px);
+  }
+}
