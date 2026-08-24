@@ -77,9 +77,11 @@ test('opportunity quick view, saved density and compare mode work', async ({ pag
   await login(page);
   await page.goto('/products');
 
+  await page.locator('.ap-view-menu > summary').click();
   const compact = page.getByRole('button', { name: 'Compact' }).first();
   await compact.click();
   await expect(compact).toHaveAttribute('aria-pressed', 'true');
+  await page.locator('.ap-view-menu > summary').click();
 
   await page.getByRole('button', { name: /Quick view Growth Loan A/i }).click();
   const quickView = page.getByRole('dialog', { name: /Growth Loan A/i });
