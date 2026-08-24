@@ -21,6 +21,16 @@ const money = value => {
 const date = value => { const result = new Date(value); return Number.isNaN(result.getTime()) ? null : result; };
 const daysUntil = value => { const target = date(value); return target ? Math.ceil((target.getTime() - Date.now()) / 86400000) : null; };
 const formatDate = value => { const target = value instanceof Date ? value : date(value); return target ? new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(target) : '—'; };
+const positionMaturity = position => {
+  const supplied = date(position && (position.maturity_date || position.maturity));
+  if (supplied) return supplied;
+  const invested = date(position && position.invested_on);
+  const duration = Number(position && (position.duration || position.max_time_duration));
+  if (!invested || !Number.isFinite(duration)) return null;
+  const result = new Date(invested.getTime());
+  result.setMonth(result.getMonth() + duration);
+  return result;
+};
 
 const PipelineChart = ({ products }) => {
   const counts = products.reduce((result, product) => { const status = product.status || 'other'; result[status] = (result[status] || 0) + 1; return result; }, {});
@@ -91,6 +101,13 @@ class Overview extends Component {
     return { primary, roles: unique.length ? unique : ['Investor workspace'] };
   };
 
+  getRolePriority = (role, { pending, dueSoon, positions, products }) => {
+    if (/credit/i.test(role.primary)) return { icon: 'bx bx-receipt', title: `${pending.length} credit decision${pending.length === 1 ? '' : 's'} in focus`, copy: dueSoon.length ? `${dueSoon.length} are due within seven days or overdue.` : 'No immediate deadline pressure in the current queue.', href: '/credit-request', action: 'Open decision queue' };
+    if (/portfolio/i.test(role.primary)) return { icon: 'bx bx-line-chart', title: `${positions.length} portfolio position${positions.length === 1 ? '' : 's'} to monitor`, copy: 'Review concentration, deployed capital and contractual maturity.', href: '/products-invested', action: 'Open portfolio' };
+    if (/admin/i.test(role.primary)) return { icon: 'bx bx-buildings', title: 'Institution controls and access', copy: 'Review governance, contacts, permissions and current security posture.', href: '/user/profile', action: 'Open institution profile' };
+    return { icon: 'bx bx-briefcase-alt-2', title: `${products.length} visible opportunities`, copy: 'Review the opportunity book and current investment workflow.', href: '/products', action: 'Open opportunities' };
+  };
+
   render() {
     const products = this.products();
     const requests = this.requests();
@@ -98,17 +115,19 @@ class Overview extends Component {
     const pending = requests.filter(request => !['invested', 'accepted', 'rejected'].includes(String(request.status || '').toLowerCase()));
     const dueSoon = pending.filter(request => { const days = daysUntil(this.deadline(request)); return days !== null && days <= 7; });
     const deployed = positions.reduce((sum, position) => sum + this.investedAmount(position), 0);
-    const maturities = positions.map(position => ({ position, date: date(position.maturity_date || position.maturity || position.deadline) })).filter(item => item.date).sort((a, b) => a.date - b.date);
-    const nextMaturity = maturities[0];
+    const maturities = positions.map(position => ({ position, date: positionMaturity(position) })).filter(item => item.date).sort((a, b) => a.date - b.date);
+    const nextMaturity = maturities.find(item => item.date.getTime() >= Date.now()) || maturities[0];
     const visibleStatuses = { requested: products.filter(product => product.status === 'requested').length, approved: products.filter(product => product.status === 'approved').length, invested: products.filter(product => product.status === 'invested').length };
     const attention = pending.slice().sort((a, b) => { const ad = date(this.deadline(a)); const bd = date(this.deadline(b)); if (!ad) return 1; if (!bd) return -1; return ad - bd; }).slice(0, 4);
     const role = this.getRoleFocus();
+    const rolePriority = this.getRolePriority(role, { pending, dueSoon, positions, products });
     const industries = this.getIndustryRows(products, positions);
     const maturityRows = this.getMaturityRows(positions);
 
     return <Fragment>
       <Subheader heading="Overview" description="Decisions, deadlines and capital events that deserve attention now." />
       <div className="ap-role-focus" aria-label="Role-aware workspace focus"><span className="ap-role-chip is-primary"><i className="bx bx-target-lock" aria-hidden="true" />Focus: {role.primary}</span>{role.roles.slice(0, 4).map(item => <span className="ap-role-chip" key={item}>{item}</span>)}</div>
+      <div className="ap-role-priority" data-motion="profile-card"><div className="ap-role-priority-copy"><span className="ap-role-priority-icon" aria-hidden="true"><i className={rolePriority.icon} /></span><span><strong>{rolePriority.title}</strong><span>{rolePriority.copy}</span></span></div><Link className="btn btn-secondary" to={rolePriority.href}>{rolePriority.action}</Link></div>
       <section className="ap-capital-tape" aria-label="Workspace summary" data-motion="metric-grid">
         <article className="ap-metric ap-metric-warning"><span className="ap-metric-label"><i />Pending decisions</span><strong>{pending.length}</strong><small>Visible credit requests</small><span className="ap-kpi-delta">{requests.length} total decision records</span></article>
         <article className="ap-metric ap-metric-warning"><span className="ap-metric-label"><i />Due within 7 days</span><strong>{dueSoon.length}</strong><small>Includes overdue items</small><span className={`ap-kpi-delta${dueSoon.length ? ' is-warning' : ' is-positive'}`}>{dueSoon.length ? 'Review queue now' : 'No immediate deadline pressure'}</span></article>
@@ -118,7 +137,7 @@ class Overview extends Component {
 
       <div className="overview-grid">
         <section className="overview-panel" aria-labelledby="attention-title" data-motion="table-shell"><header><div><strong id="attention-title">Needs attention</strong><span>Earliest visible credit deadlines first</span></div><Link to="/credit-request">Open queue</Link></header>{attention.length ? <div className="overview-attention-list">{attention.map((request, index) => { const productId = request.product_id || request.id || `request-${index}`; const appId = request.application_id || `APP-${index + 1}`; const days = daysUntil(this.deadline(request)); return <Link className="overview-attention-row" to={`/credit-requests/${encodeURIComponent(productId)}/${encodeURIComponent(appId)}`} key={`${productId}-${appId}`}><span><strong>{text(request.creditor_name) || text(request.requested_by) || 'Creditor'}</strong><small>{text(request.product_title) || 'Credit request'}</small></span><b>{money(this.amount(request))}</b><em>{days === null ? 'No deadline' : days < 0 ? `${Math.abs(days)}d overdue` : `${days}d`}</em><i aria-hidden="true">›</i></Link>; })}</div> : <div className="ap-empty ap-empty-compact"><strong>No pending decision needs attention.</strong><span>The queue is clear for the current view.</span></div>}</section>
-        <section className="overview-panel overview-actions" aria-labelledby="actions-title"><header><div><strong id="actions-title">Workspace actions</strong><span>Go directly to the next operational task</span></div></header><Link to="/products"><span>Review opportunities</span><small>{products.length} visible</small></Link><Link to="/credit-request"><span>Prioritize credit requests</span><small>{pending.length} pending</small></Link><Link to="/products-invested"><span>Review portfolio exposure</span><small>{positions.length} positions</small></Link><Link to="/opportunities/new"><span>Add opportunity</span><small>New</small></Link></section>
+        <section className="overview-panel overview-actions" aria-labelledby="actions-title"><header><div><strong id="actions-title">Workspace actions</strong><span>Go directly to the next operational task</span></div></header>{/credit/i.test(role.primary) ? <><Link to="/credit-request"><span>Prioritize credit requests</span><small>{pending.length} pending</small></Link><Link to="/products"><span>Review opportunities</span><small>{products.length} visible</small></Link></> : <><Link to="/products"><span>Review opportunities</span><small>{products.length} visible</small></Link><Link to="/credit-request"><span>Prioritize credit requests</span><small>{pending.length} pending</small></Link></>}<Link to="/products-invested"><span>Review portfolio exposure</span><small>{positions.length} positions</small></Link><Link to="/opportunities/new"><span>Add opportunity</span><small>New</small></Link></section>
       </div>
 
       <section className="overview-panel overview-book" aria-labelledby="book-title" data-motion="metric-grid"><header><div><strong id="book-title">Opportunity book</strong><span>Visible status mix for the current first page</span></div><Link to="/products">Open opportunities</Link></header><div className="overview-book-grid"><div><span>Requested</span><b>{visibleStatuses.requested}</b></div><div><span>Approved</span><b>{visibleStatuses.approved}</b></div><div><span>Invested</span><b>{visibleStatuses.invested}</b></div><div><span>Visible total</span><b>{products.length}</b></div></div></section>
