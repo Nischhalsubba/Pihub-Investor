@@ -14,10 +14,10 @@ const legacyJsxInJs = production => ({
   enforce: 'pre',
   async transform(code, id) {
     if (!/\/src\/.*\.js$/.test(id)) return null;
-    // The historical CRA source tree contains two legacy conventions that a
-    // browser-native Vite dev server cannot execute directly: JSX in .js files
-    // and a small number of CommonJS translation imports. Normalize only that
-    // known browser-safe package here, then let Oxc parse the module as JSX.
+    // The historical CRA source tree still contains JSX in .js files and a
+    // handful of CommonJS-era imports. Normalize the known browser-safe shape,
+    // then let Oxc parse the module as JSX. Translation package names resolve
+    // to our local compatibility layer below; no deprecated runtime is shipped.
     const normalizedCode = normalizeLegacyBrowserImports(code);
     const result = await transformWithOxc(normalizedCode, id, {
       lang: 'jsx',
@@ -44,7 +44,9 @@ export default defineConfig(({ mode }) => {
     ],
     resolve: {
       alias: {
-        'react-router-dom': fileURLToPath(new URL('./src/routerCompat.jsx', import.meta.url))
+        'react-router-dom': fileURLToPath(new URL('./src/routerCompat.jsx', import.meta.url)),
+        'react-translate-component': fileURLToPath(new URL('./src/i18n/Translate.jsx', import.meta.url)),
+        'react-interpolate-component': fileURLToPath(new URL('./src/i18n/Interpolate.jsx', import.meta.url))
       }
     },
     define: {
