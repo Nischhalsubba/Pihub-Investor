@@ -1,0 +1,49 @@
+name: Centralize command palette motion
+
+on:
+  push:
+    branches:
+      - refactor/product-maturity-v2
+
+permissions:
+  contents: write
+
+jobs:
+  refactor:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: refactor/product-maturity-v2
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - name: Route command palette through shared motion policy
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const file = 'app/src/components/general/CommandPalette.js';
+          let source = fs.readFileSync(file, 'utf8');
+          source = source.replace("import { gsap } from 'gsap';", "import { gsap, prefersReducedMotion } from '../../_utils/motion';");
+          source = source.replace("const reduceMotion = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;", "const reduceMotion = prefersReducedMotion;");
+          fs.writeFileSync(file, source);
+          NODE
+          rm .github/workflows/centralize-command-motion.yml
+      - name: Validate architecture after motion refactor
+        working-directory: app
+        run: |
+          npm ci --legacy-peer-deps --no-audit --no-fund
+          npm run quality
+        env:
+          REACT_APP_DEMO: 'true'
+      - name: Commit refactor and remove this one-time workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Centralize command palette motion ownership"
+          git push origin HEAD:refactor/product-maturity-v2
