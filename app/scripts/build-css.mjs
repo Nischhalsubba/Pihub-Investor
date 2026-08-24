@@ -1,57 +1,27 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { styleGroups, runtimeStyleFiles } from './style-manifest.mjs';
 
-// The individual source files remain versioned in public/assets/css so they are
-// easy to audit and diff. Runtime HTML loads only the generated bundle.
+// Runtime HTML loads one generated stylesheet. Authoring sources are grouped by
+// responsibility so historical compatibility rules cannot quietly grow another
+// generation of *-fix.css / *-polish.css patches.
 const sourceRoot = resolve(process.cwd(), 'public/assets/css');
 const outputRoot = sourceRoot;
-const files = [
-  'bootstrap.min.css',
-  'boxicon.css',
-  'tablesaw.css',
-  'style.css',
-  'pihub-2026.css',
-  'pihub-workspace.css',
-  'pihub-detail.css',
-  'pihub-aux.css',
-  'pihub-profile-edit.css',
-  'pihub-flow.css',
-  'pihub-auth.css',
-  'pihub-signup-status.css',
-  'pihub-state.css',
-  'pihub-analytical-core.css',
-  'pihub-analytical-data.css',
-  'pihub-analytical-forms.css',
-  'pihub-analytical-responsive.css',
-  'pihub-qa-polish.css',
-  'pihub-purpose-polish.css',
-  'pihub-workflows.css',
-  'pihub-stabilization.css',
-  'pihub-ui-refinement.css',
-  'pihub-ui-contrast.css',
-  'pihub-profile-navbar-v3.css',
-  'pihub-profile-navbar-v3-contrast.css',
-  'pihub-global-shell-v4.css',
-  'pihub-option-c-motion.css',
-  'pihub-option-c-loading.css',
-  'pihub-option-c-guardrails.css',
-  'pihub-sidebar-anchor-fix.css',
-  'pihub-product-suite.css',
-  'pihub-product-suite-data.css',
-  'pihub-product-suite-finish.css'
-];
 
 await mkdir(outputRoot, { recursive: true });
 const chunks = [];
-for (const file of files) {
-  let content = await readFile(resolve(sourceRoot, file), 'utf8');
-  content = content.replace(/\/\*# sourceMappingURL=.*?\*\//g, '');
-  if (file === 'boxicon.css') {
-    content = content.replace(/@font-face\{font-family:boxicons[^}]*\}/, "@font-face{font-family:boxicons;font-weight:400;font-style:normal;font-display:block;src:url(../fonts/boxicons.woff2) format('woff2')}");
+for (const group of styleGroups) {
+  chunks.push(`/* ===== PiHub layer: ${group.name} ===== */`);
+  for (const file of group.files) {
+    let content = await readFile(resolve(sourceRoot, file), 'utf8');
+    content = content.replace(/\/\*# sourceMappingURL=.*?\*\//g, '');
+    if (file === 'boxicon.css') {
+      content = content.replace(/@font-face\{font-family:boxicons[^}]*\}/, "@font-face{font-family:boxicons;font-weight:400;font-style:normal;font-display:block;src:url(../fonts/boxicons.woff2) format('woff2')}");
+    }
+    chunks.push(`/* source: ${file} */\n${content}`);
   }
-  chunks.push(`/* source: ${file} */\n${content}`);
 }
 
-const header = `/* GENERATED FILE — do not edit.\n   Runtime CSS has one deterministic cascade. Edit the versioned source files and the ordered manifest in scripts/build-css.mjs. */\n`;
+const header = `/* GENERATED FILE — do not edit.\n   Runtime CSS has one deterministic cascade from ${runtimeStyleFiles.length} authoring files.\n   Edit the canonical/grouped sources and scripts/style-manifest.mjs. */\n`;
 await writeFile(resolve(outputRoot, 'pihub-bundle.css'), `${header}${chunks.join('\n\n')}\n`, 'utf8');
-console.log(`Built pihub-bundle.css from ${files.length} ordered sources.`);
+console.log(`Built pihub-bundle.css from ${runtimeStyleFiles.length} ordered sources across ${styleGroups.length} layers.`);
