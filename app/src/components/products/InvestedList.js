@@ -5,64 +5,50 @@ import { getInvestedList } from '../../actions/invested';
 import Subheader from '../general/Subheader';
 import Spinner from '../general/Spinner';
 import Translate from 'react-translate-component';
+import { downloadCsv } from '../../_utils/exportCsv';
+import { getTableDensity, setTableDensity } from '../../_utils/workspacePreferences';
+import { openContextDrawer } from '../../_utils/workspaceEvents';
 
 const Translator = require('react-translate-component');
-
-const toText = value => {
-  if (value === null || value === undefined) return '';
-  if (typeof value === 'string' || typeof value === 'number') return String(value);
-  if (typeof value !== 'object') return '';
-  const locale = Translator.getLocale();
-  const candidates = [value[locale], value.en, value.de, value.label, value.title, value.name];
-  for (let index = 0; index < candidates.length; index += 1) {
-    const candidate = candidates[index];
-    if (typeof candidate === 'string' || typeof candidate === 'number') return String(candidate);
-  }
-  return '';
-};
-
-const formatEuro = value => {
-  const amount = Number(value);
-  if (!Number.isFinite(amount)) return '—';
-  return new Intl.NumberFormat(Translator.getLocale() === 'de' ? 'de-DE' : 'en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(amount);
-};
-
+const toText = value => { if (value === null || value === undefined) return ''; if (typeof value === 'string' || typeof value === 'number') return String(value); if (typeof value !== 'object') return ''; const locale = Translator.getLocale(); const candidates = [value[locale], value.en, value.de, value.label, value.title, value.name]; for (let index = 0; index < candidates.length; index += 1) { const candidate = candidates[index]; if (typeof candidate === 'string' || typeof candidate === 'number') return String(candidate); } return ''; };
+const formatEuro = value => { const amount = Number(value); if (!Number.isFinite(amount)) return '—'; return new Intl.NumberFormat(Translator.getLocale() === 'de' ? 'de-DE' : 'en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(amount); };
 const asDate = value => { const date = new Date(value); return Number.isNaN(date.getTime()) ? null : date; };
-const addMonths = (value, months) => {
-  const date = asDate(value);
-  const duration = Number(months);
-  if (!date || !Number.isFinite(duration)) return null;
-  const result = new Date(date.getTime());
-  result.setMonth(result.getMonth() + duration);
-  return result;
-};
+const addMonths = (value, months) => { const date = asDate(value); const duration = Number(months); if (!date || !Number.isFinite(duration)) return null; const result = new Date(date.getTime()); result.setMonth(result.getMonth() + duration); return result; };
 const formatDate = value => { const date = value instanceof Date ? value : asDate(value); if (!date) return '—'; return `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`; };
 
 class InvestedList extends Component {
+  state = { density: getTableDensity('positions') };
   componentDidMount() { this.props.getInvestedList(); }
-  getInvestments = () => {
-    if (!this.props.investments) return null;
-    const list = Array.isArray(this.props.investments.list) ? this.props.investments.list : [];
-    return list.filter(item => item && typeof item === 'object');
-  };
+  getInvestments = () => { if (!this.props.investments) return null; const list = Array.isArray(this.props.investments.list) ? this.props.investments.list : []; return list.filter(item => item && typeof item === 'object'); };
   getTotalAllocated = investments => investments.reduce((total, item) => total + (Number(item.invested_amount) || 0), 0);
+  setDensity = density => this.setState({ density: setTableDensity('positions', density) });
 
   renderMaturityLadder = investments => {
     if (!investments.length) return <div className="ap-empty ap-empty-compact"><strong>No invested positions yet.</strong><span>Maturity distribution will appear after capital is deployed.</span></div>;
     const maxDuration = Math.max(1, ...investments.map(item => Number(item.duration) || 0));
     const scaleMax = Math.max(12, Math.ceil(maxDuration / 12) * 12);
     const ticks = [0, .25, .5, .75, 1].map(fraction => Math.round(scaleMax * fraction));
-    return <div className="maturity-chart" aria-label={`Maturity scale from 0 to ${scaleMax} months`}>
-      <div className="maturity-axis" aria-hidden="true">{ticks.map((tick, index) => <span key={`${tick}-${index}`} style={{ left: `${index * 25}%` }}>{tick}m</span>)}</div>
-      <div className="ap-maturity-ladder" role="list">{investments.map((investment, index) => {
-        const duration = Number(investment.duration) || 0;
-        const amount = Number(investment.invested_amount) || 0;
-        const title = toText(investment.product_title) || toText(investment.name) || `Position ${index + 1}`;
-        const width = Math.max(2, Math.min(100, (duration / scaleMax) * 100));
-        return <div className="ap-maturity-row" role="listitem" key={investment.application_id || investment.product_id || index}><div className="ap-maturity-copy"><strong>{title}</strong><small>{formatEuro(amount)} · {duration || '—'} months</small></div><div className="ap-maturity-track" aria-hidden="true"><i style={{ width: `${width}%` }} /></div><span className="ap-mono">{duration || '—'}m</span></div>;
-      })}</div>
-      <p className="chart-definition">Bar length encodes contractual tenor against the {scaleMax}-month axis. It does not represent percentage allocation.</p>
-    </div>;
+    return <div className="maturity-chart" aria-label={`Maturity scale from 0 to ${scaleMax} months`}><div className="maturity-axis" aria-hidden="true">{ticks.map((tick, index) => <span key={`${tick}-${index}`} style={{ left: `${index * 25}%` }}>{tick}m</span>)}</div><div className="ap-maturity-ladder" role="list">{investments.map((investment, index) => { const duration = Number(investment.duration) || 0; const amount = Number(investment.invested_amount) || 0; const title = toText(investment.product_title) || toText(investment.name) || `Position ${index + 1}`; const width = Math.max(2, Math.min(100, (duration / scaleMax) * 100)); return <div className="ap-maturity-row" role="listitem" key={investment.application_id || investment.product_id || index}><div className="ap-maturity-copy"><strong>{title}</strong><small>{formatEuro(amount)} · {duration || '—'} months</small></div><div className="ap-maturity-track" aria-hidden="true"><i style={{ width: `${width}%` }} /></div><span className="ap-mono">{duration || '—'}m</span></div>; })}</div><p className="chart-definition">Bar length encodes contractual tenor against the {scaleMax}-month axis. It does not represent percentage allocation.</p></div>;
+  };
+
+  openQuickView = (investment, index, totalAllocated) => {
+    const productId = investment.product_id || investment.id || '';
+    const applicationId = investment.application_id || `POS-${index + 1}`;
+    const creditorName = toText(investment.creditor_name) || toText(investment.requested_by) || 'Creditor';
+    const productTitle = toText(investment.product_title) || toText(investment.name) || 'Invested position';
+    const amount = Number(investment.invested_amount) || 0;
+    const share = totalAllocated > 0 ? (amount / totalAllocated) * 100 : 0;
+    const maturity = addMonths(investment.invested_on, investment.duration);
+    openContextDrawer({ kicker: 'Portfolio quick view', title: productTitle, subtitle: creditorName, status: 'invested', facts: [
+      { label: 'Invested capital', value: formatEuro(amount) }, { label: 'Portfolio share', value: share ? `${share.toFixed(1)}%` : '—' }, { label: 'Invested on', value: formatDate(investment.invested_on) }, { label: 'Tenor', value: `${toText(investment.duration) || '—'} months` }, { label: 'Maturity', value: formatDate(maturity) }
+    ], activity: [
+      { label: 'Position funded', meta: formatDate(investment.invested_on) }, { label: 'Capital allocation recorded', meta: formatEuro(amount) }, { label: 'Contractual maturity calculated', meta: formatDate(maturity) }
+    ], href: `/positions/${encodeURIComponent(productId)}/${encodeURIComponent(applicationId)}`, hrefLabel: 'Open full position' });
+  };
+
+  handleRowKey = (event, investment, index, totalAllocated) => {
+    if (event.key === 'Enter') { event.preventDefault(); this.openQuickView(investment, index, totalAllocated); return; }
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); const rows = Array.from(event.currentTarget.parentElement.querySelectorAll('.portfolio-row')); const next = event.key === 'ArrowDown' ? Math.min(rows.length - 1, index + 1) : Math.max(0, index - 1); if (rows[next]) rows[next].focus(); }
   };
 
   renderRows = (investments, totalAllocated) => {
@@ -75,9 +61,11 @@ class InvestedList extends Component {
       const amount = Number(investment.invested_amount) || 0;
       const share = totalAllocated > 0 ? (amount / totalAllocated) * 100 : 0;
       const maturity = addMonths(investment.invested_on, investment.duration);
-      return <Link className="portfolio-row" key={applicationId || `${productId}-${index}`} to={`/positions/${encodeURIComponent(productId)}/${encodeURIComponent(applicationId)}`}><span className="ap-position-main"><strong>{productTitle}</strong><small>{creditorName} · {applicationId}</small></span><span className="ap-mono">{formatDate(investment.invested_on)}</span><span className="ap-mono ap-money">{formatEuro(amount)}</span><span className="ap-mono">{toText(investment.duration) || '—'}m</span><span className="ap-mono">{formatDate(maturity)}</span><span className="ap-mono">{share ? `${share.toFixed(1)}%` : '—'}</span><span className="ap-row-arrow" aria-hidden="true">›</span></Link>;
+      return <div className="portfolio-row" role="row" tabIndex="0" key={applicationId || `${productId}-${index}`} onKeyDown={event => this.handleRowKey(event, investment, index, totalAllocated)}><span className="ap-position-main" role="cell"><strong>{productTitle}</strong><small>{creditorName} · {applicationId}</small></span><span className="ap-mono" role="cell">{formatDate(investment.invested_on)}</span><span className="ap-mono ap-money" role="cell">{formatEuro(amount)}</span><span className="ap-mono" role="cell">{toText(investment.duration) || '—'}m</span><span className="ap-mono" role="cell">{formatDate(maturity)}</span><span className="ap-mono" role="cell">{share ? `${share.toFixed(1)}%` : '—'}</span><span className="portfolio-row-actions" role="cell"><button className="ap-quick-view-btn" type="button" onClick={() => this.openQuickView(investment, index, totalAllocated)} aria-label={`Quick view ${productTitle}`} title="Quick view"><i className="bx bx-window-open" aria-hidden="true" /></button><Link className="row-open-link" to={`/positions/${encodeURIComponent(productId)}/${encodeURIComponent(applicationId)}`}>Open</Link></span></div>;
     });
   };
+
+  exportPositions = investments => downloadCsv('pihub-invested-positions.csv', [['Position', 'Creditor', 'Invested date', 'Capital', 'Tenor months', 'Maturity'], ...investments.map((investment, index) => [toText(investment.product_title) || `Position ${index + 1}`, toText(investment.creditor_name) || toText(investment.requested_by), formatDate(investment.invested_on), Number(investment.invested_amount) || 0, Number(investment.duration) || 0, formatDate(addMonths(investment.invested_on, investment.duration))])]);
 
   render() {
     const investments = this.getInvestments();
@@ -97,7 +85,8 @@ class InvestedList extends Component {
       <section className="ap-capital-tape" aria-label="Portfolio summary" data-motion="metric-grid"><article className="ap-metric"><span className="ap-metric-label"><i />Positions</span><strong>{investments.length}</strong><small>Visible investment records</small></article><article className="ap-metric ap-metric-signal"><span className="ap-metric-label"><i />Allocated</span><strong className="ap-metric-money">{formatEuro(totalAllocated)}</strong><small>Total visible capital</small></article><article className="ap-metric"><span className="ap-metric-label"><i />Average tenor</span><strong>{averageDuration || '—'}<em>m</em></strong><small>Contractual duration</small></article><article className="ap-metric ap-metric-warning"><span className="ap-metric-label"><i />Next maturity</span><strong className="ap-metric-date">{nextMaturity ? formatDate(nextMaturity.date) : '—'}</strong><small>{nextMaturity ? toText(nextMaturity.item.product_title) || 'Position' : 'No future maturity visible'}</small></article></section>
       <section className="ap-maturity-panel" data-motion="table-shell"><div className="ap-section-rule"><div><strong>Maturity ladder</strong><span>Contractual tenor shown against an explicit month scale</span></div></div>{this.renderMaturityLadder(investments)}</section>
       <section className="portfolio-facts" aria-label="Portfolio decision facts"><div><span>Largest concentration</span><strong>{largestShare ? `${largestShare.toFixed(1)}%` : '—'}</strong><small>Largest position as share of visible capital</small></div><div><span>Maturing within 12 months</span><strong>{within12Months}</strong><small>Derived from invested date plus tenor</small></div><div><span>Counterparties</span><strong>{counterparties.length}</strong><small>Unique visible creditor names</small></div></section>
-      <section className="portfolio-table" aria-label="Invested position book" data-motion="table-shell"><div className="portfolio-head"><span>Position</span><span>Invested</span><span>Capital</span><span>Tenor</span><span>Maturity</span><span>Share</span><span /></div><div>{this.renderRows(investments, totalAllocated)}</div></section>
+      <div className="decision-toolbar ap-portfolio-toolbar"><span>{investments.length} visible positions · use ↑/↓ to move between rows</span><div className="data-toolbar-actions"><div className="ap-density-toggle" role="group" aria-label="Portfolio table density"><button type="button" aria-pressed={this.state.density === 'comfortable'} onClick={() => this.setDensity('comfortable')}>Comfortable</button><button type="button" aria-pressed={this.state.density === 'compact'} onClick={() => this.setDensity('compact')}>Compact</button></div><button className="btn btn-secondary" type="button" onClick={() => this.exportPositions(investments)}>Export portfolio</button></div></div>
+      <section className={`portfolio-table is-density-${this.state.density}`} role="table" aria-label="Invested position book" data-motion="table-shell"><div className="portfolio-head" role="row"><span role="columnheader">Position</span><span role="columnheader">Invested</span><span role="columnheader">Capital</span><span role="columnheader">Tenor</span><span role="columnheader">Maturity</span><span role="columnheader">Share</span><span role="columnheader"><span className="sr-only">Actions</span></span></div><div>{this.renderRows(investments, totalAllocated)}</div></section>
     </Fragment>;
   }
 }
