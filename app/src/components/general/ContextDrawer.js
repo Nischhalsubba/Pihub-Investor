@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { gsap } from 'gsap';
-
-const reduceMotion = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+import { animateOverlayPanel } from '../../_utils/motion';
 
 const ContextDrawer = ({ history }) => {
   const [open, setOpen] = useState(false);
@@ -30,17 +28,7 @@ const ContextDrawer = ({ history }) => {
     if (!drawer) return undefined;
     const layer = drawer.closest('.ap-context-layer');
     const scrim = layer && layer.querySelector('.ap-context-scrim');
-    gsap.killTweensOf([drawer, scrim]);
-    if (reduceMotion()) {
-      gsap.set(drawer, { x: 0, scaleX: 1, autoAlpha: open ? 1 : 0, transformOrigin: '100% 50%' });
-      if (scrim) gsap.set(scrim, { autoAlpha: open ? 1 : 0 });
-    } else if (open) {
-      if (scrim) gsap.fromTo(scrim, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.18, ease: 'power2.out' });
-      gsap.fromTo(drawer, { x: 0, scaleX: 0.985, autoAlpha: 0.75, transformOrigin: '100% 50%' }, { x: 0, scaleX: 1, autoAlpha: 1, duration: 0.32, ease: 'power3.out', overwrite: 'auto' });
-    } else {
-      gsap.to(drawer, { x: 0, scaleX: 0.985, autoAlpha: 0, transformOrigin: '100% 50%', duration: 0.18, ease: 'power2.in', overwrite: 'auto' });
-      if (scrim) gsap.to(scrim, { autoAlpha: 0, duration: 0.14, ease: 'power1.in' });
-    }
+    animateOverlayPanel({ panel: drawer, scrim, open });
     if (open) {
       const closeButton = drawer.querySelector('.ap-drawer-close');
       if (closeButton) closeButton.focus();
