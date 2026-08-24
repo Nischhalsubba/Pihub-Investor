@@ -9,6 +9,7 @@ import { logout } from '../../actions/login';
 import { getLocale, setLocale } from '../../_utils/locale';
 import { isDemoMode } from '../../_utils/demoMode';
 import { withCompleteDemoProfile } from '../../_utils/demoProfileData';
+import { openCommandPalette, openNotificationDrawer } from '../../_utils/workspaceEvents';
 
 const normalizeNotificationCount = value => {
   const number = candidate => {
@@ -74,7 +75,6 @@ class Header extends Component {
     this.props.changeLanguage(locale);
   };
 
-  openCommand = () => window.dispatchEvent(new CustomEvent('pihub:command-open'));
   closeAccount = () => this.setState({ accountOpen: false });
 
   render() {
@@ -98,16 +98,9 @@ class Header extends Component {
         <div className="ap-global-header-main">
           <div className="ap-topbar-leading">
             {demoMode ? (
-              <div
-                className="ap-environment-chip"
-                role="status"
-                aria-label="Demo workspace. Data and actions stay in this browser and are not live financial records."
-              >
+              <div className="ap-environment-chip" role="status" aria-label="Demo workspace. Data and actions stay in this browser and are not live financial records.">
                 <span className="ap-environment-dot" aria-hidden="true" />
-                <span className="ap-environment-copy">
-                  <strong>Demo workspace</strong>
-                  <small>Local browser data · no live records</small>
-                </span>
+                <span className="ap-environment-copy"><strong>Demo workspace</strong><small>Local browser data · no live records</small></span>
               </div>
             ) : (
               <div className="ap-environment-chip is-live" role="status" aria-label="Live workspace">
@@ -120,7 +113,7 @@ class Header extends Component {
           <nav className="header-actions ap-top-actions" aria-label="Workspace utilities">
             <ul className="ap-topbar-controls">
               <li className="ap-topbar-command-item">
-                <button className="ap-command-trigger ap-command-trigger-v3" type="button" onClick={this.openCommand} aria-label={`Open command menu, ${shortcut}`}>
+                <button className="ap-command-trigger ap-command-trigger-v3" type="button" onClick={() => openCommandPalette()} aria-label={`Open global search and command menu, ${shortcut}`}>
                   <i className="bx bx-search" aria-hidden="true" />
                   <span className="ap-command-trigger-copy">Search or command</span>
                   <kbd>{shortcut}</kbd>
@@ -134,21 +127,13 @@ class Header extends Component {
                 </div>
               </li>
               <li className="header-actions__item">
-                <Link className="header-notification ap-icon-btn ap-icon-btn-v3" to="/notifications" aria-label={`${notificationCount} notifications`}>
+                <button className="header-notification ap-icon-btn ap-icon-btn-v3" type="button" onClick={openNotificationDrawer} aria-label={`${notificationCount} unread notifications. Open notification center.`} title="Notifications">
                   <i className="bx bx-bell" aria-hidden="true" />
                   {notificationCount > 0 ? <span className="notification-count">{notificationCount}</span> : null}
-                </Link>
+                </button>
               </li>
               <li className="ap-user-menu" ref={this.accountRef}>
-                <button
-                  className="ap-user-button ap-user-button-v3"
-                  type="button"
-                  aria-haspopup="menu"
-                  aria-expanded={accountOpen}
-                  aria-controls="account-menu"
-                  aria-label="Open account menu"
-                  onClick={() => this.setState(state => ({ accountOpen: !state.accountOpen }))}
-                >
+                <button className="ap-user-button ap-user-button-v3" type="button" aria-haspopup="menu" aria-expanded={accountOpen} aria-controls="account-menu" aria-label="Open account menu" onClick={() => this.setState(state => ({ accountOpen: !state.accountOpen }))}>
                   <span className="ap-user-avatar"><img src="/assets/img/user.png" alt="" /></span>
                   <span className="ap-user-copy"><strong>{accountName}</strong><small>{accountCategory}</small></span>
                   <i className="bx bx-chevron-down ap-user-chevron" aria-hidden="true" />
@@ -170,10 +155,6 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  count: state.notificationCount,
-  language: state.language,
-  profile: state.profile
-});
+const mapStateToProps = state => ({ count: state.notificationCount, language: state.language, profile: state.profile });
 
 export default connect(mapStateToProps, { getNotificationCount, getProfile, logout, changeLanguage })(withRouter(Header));
