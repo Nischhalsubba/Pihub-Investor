@@ -111,6 +111,114 @@
   min-height: 36px !important;
 }
 
+/*
+ * Dashboard card-header contract.
+ * This lives in the final cascade so legacy and feature-layer selectors cannot
+ * collapse title + helper text back into one inline run or drop actions below
+ * the heading on wide screens.
+ */
+.overview-panel > header {
+  min-height: 64px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 20px !important;
+  padding: 13px 18px !important;
+  border-bottom: 1px solid #e4eaf2;
+}
+
+.overview-panel > header > div {
+  min-width: 0;
+  display: grid !important;
+  align-content: center;
+  gap: 4px !important;
+}
+
+.overview-panel > header > div > strong,
+.overview-panel > header > div > span {
+  display: block !important;
+  margin: 0 !important;
+}
+
+.overview-panel > header > div > strong {
+  color: #1d2b42;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.overview-panel > header > div > span {
+  color: #6b7a91;
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+.overview-panel > header > a {
+  min-height: 34px;
+  flex: 0 0 auto;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  color: #465a79;
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.overview-panel > header > a:hover {
+  color: #3154c8;
+}
+
+.overview-attention-row > span {
+  min-width: 0;
+  display: grid !important;
+  align-content: center;
+  gap: 4px;
+}
+
+.overview-attention-row > span > strong,
+.overview-attention-row > span > small {
+  display: block !important;
+  margin: 0 !important;
+  line-height: 1.3;
+}
+
+.overview-attention-row > span > strong {
+  color: #34445d;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.overview-attention-row > span > small {
+  color: #718097;
+  font-size: 9.5px;
+}
+
+.overview-actions > a {
+  min-height: 58px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  padding: 0 18px !important;
+}
+
+.overview-actions > a > span {
+  min-width: 0;
+  color: #46556d;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.overview-actions > a > small {
+  flex: 0 0 auto;
+  color: #6d7b91;
+  font: 500 9px "IBM Plex Mono", monospace;
+  white-space: nowrap;
+}
+
 /* Search results can identify institution contacts explicitly. */
 .ap-command-kind.is-contact {
   background: #eef8f4;
@@ -125,5 +233,23 @@
 
   .ap-role-priority .btn {
     width: 100%;
+  }
+
+  .overview-panel > header {
+    min-height: 0 !important;
+    align-items: flex-start !important;
+    flex-direction: column;
+    gap: 10px !important;
+    padding: 14px 16px !important;
+  }
+
+  .overview-panel > header > a {
+    min-height: 30px;
+  }
+
+  .overview-actions > a {
+    min-height: 56px;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
 }
