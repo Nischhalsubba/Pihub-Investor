@@ -76,13 +76,14 @@ const MotionController = () => {
       gsap.killTweensOf([stage, veil, ...surfaceTargets, ...rowTargets, ...maturityBars, ...dataBars, ...trendLines]);
 
       const tl = gsap.timeline({ defaults: { overwrite: 'auto' } });
-      tl.fromTo(stage, { autoAlpha: 0.94, y: 10, scale: 0.996, transformOrigin: '50% 0%' }, { autoAlpha: 1, y: 0, scale: 1, duration: MOTION.route, ease: MOTION.easeEnter, clearProps: 'transform,opacity,visibility' }, 0);
+      gsap.set(stage, { autoAlpha: 1 });
+      tl.fromTo(stage, { y: 10, scale: 0.996, transformOrigin: '50% 0%' }, { y: 0, scale: 1, duration: MOTION.route, ease: MOTION.easeEnter, clearProps: 'transform' }, 0);
       if (pageHead) tl.fromTo(pageHead, { y: 12 }, { y: 0, duration: MOTION.panel, ease: MOTION.easeEnter, clearProps: 'transform' }, 0.01);
-      if (surfaceTargets.length) tl.fromTo(surfaceTargets, { autoAlpha: 0.82, y: 14 }, { autoAlpha: 1, y: 0, duration: MOTION.panel, stagger: 0.035, ease: MOTION.easeEnter, clearProps: 'transform,opacity,visibility' }, 0.04);
-      if (rowTargets.length) tl.fromTo(rowTargets, { autoAlpha: 0.86, x: 7 }, { autoAlpha: 1, x: 0, duration: MOTION.standard, stagger: 0.025, ease: MOTION.easeStandard, clearProps: 'transform,opacity,visibility' }, 0.1);
+      if (surfaceTargets.length) tl.fromTo(surfaceTargets, { y: 14 }, { y: 0, duration: MOTION.panel, stagger: 0.035, ease: MOTION.easeEnter, clearProps: 'transform' }, 0.04);
+      if (rowTargets.length) tl.fromTo(rowTargets, { x: 7 }, { x: 0, duration: MOTION.standard, stagger: 0.025, ease: MOTION.easeStandard, clearProps: 'transform' }, 0.1);
       if (maturityBars.length) tl.fromTo(maturityBars, { scaleX: 0.12, transformOrigin: '0% 50%' }, { scaleX: 1, duration: MOTION.panel, stagger: 0.035, ease: MOTION.easeEnter, clearProps: 'transform' }, 0.12);
       if (dataBars.length) tl.fromTo(dataBars, { scaleX: 0.08, transformOrigin: '0% 50%' }, { scaleX: 1, duration: MOTION.panel, stagger: 0.025, ease: MOTION.easeEnter, clearProps: 'transform' }, 0.12);
-      if (trendLines.length) tl.fromTo(trendLines, { autoAlpha: 0.4, y: 4 }, { autoAlpha: 1, y: 0, duration: MOTION.panel, ease: MOTION.easeEnter, clearProps: 'transform,opacity,visibility' }, 0.14);
+      if (trendLines.length) tl.fromTo(trendLines, { y: 4 }, { y: 0, duration: MOTION.panel, ease: MOTION.easeEnter, clearProps: 'transform' }, 0.14);
       if (veil) tl.to(veil, { autoAlpha: 0, y: -3, duration: MOTION.quick, ease: MOTION.easeExit, clearProps: 'transform' }, 0.02);
     }, root);
 
