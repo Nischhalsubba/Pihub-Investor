@@ -58,7 +58,7 @@ const DEMO_PRODUCTS = [
   }
 ];
 
-const DEMO_CREDITORS = ['Nordstern GmbH', 'Helios Medical AG', 'Rheinwerk Industries'];
+const DEMO_CREDITORS = ['Nordstern GmbH', 'Helios Medical AG', 'Rheinwerk Industries', 'Bavaria Anlagenbau SE', 'RheinLogistik GmbH', 'Westfalen Export AG', 'NovaGrid Systems GmbH', 'HanseCare Kliniken GmbH'];
 
 const parseBoolean = value => {
   const normalized = String(value || '').trim().toLowerCase();
@@ -246,7 +246,11 @@ const buildApplication = product => ({
   nda_requirement: false,
   service: product.service,
   industries: product.industries,
-  ratings: product.ratings
+  ratings: product.ratings,
+  risk_band: product.risk_band || 'Moderate',
+  owner: product.owner || 'Investor team',
+  expected_yield_bps: product.expected_yield_bps || 500,
+  next_review_at: product.next_review_at || null
 });
 
 const buildCreditRequest = (product, index) => ({
@@ -256,8 +260,13 @@ const buildCreditRequest = (product, index) => ({
   product_title: productTitle(product),
   name: productTitle(product),
   service: product.service,
-  created_on: '2026-08-04T09:00:00Z',
-  deadline: '2026-09-30T00:00:00Z',
+  requested_amount: product.min_credit_amount || 100000,
+  amount: product.min_credit_amount || 100000,
+  ratings: product.ratings,
+  risk_band: product.risk_band || 'Moderate',
+  owner: product.owner || 'Investor team',
+  created_on: new Date(Date.UTC(2026, 7, 4 + index)).toISOString(),
+  deadline: product.next_review_at ? new Date(`${product.next_review_at}T00:00:00Z`).toISOString() : '2026-09-30T00:00:00Z',
   status: product.status === 'invested' ? 'invested' : 'requested'
 });
 
@@ -266,9 +275,14 @@ const buildInvestment = (product, index) => ({
   product_id: product.id,
   creditor_name: DEMO_CREDITORS[index] || 'Demo Creditor',
   product_title: productTitle(product),
-  invested_on: '2026-08-12T10:30:00Z',
+  invested_on: new Date(Date.UTC(2026, 6 + (index % 2), 12 + index)).toISOString(),
   invested_amount: product.min_credit_amount || 100000,
   duration: product.max_time_duration || 24,
+  expected_yield_bps: product.expected_yield_bps || 500,
+  risk_band: product.risk_band || 'Moderate',
+  owner: product.owner || 'Portfolio team',
+  ratings: product.ratings,
+  next_review_at: product.next_review_at || null,
   status: 'invested'
 });
 

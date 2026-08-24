@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Translate from 'react-translate-component';
+import Translate from '../../i18n/Translate';
 import Subheader from './Subheader';
 
-const Translator = require('react-translate-component');
+import Translator from '../../i18n/Translate';
 
 const UnverifiedPage = () => {
   const isGerman = Translator.getLocale() === 'de';

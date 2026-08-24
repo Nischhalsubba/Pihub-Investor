@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import Subheader from './../general/Subheader';
 
-const Translator = require('react-translate-component');
+import Translator from '../../i18n/Translate';
 
 const AppliedList = () => {
   const isGerman = Translator.getLocale() === 'de';

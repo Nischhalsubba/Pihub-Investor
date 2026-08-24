@@ -1,7 +1,7 @@
 import en from "../_locale/en";
 import de from "../_locale/de";
 
-const Translate = require('react-translate-component');
+import Translate from '../i18n/Translate';
 
 export const selectAll = () => {
     let locale = Translate.getLocale();

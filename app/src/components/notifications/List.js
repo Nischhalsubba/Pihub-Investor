@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { getNotificationList, markAsRead } from '../../actions/notification';
-import Translate from 'react-translate-component';
+import Translate from '../../i18n/Translate';
 import Subheader from '../general/Subheader';
 
-const Translator = require('react-translate-component');
+import Translator from '../../i18n/Translate';
 
 class Notifications extends Component {
   state = { refresh: false };

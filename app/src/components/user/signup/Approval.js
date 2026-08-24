@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { confirmEmail } from '../../../actions/confirmEmail';
 import { withRouter, Link } from 'react-router-dom';
-import Translate from 'react-translate-component';
+import Translate from '../../../i18n/Translate';
 import AuthShell from '../AuthShell';
 import SignupProgress from './SignupProgress';
 
-const Translator = require('react-translate-component');
+import Translator from '../../../i18n/Translate';
 
 class Approval extends Component {
   state = { invalid: false };

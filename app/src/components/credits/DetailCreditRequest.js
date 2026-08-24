@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { getApplicationDetail } from '../../actions/application';
-import Translate from 'react-translate-component';
+import Translate from '../../i18n/Translate';
 import { changeStatus } from '../../actions/changeStatus';
 import CreditInfo from './CreditInfo';
 import ActivityTimeline from '../general/ActivityTimeline';
 import { showToast } from '../../_utils/workspaceEvents';
 
-const Translator = require('react-translate-component');
+import Translator from '../../i18n/Translate';
 
 class DetailCreditRequest extends Component {
   state = { detail: null, refresh: false };

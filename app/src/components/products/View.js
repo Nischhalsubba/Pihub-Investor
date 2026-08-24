@@ -5,10 +5,10 @@ import { downloadToken } from '../../actions/download';
 import RequestedByList from '../credits/RequestedByList';
 import Subheader from '../general/Subheader';
 import ActivityTimeline from '../general/ActivityTimeline';
-import Translate from 'react-translate-component';
+import Translate from '../../i18n/Translate';
 import { ToEuro } from '../general/CurrencyFormatter';
 
-const Translator = require('react-translate-component');
+import Translator from '../../i18n/Translate';
 
 const toText = value => {
   if (value === null || value === undefined) return '';

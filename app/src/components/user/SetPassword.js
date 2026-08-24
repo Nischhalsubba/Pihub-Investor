@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import Translator from 'react-translate-component';
+import Translator from '../../i18n/Translate';
 import { changePasswordWithToken } from '../../actions/password';
 import * as validation from '../../_utils/validate';
 import { AuthErrorSummary, AuthField } from './AuthFields';

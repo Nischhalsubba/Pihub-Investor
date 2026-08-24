@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { gsap } from 'gsap';
+import { gsap, prefersReducedMotion } from '../../_utils/motion';
 import { getProductsList } from '../../actions/product';
 import { getCreditRequestList } from '../../actions/credits';
 import { getInvestedList } from '../../actions/invested';
@@ -19,7 +19,7 @@ const COMMANDS = [
 ];
 
 const isTypingTarget = target => target && (['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName) || target.isContentEditable);
-const reduceMotion = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduceMotion = prefersReducedMotion;
 const text = value => {
   if (value === null || value === undefined) return '';
   if (typeof value === 'string' || typeof value === 'number') return String(value);

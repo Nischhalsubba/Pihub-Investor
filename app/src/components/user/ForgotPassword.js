@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Translate from 'react-translate-component';
-import Translator from 'react-translate-component';
+import Translate from '../../i18n/Translate';
+import Translator from '../../i18n/Translate';
 import { getTokenForEmail } from '../../actions/password';
 import * as validation from '../../_utils/validate';
 import { AuthErrorSummary, AuthField } from './AuthFields';

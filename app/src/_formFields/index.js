@@ -4,7 +4,7 @@ import Select from 'react-select';
 import Multiselect from 'react-widgets/lib/Multiselect';
 import 'react-widgets/dist/css/react-widgets.css';
 import Dropzone from 'react-dropzone';
-import Translate from 'react-translate-component';
+import Translate from '../i18n/Translate';
 import counterpart from 'counterpart';
 import InputRange from 'react-input-range';
 

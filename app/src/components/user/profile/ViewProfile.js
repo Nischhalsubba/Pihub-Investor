@@ -6,7 +6,7 @@ import Subheader from '../../general/Subheader';
 import { isDemoMode } from '../../../_utils/demoMode';
 import { withCompleteDemoProfile } from '../../../_utils/demoProfileData';
 
-const Translator = require('react-translate-component');
+import Translator from '../../../i18n/Translate';
 
 const valueText = value => {
   if (value === null || value === undefined || value === '') return 'Not supplied';

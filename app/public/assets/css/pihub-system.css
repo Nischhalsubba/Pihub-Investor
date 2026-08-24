@@ -1,0 +1,184 @@
+/* PiHub Investor canonical design-system layer.
+   New UI rules belong here. Historical compatibility lives in the six grouped
+   layers before this file; do not create another *-fix or *-polish stylesheet. */
+
+:root {
+  --pihub-space-1: 4px;
+  --pihub-space-2: 8px;
+  --pihub-space-3: 12px;
+  --pihub-space-4: 16px;
+  --pihub-space-5: 24px;
+  --pihub-space-6: 32px;
+  --pihub-space-7: 48px;
+  --pihub-control-sm: 36px;
+  --pihub-control: 44px;
+  --pihub-radius-sm: 4px;
+  --pihub-radius-md: 8px;
+  --pihub-radius-lg: 12px;
+  --pihub-z-base: 0;
+  --pihub-z-sticky: 40;
+  --pihub-z-header: 70;
+  --pihub-z-sidebar: 80;
+  --pihub-z-overlay: 200;
+  --pihub-z-toast: 300;
+  --pihub-motion-quick: 120ms;
+  --pihub-motion-standard: 200ms;
+  --pihub-motion-panel: 280ms;
+  --pihub-ease-enter: cubic-bezier(.2, 0, 0, 1);
+  --pihub-ease-exit: cubic-bezier(.3, 0, 1, 1);
+  --pihub-text: #0a1020;
+  --pihub-text-secondary: #536078;
+  --pihub-text-muted: #5f6f86;
+  --pihub-border: #d9e1eb;
+  --pihub-surface: #fbfcfd;
+  --pihub-surface-muted: #f6f8fa;
+  --pihub-signal: #5f80ff;
+}
+
+/* One toolbar contract: permanent query controls plus a compact workspace rail. */
+.data-toolbar { gap: var(--pihub-space-3) !important; }
+.data-toolbar > .ap-query-line,
+.data-toolbar > .data-toolbar-actions { min-height: var(--pihub-control) !important; align-items: center !important; }
+.ap-view-menu > summary,
+.data-toolbar-actions > .btn { min-height: var(--pihub-control) !important; }
+
+.ap-view-menu { position: relative; }
+.ap-view-menu > summary { min-width: 96px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 14px; border: 1px solid #cfd9e6; border-radius: var(--pihub-radius-md); background: #fff; color: #3e506b; font-size: 11px; font-weight: 700; cursor: pointer; list-style: none; }
+.ap-view-menu > summary::-webkit-details-marker { display: none; }
+.ap-view-menu[open] > summary,
+.ap-view-menu > summary:hover { border-color: #aebed2; color: #213554; background: #f9fbff; }
+.ap-view-menu-panel { position: absolute; top: calc(100% + 8px); right: 0; z-index: var(--pihub-z-overlay); width: min(420px, calc(100vw - 32px)); max-height: min(680px, calc(100dvh - 130px)); overflow: auto; padding: 14px; border: 1px solid var(--pihub-border); border-radius: var(--pihub-radius-lg); background: #fff; box-shadow: 0 18px 50px rgba(10, 20, 40, .14); }
+.ap-view-section + .ap-view-section { margin-top: 14px; padding-top: 14px; border-top: 1px solid #e7ecf2; }
+.ap-view-section > header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.ap-view-section > header strong { color: #223149; font-size: 11px; }
+.ap-view-section > header span { color: var(--pihub-text-muted); font-size: 9.5px; }
+.ap-view-density { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.ap-view-density button { min-height: 38px; border: 1px solid #d8e1ec; border-radius: 7px; background: #fff; color: #53647c; font-size: 10.5px; font-weight: 700; }
+.ap-view-density button[aria-pressed="true"] { border-color: #b9c8ff; background: #f0f4ff; color: #3558cb; }
+.ap-view-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 12px; }
+.ap-view-columns label { min-height: 34px; display: flex; align-items: center; gap: 8px; color: #43536b; font-size: 10.5px; }
+
+.ap-saved-view-list { display: grid; gap: 7px; }
+.ap-saved-view-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 8px 9px; border: 1px solid #e1e7ef; border-radius: 8px; background: #fafbfd; }
+.ap-saved-view-item.is-default { border-color: #c8d5ff; background: #f5f7ff; }
+.ap-saved-view-copy { min-width: 0; display: block; width: 100%; padding: 0; border: 0; background: transparent; text-align: left; }
+.ap-saved-view-copy strong, .ap-saved-view-copy span { display: block; }
+.ap-saved-view-copy strong { overflow: hidden; color: #2a3951; font-size: 10.5px; text-overflow: ellipsis; white-space: nowrap; }
+.ap-saved-view-copy span { margin-top: 2px; color: #66758a; font-size: 9px; }
+.ap-saved-view-actions { display: flex; gap: 4px; }
+.ap-saved-view-actions button { width: 32px; height: 32px; display: grid; place-items: center; border: 0; border-radius: 6px; background: transparent; color: #596b84; }
+.ap-saved-view-actions button:hover { background: #edf2f8; color: #284aab; }
+.ap-saved-view-actions button.is-danger:hover { background: #fff0f1; color: #ad3440; }
+.ap-saved-view-create { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7px; margin-top: 9px; }
+.ap-saved-view-create input { min-height: 38px; min-width: 0; border: 1px solid #d5deea; border-radius: 7px; padding: 0 10px; font-size: 11px; }
+.ap-saved-view-create button { min-height: 38px; padding: 0 12px; border: 1px solid #c6d2e2; border-radius: 7px; background: #fff; color: #30445f; font-size: 10px; font-weight: 700; }
+.ap-saved-view-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.ap-saved-view-tools button { min-height: 34px; padding: 0 10px; border: 1px solid #d8e0ea; border-radius: 6px; background: #fff; color: #53647b; font-size: 9.5px; font-weight: 700; }
+.ap-saved-view-inline { display: grid; grid-template-columns: minmax(120px, 1fr) repeat(3, auto); gap: 5px; align-items: center; }
+.ap-saved-view-inline button { min-height: 32px; border: 0; border-radius: 5px; background: transparent; color: #4f6078; font-size: 9.5px; text-align: left; }
+.ap-saved-view-inline button:hover { background: #f0f4f9; color: #3154c8; }
+
+/* Decision fields added during product-maturity pass. */
+.ap-decision-meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+.ap-decision-meta > div { padding: 9px 10px; border: 1px solid #e3e8ef; border-radius: 7px; background: #fafbfd; }
+.ap-decision-meta span, .ap-decision-meta strong { display: block; }
+.ap-decision-meta span { color: #68778c; font-size: 9px; }
+.ap-decision-meta strong { margin-top: 3px; color: #263750; font-size: 10.5px; }
+
+/* Owner is a first-class decision field; preserve usable widths before scrolling. */
+.decision-head,
+.decision-row { grid-template-columns: 34px minmax(132px, 1fr) minmax(150px, 1.08fr) minmax(92px, .72fr) minmax(108px, .78fr) minmax(92px, .65fr) minmax(82px, .58fr) minmax(116px, .78fr) 92px 96px !important; }
+.portfolio-head,
+.portfolio-row { grid-template-columns: minmax(200px, 1.4fr) 96px 112px 76px 86px 70px 100px 66px 92px !important; gap: 10px !important; }
+
+/* Release hardening: text must remain AA-compliant at rest and during motion. */
+.ap-notification-drawer .ap-drawer-head p,
+.ap-notification-card-copy span,
+.ap-notification-card-copy small,
+.ap-notification-filters button,
+.chart-definition { color: #536078 !important; }
+.ap-density-toggle button[aria-pressed="false"] { color: #536078 !important; }
+.ap-notification-actions .btn.btn-link { color: #455a78 !important; }
+.ap-notification-actions .btn.btn-link:last-child,
+.ap-notification-filters button[aria-pressed="true"],
+.ap-compare-table .btn-link { color: #294aa8 !important; }
+.content-head-kicker { color: #3451ad !important; }
+.content-head-copy,
+.ap-compare-table th small { color: #536078 !important; }
+
+/* Board children must never enlarge the document viewport. */
+.ap-board-grid { min-width: 0 !important; width: 100% !important; }
+.ap-board-grid > * { min-width: 0 !important; }
+.ap-inspector { min-width: 0 !important; }
+
+/* WebKit applies slightly different intrinsic form metrics; use one flex baseline on wide screens. */
+@media (min-width: 1361px) {
+  .data-toolbar > .ap-query-line { display: flex !important; align-items: center !important; }
+  .data-toolbar > .ap-query-line > *,
+  .data-toolbar > .data-toolbar-actions > * { align-self: center !important; margin-top: 0 !important; margin-bottom: 0 !important; }
+  .data-toolbar .ap-query-input { min-width: 0 !important; flex: 1 1 auto !important; align-self: center !important; }
+  .data-toolbar .ap-query-input input,
+  .data-toolbar .ap-filter-tabs,
+  .data-toolbar .ap-search-submit,
+  .data-toolbar .ap-view-menu > summary,
+  .data-toolbar .data-toolbar-actions > .btn { height: var(--pihub-control) !important; min-height: var(--pihub-control) !important; margin-block: 0 !important; }
+}
+
+@media (min-width: 821px) and (max-width: 1360px) {
+  .ap-board-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .ap-inspector { width: 100% !important; max-width: none !important; }
+  .ap-decision-meta { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+
+/* At laptop widths the nine-column portfolio ledger becomes a compact
+   decision ledger rather than forcing desktop geometry into a narrow content
+   pane. Invested date, tenor and share remain available in Quick View/CSV. */
+@media (min-width: 821px) and (max-width: 1200px) {
+  .portfolio-table {
+    display: block !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+  .portfolio-table > div:not(.portfolio-head) {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .portfolio-head,
+  .portfolio-row {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    grid-template-columns: minmax(170px, 1.6fr) 104px 78px 88px 104px 86px !important;
+    gap: 8px !important;
+  }
+  .portfolio-head > :nth-child(2),
+  .portfolio-row > :nth-child(2),
+  .portfolio-head > :nth-child(6),
+  .portfolio-row > :nth-child(6),
+  .portfolio-head > :nth-child(8),
+  .portfolio-row > :nth-child(8) {
+    display: none !important;
+  }
+  .portfolio-row > * {
+    min-width: 0 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ap-portfolio-toolbar { min-width: 0 !important; flex-wrap: wrap !important; }
+  .ap-portfolio-toolbar .data-toolbar-actions { min-width: 0 !important; flex-wrap: wrap !important; }
+}
+
+@media (max-width: 720px) {
+  .ap-view-menu-panel { position: fixed; left: 12px; right: 12px; top: 74px; width: auto; }
+  .ap-view-columns, .ap-decision-meta { grid-template-columns: 1fr; }
+  .ap-saved-view-inline { grid-template-columns: 1fr 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}

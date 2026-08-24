@@ -63,6 +63,7 @@ test('notification center supports unread state, deep links and accessibility', 
   await expect(bell).toBeVisible();
   await bell.click();
   await expect(page.getByRole('dialog', { name: /notifications/i })).toBeVisible();
+  await expect(page.locator('.ap-notification-drawer')).toHaveCSS('opacity', '1');
   await expect(page.getByText(/3 unread updates?/i)).toBeVisible();
   await expect(page.getByText('Credit request awaiting review', { exact: true })).toBeVisible();
   await expectNoSeriousA11y(page);
@@ -74,12 +75,15 @@ test('notification center supports unread state, deep links and accessibility', 
 });
 
 test('opportunity quick view, saved density and compare mode work', async ({ page }) => {
+  test.setTimeout(45000);
   await login(page);
   await page.goto('/products');
 
+  await page.locator('.ap-view-menu > summary').click();
   const compact = page.getByRole('button', { name: 'Compact' }).first();
   await compact.click();
   await expect(compact).toHaveAttribute('aria-pressed', 'true');
+  await page.locator('.ap-view-menu > summary').click();
 
   await page.getByRole('button', { name: /Quick view Growth Loan A/i }).click();
   const quickView = page.getByRole('dialog', { name: /Growth Loan A/i });

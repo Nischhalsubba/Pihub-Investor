@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { uploadFile } from '../../actions/uploadFile';
 import { creditorDetail } from '../../actions/creditor';
 import { downloadToken } from '../../actions/download';
-import Translate from 'react-translate-component';
+import Translate from '../../i18n/Translate';
 import Spinner from '../general/Spinner';
 import CreditInfo from './CreditInfo';
 
-const Translator = require('react-translate-component');
+import Translator from '../../i18n/Translate';
 const MAX_FILE_SIZE = 8 * 1024 * 1024;
 const ALLOWED_TYPES = ['application/pdf', 'image/png', 'image/jpeg'];
 

@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Translate from 'react-translate-component';
+import Translate from '../../i18n/Translate';
 import { getNotificationCount } from '../../actions/notification';
 import { getProfile } from '../../actions/profile';
 import { changeLanguage } from '../../actions/changeLanguage';

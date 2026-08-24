@@ -2,13 +2,13 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Subheader from '../general/Subheader';
 import { getApplicationDetail } from '../../actions/application';
-import Translate from 'react-translate-component';
+import Translate from '../../i18n/Translate';
 import { ToEuro } from '../general/CurrencyFormatter';
 import { dDigit } from '../../_utils/misc';
 import { matchesInvestorStatus } from '../../_status';
 import { downloadToken } from '../../actions/download';
 
-const Translator = require('react-translate-component');
+import Translator from '../../i18n/Translate';
 
 class CreditInfo extends Component {
   state = { detail: null };
