@@ -4,6 +4,7 @@ import de from '../_locale/de';
 
 const STORAGE_KEY = 'pihub-locale';
 const LEGACY_KEY = 'language';
+const LOCALE_EVENT = 'pihub:locale-changed';
 const SUPPORTED = ['en', 'de'];
 let registered = false;
 
@@ -28,11 +29,13 @@ export const getLocale = () => {
 export const setLocale = value => {
   register();
   const locale = normalizeLocale(value);
+  const previous = counterpart.getLocale ? normalizeLocale(counterpart.getLocale()) : null;
   counterpart.setLocale(locale);
   if (typeof window !== 'undefined') {
     window.localStorage.setItem(STORAGE_KEY, locale);
     window.localStorage.removeItem(LEGACY_KEY);
     document.documentElement.lang = locale;
+    if (previous !== locale) window.dispatchEvent(new CustomEvent(LOCALE_EVENT, { detail: { locale } }));
   }
   return locale;
 };
@@ -42,3 +45,4 @@ export const translate = (key, options) => {
   register();
   return counterpart.translate(key, options);
 };
+export const localeEventName = LOCALE_EVENT;
