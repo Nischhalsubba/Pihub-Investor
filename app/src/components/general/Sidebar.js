@@ -1,12 +1,9 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import Translate from 'react-translate-component';
-import { gsap } from 'gsap';
-import { Flip } from 'gsap/Flip';
+import Translate from '../../i18n/Translate';
 import { getSidebarCollapsed, setSidebarCollapsed } from '../../_utils/workspacePreferences';
 import { openShortcutHelp } from '../../_utils/workspaceEvents';
-
-gsap.registerPlugin(Flip);
+import { captureLayout, playLayoutFlip } from '../../_utils/motion';
 
 const items = [
   { to: '/dashboard', icon: 'bx bx-pulse', text: 'Overview', matches: ['/', '/dashboard'] },
@@ -17,7 +14,6 @@ const items = [
 ];
 
 const routeMatches = (pathname, matches) => matches.some(path => path === '/' ? pathname === '/' : pathname === path || pathname.indexOf(`${path}/`) === 0);
-const reduceMotion = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const applySidebarState = collapsed => {
   if (typeof document === 'undefined') return;
   document.documentElement.dataset.pihubSidebar = collapsed ? 'collapsed' : 'expanded';
@@ -32,20 +28,11 @@ const Sidebar = ({ location }) => {
   const toggleSidebar = () => {
     const next = !collapsed;
     const targets = document.querySelectorAll('.ap-global-brand, .ap-global-header-main, .ap-sidebar, .ap-workspace');
-    const flipState = !reduceMotion() && window.innerWidth > 820 && targets.length ? Flip.getState(targets) : null;
+    const flipState = captureLayout(targets);
     setSidebarCollapsed(next);
     setCollapsed(next);
     applySidebarState(next);
-    if (flipState) {
-      window.requestAnimationFrame(() => Flip.from(flipState, {
-        duration: 0.32,
-        ease: 'power3.out',
-        absolute: false,
-        nested: true,
-        prune: true,
-        onComplete: () => gsap.set(targets, { clearProps: 'transform' })
-      }));
-    }
+    playLayoutFlip(flipState, targets);
   };
 
   return (
