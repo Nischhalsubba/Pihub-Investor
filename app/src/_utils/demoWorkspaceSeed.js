@@ -12,14 +12,21 @@ const seededProducts = [
   { id: 'DEMO-008', product_code: 'PIH-008', product_title: 'Healthcare Expansion H', service: { id: 3, name: { en: 'Growth Finance', de: 'Wachstumsfinanzierung' } }, industries: [{ id: 2, name: { en: 'Healthcare', de: 'Gesundheitswesen' } }], states: [{ id: 2, name: 'Hamburg' }], counties: [{ id: 21, name: 'Hamburg Mitte' }], min_time_duration: 24, max_time_duration: 60, min_credit_amount: 300000, max_credit_amount: 1100000, min_sales_creditor: 1600000, collatoral: 1, ratings: [{ name: 'Standard & Poors', value: 'BBB+' }], documents: [], status: 'requested' }
 ];
 
+const decisionContext = [
+  { owner: 'Mara Klein', risk_band: 'Low', next_review_at: '2026-09-04', expected_yield_bps: 410 },
+  { owner: 'Jonas Weber', risk_band: 'Moderate', next_review_at: '2026-08-28', expected_yield_bps: 485 },
+  { owner: 'Lena Hoffmann', risk_band: 'Moderate', next_review_at: '2026-10-15', expected_yield_bps: 535 },
+  { owner: 'Mara Klein', risk_band: 'Low', next_review_at: '2026-09-18', expected_yield_bps: 445 },
+  { owner: 'Jonas Weber', risk_band: 'Moderate', next_review_at: '2026-08-26', expected_yield_bps: 520 },
+  { owner: 'Lena Hoffmann', risk_band: 'Moderate', next_review_at: '2026-11-05', expected_yield_bps: 560 },
+  { owner: 'Mara Klein', risk_band: 'Moderate', next_review_at: '2026-10-02', expected_yield_bps: 575 },
+  { owner: 'Jonas Weber', risk_band: 'Elevated', next_review_at: '2026-08-25', expected_yield_bps: 625 }
+];
+
+const enrichSeed = (product, index) => ({ ...product, ...(decisionContext[index] || {}) });
+
 const readArray = key => {
-  try {
-    const value = localStorage.getItem(key);
-    const parsed = value ? JSON.parse(value) : [];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (error) {
-    return [];
-  }
+  try { const value = localStorage.getItem(key); const parsed = value ? JSON.parse(value) : []; return Array.isArray(parsed) ? parsed : []; } catch (error) { return []; }
 };
 
 export const rememberDeletedDemoSeed = id => {
@@ -33,7 +40,7 @@ export const ensureDemoWorkspaceData = () => {
   if (typeof window === 'undefined' || typeof localStorage === 'undefined') return;
   const current = readArray(PRODUCTS_KEY);
   const deleted = new Set(readArray(DELETED_SEED_KEY).map(String));
-  const byId = new Map(seededProducts.filter(product => !deleted.has(String(product.id))).map(product => [String(product.id), { ...product }]));
+  const byId = new Map(seededProducts.map(enrichSeed).filter(product => !deleted.has(String(product.id))).map(product => [String(product.id), { ...product }]));
   current.filter(Boolean).forEach(product => byId.set(String(product.id), { ...byId.get(String(product.id)), ...product }));
   try { localStorage.setItem(PRODUCTS_KEY, JSON.stringify(Array.from(byId.values()))); } catch (error) { /* demo enrichment is non-critical */ }
 };
