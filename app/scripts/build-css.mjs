@@ -33,7 +33,8 @@ const files = [
   'pihub-profile-navbar-v3-contrast.css',
   'pihub-global-shell-v4.css',
   'pihub-option-c-motion.css',
-  'pihub-option-c-loading.css'
+  'pihub-option-c-loading.css',
+  'pihub-option-c-guardrails.css'
 ];
 
 await mkdir(outputRoot, { recursive: true });
