@@ -26,10 +26,17 @@ export const animateOverlayPanel = ({ panel, scrim, open }) => {
   }
   if (open) {
     if (scrim) gsap.fromTo(scrim, { autoAlpha: 0 }, { autoAlpha: 1, duration: MOTION.standard, ease: MOTION.easeStandard });
-    gsap.fromTo(panel, { x: 24, autoAlpha: 0.76 }, { x: 0, autoAlpha: 1, duration: MOTION.panel, ease: MOTION.easeEnter, overwrite: 'auto' });
+    gsap.set(panel, { x: 24, autoAlpha: 1 });
+    gsap.to(panel, { x: 0, duration: MOTION.panel, ease: MOTION.easeEnter, overwrite: 'auto', clearProps: 'transform' });
     return;
   }
-  gsap.to(panel, { x: 0, autoAlpha: 0, duration: MOTION.quick, ease: MOTION.easeExit, overwrite: 'auto' });
+  gsap.to(panel, {
+    x: 24,
+    duration: MOTION.quick,
+    ease: MOTION.easeExit,
+    overwrite: 'auto',
+    onComplete: () => gsap.set(panel, { x: 0, autoAlpha: 0 })
+  });
   if (scrim) gsap.to(scrim, { autoAlpha: 0, duration: MOTION.quick, ease: MOTION.easeExit });
 };
 
