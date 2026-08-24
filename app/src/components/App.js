@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Suspense, useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom-v6';
 import Sidebar from './general/Sidebar';
 import Header from './general/Header';
 import CommandPalette from './general/CommandPalette';
 import MotionController from './general/MotionController';
+import WorkspaceSkeleton from './general/WorkspaceSkeleton';
 
 const App = () => {
   const mainRef = useRef(null);
@@ -23,7 +24,11 @@ const App = () => {
       <div className="main-content main-content--padded ap-workspace">
         <main id="main-content" className="workspace-main ap-main route-motion-scope" ref={mainRef} tabIndex="-1">
           <MotionController />
-          <Outlet />
+          <div className="route-stage" data-route={location.pathname}>
+            <Suspense fallback={<WorkspaceSkeleton />}>
+              <Outlet />
+            </Suspense>
+          </div>
         </main>
       </div>
       <CommandPalette />

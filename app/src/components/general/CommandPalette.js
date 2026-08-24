@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { gsap } from 'gsap';
 
 const COMMANDS = [
   { label: 'Opportunity book', meta: 'Browse and manage all opportunities.', path: '/products', shortcut: 'P', icon: 'bx bx-bar-chart-square', keywords: 'products opportunities facilities book' },
@@ -10,12 +11,15 @@ const COMMANDS = [
 ];
 
 const isTypingTarget = target => target && (['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName) || target.isContentEditable);
+const reduceMotion = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 class CommandPalette extends Component {
   state = { open: false, query: '', activeIndex: 0 };
   inputRef = React.createRef();
   dialogRef = React.createRef();
   previousFocus = null;
+  animation = null;
+  isClosing = false;
 
   componentDidMount() {
     window.addEventListener('keydown', this.onGlobalKeyDown);
@@ -25,6 +29,7 @@ class CommandPalette extends Component {
   componentWillUnmount() {
     window.removeEventListener('keydown', this.onGlobalKeyDown);
     window.removeEventListener('pihub:command-open', this.open);
+    if (this.animation) this.animation.kill();
   }
 
   getFilteredCommands = () => {
@@ -36,25 +41,88 @@ class CommandPalette extends Component {
     ? Array.from(this.dialogRef.current.querySelectorAll('input,button:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])')).filter(element => !element.hasAttribute('hidden'))
     : [];
 
-  open = () => {
-    if (this.state.open) return;
-    this.previousFocus = document.activeElement;
-    this.setState({ open: true, query: '', activeIndex: 0 }, () => window.requestAnimationFrame(() => this.inputRef.current && this.inputRef.current.focus()));
+  animateOpen = () => {
+    const dialog = this.dialogRef.current;
+    const layer = dialog && dialog.closest('.ap-command-layer');
+    if (!dialog || !layer || reduceMotion()) return;
+    const scrim = layer.querySelector('.ap-command-scrim');
+    const rows = dialog.querySelectorAll('.ap-command-row');
+    if (this.animation) this.animation.kill();
+    this.animation = gsap.timeline({ defaults: { overwrite: 'auto' } });
+    if (scrim) this.animation.fromTo(scrim, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.2, ease: 'power2.out' }, 0);
+    this.animation.fromTo(dialog, { autoAlpha: 0, y: -16, scale: 0.975, transformOrigin: '50% 0%' }, {
+      autoAlpha: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.34,
+      ease: 'power3.out',
+      clearProps: 'transform,opacity,visibility'
+    }, 0.02);
+    if (rows.length) this.animation.fromTo(rows, { autoAlpha: 0, y: 8 }, {
+      autoAlpha: 1,
+      y: 0,
+      duration: 0.26,
+      stagger: 0.035,
+      ease: 'power2.out',
+      clearProps: 'transform,opacity,visibility'
+    }, 0.09);
   };
 
-  close = () => {
-    if (!this.state.open) return;
-    const focusTarget = this.previousFocus;
+  open = () => {
+    if (this.state.open || this.isClosing) return;
+    this.previousFocus = document.activeElement;
+    this.setState({ open: true, query: '', activeIndex: 0 }, () => window.requestAnimationFrame(() => {
+      this.animateOpen();
+      if (this.inputRef.current) this.inputRef.current.focus();
+    }));
+  };
+
+  finishClose = (focusTarget, afterClose) => {
+    this.isClosing = false;
+    this.animation = null;
     this.setState({ open: false, query: '', activeIndex: 0 }, () => {
       this.previousFocus = null;
+      if (typeof afterClose === 'function') {
+        afterClose();
+        return;
+      }
       if (focusTarget && focusTarget.focus && document.documentElement.contains(focusTarget)) window.requestAnimationFrame(() => focusTarget.focus());
     });
   };
 
+  close = afterClose => {
+    if (!this.state.open || this.isClosing) {
+      if (!this.state.open && typeof afterClose === 'function') afterClose();
+      return;
+    }
+    const callback = typeof afterClose === 'function' ? afterClose : null;
+    const focusTarget = this.previousFocus;
+    const dialog = this.dialogRef.current;
+    const layer = dialog && dialog.closest('.ap-command-layer');
+    const scrim = layer && layer.querySelector('.ap-command-scrim');
+
+    if (!dialog || reduceMotion()) {
+      this.finishClose(focusTarget, callback);
+      return;
+    }
+
+    this.isClosing = true;
+    if (this.animation) this.animation.kill();
+    this.animation = gsap.timeline({
+      defaults: { overwrite: 'auto' },
+      onComplete: () => this.finishClose(focusTarget, callback)
+    });
+    this.animation.to(dialog, { autoAlpha: 0, y: -10, scale: 0.988, duration: 0.16, ease: 'power2.in' }, 0);
+    if (scrim) this.animation.to(scrim, { autoAlpha: 0, duration: 0.14, ease: 'power1.in' }, 0.02);
+  };
+
   navigate = command => {
     if (!command) return;
-    this.close();
-    this.props.history.push(command.path);
+    if (!this.state.open) {
+      this.props.history.push(command.path);
+      return;
+    }
+    this.close(() => this.props.history.push(command.path));
   };
 
   trapFocus = event => {
@@ -95,7 +163,7 @@ class CommandPalette extends Component {
     const commands = this.getFilteredCommands();
     return (
       <div className="ap-command-layer" role="presentation">
-        <button className="ap-command-scrim" type="button" aria-label="Close command menu" onClick={this.close} />
+        <button className="ap-command-scrim" type="button" aria-label="Close command menu" onClick={() => this.close()} />
         <section ref={this.dialogRef} className="ap-command" role="dialog" aria-modal="true" aria-label="PiHub command menu">
           <div className="ap-command-search"><i className="bx bx-search" aria-hidden="true" /><label className="sr-only" htmlFor="pihub-command-search">Search commands</label><input ref={this.inputRef} id="pihub-command-search" value={this.state.query} onChange={event => this.setState({ query: event.target.value, activeIndex: 0 })} placeholder="Search navigation or action…" autoComplete="off" /><kbd>Esc</kbd></div>
           <div className="ap-command-section-label">Workspace commands</div>

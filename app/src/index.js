@@ -10,6 +10,7 @@ import { AUTH_USER } from './actions/types';
 
 import App from './components/App';
 import AppErrorBoundary from './components/general/AppErrorBoundary';
+import WorkspaceSkeleton from './components/general/WorkspaceSkeleton';
 import reducers from './reducers';
 import RequireInvestorAuth from './components/_auth/RequireInvestorAuth';
 import RequireNoAuth from './components/_auth/RequireNoAuth';
@@ -67,7 +68,7 @@ const AuthNoMatch = RequireInvestorAuth(NoMatch);
 const AuthChangePassword = RequireInvestorAuth(ChangePassword);
 const AuthSignout = RequireInvestorAuth(Signout);
 
-const LoadingRoute = () => <div className="data-loading" role="status" aria-live="polite">Loading workspace…</div>;
+const LoadingRoute = () => <WorkspaceSkeleton compact />;
 
 const LegacyElement = ({ Component, routeState }) => {
   const navigate = useNavigate();

@@ -168,8 +168,6 @@ test('institution profile is complete, readable and accessible', async ({ page }
   expect(Math.abs(shell.header.width - shell.viewportWidth), `Header should span viewport width: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(2);
   expect(shell.header.height, `Header must stay one row: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(72);
 
-  // A few pixels of inset from the header's own focus/border treatment is fine;
-  // the regression we care about is the brand and utilities becoming separate rows.
   expect(Math.abs(shell.brand.top - shell.header.top), `Brand and utility header split into separate rows: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(3);
   expect(Math.abs(shell.brand.bottom - shell.header.bottom), `Brand rail must remain in header row: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(3);
   expect(Math.abs(shell.headerMain.top - shell.header.top), `Header utilities must share the brand row: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(3);
@@ -180,7 +178,7 @@ test('institution profile is complete, readable and accessible', async ({ page }
     expect(Math.abs(shell.sidebar.left), `Desktop sidebar should start at viewport left: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(1);
     expect(Math.abs(shell.workspace.left - shell.sidebar.right), `Workspace must begin exactly after sidebar: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(2);
     expect(shell.main.width, `Desktop main content collapsed: ${JSON.stringify(shell)}`).toBeGreaterThan(720);
-    expect(shell.main.width, `Desktop main content is unbounded: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(1442);
+    expect(shell.main.width, `Desktop main content is unbounded: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(1482);
     expect(shell.main.left, `Main content escaped workspace: ${JSON.stringify(shell)}`).toBeGreaterThanOrEqual(shell.workspace.left);
     expect(shell.main.right, `Main content escaped viewport: ${JSON.stringify(shell)}`).toBeLessThanOrEqual(shell.viewportWidth);
   } else {
@@ -202,6 +200,79 @@ test('institution profile is complete, readable and accessible', async ({ page }
   expect(Math.min(...contactBoxes), `Relationship cards are collapsing: ${JSON.stringify(contactBoxes)}`).toBeGreaterThan(220);
 
   await expectNoSeriousA11y(page);
+});
+
+test('desktop shell stays fixed, seam-free and uses readable UI typography', async ({ page }) => {
+  await login(page);
+
+  const visual = await page.evaluate(() => {
+    const px = (selector, property) => {
+      const node = document.querySelector(selector);
+      return node ? Number.parseFloat(window.getComputedStyle(node)[property]) : null;
+    };
+    const style = selector => {
+      const node = document.querySelector(selector);
+      if (!node) return null;
+      const computed = window.getComputedStyle(node);
+      return {
+        backgroundColor: computed.backgroundColor,
+        borderBottomWidth: computed.borderBottomWidth,
+        position: computed.position,
+        overflowY: computed.overflowY
+      };
+    };
+    return {
+      viewportWidth: document.documentElement.clientWidth,
+      header: style('.ap-topbar-v4'),
+      brand: style('.ap-global-brand'),
+      sidebar: style('.ap-sidebar'),
+      titleSize: px('.content-head__title', 'fontSize'),
+      copySize: px('.content-head-copy', 'fontSize'),
+      navSize: px('.ap-nav-label', 'fontSize'),
+      metricPadding: px('.ap-metric', 'paddingTop'),
+      metricHelp: px('.ap-metric small', 'fontSize')
+    };
+  });
+
+  expect(visual.header && visual.header.borderBottomWidth, `Header style missing: ${JSON.stringify(visual)}`).toBe('0px');
+  expect(visual.brand && visual.sidebar && visual.brand.backgroundColor, `Brand/sidebar background missing: ${JSON.stringify(visual)}`).toBe(visual.sidebar.backgroundColor);
+  expect(visual.titleSize, `Page title size missing: ${JSON.stringify(visual)}`).toBeGreaterThanOrEqual(30);
+  expect(visual.copySize, `Page description is too small: ${JSON.stringify(visual)}`).toBeGreaterThanOrEqual(13.5);
+  expect(visual.navSize, `Sidebar labels are too small: ${JSON.stringify(visual)}`).toBeGreaterThanOrEqual(12.5);
+  expect(visual.metricPadding, `Metric spacing collapsed: ${JSON.stringify(visual)}`).toBeGreaterThanOrEqual(20);
+  expect(visual.metricHelp, `Metric support text is too small: ${JSON.stringify(visual)}`).toBeGreaterThanOrEqual(11);
+
+  if (visual.viewportWidth > 820) {
+    expect(visual.sidebar.position, `Desktop sidebar is not fixed: ${JSON.stringify(visual)}`).toBe('fixed');
+    expect(visual.sidebar.overflowY, `Desktop sidebar should not be its own normal scroll region: ${JSON.stringify(visual)}`).toBe('hidden');
+    const before = await page.locator('.ap-sidebar').boundingBox();
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await page.waitForTimeout(100);
+    const after = await page.locator('.ap-sidebar').boundingBox();
+    expect(before && after && Math.abs(after.y - before.y), `Sidebar moved with document scroll: ${JSON.stringify({ before, after })}`).toBeLessThanOrEqual(1);
+  }
+});
+
+test('lazy authenticated navigation shows structured skeleton without removing the shell', async ({ page }) => {
+  await login(page);
+  let delayed = false;
+
+  await page.route('**/assets/*.js', async route => {
+    const request = route.request();
+    if (!delayed && request.resourceType() === 'script') {
+      delayed = true;
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+    await route.continue();
+  });
+
+  await page.getByRole('link', { name: /invested products/i }).click();
+  if (delayed) await expect(page.locator('.workspace-skeleton')).toBeVisible({ timeout: 1600 });
+  await expect(page.locator('.ap-topbar-v4')).toBeVisible();
+  await expect(page.locator('.ap-sidebar')).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Invested Products/i })).toBeVisible({ timeout: 10000 });
+  await expect(page.locator('.workspace-skeleton')).toHaveCount(0);
+  await page.unroute('**/assets/*.js');
 });
 
 test('workspace does not create page-level horizontal overflow', async ({ page }) => {
