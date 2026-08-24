@@ -25,3 +25,7 @@ This release turns the post-modernization product suite into a maintainable inst
 ## Merge gates
 
 The release is complete only when the exact PR head passes architecture checks, unit tests, production build, bundle budget, Chromium/Firefox/WebKit Playwright, responsive screenshots, reduced motion, keyboard workflows, WCAG A/AA serious/critical checks, canonical-width overflow checks, and the exact merged commit reports Vercel success.
+
+## Final browser validation
+
+A clean final-head run is required after all one-time migration, refactor and screenshot-baseline writers have been removed. The final read-only run must validate the current View-menu toolbar, canonical responsive containment, Firefox/WebKit layout behavior, WCAG contrast hardening and committed visual baselines from one unambiguous branch head before this release can merge.
