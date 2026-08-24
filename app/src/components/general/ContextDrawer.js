@@ -32,13 +32,13 @@ const ContextDrawer = ({ history }) => {
     const scrim = layer && layer.querySelector('.ap-context-scrim');
     gsap.killTweensOf([drawer, scrim]);
     if (reduceMotion()) {
-      gsap.set(drawer, { x: open ? 0 : '100%', autoAlpha: open ? 1 : 0 });
+      gsap.set(drawer, { x: 0, scaleX: 1, autoAlpha: open ? 1 : 0, transformOrigin: '100% 50%' });
       if (scrim) gsap.set(scrim, { autoAlpha: open ? 1 : 0 });
     } else if (open) {
       if (scrim) gsap.fromTo(scrim, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.18, ease: 'power2.out' });
-      gsap.fromTo(drawer, { x: 28, autoAlpha: 0.75 }, { x: 0, autoAlpha: 1, duration: 0.32, ease: 'power3.out', overwrite: 'auto' });
+      gsap.fromTo(drawer, { x: 0, scaleX: 0.985, autoAlpha: 0.75, transformOrigin: '100% 50%' }, { x: 0, scaleX: 1, autoAlpha: 1, duration: 0.32, ease: 'power3.out', overwrite: 'auto' });
     } else {
-      gsap.to(drawer, { x: 28, autoAlpha: 0, duration: 0.18, ease: 'power2.in', overwrite: 'auto' });
+      gsap.to(drawer, { x: 0, scaleX: 0.985, autoAlpha: 0, transformOrigin: '100% 50%', duration: 0.18, ease: 'power2.in', overwrite: 'auto' });
       if (scrim) gsap.to(scrim, { autoAlpha: 0, duration: 0.14, ease: 'power1.in' });
     }
     if (open) {
