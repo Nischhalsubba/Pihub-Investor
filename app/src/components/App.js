@@ -5,6 +5,11 @@ import Header from './general/Header';
 import CommandPalette from './general/CommandPalette';
 import MotionController from './general/MotionController';
 import WorkspaceSkeleton from './general/WorkspaceSkeleton';
+import WorkspaceActivityTracker from './general/WorkspaceActivityTracker';
+import NotificationDrawer from './general/NotificationDrawer';
+import ContextDrawer from './general/ContextDrawer';
+import ShortcutHelp from './general/ShortcutHelp';
+import ToastRegion from './general/ToastRegion';
 
 const App = () => {
   const mainRef = useRef(null);
@@ -21,6 +26,7 @@ const App = () => {
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <Header demoMode={demoMode} />
       <Sidebar />
+      <WorkspaceActivityTracker />
       <div className="main-content main-content--padded ap-workspace">
         <main id="main-content" className="workspace-main ap-main route-motion-scope" ref={mainRef} tabIndex="-1">
           <MotionController />
@@ -32,6 +38,10 @@ const App = () => {
         </main>
       </div>
       <CommandPalette />
+      <NotificationDrawer />
+      <ContextDrawer />
+      <ShortcutHelp />
+      <ToastRegion />
     </div>
   );
 };
