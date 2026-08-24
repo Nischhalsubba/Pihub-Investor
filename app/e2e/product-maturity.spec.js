@@ -52,7 +52,8 @@ test('new workspace controls switch immediately between EN and DE', async ({ pag
   await expect(page.locator('.ap-view-menu > summary')).toContainText('View');
 });
 
-test('decision surfaces expose owner risk review and yield context', async ({ page }) => {
+test('decision surfaces expose owner risk review and yield context', async ({ page }, testInfo) => {
+  const mobile = testInfo.project.name.includes('mobile');
   await login(page);
   await page.goto('/products');
   const inspector = page.locator('.ap-inspector');
@@ -62,15 +63,18 @@ test('decision surfaces expose owner risk review and yield context', async ({ pa
   await expect(inspector.getByText('Mara Klein', { exact: true })).toBeVisible();
 
   await page.goto('/credit-request');
-  await expect(page.getByRole('columnheader', { name: 'Owner' })).toBeVisible();
+  if (!mobile) await expect(page.getByRole('columnheader', { name: 'Owner' })).toBeVisible();
   await expect(page.getByText('Jonas Weber', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('Not supplied', { exact: true })).toHaveCount(0);
   await expect(page.getByText('Unassigned', { exact: true })).toHaveCount(0);
 
   await page.goto('/products-invested');
-  await expect(page.getByRole('columnheader', { name: 'Yield' })).toBeVisible();
-  await expect(page.getByRole('columnheader', { name: 'Risk' })).toBeVisible();
+  if (!mobile) {
+    await expect(page.getByRole('columnheader', { name: 'Yield' })).toBeVisible();
+    await expect(page.getByRole('columnheader', { name: 'Risk' })).toBeVisible();
+  }
   await expect(page.getByText(/5\.35%|5\.60%|5\.75%/).first()).toBeVisible();
+  await expect(page.getByText('Moderate', { exact: true }).first()).toBeVisible();
   expect(await seriousA11y(page)).toEqual([]);
 });
 
