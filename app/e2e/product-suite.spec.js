@@ -150,3 +150,42 @@ test('desktop sidebar collapse persists and reflows the workspace', async ({ pag
   const expanded = await sidebar.boundingBox();
   expect(expanded && expanded.width).toBeGreaterThanOrEqual(220);
 });
+
+test('overview card headers preserve title hierarchy and action alignment', async ({ page }) => {
+  await login(page);
+
+  const attention = page.locator('.overview-panel').filter({ has: page.getByText('Needs attention', { exact: true }) });
+  const actions = page.locator('.overview-panel').filter({ has: page.getByText('Workspace actions', { exact: true }) });
+  const attentionHeader = attention.locator('> header');
+  const attentionCopy = attentionHeader.locator('> div');
+  const title = attention.getByText('Needs attention', { exact: true });
+  const subtitle = attention.getByText('Earliest visible credit deadlines first', { exact: true });
+  const openQueue = attention.getByRole('link', { name: 'Open queue' });
+  const actionTitle = actions.getByText('Workspace actions', { exact: true });
+  const actionSubtitle = actions.getByText('Go directly to the next operational task', { exact: true });
+
+  await expect(attentionHeader).toHaveCSS('display', 'flex');
+  await expect(attentionCopy).toHaveCSS('display', 'grid');
+  await expect(title).toHaveCSS('display', 'block');
+  await expect(subtitle).toHaveCSS('display', 'block');
+  await expect(actionTitle).toHaveCSS('display', 'block');
+  await expect(actionSubtitle).toHaveCSS('display', 'block');
+
+  const titleBox = await title.boundingBox();
+  const subtitleBox = await subtitle.boundingBox();
+  const actionTitleBox = await actionTitle.boundingBox();
+  const actionSubtitleBox = await actionSubtitle.boundingBox();
+  expect(titleBox && subtitleBox && subtitleBox.y).toBeGreaterThanOrEqual((titleBox && titleBox.y + titleBox.height) || 0);
+  expect(actionTitleBox && actionSubtitleBox && actionSubtitleBox.y).toBeGreaterThanOrEqual((actionTitleBox && actionTitleBox.y + actionTitleBox.height) || 0);
+
+  const viewport = page.viewportSize();
+  if (viewport && viewport.width > 680) {
+    const headerBox = await attentionHeader.boundingBox();
+    const linkBox = await openQueue.boundingBox();
+    expect(headerBox && linkBox && linkBox.x).toBeGreaterThan((headerBox && headerBox.x + headerBox.width / 2) || 0);
+    expect(headerBox && linkBox && Math.abs((linkBox.y + linkBox.height / 2) - (headerBox.y + headerBox.height / 2))).toBeLessThanOrEqual(12);
+  }
+
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(2);
+});
