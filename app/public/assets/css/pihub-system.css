@@ -38,7 +38,7 @@
 /* One toolbar contract: permanent query controls plus a compact workspace rail. */
 .data-toolbar { gap: var(--pihub-space-3) !important; }
 .data-toolbar > .ap-query-line,
-.data-toolbar > .data-toolbar-actions { min-height: var(--pihub-control) !important; }
+.data-toolbar > .data-toolbar-actions { min-height: var(--pihub-control) !important; align-items: center !important; }
 .ap-view-menu > summary,
 .data-toolbar-actions > .btn { min-height: var(--pihub-control) !important; }
 
@@ -95,7 +95,9 @@
 .ap-notification-drawer .ap-drawer-head p,
 .ap-notification-card-copy span,
 .ap-notification-card-copy small,
-.ap-notification-filters button { color: #536078 !important; }
+.ap-notification-filters button,
+.chart-definition { color: #536078 !important; }
+.ap-density-toggle button[aria-pressed="false"] { color: #536078 !important; }
 .ap-notification-actions .btn.btn-link { color: #455a78 !important; }
 .ap-notification-actions .btn.btn-link:last-child,
 .ap-notification-filters button[aria-pressed="true"],
@@ -109,6 +111,19 @@
 .ap-board-grid > * { min-width: 0 !important; }
 .ap-inspector { min-width: 0 !important; }
 
+/* WebKit applies slightly different intrinsic form metrics; use one flex baseline on wide screens. */
+@media (min-width: 1361px) {
+  .data-toolbar > .ap-query-line { display: flex !important; align-items: center !important; }
+  .data-toolbar > .ap-query-line > *,
+  .data-toolbar > .data-toolbar-actions > * { align-self: center !important; margin-top: 0 !important; margin-bottom: 0 !important; }
+  .data-toolbar .ap-query-input { min-width: 0 !important; flex: 1 1 auto !important; align-self: center !important; }
+  .data-toolbar .ap-query-input input,
+  .data-toolbar .ap-filter-tabs,
+  .data-toolbar .ap-search-submit,
+  .data-toolbar .ap-view-menu > summary,
+  .data-toolbar .data-toolbar-actions > .btn { height: var(--pihub-control) !important; min-height: var(--pihub-control) !important; margin-block: 0 !important; }
+}
+
 @media (min-width: 821px) and (max-width: 1360px) {
   .ap-board-grid { grid-template-columns: minmax(0, 1fr) !important; }
   .ap-inspector { width: 100% !important; max-width: none !important; }
@@ -117,7 +132,8 @@
 
 /* Dense portfolio columns scroll inside their table shell rather than widening the page. */
 @media (min-width: 721px) and (max-width: 1200px) {
-  .portfolio-table { min-width: 0 !important; width: 100% !important; max-width: 100% !important; overflow-x: auto !important; overflow-y: hidden !important; overscroll-behavior-inline: contain; }
+  .portfolio-table { min-width: 0 !important; width: 100% !important; max-width: 100% !important; inline-size: 100% !important; max-inline-size: 100% !important; contain: inline-size; overflow-x: auto !important; overflow-y: hidden !important; overscroll-behavior-inline: contain; }
+  .portfolio-table > div:last-child { min-width: 940px; }
   .portfolio-head,
   .portfolio-row { min-width: 940px; }
   .ap-portfolio-toolbar { min-width: 0 !important; flex-wrap: wrap !important; }
