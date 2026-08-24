@@ -1,7 +1,7 @@
 /* Option C compatibility guardrails.
-   Loaded after the main Option C layers to neutralize three legacy selectors
-   exposed by the larger type scale: sidebar child sizing, footer contrast and
-   decision-table minimum widths. */
+   Loaded after the main Option C layers to neutralize legacy selectors exposed
+   by the larger type scale: sidebar child sizing, footer contrast, profile
+   microcopy and decision-table minimum widths. */
 
 .ap-sidebar .ap-nav-label {
   font-size: 13px !important;
@@ -16,6 +16,43 @@
 
 .ap-system-line > span {
   color: #91a3bf !important;
+}
+
+/* The v3 profile shipped with 8–10px metadata. Keep hierarchy, not eye strain. */
+.profile-v3-eyebrow,
+.profile-v3-kicker,
+.profile-v3-summary-grid span,
+.profile-v3-detail > span,
+.profile-v3-control-grid span,
+.profile-v3-subhead span,
+.profile-v3-governance-list span,
+.profile-v3-document-status {
+  font-size: 10.5px !important;
+  line-height: 1.4 !important;
+}
+
+.profile-v3-card-head p,
+.profile-v3-person-copy > span,
+.profile-v3-person-links a,
+.profile-v3-document-copy span,
+.profile-v3-governance-list strong {
+  font-size: 11.5px !important;
+  line-height: 1.45 !important;
+}
+
+.profile-v3-summary-grid strong,
+.profile-v3-detail strong,
+.profile-v3-detail a,
+.profile-v3-control-grid strong,
+.profile-v3-subhead strong,
+.profile-v3-document-copy strong {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+
+.profile-v3-person-copy > strong {
+  font-size: 13px !important;
+  line-height: 1.35 !important;
 }
 
 .decision-table {
