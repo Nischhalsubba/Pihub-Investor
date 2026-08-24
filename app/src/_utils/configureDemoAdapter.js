@@ -5,6 +5,10 @@ export const configureDemoAdapter = client => {
     import('./demoWorkspaceSeed')
   ]).then(([adapterModule, seedModule]) => {
     seedModule.ensureDemoWorkspaceData();
+    const method = String(config && config.method || 'get').toLowerCase();
+    const path = String(config && config.url || '').split('?')[0].replace(/\/$/, '');
+    const match = method === 'delete' ? path.match(/\/investor\/product\/([^/]+)$/) : null;
+    if (match) seedModule.rememberDeletedDemoSeed(decodeURIComponent(match[1]));
     return adapterModule.demoAxiosAdapter(config);
   });
   return client;
