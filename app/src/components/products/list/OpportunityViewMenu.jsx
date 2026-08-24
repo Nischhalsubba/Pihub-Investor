@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useWorkspaceCopy } from '../../../i18n/workspaceCopy';
+import useWorkspaceCopy from '../../../i18n/useWorkspaceCopy';
 import { opportunityColumns } from './opportunityListModel';
 
 const OpportunityViewMenu = ({ density, setDensity, visibleColumns, toggleColumn, savedViews, defaultId, savedViewName, setSavedViewName, saveView, loadView, renameView, deleteView, setDefaultView, copyViewLink, exportViews, importViews }) => {
