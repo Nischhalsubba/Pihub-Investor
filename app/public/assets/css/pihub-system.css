@@ -91,6 +91,39 @@
 .portfolio-head,
 .portfolio-row { grid-template-columns: minmax(200px, 1.4fr) 96px 112px 76px 86px 70px 100px 66px 92px !important; gap: 10px !important; }
 
+/* Release hardening: text must remain AA-compliant at rest and during motion. */
+.ap-notification-drawer .ap-drawer-head p,
+.ap-notification-card-copy span,
+.ap-notification-card-copy small,
+.ap-notification-filters button { color: #536078 !important; }
+.ap-notification-actions .btn.btn-link { color: #455a78 !important; }
+.ap-notification-actions .btn.btn-link:last-child,
+.ap-notification-filters button[aria-pressed="true"],
+.ap-compare-table .btn-link { color: #294aa8 !important; }
+.content-head-kicker { color: #3451ad !important; }
+.content-head-copy,
+.ap-compare-table th small { color: #536078 !important; }
+
+/* Board children must never enlarge the document viewport. */
+.ap-board-grid { min-width: 0 !important; width: 100% !important; }
+.ap-board-grid > * { min-width: 0 !important; }
+.ap-inspector { min-width: 0 !important; }
+
+@media (min-width: 821px) and (max-width: 1360px) {
+  .ap-board-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .ap-inspector { width: 100% !important; max-width: none !important; }
+  .ap-decision-meta { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+
+/* Dense portfolio columns scroll inside their table shell rather than widening the page. */
+@media (min-width: 721px) and (max-width: 1200px) {
+  .portfolio-table { min-width: 0 !important; width: 100% !important; max-width: 100% !important; overflow-x: auto !important; overflow-y: hidden !important; overscroll-behavior-inline: contain; }
+  .portfolio-head,
+  .portfolio-row { min-width: 940px; }
+  .ap-portfolio-toolbar { min-width: 0 !important; flex-wrap: wrap !important; }
+  .ap-portfolio-toolbar .data-toolbar-actions { min-width: 0 !important; flex-wrap: wrap !important; }
+}
+
 @media (max-width: 720px) {
   .ap-view-menu-panel { position: fixed; left: 12px; right: 12px; top: 74px; width: auto; }
   .ap-view-columns, .ap-decision-meta { grid-template-columns: 1fr; }
