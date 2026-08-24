@@ -52,3 +52,27 @@ test('desktop opportunity toolbar keeps filters and workspace actions on one bas
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow, 'Opportunity toolbar created page-level horizontal overflow').toBeLessThanOrEqual(2);
 });
+
+test('crowded desktop stacks opportunity toolbar rails before controls collide', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name.includes('mobile'), 'Desktop responsive toolbar contract');
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await login(page);
+  await page.goto('/products');
+
+  const toolbar = page.locator('.data-toolbar');
+  const queryLine = toolbar.locator('> .ap-query-line');
+  const actions = toolbar.locator('> .data-toolbar-actions');
+  const queryBox = await queryLine.boundingBox();
+  const actionsBox = await actions.boundingBox();
+  expect(queryBox).not.toBeNull();
+  expect(actionsBox).not.toBeNull();
+  expect(actionsBox.y, 'Workspace actions should move below filters before the toolbar becomes crowded').toBeGreaterThanOrEqual(queryBox.y + queryBox.height - 1);
+
+  const compact = page.getByRole('button', { name: 'Compact' }).first();
+  await expect(compact).toBeVisible();
+  await compact.click();
+  await expect(compact).toHaveAttribute('aria-pressed', 'true');
+
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(overflow, 'Responsive opportunity toolbar created page-level horizontal overflow').toBeLessThanOrEqual(2);
+});
