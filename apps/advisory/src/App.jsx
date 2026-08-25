@@ -3,7 +3,8 @@ import { Link, Navigate, NavLink, Route, Routes, useLocation, useNavigate } from
 import { authenticateDemo, clearDemoSession, consumeDemoAccessHandoff, readDemoSession, writeDemoSession } from '../../../packages/platform/src/demo-session';
 import { DEMO_DEAL } from '../../../packages/domain/src/demo-data';
 import { APP_ID, APP_LABEL, DEMO_ACCOUNT, LOGIN_COPY } from './config';
-import { Overview, Mandates, Transactions, Structuring, Counterparties, DueDiligence, Execution, Tasks } from './pages';
+import Overview from './Overview';
+import { Mandates, Transactions, Structuring, Counterparties, DueDiligence, Execution, Tasks } from './pages';
 
 const NAV_SECTIONS = [
   {
