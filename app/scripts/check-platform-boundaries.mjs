@@ -1,14 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const appRoot = process.cwd();
-const repoRoot = path.resolve(appRoot, '..');
+const repoRoot = path.resolve(process.cwd(), '..');
 const SOURCE_EXTENSIONS = new Set(['.js', '.jsx', '.ts', '.tsx', '.mjs', '.cjs']);
 const SKIP_DIRS = new Set(['node_modules', 'dist', 'build', '.git', 'playwright-report', 'test-results']);
 const FORBIDDEN_INVESTOR_ROUTE_ROOTS = new Set(['borrower', 'advisory', 'admin', 'access']);
 
 const relativeRepoPath = value => path.relative(repoRoot, value).split(path.sep).join('/');
-const inside = (candidate, root) => candidate === root || candidate.startsWith(`${root}${path.sep}`);
 
 const classify = absolutePath => {
   const rel = relativeRepoPath(absolutePath);
@@ -93,13 +91,21 @@ if (fs.existsSync(investorRouter)) {
 }
 
 // Guard the current production isolation contract as long as Investor is still
-// deployed from /app. Changing this must happen in its own migration PR with a
-// verified replacement build, never as a side effect of module feature work.
+// deployed from /app. Changing these values requires a dedicated cutover PR
+// with a verified replacement build and deployment, never a feature side effect.
 const vercelPath = path.join(repoRoot, 'vercel.json');
 if (fs.existsSync(vercelPath)) {
   const config = JSON.parse(fs.readFileSync(vercelPath, 'utf8'));
-  if (config.buildCommand !== 'npm --prefix app run build' || config.outputDirectory !== 'app/dist') {
-    violations.push('vercel.json changed the verified Investor build/output contract. Move that change into a dedicated deployment-migration PR.');
+  const expected = {
+    installCommand: 'npm ci --prefix app --legacy-peer-deps',
+    buildCommand: 'npm --prefix app run build',
+    outputDirectory: 'app/dist'
+  };
+
+  for (const [key, value] of Object.entries(expected)) {
+    if (config[key] !== value) {
+      violations.push(`vercel.json changed ${key} from the verified Investor contract. Move that change into a dedicated deployment-migration PR.`);
+    }
   }
 }
 
