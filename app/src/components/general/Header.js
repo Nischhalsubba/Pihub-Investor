@@ -10,6 +10,8 @@ import { getLocale, setLocale } from '../../_utils/locale';
 import { isDemoMode } from '../../_utils/demoMode';
 import { withCompleteDemoProfile } from '../../_utils/demoProfileData';
 import { openCommandPalette, openNotificationDrawer } from '../../_utils/workspaceEvents';
+import { getNavigableModules } from '../../_platform/modules';
+import ModuleSwitcher from './ModuleSwitcher';
 
 const normalizeNotificationCount = value => {
   const number = candidate => {
@@ -83,6 +85,7 @@ class Header extends Component {
     const { accountOpen } = this.state;
     const { demoMode } = this.props;
     const profile = this.props.profile && isDemoMode() ? withCompleteDemoProfile(this.props.profile) : this.props.profile;
+    const availableModules = getNavigableModules(profile);
     const accountName = profile && (profile.company_name || [profile.fname, profile.lname].filter(Boolean).join(' '))
       ? (profile.company_name || [profile.fname, profile.lname].filter(Boolean).join(' '))
       : 'Investor workspace';
@@ -97,6 +100,7 @@ class Header extends Component {
 
         <div className="ap-global-header-main">
           <div className="ap-topbar-leading">
+            <ModuleSwitcher modules={availableModules} currentModuleId="investor" />
             {demoMode ? (
               <div className="ap-environment-chip" role="status" aria-label="Demo workspace. Data and actions stay in this browser and are not live financial records.">
                 <span className="ap-environment-dot" aria-hidden="true" />
