@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom-v6';
 import '../../../packages/ui/src/platform.css';
 import '../../../packages/ui/src/containment.css';
+import '../../../packages/ui/src/workspace-system.css';
 import './styles.css';
+import '../../../packages/ui/src/investor-design-system.css';
 import App from './App';
 createRoot(document.getElementById('root')).render(<React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>);
