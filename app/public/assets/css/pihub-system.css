@@ -35,6 +35,49 @@
   --pihub-signal: #5f80ff;
 }
 
+/* Platform shell: the switcher is intentionally dormant until more than one
+   server-authorized module also has a real application location. */
+.ap-topbar-leading { gap: var(--pihub-space-2); }
+.ap-module-switcher { position: relative; flex: 0 0 auto; }
+.ap-module-switcher > summary {
+  min-height: var(--pihub-control);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pihub-space-2);
+  padding: 0 var(--pihub-space-3);
+  border: 1px solid var(--pihub-border);
+  border-radius: var(--pihub-radius-md);
+  background: #fff;
+  color: #2d3f59;
+  cursor: pointer;
+  list-style: none;
+  transition: border-color var(--pihub-motion-quick) var(--pihub-ease-enter), background-color var(--pihub-motion-quick) var(--pihub-ease-enter);
+}
+.ap-module-switcher > summary::-webkit-details-marker { display: none; }
+.ap-module-switcher > summary:hover,
+.ap-module-switcher[open] > summary { border-color: #b6c4d6; background: #f9fbfd; }
+.ap-module-switcher > summary:focus-visible,
+.ap-module-switcher-option:focus-visible { outline: 2px solid var(--pihub-signal); outline-offset: 2px; }
+.ap-module-switcher-icon { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 7px; background: #eef2ff; color: #3152ba; font-size: 15px; }
+.ap-module-switcher-copy { display: grid; line-height: 1.05; }
+.ap-module-switcher-copy small { color: var(--pihub-text-muted); font-size: 8.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.ap-module-switcher-copy strong { margin-top: 3px; color: #23354f; font-size: 10.5px; }
+.ap-module-switcher-chevron { color: #627087; font-size: 16px; transition: transform var(--pihub-motion-standard) var(--pihub-ease-enter); }
+.ap-module-switcher[open] .ap-module-switcher-chevron { transform: rotate(180deg); }
+.ap-module-switcher-panel { position: absolute; top: calc(100% + 8px); left: 0; z-index: var(--pihub-z-overlay); width: min(340px, calc(100vw - 32px)); padding: var(--pihub-space-3); border: 1px solid var(--pihub-border); border-radius: var(--pihub-radius-lg); background: #fff; box-shadow: 0 18px 50px rgba(10, 20, 40, .14); }
+.ap-module-switcher-head { display: grid; gap: 3px; padding: 2px 3px var(--pihub-space-3); }
+.ap-module-switcher-head strong { color: #253750; font-size: 11px; }
+.ap-module-switcher-head span { color: var(--pihub-text-secondary); font-size: 9.5px; line-height: 1.4; }
+.ap-module-switcher-list { display: grid; gap: 5px; }
+.ap-module-switcher-option { min-height: 52px; display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; align-items: center; gap: var(--pihub-space-2); padding: 6px 9px; border: 1px solid transparent; border-radius: var(--pihub-radius-md); color: #334761; text-decoration: none; }
+.ap-module-switcher-option:hover { border-color: #dbe3ee; background: var(--pihub-surface-muted); color: #2449ad; text-decoration: none; }
+.ap-module-switcher-option.is-current { border-color: #cbd6fa; background: #f3f6ff; color: #2749a8; }
+.ap-module-switcher-option > i:first-child { font-size: 17px; }
+.ap-module-switcher-option > i:last-child { justify-self: end; font-size: 16px; }
+.ap-module-switcher-option span { min-width: 0; display: grid; gap: 2px; }
+.ap-module-switcher-option strong { color: inherit; font-size: 10.5px; }
+.ap-module-switcher-option small { overflow: hidden; color: var(--pihub-text-secondary); font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+
 /* One toolbar contract: permanent query controls plus a compact workspace rail. */
 .data-toolbar { gap: var(--pihub-space-3) !important; }
 .data-toolbar > .ap-query-line,
@@ -174,11 +217,15 @@
 }
 
 @media (max-width: 720px) {
+  .ap-module-switcher-panel { position: fixed; left: 12px; right: 12px; top: 74px; width: auto; }
+  .ap-module-switcher-copy small { display: none; }
   .ap-view-menu-panel { position: fixed; left: 12px; right: 12px; top: 74px; width: auto; }
   .ap-view-columns, .ap-decision-meta { grid-template-columns: 1fr; }
   .ap-saved-view-inline { grid-template-columns: 1fr 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .ap-module-switcher > summary,
+  .ap-module-switcher-chevron { transition: none !important; }
   *, *::before, *::after { scroll-behavior: auto !important; }
 }
