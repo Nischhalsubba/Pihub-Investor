@@ -1,11 +1,15 @@
 import { test, expect } from '@playwright/test';
 
-test('borrower shared access handoff opens the workspace without a second login', async ({ page }) => {
+test('borrower shared access handoff opens a borrower-specific workspace without a second login', async ({ page }) => {
   await page.goto('/?pihub_demo_access=borrower&source=investor-access');
-  await expect(page.getByRole('heading', { name: /financing/i }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Financing overview' })).toBeVisible();
   await expect(page).not.toHaveURL(/pihub_demo_access/);
+  await expect(page.locator('.ph-app[data-workspace="borrower"]')).toBeVisible();
   await expect(page.locator('.ph-topbar')).toBeVisible();
-  await expect(page.locator('.ph-metric-card')).toHaveCount(4);
+  await expect(page.locator('.ph-kpi')).toHaveCount(4);
+  await expect(page.getByRole('heading', { name: 'Next actions' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Application progress' })).toBeVisible();
+  await expect(page.getByText('Pipeline by stage', { exact: true })).toHaveCount(0);
 
   const viewport = page.viewportSize();
   if (viewport && viewport.width <= 820) {
@@ -17,12 +21,12 @@ test('borrower shared access handoff opens the workspace without a second login'
       font: getComputedStyle(document.body).fontFamily,
       topbar: getComputedStyle(document.querySelector('.ph-topbar')).minHeight,
       sidebar: getComputedStyle(document.querySelector('.ph-sidebar')).width,
-      metricRadius: getComputedStyle(document.querySelector('.ph-metric-card')).borderRadius
+      tapeRadius: getComputedStyle(document.querySelector('.ph-kpi-tape')).borderRadius
     }));
     expect(geometry.font).toContain('IBM Plex Sans');
     expect(geometry.topbar).toBe('68px');
     expect(geometry.sidebar).toBe('248px');
-    expect(geometry.metricRadius).toBe('8px');
+    expect(geometry.tapeRadius).toBe('9px');
   }
 
   await page.getByRole('link', { name: 'Financing request', exact: true }).first().click();
