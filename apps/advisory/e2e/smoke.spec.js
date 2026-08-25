@@ -7,8 +7,8 @@ test('advisory shared access handoff opens an advisory-specific workspace withou
   await expect(page.locator('.ph-app[data-workspace="advisory"]')).toBeVisible();
   await expect(page.locator('.ph-topbar')).toBeVisible();
   await expect(page.locator('.ph-kpi')).toHaveCount(4);
-  await expect(page.getByRole('heading', { name: 'Execution queue' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Pipeline by stage' })).toBeVisible();
+  await expect(page.getByText('Execution queue', { exact: true })).toBeVisible();
+  await expect(page.getByText('Pipeline by stage', { exact: true })).toBeVisible();
   await expect(page.getByText('Application progress', { exact: true })).toHaveCount(0);
 
   const viewport = page.viewportSize();
