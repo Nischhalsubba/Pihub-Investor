@@ -1,12 +1,9 @@
-# Advisory / Structuring application
+# PiHub Advisory
 
-Future PiHub team workspace for bespoke financing and corporate-finance execution.
+Independent PiHub Advisory application. It owns only Advisory routes and may consume shared repository contracts, but it must not import another application's implementation code.
 
-Target ownership:
-- mandates and transaction pipeline;
-- financing structure and counterparties;
-- valuation, models and due-diligence work products;
-- term sheets, negotiation and execution milestones;
-- controlled handoff of relevant deal information to Investor workflows.
+## Demo login
+- Email: `advisory.demo@pihub.local`
+- Password: `DemoAdvisory1!`
 
-Phase 1 status: architecture placeholder only. It is not deployed and must not be presented as a live product.
+The current implementation is an explicit browser-local demo until the shared server session/API contracts are available.

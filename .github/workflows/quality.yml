@@ -1,4 +1,4 @@
-name: Validate investor frontend
+name: Validate PiHub platform
 
 on:
   push:
@@ -7,6 +7,8 @@ on:
       - develop
       - 'remediation/**'
       - 'stabilization/**'
+      - 'feat/**'
+      - 'refactor/**'
   pull_request:
     branches:
       - main
@@ -20,7 +22,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  frontend-quality:
+  investor-quality:
+    name: Investor quality
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -50,13 +53,57 @@ jobs:
         run: npm run test:e2e
         env:
           REACT_APP_DEMO: 'true'
-      - name: Preserve Playwright failure diagnostics
+      - name: Preserve Investor Playwright failure diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-failure-${{ github.run_id }}
+          name: investor-playwright-failure-${{ github.run_id }}
           path: |
             app/playwright-report/
             app/test-results/
+          if-no-files-found: warn
+          retention-days: 7
+
+  platform-apps-quality:
+    name: Borrower, Advisory, Admin and Access
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            apps/borrower/package-lock.json
+            apps/advisory/package-lock.json
+            apps/admin/package-lock.json
+            apps/access/package-lock.json
+      - name: Install independent app dependencies
+        run: |
+          for app in borrower advisory admin access; do
+            npm ci --prefix "apps/$app" --legacy-peer-deps --no-audit --no-fund
+          done
+      - name: Enforce platform boundaries and Investor deployment contract
+        run: node tooling/check-platform-suite.mjs
+      - name: Unit tests and production builds through Turborepo
+        run: npx --yes turbo@2.8.0 run test:unit build
+      - name: Install Chromium for new-app smoke tests
+        working-directory: apps/borrower
+        run: npx playwright install --with-deps chromium
+      - name: Browser smoke tests for independent apps
+        run: |
+          for app in borrower advisory admin access; do
+            npm --prefix "apps/$app" run test:e2e
+          done
+      - name: Preserve platform-app Playwright failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: platform-apps-playwright-failure-${{ github.run_id }}
+          path: |
+            apps/*/playwright-report/
+            apps/*/test-results/
           if-no-files-found: warn
           retention-days: 7

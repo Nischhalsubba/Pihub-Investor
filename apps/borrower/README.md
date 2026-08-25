@@ -1,13 +1,9 @@
-# Borrower / Origination application
+# PiHub Borrower
 
-Future user-facing module for companies, sponsors and developers requesting financing.
+Independent PiHub Borrower application. It owns only Borrower routes and may consume shared repository contracts, but it must not import another application's implementation code.
 
-Target ownership:
-- organization onboarding;
-- financing requests and use of funds;
-- company, project and property information;
-- requested documents and information requests;
-- borrower/PiHub communication;
-- transaction progress, terms and closing requirements.
+## Demo login
+- Email: `borrower.demo@pihub.local`
+- Password: `DemoBorrower1!`
 
-Phase 1 status: architecture placeholder only. It is not deployed and must not be presented as a live product.
+The current implementation is an explicit browser-local demo until the shared server session/API contracts are available.

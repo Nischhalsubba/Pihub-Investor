@@ -1,9 +1,5 @@
-# Shared UI package
+# @pihub/ui
 
-Future home for reusable PiHub design-system primitives shared by Borrower, Investor, Advisory and Admin.
+Shared PiHub visual primitives and design tokens for independently deployed applications.
 
-Rules:
-- application-specific financial workflows stay inside their owning app;
-- shared components follow the canonical PiHub design tokens and accessibility requirements;
-- operational motion remains restrained and reduced-motion safe;
-- no new patch-style CSS layer is created merely because moving code is inconvenient.
+Phase 3 provides the common institutional shell, typography, forms, cards, tables, status treatments, responsive rules, focus states and reduced-motion behavior used by Borrower, Advisory, Admin and Access. Workflow-specific screens remain inside their owning applications.
