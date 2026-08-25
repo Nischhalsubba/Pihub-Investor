@@ -1,8 +1,5 @@
 import { test, expect } from '@playwright/test';
 
-const BORROWER_URL = 'https://pihub-borrower-nischhalsubbas-projects.vercel.app/login';
-const ADVISORY_URL = 'https://pihub-advisory-nischhalsubbas-projects.vercel.app/login';
-
 const loginInvestor = async page => {
   await page.goto('/login');
   await page.locator('#login-email').fill('routing.qa@example.com');
@@ -11,31 +8,41 @@ const loginInvestor = async page => {
   await expect(page.getByRole('heading', { name: 'Overview' })).toBeVisible();
 };
 
-test('shared access selector keeps Investor local and points live modules at independent origins', async ({ page }) => {
+test('shared access selector keeps all workspace choices on one login surface', async ({ page }) => {
   await page.goto('/login');
   const workspaceNav = page.getByRole('navigation', { name: 'PiHub workspace access' });
 
   const investor = workspaceNav.getByRole('link', { name: 'Investor', exact: true });
-  const borrower = workspaceNav.getByRole('link', { name: /Borrower/i });
-  const advisory = workspaceNav.getByRole('link', { name: /Advisory/i });
+  const borrower = workspaceNav.getByRole('link', { name: 'Borrower', exact: true });
+  const advisory = workspaceNav.getByRole('link', { name: 'Advisory', exact: true });
 
   await expect(investor).toHaveAttribute('aria-current', 'page');
   await expect(investor).toHaveAttribute('href', '/login');
-  await expect(page.locator('#login-email')).toBeVisible();
-  await expect(page.locator('#login-password')).toBeVisible();
+  await expect(borrower).toHaveAttribute('href', '/login/borrower');
+  await expect(advisory).toHaveAttribute('href', '/login/advisory');
 
-  // Cross-app navigation must use independent absolute origins. We assert the
-  // href instead of making CI depend on the availability of an external host.
-  await expect(borrower).toHaveAttribute('href', BORROWER_URL);
-  await expect(advisory).toHaveAttribute('href', ADVISORY_URL);
+  await borrower.click();
+  await expect(page).toHaveURL(/\/login\/borrower$/);
+  await expect(page.locator('#login-email')).toHaveValue('borrower.demo@pihub.local');
+  await expect(page.locator('#login-password')).toHaveValue('DemoBorrower1!');
+  await expect(page.getByRole('button', { name: 'Open Borrower' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Borrower', exact: true })).toHaveAttribute('aria-current', 'page');
+
+  await page.getByRole('link', { name: 'Advisory', exact: true }).click();
+  await expect(page).toHaveURL(/\/login\/advisory$/);
+  await expect(page.locator('#login-email')).toHaveValue('advisory.demo@pihub.local');
+  await expect(page.locator('#login-password')).toHaveValue('DemoAdvisory1!');
+  await expect(page.getByRole('button', { name: 'Open Advisory' })).toBeVisible();
 });
 
 test('module aliases and invalid access routes canonicalize safely inside Investor', async ({ page }) => {
   await page.goto('/login/origination');
   await expect(page).toHaveURL(/\/login\/borrower$/);
+  await expect(page.locator('#login-email')).toBeVisible();
 
   await page.goto('/login/structuring');
   await expect(page).toHaveURL(/\/login\/advisory$/);
+  await expect(page.locator('#login-email')).toBeVisible();
 
   await page.goto('/login/not-a-module');
   await expect(page).toHaveURL(/\/login$/);
