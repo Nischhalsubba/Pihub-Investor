@@ -9,7 +9,7 @@ import AuthShell from './AuthShell';
 import ModuleAccessTabs from './ModuleAccessTabs';
 import { getAccessCopy } from '../../_platform/access';
 import { normalizeModuleId, PLATFORM_MODULES } from '../../_platform/modules';
-import { getCurrentModuleId, getModuleHomeHref, getModuleRuntime } from '../../_platform/runtime';
+import { getApplicationHomeHref, getCurrentApplicationId, getModuleRuntime } from '../../_platform/runtime';
 import * as validation from '../../_utils/validate';
 
 const Login = ({ signin: signIn, errorMessage }) => {
@@ -20,23 +20,24 @@ const Login = ({ signin: signIn, errorMessage }) => {
   const [submitting, setSubmitting] = useState(false);
   const isGerman = Translator.getLocale() === 'de';
   const locale = isGerman ? 'de' : 'en';
-  const currentModuleId = getCurrentModuleId();
+  const currentApplicationId = getCurrentApplicationId();
+  const currentBusinessModuleId = normalizeModuleId(currentApplicationId) || 'investor';
   const normalizedRequestedModuleId = normalizeModuleId(requestedModuleId);
-  const selectedModuleId = requestedModuleId ? (normalizedRequestedModuleId || 'investor') : 'investor';
+  const selectedModuleId = requestedModuleId ? (normalizedRequestedModuleId || currentBusinessModuleId) : currentBusinessModuleId;
   const selectedModule = PLATFORM_MODULES.find(module => module.id === selectedModuleId) || PLATFORM_MODULES[0];
   const runtime = getModuleRuntime(selectedModuleId);
   const copy = getAccessCopy(selectedModuleId, locale);
-  const isCurrentApplication = selectedModuleId === currentModuleId;
+  const isCurrentApplication = selectedModuleId === currentApplicationId;
 
   useEffect(() => {
     if (!requestedModuleId) return;
     const normalized = normalizeModuleId(requestedModuleId);
     const canonical = normalized
-      ? (normalized === 'investor' ? '/login' : `/login/${normalized}`)
+      ? (normalized === currentBusinessModuleId ? '/login' : `/login/${normalized}`)
       : '/login';
     const requested = `/login/${requestedModuleId}`;
     if (canonical !== requested) history.replace(canonical);
-  }, [history, requestedModuleId]);
+  }, [currentBusinessModuleId, history, requestedModuleId]);
 
   const update = event => setValues(current => ({ ...current, [event.target.name]: event.target.value }));
   const onSubmit = event => {
@@ -51,7 +52,7 @@ const Login = ({ signin: signIn, errorMessage }) => {
     setErrors(clean);
     if (Object.keys(clean).length) return;
     setSubmitting(true);
-    signIn(values, () => history.replace(getModuleHomeHref(currentModuleId) || '/dashboard')).finally?.(() => setSubmitting(false));
+    signIn(values, () => history.replace(getApplicationHomeHref(currentApplicationId) || '/dashboard')).finally?.(() => setSubmitting(false));
     window.setTimeout(() => setSubmitting(false), 1200);
   };
 
@@ -87,7 +88,7 @@ const Login = ({ signin: signIn, errorMessage }) => {
           <div className="alert alert-light border" role="status">
             <strong id="module-access-status" className="d-block mb-2">{selectedModule.label} workspace</strong>
             {runtime?.configured ? (
-              <span>This workspace runs as a separate PiHub application so its routes and releases stay isolated from Investor.</span>
+              <span>This workspace runs as a separate PiHub application so its routes and releases stay isolated from {currentBusinessModuleId === 'investor' ? 'Investor' : 'this application'}.</span>
             ) : (
               <span>This workspace is being prepared as a separate PiHub application. It is not available for sign-in yet.</span>
             )}
@@ -95,7 +96,7 @@ const Login = ({ signin: signIn, errorMessage }) => {
           {runtime?.configured ? (
             <a className="btn btn-primary btn-form" href={moduleLogin}>Continue to {selectedModule.label} login</a>
           ) : (
-            <Link className="btn btn-outline-primary btn-form" to="/login">Return to Investor login</Link>
+            <Link className="btn btn-outline-primary btn-form" to="/login">Return to {PLATFORM_MODULES.find(module => module.id === currentBusinessModuleId)?.label || 'current'} login</Link>
           )}
         </section>
       )}

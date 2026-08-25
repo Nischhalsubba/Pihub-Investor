@@ -1,25 +1,31 @@
-import { normalizeModuleId } from './moduleIds';
+import { normalizeApplicationId } from './moduleIds';
 
 const ENV_APP_URLS = Object.freeze({
   investor: typeof __PIHUB_INVESTOR_APP_URL__ !== 'undefined' ? __PIHUB_INVESTOR_APP_URL__ : '',
   borrower: typeof __PIHUB_BORROWER_APP_URL__ !== 'undefined' ? __PIHUB_BORROWER_APP_URL__ : '',
-  advisory: typeof __PIHUB_ADVISORY_APP_URL__ !== 'undefined' ? __PIHUB_ADVISORY_APP_URL__ : ''
+  advisory: typeof __PIHUB_ADVISORY_APP_URL__ !== 'undefined' ? __PIHUB_ADVISORY_APP_URL__ : '',
+  admin: typeof __PIHUB_ADMIN_APP_URL__ !== 'undefined' ? __PIHUB_ADMIN_APP_URL__ : '',
+  access: typeof __PIHUB_ACCESS_APP_URL__ !== 'undefined' ? __PIHUB_ACCESS_APP_URL__ : ''
 });
 
 const HOME_PATHS = Object.freeze({
   investor: '/dashboard',
   borrower: '/',
-  advisory: '/'
+  advisory: '/',
+  admin: '/',
+  access: '/'
 });
 
 const LOGIN_PATHS = Object.freeze({
   investor: '/login',
   borrower: '/login',
-  advisory: '/login'
+  advisory: '/login',
+  admin: '/login',
+  access: '/'
 });
 
-const BUILD_MODULE_ID = typeof __PIHUB_MODULE_ID__ !== 'undefined' ? __PIHUB_MODULE_ID__ : 'investor';
-const DEFAULT_CURRENT_MODULE_ID = normalizeModuleId(BUILD_MODULE_ID) || 'investor';
+const BUILD_APPLICATION_ID = typeof __PIHUB_MODULE_ID__ !== 'undefined' ? __PIHUB_MODULE_ID__ : 'investor';
+const DEFAULT_CURRENT_APPLICATION_ID = normalizeApplicationId(BUILD_APPLICATION_ID) || 'investor';
 const owns = (object, key) => Object.prototype.hasOwnProperty.call(object || {}, key);
 const isAbsoluteHttpUrl = value => /^https?:\/\//i.test(String(value || '').trim());
 
@@ -69,19 +75,19 @@ const joinAppPath = (base, path) => {
   return new URL(cleanPath.replace(/^\//, ''), `${base}/`).toString();
 };
 
-const resolveConfiguredBase = (moduleId, appUrlOverrides = {}) => {
-  const raw = owns(appUrlOverrides, moduleId) ? appUrlOverrides[moduleId] : ENV_APP_URLS[moduleId];
+const resolveConfiguredBase = (applicationId, appUrlOverrides = {}) => {
+  const raw = owns(appUrlOverrides, applicationId) ? appUrlOverrides[applicationId] : ENV_APP_URLS[applicationId];
   return sanitizeAppBase(raw);
 };
 
-export const getCurrentModuleId = () => DEFAULT_CURRENT_MODULE_ID;
+export const getCurrentApplicationId = () => DEFAULT_CURRENT_APPLICATION_ID;
 
-export const getModuleRuntime = (value, options = {}) => {
-  const id = normalizeModuleId(value);
+export const getApplicationRuntime = (value, options = {}) => {
+  const id = normalizeApplicationId(value);
   if (!id) return null;
 
-  const currentModuleId = normalizeModuleId(options.currentModuleId) || DEFAULT_CURRENT_MODULE_ID;
-  const current = id === currentModuleId;
+  const currentApplicationId = normalizeApplicationId(options.currentApplicationId || options.currentModuleId) || DEFAULT_CURRENT_APPLICATION_ID;
+  const current = id === currentApplicationId;
   const configuredBase = resolveConfiguredBase(id, options.appUrlOverrides);
 
   // The current app always owns its own local routes. Absolute origins are only
@@ -89,8 +95,7 @@ export const getModuleRuntime = (value, options = {}) => {
   const base = current ? '' : configuredBase;
 
   // A different PiHub application must have its own absolute origin. Relative
-  // path mounting would let one SPA swallow another module's routes and defeats
-  // the isolation contract this registry exists to enforce.
+  // path mounting would let one SPA swallow another application's routes.
   const configured = current || Boolean(base && isAbsoluteHttpUrl(base));
 
   return Object.freeze({
@@ -103,14 +108,19 @@ export const getModuleRuntime = (value, options = {}) => {
   });
 };
 
-export const getModuleHomeHref = (value, options = {}) => getModuleRuntime(value, options)?.homeHref || '';
+export const getApplicationHomeHref = (value, options = {}) => getApplicationRuntime(value, options)?.homeHref || '';
+export const getApplicationLoginHref = (value, options = {}) => getApplicationRuntime(value, options)?.loginHref || '';
 
-export const getModuleLoginHref = (value, options = {}) => getModuleRuntime(value, options)?.loginHref || '';
+// Business-module aliases preserve the Phase 1 public API while the runtime
+// itself now understands supporting Admin and Access applications as well.
+export const getModuleRuntime = getApplicationRuntime;
+export const getModuleHomeHref = getApplicationHomeHref;
+export const getModuleLoginHref = getApplicationLoginHref;
 
 export const getModuleAccessHref = (value, options = {}) => {
-  const runtime = getModuleRuntime(value, options);
+  const runtime = getApplicationRuntime(value, options);
   if (!runtime) return '/login';
-  if (runtime.current) return runtime.id === 'investor' ? '/login' : `/login/${runtime.id}`;
+  if (runtime.current) return '/login';
   if (runtime.configured) return runtime.loginHref;
   return `/login/${runtime.id}`;
 };

@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
+  getApplicationRuntime,
+  getCurrentApplicationId,
   getModuleAccessHref,
   getModuleHomeHref,
   getModuleLoginHref,
@@ -10,6 +12,7 @@ import {
 
 describe('PiHub platform runtime routing', () => {
   it('keeps Investor as the current application without requiring an external origin', () => {
+    expect(getCurrentApplicationId()).toBe('investor');
     const runtime = getModuleRuntime('investor');
     expect(runtime?.current).toBe(true);
     expect(runtime?.configured).toBe(true);
@@ -29,6 +32,28 @@ describe('PiHub platform runtime routing', () => {
     expect(getModuleHomeHref('borrower', options)).toBe('https://borrower.example.test/');
     expect(getModuleLoginHref('borrower', options)).toBe('https://borrower.example.test/login');
     expect(getModuleAccessHref('borrower', options)).toBe('https://borrower.example.test/login');
+  });
+
+  it('understands supporting Admin and Access apps without treating them as business modules', () => {
+    const admin = getApplicationRuntime('admin', { currentApplicationId: 'admin' });
+    expect(admin?.current).toBe(true);
+    expect(admin?.homeHref).toBe('/');
+
+    const access = getApplicationRuntime('access', {
+      currentApplicationId: 'investor',
+      appUrlOverrides: { access: 'https://access.example.test' }
+    });
+    expect(access?.configured).toBe(true);
+    expect(access?.homeHref).toBe('https://access.example.test/');
+  });
+
+  it('does not let a configured public URL turn the current app into a cross-origin redirect', () => {
+    const runtime = getApplicationRuntime('investor', {
+      currentApplicationId: 'investor',
+      appUrlOverrides: { investor: 'https://investor.example.test' }
+    });
+    expect(runtime?.base).toBe('');
+    expect(runtime?.homeHref).toBe('/dashboard');
   });
 
   it('refuses to treat a relative future-module path as an independently configured application', () => {
