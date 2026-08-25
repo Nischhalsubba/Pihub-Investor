@@ -16,19 +16,28 @@ describe('PiHub platform module registry', () => {
     expect([...readDeclaredModuleIds(profile)].sort()).toEqual(['advisory', 'borrower', 'investor']);
   });
 
-  it('does not expose future modules before a real application location exists', () => {
+  it('does not expose a permitted module when its independent application origin is explicitly unavailable', () => {
     const profile = { available_modules: ['investor', 'borrower', 'advisory'] };
-    expect(getNavigableModules(profile).map(module => module.id)).toEqual(['investor']);
+    const modules = getNavigableModules(profile, { borrower: '', advisory: '' });
+    expect(modules.map(module => module.id)).toEqual(['investor']);
   });
 
-  it('exposes only permitted modules when independent application origins are configured', () => {
+  it('exposes permitted modules through their deployed independent application origins', () => {
+    const profile = { module_access: { investor: true, borrower: true, advisory: true } };
+    const modules = getNavigableModules(profile);
+
+    expect(modules.map(module => module.id)).toEqual(['investor', 'borrower', 'advisory']);
+    expect(modules.find(module => module.id === 'borrower')?.href).toBe('https://pihub-borrower-nischhalsubbas-projects.vercel.app/');
+    expect(modules.find(module => module.id === 'advisory')?.href).toBe('https://pihub-advisory-nischhalsubbas-projects.vercel.app/');
+  });
+
+  it('supports explicit application-origin overrides', () => {
     const profile = { module_access: { investor: true, borrower: true, advisory: true } };
     const modules = getNavigableModules(profile, {
       borrower: 'https://borrower.example.test',
       advisory: 'https://advisory.example.test'
     });
 
-    expect(modules.map(module => module.id)).toEqual(['investor', 'borrower', 'advisory']);
     expect(modules.find(module => module.id === 'borrower')?.href).toBe('https://borrower.example.test/');
   });
 
