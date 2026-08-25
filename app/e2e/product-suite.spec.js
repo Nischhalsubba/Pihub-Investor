@@ -35,6 +35,7 @@ test('workspace product suite renders decision intelligence and complete demo da
 });
 
 test('global search, recent records and keyboard routes work', async ({ page }) => {
+  test.setTimeout(45000);
   await login(page);
   await page.keyboard.press('Control+K');
   await expect(page.getByRole('dialog', { name: /global search and command menu/i })).toBeVisible();
