@@ -1,0 +1,28 @@
+name: Recheck live PiHub modules
+
+on:
+  push:
+    branches:
+      - ops/live-module-recheck
+
+permissions:
+  contents: read
+
+jobs:
+  live-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: apps/borrower/package-lock.json
+      - name: Install browser test dependencies
+        run: npm ci --prefix apps/borrower --legacy-peer-deps --no-audit --no-fund
+      - name: Install Chromium
+        working-directory: apps/borrower
+        run: npx playwright install --with-deps chromium
+      - name: Verify stable production aliases anonymously
+        working-directory: apps/borrower
+        run: node e2e/live-production.mjs
