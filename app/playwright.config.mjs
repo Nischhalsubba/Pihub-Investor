@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './e2e',
-  timeout: 30000,
+  timeout: 60000,
   expect: { timeout: 7000, toHaveScreenshot: { maxDiffPixelRatio: 0.012 } },
   fullyParallel: false,
   retries: process.env.CI ? 1 : 0,

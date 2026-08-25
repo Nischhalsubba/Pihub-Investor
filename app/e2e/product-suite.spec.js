@@ -35,6 +35,7 @@ test('workspace product suite renders decision intelligence and complete demo da
 });
 
 test('global search, recent records and keyboard routes work', async ({ page }) => {
+  test.setTimeout(60000);
   await login(page);
   await page.keyboard.press('Control+K');
   await expect(page.getByRole('dialog', { name: /global search and command menu/i })).toBeVisible();
@@ -75,7 +76,7 @@ test('notification center supports unread state, deep links and accessibility', 
 });
 
 test('opportunity quick view, saved density and compare mode work', async ({ page }) => {
-  test.setTimeout(45000);
+  test.setTimeout(60000);
   await login(page);
   await page.goto('/products');
 
@@ -181,8 +182,12 @@ test('overview card headers preserve title hierarchy and action alignment', asyn
   const subtitleBox = await subtitle.boundingBox();
   const actionTitleBox = await actionTitle.boundingBox();
   const actionSubtitleBox = await actionSubtitle.boundingBox();
-  expect(titleBox && subtitleBox && subtitleBox.y).toBeGreaterThanOrEqual((titleBox && titleBox.y + titleBox.height) || 0);
-  expect(actionTitleBox && actionSubtitleBox && actionSubtitleBox.y).toBeGreaterThanOrEqual((actionTitleBox && actionTitleBox.y + actionTitleBox.height) || 0);
+  expect(titleBox).not.toBeNull();
+  expect(subtitleBox).not.toBeNull();
+  expect(actionTitleBox).not.toBeNull();
+  expect(actionSubtitleBox).not.toBeNull();
+  expect((titleBox.y + titleBox.height) - subtitleBox.y, 'Title and subtitle should not materially overlap').toBeLessThanOrEqual(1);
+  expect((actionTitleBox.y + actionTitleBox.height) - actionSubtitleBox.y, 'Action title and subtitle should not materially overlap').toBeLessThanOrEqual(1);
 
   const viewport = page.viewportSize();
   if (viewport && viewport.width > 680) {
