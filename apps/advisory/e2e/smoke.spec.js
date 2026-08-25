@@ -1,5 +1,14 @@
 import { test, expect } from '@playwright/test';
 
+const CENTRAL_LOGIN = 'https://pihub-investor.vercel.app';
+const stubCentralLogin = async page => {
+  await page.route(`${CENTRAL_LOGIN}/**`, route => route.fulfill({
+    status: 200,
+    contentType: 'text/html',
+    body: '<!doctype html><html><body><h1>Central PiHub sign in</h1></body></html>'
+  }));
+};
+
 test('advisory shared access handoff opens an advisory-specific Investor-design workspace', async ({ page }) => {
   await page.goto('/?pihub_demo_access=advisory&source=investor-access');
   await expect(page.getByRole('heading', { name: 'Transaction overview' })).toBeVisible();
@@ -52,24 +61,16 @@ test('advisory shared access handoff opens an advisory-specific Investor-design 
   await expect(page.getByRole('heading', { name: 'Due diligence' })).toBeVisible();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(2);
+
+  await stubCentralLogin(page);
+  await page.getByRole('button', { name: 'Sign out' }).click();
+  await expect(page).toHaveURL(`${CENTRAL_LOGIN}/login/advisory`);
 });
 
-test('advisory direct fallback uses Investor auth geometry', async ({ page }) => {
+test('advisory direct visit has no fallback login and returns to central PiHub access', async ({ page }) => {
+  await stubCentralLogin(page);
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Open Advisory' })).toBeVisible();
-  const auth = await page.evaluate(() => {
-    const input = document.querySelector('.ph-field input');
-    const button = document.querySelector('.ph-login .ph-button.primary');
-    return {
-      inputHeight: getComputedStyle(input).minHeight,
-      inputRadius: getComputedStyle(input).borderRadius,
-      buttonHeight: getComputedStyle(button).minHeight,
-      buttonColor: getComputedStyle(button).backgroundColor,
-    };
-  });
-  expect(auth.inputHeight).toBe('50px');
-  expect(auth.inputRadius).toBe('10px');
-  expect(auth.buttonHeight).toBe('48px');
-  expect(auth.buttonColor).toBe('rgb(36, 87, 230)');
+  await expect(page).toHaveURL(`${CENTRAL_LOGIN}/login/advisory`);
+  await expect(page.getByRole('heading', { name: 'Central PiHub sign in' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Open Advisory' })).toHaveCount(0);
 });
