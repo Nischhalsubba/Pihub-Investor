@@ -18,6 +18,7 @@ test('borrower shared access handoff opens a borrower-specific Investor-design w
     await expect(page.locator('.ph-sidebar')).toBeVisible();
     const design = await page.evaluate(() => {
       const css = node => getComputedStyle(node);
+      const root = css(document.documentElement);
       return {
         font: css(document.body).fontFamily,
         bodySize: css(document.body).fontSize,
@@ -27,7 +28,7 @@ test('borrower shared access handoff opens a borrower-specific Investor-design w
         canvasBg: css(document.querySelector('.ph-main')).backgroundColor,
         cardRadius: css(document.querySelector('.ph-kpi')).borderRadius,
         cardBorder: css(document.querySelector('.ph-kpi')).borderTopColor,
-        primary: css(document.querySelector('.ph-button.primary')).backgroundColor,
+        primaryToken: root.getPropertyValue('--pi-primary').trim(),
         navHeight: css(document.querySelector('.ph-nav-link')).minHeight,
       };
     });
@@ -39,7 +40,7 @@ test('borrower shared access handoff opens a borrower-specific Investor-design w
     expect(design.canvasBg).toBe('rgb(246, 248, 252)');
     expect(design.cardRadius).toBe('12px');
     expect(design.cardBorder).toBe('rgb(226, 232, 240)');
-    expect(design.primary).toBe('rgb(36, 87, 230)');
+    expect(design.primaryToken).toBe('#2457e6');
     expect(design.navHeight).toBe('44px');
   }
 
