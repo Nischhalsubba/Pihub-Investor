@@ -4,7 +4,7 @@ import { readLocal, writeLocal } from './local-state';
 import { Card, Metric, PageHead, Status } from './ui';
 
 export const Overview = () => <><PageHead eyebrow="Admin / Overview" title="Platform governance" subtitle="Admin is a supporting application for identity, access, compliance and audit. It is not a fourth PiHub business module."/>
-<div className="ph-demo">Demo governance data only. Real role changes, compliance decisions and session revocation must be server-enforced before production use.</div>
+<div className="ph-demo">Admin is a supporting application, not a fourth business module. Demo governance data only: real role changes, compliance decisions and session revocation must be server-enforced before production use.</div>
 <div className="ph-grid cols-4"><Metric value={DEMO_ORGANIZATIONS.length} label="Organizations"/><Metric value={DEMO_USERS.length} label="Demo users"/><Metric value={DEMO_COMPLIANCE.filter(x=>x.status!=='Verified').length} label="Compliance items open"/><Metric value={DEMO_AUDIT.length} label="Recent audit events"/></div>
 <div className="ph-grid cols-2" style={{marginTop:16}}><Card title="Governance priorities"><ul className="ph-list"><li><span>KYB annual review · Berlin Living GmbH</span><Status tone="bad">Action required</Status></li><li><span>UBO evidence · ABC Development AG</span><Status tone="warn">In review</Status></li><li><span>Shared-session backend contract</span><Status>Backend dependency</Status></li></ul></Card><Card title="Architecture boundary"><p className="ph-subtitle">Admin can manage access policy and compliance context, but it must never become a hidden route inside Investor, Borrower or Advisory. It owns its own deployment and authorization surface.</p></Card></div></>;
 
