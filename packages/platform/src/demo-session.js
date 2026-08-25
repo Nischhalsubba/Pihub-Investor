@@ -29,3 +29,31 @@ export const authenticateDemo = ({ applicationId, email, password, account }) =>
   };
   return { ok: true, session };
 };
+
+export const consumeDemoAccessHandoff = ({ applicationId, account }) => {
+  if (typeof window === 'undefined' || !account) return null;
+
+  try {
+    const url = new URL(window.location.href);
+    const requestedApplication = url.searchParams.get('pihub_demo_access');
+    const source = url.searchParams.get('source');
+    if (requestedApplication !== applicationId || source !== 'investor-access') return null;
+
+    const result = authenticateDemo({
+      applicationId,
+      email: account.email,
+      password: account.password,
+      account
+    });
+    if (!result.ok) return null;
+
+    writeDemoSession(applicationId, result.session);
+    url.searchParams.delete('pihub_demo_access');
+    url.searchParams.delete('source');
+    const cleanHref = `${url.pathname}${url.search}${url.hash}` || '/';
+    window.history.replaceState(window.history.state, '', cleanHref);
+    return result.session;
+  } catch {
+    return null;
+  }
+};

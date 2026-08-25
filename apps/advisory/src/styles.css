@@ -1,4 +1,4 @@
-:root { --module-accent: #6b4fd3; }
-.ph-nav-link.active { background: color-mix(in srgb, var(--module-accent) 9%, white); color: var(--module-accent); }
-.ph-progress > span { background: var(--module-accent); }
-.ph-button.primary { background: var(--module-accent); border-color: var(--module-accent); }
+:root { --module-accent: #355dd4; }
+.ph-nav-link.active { border-color: #cbd6fa; background: #f3f6ff; color: #2749a8; }
+.ph-progress > span { background: #5f80ff; }
+.ph-button.primary { background: #2749a8; border-color: #2749a8; }
