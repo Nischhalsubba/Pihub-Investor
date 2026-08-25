@@ -20,11 +20,19 @@ describe('PiHub platform runtime routing', () => {
     expect(runtime?.loginHref).toBe('/login');
   });
 
-  it('does not configure another module until it has its own absolute application origin', () => {
-    expect(getModuleRuntime('borrower')?.configured).toBe(false);
-    expect(getModuleRuntime('advisory')?.configured).toBe(false);
-    expect(getModuleHomeHref('borrower')).toBe('');
-    expect(getModuleLoginHref('advisory')).toBe('');
+  it('uses the deployed Borrower and Advisory origins by default', () => {
+    expect(getModuleRuntime('borrower')?.configured).toBe(true);
+    expect(getModuleRuntime('advisory')?.configured).toBe(true);
+    expect(getModuleHomeHref('borrower')).toBe('https://pihub-borrower-nischhalsubbas-projects.vercel.app/');
+    expect(getModuleLoginHref('advisory')).toBe('https://pihub-advisory-nischhalsubbas-projects.vercel.app/login');
+  });
+
+  it('can explicitly mark a cross-application origin unavailable', () => {
+    const options = { appUrlOverrides: { borrower: '', advisory: '' } };
+    expect(getModuleRuntime('borrower', options)?.configured).toBe(false);
+    expect(getModuleRuntime('advisory', options)?.configured).toBe(false);
+    expect(getModuleHomeHref('borrower', options)).toBe('');
+    expect(getModuleLoginHref('advisory', options)).toBe('');
   });
 
   it('builds cross-application destinations from an absolute module origin', () => {
@@ -63,10 +71,11 @@ describe('PiHub platform runtime routing', () => {
     expect(getModuleAccessHref('borrower', { appUrlOverrides: { borrower: '/borrower' } })).toBe('/login/borrower');
   });
 
-  it('uses local access-selection routes only as a safe pre-deployment fallback', () => {
+  it('uses local access-selection routes only when an application origin is unavailable', () => {
     expect(getModuleAccessHref('investor')).toBe('/login');
-    expect(getModuleAccessHref('borrower')).toBe('/login/borrower');
-    expect(getModuleAccessHref('advisory')).toBe('/login/advisory');
+    expect(getModuleAccessHref('borrower')).toBe('https://pihub-borrower-nischhalsubbas-projects.vercel.app/login');
+    expect(getModuleAccessHref('advisory')).toBe('https://pihub-advisory-nischhalsubbas-projects.vercel.app/login');
+    expect(getModuleAccessHref('borrower', { appUrlOverrides: { borrower: '' } })).toBe('/login/borrower');
   });
 
   it('rejects executable, protocol-relative and credential-bearing destinations', () => {
