@@ -106,6 +106,7 @@ const RouterTree = () => (
   <Suspense fallback={<LoadingRoute />}>
     <Routes>
       <Route path="/login" element={<LegacyElement Component={RequireNoAuth(Login)} />} />
+      <Route path="/login/:moduleId" element={<LegacyElement Component={RequireNoAuth(Login)} />} />
       <Route path="/set-password/:token" element={<LegacyElement Component={RequireNoAuth(SetPassword)} />} />
       <Route path="/forgot-password" element={<LegacyElement Component={RequireNoAuth(ForgotPassword)} />} />
       <Route path="/signup" element={<LegacyElement Component={RequireNoAuth(Signup)} />} />

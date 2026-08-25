@@ -34,6 +34,7 @@
     "styles": "node scripts/build-css.mjs",
     "check:styles": "node scripts/check-style-architecture.mjs",
     "check:i18n": "node scripts/check-i18n-architecture.mjs",
+    "check:platform": "node scripts/check-platform-boundaries.mjs",
     "predev": "npm run styles",
     "dev": "vite",
     "start": "npm run dev",
@@ -44,6 +45,6 @@
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
     "check:bundle": "node scripts/check-bundle.mjs",
-    "quality": "npm run check:styles && npm run check:i18n && npm run test:unit && npm run build && npm run check:bundle"
+    "quality": "npm run check:styles && npm run check:i18n && npm run check:platform && npm run test:unit && npm run build && npm run check:bundle"
   }
 }

@@ -1,17 +1,7 @@
-const MODULE_ALIASES = Object.freeze({
-  investor: 'investor',
-  lender: 'investor',
-  borrower: 'borrower',
-  origination: 'borrower',
-  advisory: 'advisory',
-  structuring: 'advisory'
-});
+import { normalizeModuleId } from './moduleIds';
+import { getModuleHomeHref, isAbsoluteNavigationHref, sanitizeNavigationHref } from './runtime';
 
-const DEFAULT_MODULE_LOCATIONS = Object.freeze({
-  investor: '/dashboard',
-  borrower: '',
-  advisory: ''
-});
+export { normalizeModuleId } from './moduleIds';
 
 export const PLATFORM_MODULES = Object.freeze([
   Object.freeze({
@@ -36,8 +26,6 @@ export const PLATFORM_MODULES = Object.freeze([
     icon: 'bx bx-briefcase-alt-2'
   })
 ]);
-
-export const normalizeModuleId = value => MODULE_ALIASES[String(value || '').trim().toLowerCase()] || null;
 
 const declarationValues = value => {
   if (!value) return [];
@@ -74,12 +62,23 @@ export const getNavigableModules = (profile, locationOverrides = {}, currentModu
   const currentId = normalizeModuleId(currentModuleId) || 'investor';
   const allowed = readDeclaredModuleIds(profile);
 
-  // This application is currently the Investor entry point. Until shared server
-  // authorization exists, the active module is the only safe fallback.
+  // Until server authorization is shared across all applications, the active
+  // application remains the only safe implicit permission.
   allowed.add(currentId);
 
-  const locations = { ...DEFAULT_MODULE_LOCATIONS, ...locationOverrides };
-  return PLATFORM_MODULES
-    .filter(module => allowed.has(module.id) && typeof locations[module.id] === 'string' && locations[module.id].trim())
-    .map(module => ({ ...module, href: locations[module.id].trim() }));
+  return PLATFORM_MODULES.flatMap(module => {
+    if (!allowed.has(module.id)) return [];
+
+    const hasOverride = Object.prototype.hasOwnProperty.call(locationOverrides || {}, module.id);
+    let href = hasOverride
+      ? sanitizeNavigationHref(locationOverrides[module.id])
+      : getModuleHomeHref(module.id, { currentModuleId: currentId });
+
+    // Cross-module navigation must leave the current application origin. This
+    // prevents Investor's catch-all SPA rewrite from ever claiming Borrower or
+    // Advisory paths simply because somebody supplied a convenient relative URL.
+    if (module.id !== currentId && !isAbsoluteNavigationHref(href)) href = '';
+
+    return href ? [{ ...module, href }] : [];
+  });
 };

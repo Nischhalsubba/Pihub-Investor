@@ -9,40 +9,54 @@ Primary business modules:
 2. Investor / Lender
 3. Advisory / Structuring
 
-Admin / Compliance is a shared platform capability rather than a fourth business module.
+Admin / Compliance is a shared platform capability rather than a fourth business module. Access is a shared entry/authentication surface rather than a business module.
 
-## Phase 1 safety contract
+## Production safety contract
 
-The first platform change is deliberately compatibility-first:
+The platform migration remains compatibility-first:
 
-- `/app` remains the production Investor application.
-- Root `vercel.json` remains unchanged.
-- Vercel continues to install `app/package-lock.json`, build `/app`, and serve `app/dist`.
-- The existing GitHub Actions quality workflow remains rooted in `/app`.
-- `apps/borrower`, `apps/advisory`, `apps/admin`, and future shared packages are not production build targets yet.
-- No future module is shown in the UI until both server-authorized access and a real application location exist.
-- Every cutover step gets its own PR, quality run, Vercel preview/status check and rollback point.
+- `/app` remains the production Investor application until a dedicated Investor cutover release.
+- Root `vercel.json` keeps the verified `/app` install/build/output contract during the routing-isolation phase.
+- The existing GitHub Actions quality workflow remains rooted in `/app` while Investor is the only production application.
+- `apps/borrower`, `apps/advisory`, `apps/admin`, `apps/access`, and shared packages are not production build targets until they contain real independently deployable applications.
+- A future module is not presented as a working sign-in destination until it has its own configured application origin.
+- Every cutover step gets its own PR, quality run, Vercel status check and rollback point.
 
-## Phase 1 implementation
+## Phase 1 — platform-aware shell: complete
 
-The existing Investor shell now contains a platform-aware module registry and an accessible module-switcher component. In the current deployment only Investor has a configured application location, so the switcher renders nothing and the visible production UI remains unchanged.
+The Investor shell gained a platform module registry, permission-aware module switcher and reserved `apps/*` / `packages/*` boundaries without moving the production build.
 
-The root repository now also reserves future `apps/*` and `packages/*` boundaries with README contracts. These directories are scaffolding only; they do not affect the Vercel build.
+## Phase 2 — routing and application isolation
+
+Phase 2 makes the boundaries enforceable before a second application is built:
+
+- each module owns a separate application origin;
+- Investor never mounts Borrower, Advisory, Admin or Access product namespaces;
+- cross-module navigation uses an allowlisted absolute HTTP(S) application origin;
+- relative cross-module route overrides are rejected;
+- login can display module context without pretending an undeployed module can authenticate;
+- CI scans imports and route declarations to prevent application-to-application coupling;
+- current Investor Vercel install/build/output behavior remains unchanged.
+
+See `docs/PLATFORM_ROUTING_AND_ISOLATION.md` for the full URL, authentication, source-dependency and deployment contract.
 
 ## Migration sequence
 
-### Phase 2: workspace orchestration
-Introduce the root workspace/Turborepo task graph and affected-package CI while leaving `/app` as the production target.
+### Phase 3: Borrower application foundation
+Create the first real independent application in `apps/borrower` with its own package manifest, router, tests and deployment contract. It consumes only stable shared packages/contracts.
 
-### Phase 3: Investor parity migration
-Create `apps/investor`, prove equivalent build output and complete browser/accessibility/visual parity, then change Vercel's build root in a dedicated cutover PR only after the preview is green.
+### Phase 4: root workspace and Turborepo
+Once Investor and Borrower are represented by real package boundaries, introduce the root workspace, deterministic shared lockfile, Turborepo task graph, dependency-boundary rules, affected-package CI and optional remote caching. Doing this after the second real package exists avoids adding a build orchestrator that has nothing useful to orchestrate.
 
-### Phase 4: Borrower vertical slice
-Implement a guided financing-request journey against shared domain/API contracts.
+### Phase 5: Borrower deployment
+Give Borrower its own Vercel project/origin, verify its exact deployment, then configure the Investor/access module registry to navigate to that origin.
 
-### Phase 5: Advisory vertical slice
-Implement mandate/transaction structuring and execution against the same shared deal records.
+### Phase 6: Advisory, Admin and Access
+Repeat the independent-app pattern for Advisory and supporting surfaces. Shared authentication is introduced only with an approved server session/SSO contract.
+
+### Phase 7: Investor parity migration
+Move the existing Investor application from `/app` into `apps/investor` only after equivalent build output, routes, browser behavior, accessibility, responsive geometry and visual regression are proven. Change Vercel's root/build path in a dedicated cutover PR.
 
 ## Rollback rule
 
-Until the explicit Investor cutover, rollback is trivial because production continues to use the known `/app` path. After cutover, retain the previous successful Vercel deployment and production commit as the rollback target.
+Until the explicit Investor cutover, Investor rollback stays simple because production continues to use `/app`. A failed future application can be removed from module-location configuration without importing, routing through or redeploying Investor. After each application cutover, retain its previous successful Vercel deployment and exact production commit as the rollback target.

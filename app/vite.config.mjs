@@ -36,6 +36,10 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       __PIHUB_DEMO__: JSON.stringify(truthy(demoValue)),
+      __PIHUB_MODULE_ID__: JSON.stringify(read('REACT_APP_PIHUB_MODULE_ID') || 'investor'),
+      __PIHUB_INVESTOR_APP_URL__: JSON.stringify(read('REACT_APP_INVESTOR_APP_URL') || ''),
+      __PIHUB_BORROWER_APP_URL__: JSON.stringify(read('REACT_APP_BORROWER_APP_URL') || ''),
+      __PIHUB_ADVISORY_APP_URL__: JSON.stringify(read('REACT_APP_ADVISORY_APP_URL') || ''),
       'process.env.NODE_ENV': JSON.stringify(production ? 'production' : 'development'),
       'process.env.REACT_APP_DEMO': JSON.stringify(demoValue),
       'process.env.REACT_APP_API_URL': JSON.stringify(read('REACT_APP_API_URL') || ''),

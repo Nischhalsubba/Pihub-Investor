@@ -12,15 +12,19 @@ const AuthShell = ({
   visualDescription,
   proofItems = [],
   wide = false,
-  hideVisual = false
+  hideVisual = false,
+  brandLabel = 'PiHub Investor',
+  brandHref = '/login',
+  workspaceNav = null
 }) => (
   <main className={`auth-world${wide ? ' auth-world-wide-form' : ''}${hideVisual ? ' auth-world-no-visual' : ''}`}>
     <section className="auth-form-panel">
       <div className={`auth-card${wide ? ' auth-card-wide' : ''}`} data-motion="auth-card">
-        <Link className="auth-brand" to="/login" aria-label="PiHub Investor">
+        <Link className="auth-brand" to={brandHref} aria-label={`${brandLabel} access`} style={workspaceNav ? { marginBottom: 24 } : undefined}>
           <span className="auth-brand-logo" aria-hidden="true"><img src="/assets/img/logo.png" alt="" /></span>
-          <strong>PiHub Investor</strong>
+          <strong>{brandLabel}</strong>
         </Link>
+        {workspaceNav}
         {eyebrow ? <div className="auth-eyebrow">{eyebrow}</div> : null}
         {title ? <h1 className="page-title">{title}</h1> : null}
         {description ? <div className="page-desc">{description}</div> : null}
