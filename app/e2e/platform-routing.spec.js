@@ -1,5 +1,8 @@
 import { test, expect } from '@playwright/test';
 
+const BORROWER_ORIGIN = 'https://pihub-borrower-nischhalsubbas-projects.vercel.app';
+const ADVISORY_ORIGIN = 'https://pihub-advisory-nischhalsubbas-projects.vercel.app';
+
 const loginInvestor = async page => {
   await page.goto('/login');
   await page.locator('#login-email').fill('routing.qa@example.com');
@@ -33,6 +36,27 @@ test('shared access selector keeps all workspace choices on one login surface', 
   await expect(page.locator('#login-email')).toHaveValue('advisory.demo@pihub.local');
   await expect(page.locator('#login-password')).toHaveValue('DemoAdvisory1!');
   await expect(page.getByRole('button', { name: 'Open Advisory' })).toBeVisible();
+});
+
+test('demo workspace launch crosses origins without putting credentials or tokens in the URL', async ({ page }) => {
+  const cases = [
+    { id: 'borrower', origin: BORROWER_ORIGIN, button: 'Open Borrower' },
+    { id: 'advisory', origin: ADVISORY_ORIGIN, button: 'Open Advisory' }
+  ];
+
+  for (const item of cases) {
+    await page.route(`${item.origin}/**`, route => route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>PiHub handoff test</title>' }));
+    await page.goto(`/login/${item.id}`);
+    await page.getByRole('button', { name: item.button }).click();
+    await expect(page).toHaveURL(new RegExp(`^${item.origin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/\\?`));
+    const launched = new URL(page.url());
+    expect(launched.searchParams.get('pihub_demo_access')).toBe(item.id);
+    expect(launched.searchParams.get('source')).toBe('investor-access');
+    expect(launched.search).not.toContain('password');
+    expect(launched.search).not.toContain('email');
+    expect(launched.search).not.toContain('token');
+    await page.unroute(`${item.origin}/**`);
+  }
 });
 
 test('module aliases and invalid access routes canonicalize safely inside Investor', async ({ page }) => {
