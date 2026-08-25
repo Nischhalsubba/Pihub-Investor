@@ -1,0 +1,35 @@
+name: Disable module Vercel protection
+
+on:
+  push:
+    branches:
+      - ops/disable-module-vercel-protection
+
+permissions:
+  contents: read
+
+jobs:
+  disable-protection:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require Vercel API token
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error::VERCEL_TOKEN is not configured in GitHub Actions secrets."
+            exit 1
+          fi
+          echo "Vercel token is available; proceeding without printing it."
+      - name: Disable Vercel Authentication for public PiHub modules
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          npx --yes vercel@latest project protection disable pihub-borrower --sso --scope nischhalsubbas-projects --token "$VERCEL_TOKEN"
+          npx --yes vercel@latest project protection disable pihub-advisory --sso --scope nischhalsubbas-projects --token "$VERCEL_TOKEN"
+      - name: Read back protection state
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          npx --yes vercel@latest project protection pihub-borrower --format json --scope nischhalsubbas-projects --token "$VERCEL_TOKEN"
+          npx --yes vercel@latest project protection pihub-advisory --format json --scope nischhalsubbas-projects --token "$VERCEL_TOKEN"
