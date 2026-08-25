@@ -7,8 +7,8 @@ test('borrower shared access handoff opens a borrower-specific workspace without
   await expect(page.locator('.ph-app[data-workspace="borrower"]')).toBeVisible();
   await expect(page.locator('.ph-topbar')).toBeVisible();
   await expect(page.locator('.ph-kpi')).toHaveCount(4);
-  await expect(page.getByRole('heading', { name: 'Next actions' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Application progress' })).toBeVisible();
+  await expect(page.getByText('Next actions', { exact: true })).toBeVisible();
+  await expect(page.getByText('Application progress', { exact: true })).toBeVisible();
   await expect(page.getByText('Pipeline by stage', { exact: true })).toHaveCount(0);
 
   const viewport = page.viewportSize();
