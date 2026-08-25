@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, Navigate, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom-v6';
-import { authenticateDemo, clearDemoSession, consumeDemoAccessHandoff, readDemoSession, writeDemoSession } from '../../../packages/platform/src/demo-session';
+import { clearDemoSession, consumeDemoAccessHandoff, readDemoSession, redirectToCentralAccess } from '../../../packages/platform/src/demo-session';
 import { DEMO_DEAL } from '../../../packages/domain/src/demo-data';
-import { APP_ID, APP_LABEL, DEMO_ACCOUNT, LOGIN_COPY } from './config';
+import { APP_ID, APP_LABEL, DEMO_ACCOUNT } from './config';
 import Overview from './Overview';
 import { Financing, Company, Project, Financials, Documents, Requests, Closing, Account } from './pages';
 
@@ -48,32 +48,9 @@ const Icon = ({ name }) => {
 
 const initials = name => String(name || '').split(' ').filter(Boolean).map(part => part[0]).join('').slice(0, 2).toUpperCase();
 
-const Login = ({ onLogin }) => {
-  const [email, setEmail] = useState(DEMO_ACCOUNT.email);
-  const [password, setPassword] = useState(DEMO_ACCOUNT.password);
-  const [error, setError] = useState('');
-  const submit = event => {
-    event.preventDefault();
-    const result = authenticateDemo({ applicationId: APP_ID, email, password, account: DEMO_ACCOUNT });
-    if (!result.ok) { setError(result.error); return; }
-    writeDemoSession(APP_ID, result.session);
-    onLogin(result.session);
-  };
-  return <main className="ph-login">
-    <section className="ph-login-main">
-      <form className="ph-login-card ph-login-form" onSubmit={submit} noValidate>
-        <div className="ph-login-brand"><span className="ph-brandmark">PH</span><span>PiHub</span><span className="ph-status">{APP_LABEL}</span></div>
-        <div><div className="ph-eyebrow">{LOGIN_COPY.eyebrow}</div><h1 className="ph-title">Sign in</h1><p className="ph-subtitle">{LOGIN_COPY.description}</p></div>
-        <div className="ph-demo">Direct demo access. The shared PiHub access screen normally opens this workspace without asking for credentials twice.</div>
-        <div className="ph-field"><label htmlFor="login-email">Email</label><input id="login-email" type="email" value={email} onChange={e=>setEmail(e.target.value)} autoComplete="email" /></div>
-        <div className="ph-field"><label htmlFor="login-password">Password</label><input id="login-password" type="password" value={password} onChange={e=>setPassword(e.target.value)} autoComplete="current-password" /></div>
-        {error ? <div role="alert" className="ph-callout">{error}</div> : null}
-        <button type="submit" className="ph-button primary">Open {APP_LABEL}</button>
-        <div className="ph-login-hint">Demo account: <strong>{DEMO_ACCOUNT.email}</strong><br/>Password: <strong>{DEMO_ACCOUNT.password}</strong></div>
-      </form>
-    </section>
-    <aside className="ph-login-side" aria-hidden="true"><div><div className="ph-eyebrow">PIHUB / {APP_LABEL.toUpperCase()}</div><h1>{LOGIN_COPY.side}</h1><p>Separate application boundary, shared PiHub design system and one canonical financing record.</p></div></aside>
-  </main>;
+const CentralAccessRedirect = () => {
+  useEffect(() => { redirectToCentralAccess(APP_ID); }, []);
+  return null;
 };
 
 const Workspace = ({ session, onLogout }) => {
@@ -139,7 +116,7 @@ const Workspace = ({ session, onLogout }) => {
 };
 
 export default function App() {
-  const [session, setSession] = useState(() => consumeDemoAccessHandoff({ applicationId: APP_ID, account: DEMO_ACCOUNT }) || readDemoSession(APP_ID));
-  if (!session) return <Login onLogin={setSession} />;
-  return <Workspace session={session} onLogout={() => { clearDemoSession(APP_ID); setSession(null); }} />;
+  const [session] = useState(() => consumeDemoAccessHandoff({ applicationId: APP_ID, account: DEMO_ACCOUNT }) || readDemoSession(APP_ID));
+  if (!session) return <CentralAccessRedirect />;
+  return <Workspace session={session} onLogout={() => { clearDemoSession(APP_ID); redirectToCentralAccess(APP_ID); }} />;
 }

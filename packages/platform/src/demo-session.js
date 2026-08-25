@@ -1,5 +1,49 @@
 const keyFor = applicationId => `pihub:${applicationId}:demo-session:v1`;
 
+const DEFAULT_CENTRAL_ACCESS_ORIGIN = 'https://pihub-investor.vercel.app';
+const CENTRAL_ACCESS_PATHS = Object.freeze({
+  investor: '/login',
+  borrower: '/login/borrower',
+  advisory: '/login/advisory',
+  admin: '/login?next=admin',
+  access: '/login'
+});
+
+const configuredCentralAccessOrigin = () => {
+  try {
+    return String(import.meta.env?.VITE_PIHUB_ACCESS_ORIGIN || DEFAULT_CENTRAL_ACCESS_ORIGIN).trim();
+  } catch {
+    return DEFAULT_CENTRAL_ACCESS_ORIGIN;
+  }
+};
+
+const sanitizeOrigin = value => {
+  try {
+    const url = new URL(String(value || '').trim());
+    if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) return DEFAULT_CENTRAL_ACCESS_ORIGIN;
+    url.pathname = '/';
+    url.search = '';
+    url.hash = '';
+    return url.toString().replace(/\/$/, '');
+  } catch {
+    return DEFAULT_CENTRAL_ACCESS_ORIGIN;
+  }
+};
+
+export const getCentralAccessHref = (applicationId, options = {}) => {
+  const id = String(applicationId || '').trim().toLowerCase();
+  const origin = sanitizeOrigin(options.origin || configuredCentralAccessOrigin());
+  const path = CENTRAL_ACCESS_PATHS[id] || CENTRAL_ACCESS_PATHS.investor;
+  return new URL(path, `${origin}/`).toString();
+};
+
+export const redirectToCentralAccess = (applicationId, options = {}) => {
+  if (typeof window === 'undefined') return '';
+  const href = getCentralAccessHref(applicationId, options);
+  window.location.replace(href);
+  return href;
+};
+
 export const readDemoSession = applicationId => {
   try {
     const raw = localStorage.getItem(keyFor(applicationId));
