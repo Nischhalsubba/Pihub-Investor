@@ -101,6 +101,10 @@ jobs:
             npm --prefix "apps/$app" run test:e2e || status=1
           done
           exit "$status"
+      - name: Verify live Borrower and Advisory deployment routing
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        working-directory: apps/borrower
+        run: node e2e/live-production.mjs
       - name: Preserve platform-app Playwright failure diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
