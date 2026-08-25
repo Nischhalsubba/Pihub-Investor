@@ -1,4 +1,3 @@
-:root { --module-accent: #1f6b58; }
-.ph-nav-link.active { background: color-mix(in srgb, var(--module-accent) 9%, white); color: var(--module-accent); }
-.ph-progress > span { background: var(--module-accent); }
-.ph-button.primary { background: var(--module-accent); border-color: var(--module-accent); }
+/* Admin owns governance composition only.
+   The former green Admin theme is intentionally removed. Palette, typography,
+   spacing, controls and shell geometry now come from the Investor design system. */
