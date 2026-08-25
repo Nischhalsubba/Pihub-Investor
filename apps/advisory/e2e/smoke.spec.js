@@ -6,7 +6,7 @@ test('advisory login exposes isolated transaction execution workflow', async ({ 
   await expect(page.getByRole('heading', { name: /transaction/i }).first()).toBeVisible();
   await page.getByRole('link', { name: 'Transactions', exact: true }).first().click();
   await expect(page).toHaveURL(/\/transactions$/);
-  await expect(page.getByText('PH-2026-0147', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /PH-2026-0147/ })).toBeVisible();
   await page.getByRole('link', { name: 'Due diligence', exact: true }).first().click();
   await expect(page).toHaveURL(/\/due-diligence$/);
   await expect(page.getByRole('heading', { name: 'Due diligence' })).toBeVisible();
