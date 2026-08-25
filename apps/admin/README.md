@@ -1,12 +1,9 @@
-# Shared Admin / Compliance application
+# PiHub Admin
 
-Admin is a shared platform capability, not a fourth primary PiHub business module.
+Independent PiHub Admin application. It owns only Admin routes and may consume shared repository contracts, but it must not import another application's implementation code.
 
-Target ownership:
-- organizations and users;
-- roles, permissions and record access;
-- KYC/KYB/AML and compliance lifecycle;
-- security/session administration;
-- audit and platform governance.
+## Demo login
+- Email: `admin.demo@pihub.local`
+- Password: `DemoAdmin1!`
 
-Phase 1 status: architecture placeholder only. Authorization must ultimately be server-enforced; hiding UI is never treated as a security boundary.
+The current implementation is an explicit browser-local demo until the shared server session/API contracts are available.

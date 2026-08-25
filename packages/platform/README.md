@@ -1,5 +1,7 @@
-# Platform package
+# @pihub/platform
 
-Future home for module metadata and shared platform contracts that are independent of any one PiHub application.
+Shared application metadata and platform contracts that are safe for every PiHub frontend to consume.
 
-Phase 1 keeps the executable module registry inside `/app/src/_platform` so production can evolve without changing Vercel's build root. Extraction into this package happens only after the repository workspace is introduced and the Investor parity gate is green.
+Phase 3 makes this package executable: it owns application/origin metadata plus explicit browser-local demo-session helpers used only by the new demo workspaces. Production authentication remains a server responsibility.
+
+Dependency rule: applications may import this package; this package must never import an application.

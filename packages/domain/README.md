@@ -1,5 +1,7 @@
-# Shared domain package
+# @pihub/domain
 
-Future shared types and domain contracts for canonical PiHub records such as Organization, Deal, Facility, Asset/Property, Document, Decision, Commitment, Position, Payment, Task and AuditEvent.
+Shared business/domain records and domain utilities that are independent of a single PiHub application.
 
-The central rule is one source of truth: Borrower, Investor and Advisory may expose different views of a deal, but they must not create independent copies of the same business record.
+Phase 3 starts with one canonical demo deal and related documents, organizations, users, compliance and audit fixtures. Borrower and Advisory deliberately render different workflows around the same deal identity.
+
+Production entities must ultimately come from canonical backend APIs rather than browser fixtures.
