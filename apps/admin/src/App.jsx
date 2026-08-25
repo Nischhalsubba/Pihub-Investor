@@ -1,18 +1,37 @@
 import React, { useMemo, useState } from 'react';
-import { Navigate, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom-v6';
+import { Navigate, NavLink, Route, Routes, useNavigate } from 'react-router-dom-v6';
 import { authenticateDemo, clearDemoSession, readDemoSession, writeDemoSession } from '../../../packages/platform/src/demo-session';
 import { APP_ID, APP_LABEL, DEMO_ACCOUNT, LOGIN_COPY } from './config';
 import { Overview, Organizations, Users, Compliance, AccessPolicies, Audit, Platform } from './pages';
 
-const NAV = [
-  { label: 'Overview', to: '/' },
-  { label: 'Organizations', to: '/organizations' },
-  { label: 'Users & roles', to: '/users' },
-  { label: 'Compliance', to: '/compliance' },
-  { label: 'Access policies', to: '/access-policies' },
-  { label: 'Audit log', to: '/audit' },
-  { label: 'Platform', to: '/platform' },
+const NAV_SECTIONS = [
+  { label: 'Workspace', items: [{ label: 'Overview', to: '/', icon: 'overview' }] },
+  { label: 'Governance', items: [
+    { label: 'Organizations', to: '/organizations', icon: 'organizations' },
+    { label: 'Users & roles', to: '/users', icon: 'users' },
+    { label: 'Compliance', to: '/compliance', icon: 'compliance' },
+    { label: 'Access policies', to: '/access-policies', icon: 'access' },
+  ] },
+  { label: 'Operations', items: [
+    { label: 'Audit log', to: '/audit', icon: 'audit' },
+    { label: 'Platform', to: '/platform', icon: 'platform' },
+  ] },
 ];
+
+const Icon = ({ name }) => {
+  const paths = {
+    overview: <><path d="M4 13h6V4H4z"/><path d="M14 20h6v-9h-6z"/><path d="M14 8h6V4h-6z"/><path d="M4 20h6v-3H4z"/></>,
+    organizations: <><path d="M4 21V8l8-4 8 4v13"/><path d="M9 21v-5h6v5"/><path d="M8 10h.01M12 10h.01M16 10h.01"/></>,
+    users: <><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M17 8a3 3 0 1 1 0 6"/><path d="M17 17a5 5 0 0 1 5 4"/></>,
+    compliance: <><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8 12l3 3 5-6"/></>,
+    access: <><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></>,
+    audit: <><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></>,
+    platform: <><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></>,
+  };
+  return <span className="ph-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24">{paths[name] || paths.overview}</svg></span>;
+};
+
+const initials = name => String(name || '').split(' ').filter(Boolean).map(part => part[0]).join('').slice(0, 2).toUpperCase();
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState(DEMO_ACCOUNT.email);
@@ -30,7 +49,7 @@ const Login = ({ onLogin }) => {
       <form className="ph-login-card ph-login-form" onSubmit={submit} noValidate>
         <div className="ph-login-brand"><span className="ph-brandmark">PH</span><span>PiHub</span><span className="ph-status">{APP_LABEL}</span></div>
         <div><div className="ph-eyebrow">{LOGIN_COPY.eyebrow}</div><h1 className="ph-title">Sign in</h1><p className="ph-subtitle">{LOGIN_COPY.description}</p></div>
-        <div className="ph-demo">Demo workspace. Data and actions are stored only in this browser until the shared PiHub server session and API contracts are connected.</div>
+        <div className="ph-demo">Demo workspace. Identity, access and compliance changes remain browser-local until the server authorization contracts are connected.</div>
         <div className="ph-field"><label htmlFor="login-email">Email</label><input id="login-email" type="email" value={email} onChange={e=>setEmail(e.target.value)} autoComplete="email" /></div>
         <div className="ph-field"><label htmlFor="login-password">Password</label><input id="login-password" type="password" value={password} onChange={e=>setPassword(e.target.value)} autoComplete="current-password" /></div>
         {error ? <div role="alert" className="ph-callout">{error}</div> : null}
@@ -38,27 +57,52 @@ const Login = ({ onLogin }) => {
         <div className="ph-login-hint">Demo account: <strong>{DEMO_ACCOUNT.email}</strong><br/>Password: <strong>{DEMO_ACCOUNT.password}</strong></div>
       </form>
     </section>
-    <aside className="ph-login-side" aria-hidden="true"><div><div className="ph-eyebrow">PIHUB / {APP_LABEL.toUpperCase()}</div><h1>{LOGIN_COPY.side}</h1><p>One application, one route boundary, one release surface. Shared data can flow through platform contracts without importing another module's screens.</p></div></aside>
+    <aside className="ph-login-side" aria-hidden="true"><div><div className="ph-eyebrow">PIHUB / ADMIN</div><h1>{LOGIN_COPY.side}</h1><p>Govern platform access, compliance and audit from an independently controlled administrative surface.</p></div></aside>
   </main>;
 };
 
 const Workspace = ({ session, onLogout }) => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const grouped = useMemo(() => NAV, []);
-  const link = item => <NavLink key={item.to} to={item.to} end={item.to === '/'} className={({isActive})=>`ph-nav-link${isActive?' active':''}`}>{item.label}</NavLink>;
-  return <div className="ph-app">
+  const mobileItems = useMemo(() => NAV_SECTIONS.flatMap(section => section.items), []);
+  const link = item => <NavLink key={item.to} to={item.to} end={item.to === '/'} className={({ isActive }) => `ph-nav-link${isActive ? ' active' : ''}`}><Icon name={item.icon}/><span>{item.label}</span></NavLink>;
+
+  return <div className="ph-app" data-workspace="admin">
     <header className="ph-topbar">
-      <button className="ph-brand" type="button" onClick={()=>navigate('/')} style={{background:'transparent',border:0,color:'inherit',padding:0,cursor:'pointer'}}><span className="ph-brandmark">PH</span><span>PiHub</span></button>
-      <span className="ph-workspace-badge">{APP_LABEL}</span>
+      <div className="ph-topbar-leading">
+        <button className="ph-brand" type="button" onClick={() => navigate('/')}>
+          <span className="ph-brandmark">PH</span>
+          <span className="ph-brand-copy"><strong>PiHub Admin</strong><small>Governance workspace</small></span>
+        </button>
+        <div className="ph-workspace-context">
+          <span className="ph-workspace-badge">Admin</span>
+          <span className="ph-workspace-context-copy"><strong>Platform control plane</strong><small>Identity · access · compliance · audit</small></span>
+        </div>
+      </div>
       <div className="ph-topbar-spacer" />
-      <span className="ph-env">Demo environment</span>
-      <div className="ph-user"><span>{session.user.organization}</span><span className="ph-avatar" aria-hidden="true">{session.user.name.split(' ').map(part=>part[0]).join('').slice(0,2)}</span><button className="ph-button" type="button" onClick={onLogout}>Sign out</button></div>
+      <div className="ph-topbar-controls">
+        <div className="ph-environment-chip" aria-label="Demo environment">
+          <span className="ph-environment-dot" aria-hidden="true" />
+          <span className="ph-environment-copy"><strong>Demo workspace</strong><small>Local browser data · no live policy changes</small></span>
+        </div>
+        <div className="ph-user-card">
+          <span className="ph-avatar" aria-hidden="true">{initials(session.user.name)}</span>
+          <span className="ph-user-copy"><strong>{session.user.name}</strong><small>{session.user.organization} · {session.user.role}</small></span>
+          <button className="ph-button ph-signout" type="button" onClick={onLogout}>Sign out</button>
+        </div>
+      </div>
     </header>
-    <div className="ph-mobile-nav" aria-label={`${APP_LABEL} navigation`}>{grouped.map(link)}</div>
+
+    <div className="ph-mobile-nav" aria-label="Admin navigation">{mobileItems.map(link)}</div>
+
     <div className="ph-shell">
-      <aside className="ph-sidebar"><div className="ph-nav-group"><div className="ph-nav-label">{APP_LABEL} workspace</div>{grouped.map(link)}</div><div className="ph-demo">{APP_ID === 'admin' ? 'Admin is a supporting application, not a fourth business module.' : 'This workspace owns only its own routes and browser-local demo state.'}</div></aside>
-      <main className="ph-main" key={location.pathname}>
+      <aside className="ph-sidebar">
+        {NAV_SECTIONS.map(section => <div className="ph-sidebar-section" key={section.label}><div className="ph-nav-label">{section.label}</div>{section.items.map(link)}</div>)}
+        <div className="ph-sidebar-foot">
+          <div className="ph-sidebar-foot-copy">Admin is a supporting control-plane application, not a fourth PiHub business module.</div>
+          <div className="ph-system-line"><i/><b>DEMO DATA</b><span>CONTROL</span></div>
+        </div>
+      </aside>
+      <main className="ph-main">
         <Routes>
           <Route path="/" element={<Overview />} />
           <Route path="/organizations" element={<Organizations />} />
@@ -77,5 +121,5 @@ const Workspace = ({ session, onLogout }) => {
 export default function App() {
   const [session, setSession] = useState(() => readDemoSession(APP_ID));
   if (!session) return <Login onLogin={setSession} />;
-  return <Workspace session={session} onLogout={() => { clearDemoSession(APP_ID); setSession(null); } } />;
+  return <Workspace session={session} onLogout={() => { clearDemoSession(APP_ID); setSession(null); }} />;
 }
