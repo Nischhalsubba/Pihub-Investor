@@ -11,6 +11,8 @@ const CONFIG = Object.freeze({
 });
 
 const human = key => ({ states: 'States', counties: 'Counties', services: 'Services', industries: 'Industries', ratingAgencies: 'Rating agencies' }[key] || key);
+const singular = key => ({ states: 'state', counties: 'county', services: 'service', industries: 'industry', ratingAgencies: 'rating agency' }[key] || human(key).toLowerCase());
+const sectionTitle = (config, field) => human(field) === config.title ? `${human(field)} records` : human(field);
 const statusKey = (field, value) => `${field}:${value}`;
 
 export default function ReferenceData({ kind }) {
@@ -70,9 +72,9 @@ export default function ReferenceData({ kind }) {
       <Card title="Used by"><div className="ph-metric-value">3</div><p className="ph-section-note">Investor · Borrower · Advisory</p></Card>
       <Card title="Change control"><Status tone="warn">Admin governed</Status><p className="ph-section-note">Production changes require backend audit and authorization.</p></Card>
     </div>
-    {config.fields.map(field => <Card key={field} title={human(field)} action={<Status tone="good">{(data[field] || []).filter(value => statuses[statusKey(field, value)] !== 'Inactive').length} active</Status>}>
+    {config.fields.map(field => <Card key={field} title={sectionTitle(config, field)} action={<Status tone="good">{(data[field] || []).filter(value => statuses[statusKey(field, value)] !== 'Inactive').length} active</Status>}>
       <div className="ph-form-actions" style={{ marginBottom: 16 }}>
-        <Field label={`Add ${human(field).replace(/s$/, '').toLowerCase()}`}><input value={drafts[field] || ''} onChange={event => setDrafts(current => ({ ...current, [field]: event.target.value }))} onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); add(field); } }} /></Field>
+        <Field label={`Add ${singular(field)}`}><input value={drafts[field] || ''} onChange={event => setDrafts(current => ({ ...current, [field]: event.target.value }))} onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); add(field); } }} /></Field>
         <button className="ph-button primary" type="button" onClick={() => add(field)}>Add</button>
       </div>
       <div className="ph-table-wrap"><table className="ph-table"><thead><tr><th>Name</th><th>Status</th><th>Actions</th></tr></thead><tbody>{(data[field] || []).map(value => {
