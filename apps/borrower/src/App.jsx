@@ -109,6 +109,9 @@ const Workspace = ({ session, onLogout }) => {
       accountLogoutLabel="Logout"
       notifications={NOTIFICATIONS}
       routeKey={location.pathname}
+      contentMaxWidth="1440px"
+      mainGutter="clamp(24px, 2.2vw, 40px)"
+      compactMainGutter="18px"
     >
       <Routes>
         <Route path="/" element={<Overview />} />
