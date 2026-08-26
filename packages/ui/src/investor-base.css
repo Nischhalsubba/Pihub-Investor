@@ -56,8 +56,37 @@ body,
   -webkit-overflow-scrolling: touch;
 }
 
+/*
+ * Keep each independent route on the same bounded desktop canvas as Investor.
+ * This rule intentionally comes after the generic containment selector above
+ * so max-width:100% cannot silently defeat the 1600px design-system contract.
+ */
 .ph-route-stage {
   width: 100%;
+  max-width: var(--pi-shell-content-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*
+ * Priority icons are SVG children sized to 100% by the Investor system. Give
+ * the parent an explicit box so the SVG cannot expand to the available flex
+ * area and swallow the dashboard on Chromium/WebKit/Firefox.
+ */
+.ph-priority-icon {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  display: inline-grid;
+  place-items: center;
+}
+
+/*
+ * Sidebar section labels are normal-size text and therefore need WCAG AA
+ * contrast. #71809a on the canonical #0b1220 Investor rail is > 4.5:1.
+ */
+.ph-nav-label {
+  color: #71809a !important;
 }
 
 @media (max-width: 820px) {
