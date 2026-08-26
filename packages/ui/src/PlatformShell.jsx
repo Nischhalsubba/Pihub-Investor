@@ -44,6 +44,8 @@ export default function PlatformShell({
   onLogout,
   onHome,
   accountSecondaryAction,
+  accountMenuItems,
+  accountLogoutLabel = 'Sign out',
   notifications = [],
   routeKey,
   headerVariant = 'investor',
@@ -173,6 +175,8 @@ export default function PlatformShell({
             onLogout={onLogout}
             onHome={onHome}
             secondaryAction={accountSecondaryAction}
+            menuItems={accountMenuItems}
+            logoutLabel={accountLogoutLabel}
           />
         </div>
       </header>
