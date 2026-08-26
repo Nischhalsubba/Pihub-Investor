@@ -4,6 +4,7 @@ import WorkspaceAccount from './WorkspaceAccount';
 import PlatformRouteMotion from './PlatformRouteMotion';
 
 const SearchIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>;
+const GlobeIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>;
 const BellIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>;
 
 const NavIcon = ({ path }) => (
@@ -45,6 +46,7 @@ export default function PlatformShell({
   accountSecondaryAction,
   notifications = [],
   routeKey,
+  headerVariant = 'investor',
   children,
 }) {
   const navigate = useNavigate();
@@ -117,11 +119,11 @@ export default function PlatformShell({
   };
 
   return (
-    <div className="ph-app" data-workspace={applicationId}>
+    <div className="ph-app" data-workspace={applicationId} data-header-variant={headerVariant}>
       <a className="skip-link" href="#main-content">Skip to main content</a>
-      <header className="ph-topbar">
+      <header className="ph-topbar" aria-label={`${workspaceBadge} workspace header`}>
         <div className="ph-topbar-leading">
-          <button className="ph-brand" type="button" onClick={onHome}>
+          <button className="ph-brand" type="button" onClick={onHome} aria-label={`${brandTitle} home`}>
             <span className="ph-brandmark">PH</span>
             <span className="ph-brand-copy">
               <strong>{brandTitle}</strong>
@@ -139,17 +141,18 @@ export default function PlatformShell({
           </div>
         </div>
         <div className="ph-topbar-spacer" />
-        <div className="ph-topbar-controls">
+        <div className="ph-topbar-controls" aria-label="Workspace utilities">
           <button className="ph-command-trigger" type="button" onClick={() => { setNotificationOpen(false); setCommandOpen(true); }} aria-label={`Open search and command menu, ${shortcut}`}>
             <SearchIcon />
             <span>Search or command</span>
             <kbd>{shortcut}</kbd>
           </button>
-          <div className="ph-language" role="group" aria-label="Workspace language preference">
-            <button type="button" aria-pressed={language === 'en'} onClick={() => setLanguage('en')}>EN</button>
-            <button type="button" aria-pressed={language === 'de'} onClick={() => setLanguage('de')}>DE</button>
+          <div className="ph-language" role="group" aria-label="Language selector">
+            <span className="ph-language-glyph" aria-hidden="true"><GlobeIcon /></span>
+            <button type="button" aria-pressed={language === 'en'} aria-label="Use English" title="English" onClick={() => setLanguage('en')}>EN</button>
+            <button type="button" aria-pressed={language === 'de'} aria-label="Deutsch verwenden" title="Deutsch" onClick={() => setLanguage('de')}>DE</button>
           </div>
-          <div ref={notificationRoot}>
+          <div className="ph-notification-root" ref={notificationRoot}>
             <button className="ph-icon-button" type="button" aria-label={`${unread} unread notifications. Open notification center.`} aria-expanded={notificationOpen} onClick={() => { setCommandOpen(false); setNotificationOpen(value => !value); }}>
               <BellIcon />
               {unread ? <span className="ph-notification-count">{unread}</span> : null}
