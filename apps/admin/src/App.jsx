@@ -1,4 +1,81 @@
-import React,{useEffect,useMemo,useState}from'react';import{Navigate,NavLink,Route,Routes,useNavigate}from'react-router-dom-v6';import{clearDemoSession,consumeDemoAccessHandoff,readDemoSession,redirectToCentralAccess}from'../../../packages/platform/src/demo-session';import WorkspaceAccount from'../../../packages/ui/src/WorkspaceAccount';import{APP_ID,DEMO_ACCOUNT}from'./config';import{Overview,Organizations,Users,Compliance,AccessPolicies,Audit,Platform}from'./pages';
-const NAV=[{label:'Workspace',items:[['Overview','/']]},{label:'Governance',items:[['Organizations','/organizations'],['Users & roles','/users'],['Compliance','/compliance'],['Access policies','/access-policies']]},{label:'Operations',items:[['Audit log','/audit'],['Platform','/platform']]}];const Icon=()=> <span className="ph-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h8"/></svg></span>;const Redirect=()=>{useEffect(()=>{redirectToCentralAccess(APP_ID)},[]);return null};
-const Workspace=({session,onLogout})=>{const navigate=useNavigate(),items=useMemo(()=>NAV.flatMap(s=>s.items),[]),link=i=><NavLink key={i[1]} to={i[1]} end={i[1]==='/'} className={({isActive})=>`ph-nav-link${isActive?' active':''}`}><Icon/><span>{i[0]}</span></NavLink>;return <div className="ph-app" data-workspace="admin"><header className="ph-topbar"><div className="ph-topbar-leading"><button className="ph-brand" type="button" onClick={()=>navigate('/')}><span className="ph-brandmark">PH</span><span className="ph-brand-copy"><strong>PiHub Admin</strong><small>Governance workspace</small></span></button><div className="ph-workspace-context"><span className="ph-workspace-badge">Admin</span><span className="ph-workspace-context-copy"><strong>Platform control plane</strong><small>Identity · access · compliance · audit</small></span></div></div><div className="ph-topbar-spacer"/><div className="ph-topbar-controls"><div className="ph-environment-chip" aria-label="Demo environment"><span className="ph-environment-dot"/><span className="ph-environment-copy"><strong>Demo workspace</strong><small>Local browser data · no live policy changes</small></span></div><WorkspaceAccount user={session.user} onLogout={onLogout} onHome={()=>navigate('/')} secondaryAction={{label:'Platform status',onSelect:()=>navigate('/platform')}}/></div></header><div className="ph-mobile-nav" aria-label="Admin navigation">{items.map(link)}</div><div className="ph-shell"><aside className="ph-sidebar">{NAV.map(s=><div className="ph-sidebar-section" key={s.label}><div className="ph-nav-label">{s.label}</div>{s.items.map(link)}</div>)}<div className="ph-sidebar-foot"><div className="ph-sidebar-foot-copy">Admin is the PiHub control plane for identity, policy, compliance and audit.</div><div className="ph-system-line"><i/><b>DEMO DATA</b><span>CONTROL</span></div></div></aside><main className="ph-main"><Routes><Route path="/" element={<Overview/>}/><Route path="/organizations" element={<Organizations/>}/><Route path="/users" element={<Users/>}/><Route path="/compliance" element={<Compliance/>}/><Route path="/access-policies" element={<AccessPolicies/>}/><Route path="/audit" element={<Audit/>}/><Route path="/platform" element={<Platform/>}/><Route path="*" element={<Navigate to="/" replace/>}/></Routes></main></div></div>};
-export default function App(){const[session]=useState(()=>consumeDemoAccessHandoff({applicationId:APP_ID,account:DEMO_ACCOUNT})||readDemoSession(APP_ID));if(!session)return <Redirect/>;return <Workspace session={session} onLogout={()=>{clearDemoSession(APP_ID);redirectToCentralAccess(APP_ID)}}/>}
+import React, { useEffect, useState } from 'react';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom-v6';
+import {
+  clearDemoSession,
+  consumeDemoAccessHandoff,
+  readDemoSession,
+  redirectToCentralAccess,
+} from '../../../packages/platform/src/demo-session';
+import PlatformShell from '../../../packages/ui/src/PlatformShell';
+import { APP_ID, DEMO_ACCOUNT } from './config';
+import { Overview, Organizations, Users, Compliance, AccessPolicies, Audit, Platform } from './pages';
+
+const ICONS = {
+  overview: 'M4 13h6V4H4v9m10 7h6v-9h-6v9',
+  organizations: 'M4 21V8l8-4 8 4v13M9 21v-5h6v5',
+  users: 'M4 21a8 8 0 0 1 16 0M8 8a4 4 0 1 0 8 0',
+  compliance: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM8 12l3 3 5-6',
+  access: 'M4 10h16v11H4zM8 10V7a4 4 0 0 1 8 0v3',
+  audit: 'M4 4h16v16H4zM8 9h8M8 13h8M8 17h5',
+  platform: 'M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1',
+};
+
+const NAVIGATION = [
+  { label: 'Workspace', items: [{ label: 'Overview', to: '/', iconPath: ICONS.overview }] },
+  { label: 'Governance', items: [
+    { label: 'Organizations', to: '/organizations', iconPath: ICONS.organizations },
+    { label: 'Users & roles', to: '/users', iconPath: ICONS.users },
+    { label: 'Compliance', to: '/compliance', iconPath: ICONS.compliance },
+    { label: 'Access policies', to: '/access-policies', iconPath: ICONS.access },
+  ] },
+  { label: 'Operations', items: [
+    { label: 'Audit log', to: '/audit', iconPath: ICONS.audit },
+    { label: 'Platform', to: '/platform', iconPath: ICONS.platform },
+  ] },
+];
+
+const CentralAccessRedirect = () => {
+  useEffect(() => { redirectToCentralAccess(APP_ID); }, []);
+  return null;
+};
+
+const Workspace = ({ session, onLogout }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  return (
+    <PlatformShell
+      applicationId={APP_ID}
+      brandTitle="PiHub Admin"
+      brandSubtitle="Governance workspace"
+      workspaceBadge="Admin"
+      contextTitle="Platform control plane"
+      contextSubtitle="Identity · access · compliance · audit"
+      environmentDetail="Local browser data · no live policy changes"
+      navigationSections={NAVIGATION}
+      footerCopy="Admin governs identity, policy, compliance, audit and the canonical workflow control plane."
+      footerMeta="CONTROL"
+      user={session.user}
+      onLogout={onLogout}
+      onHome={() => navigate('/')}
+      accountSecondaryAction={{ label: 'Platform status', onSelect: () => navigate('/platform') }}
+      routeKey={location.pathname}
+    >
+      <Routes>
+        <Route path="/" element={<Overview />} />
+        <Route path="/organizations" element={<Organizations />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/compliance" element={<Compliance />} />
+        <Route path="/access-policies" element={<AccessPolicies />} />
+        <Route path="/audit" element={<Audit />} />
+        <Route path="/platform" element={<Platform />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </PlatformShell>
+  );
+};
+
+export default function App() {
+  const [session] = useState(() => consumeDemoAccessHandoff({ applicationId: APP_ID, account: DEMO_ACCOUNT }) || readDemoSession(APP_ID));
+  if (!session) return <CentralAccessRedirect />;
+  return <Workspace session={session} onLogout={() => { clearDemoSession(APP_ID); redirectToCentralAccess(APP_ID); }} />;
+}
