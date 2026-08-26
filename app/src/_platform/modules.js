@@ -4,38 +4,21 @@ import { getModuleHomeHref, isAbsoluteNavigationHref, sanitizeNavigationHref } f
 export { normalizeModuleId } from './moduleIds';
 
 export const PLATFORM_MODULES = Object.freeze([
-  Object.freeze({
-    id: 'investor',
-    label: 'Investor',
-    eyebrow: 'Capital provider workspace',
-    description: 'Review, underwrite, decide and monitor private-credit investments.',
-    icon: 'bx bx-line-chart'
-  }),
-  Object.freeze({
-    id: 'borrower',
-    label: 'Borrower',
-    eyebrow: 'Origination workspace',
-    description: 'Request financing, provide information and follow transaction progress.',
-    icon: 'bx bx-building-house'
-  }),
-  Object.freeze({
-    id: 'advisory',
-    label: 'Advisory',
-    eyebrow: 'Structuring workspace',
-    description: 'Manage mandates, structure transactions and coordinate execution.',
-    icon: 'bx bx-briefcase-alt-2'
-  })
+  Object.freeze({ id: 'investor', label: 'Investor', eyebrow: 'Capital provider workspace', description: 'Review, underwrite, decide and monitor private-credit investments.', icon: 'bx bx-line-chart' }),
+  Object.freeze({ id: 'borrower', label: 'Borrower', eyebrow: 'Origination workspace', description: 'Request financing, provide information and follow transaction progress.', icon: 'bx bx-building-house' }),
+  Object.freeze({ id: 'advisory', label: 'Advisory', eyebrow: 'Structuring workspace', description: 'Manage mandates, structure transactions and coordinate execution.', icon: 'bx bx-briefcase-alt-2' })
+]);
+
+export const PLATFORM_ACCESS_APPLICATIONS = Object.freeze([
+  ...PLATFORM_MODULES,
+  Object.freeze({ id: 'admin', label: 'Admin', eyebrow: 'Governance control plane', description: 'Manage organizations, roles, compliance, policy and audit context.', icon: 'bx bx-shield-quarter', support: true })
 ]);
 
 const declarationValues = value => {
   if (!value) return [];
   if (Array.isArray(value)) return value;
   if (typeof value === 'string') return value.split(/[\s,]+/).filter(Boolean);
-  if (typeof value === 'object') {
-    return Object.entries(value)
-      .filter(([, enabled]) => enabled !== false && enabled !== null && enabled !== undefined)
-      .map(([key]) => key);
-  }
+  if (typeof value === 'object') return Object.entries(value).filter(([, enabled]) => enabled !== false && enabled !== null && enabled !== undefined).map(([key]) => key);
   return [];
 };
 
@@ -47,12 +30,7 @@ const moduleIdFromEntry = entry => {
 
 export const readDeclaredModuleIds = profile => {
   if (!profile || typeof profile !== 'object') return new Set();
-  const declarations = [
-    profile.modules,
-    profile.available_modules,
-    profile.module_access,
-    profile.permissions && !Array.isArray(profile.permissions) ? profile.permissions.modules : undefined
-  ];
+  const declarations = [profile.modules, profile.available_modules, profile.module_access, profile.permissions && !Array.isArray(profile.permissions) ? profile.permissions.modules : undefined];
   const declaration = declarations.find(value => value !== undefined && value !== null);
   if (declaration === undefined) return new Set();
   return new Set(declarationValues(declaration).map(moduleIdFromEntry).filter(Boolean));
@@ -61,24 +39,13 @@ export const readDeclaredModuleIds = profile => {
 export const getNavigableModules = (profile, locationOverrides = {}, currentModuleId = 'investor') => {
   const currentId = normalizeModuleId(currentModuleId) || 'investor';
   const allowed = readDeclaredModuleIds(profile);
-
-  // Until server authorization is shared across all applications, the active
-  // application remains the only safe implicit permission.
   allowed.add(currentId);
 
   return PLATFORM_MODULES.flatMap(module => {
     if (!allowed.has(module.id)) return [];
-
     const hasOverride = Object.prototype.hasOwnProperty.call(locationOverrides || {}, module.id);
-    let href = hasOverride
-      ? sanitizeNavigationHref(locationOverrides[module.id])
-      : getModuleHomeHref(module.id, { currentModuleId: currentId });
-
-    // Cross-module navigation must leave the current application origin. This
-    // prevents Investor's catch-all SPA rewrite from ever claiming Borrower or
-    // Advisory paths simply because somebody supplied a convenient relative URL.
+    let href = hasOverride ? sanitizeNavigationHref(locationOverrides[module.id]) : getModuleHomeHref(module.id, { currentModuleId: currentId });
     if (module.id !== currentId && !isAbsoluteNavigationHref(href)) href = '';
-
     return href ? [{ ...module, href }] : [];
   });
 };
