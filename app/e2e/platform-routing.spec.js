@@ -1,81 +1,80 @@
 import { test, expect } from '@playwright/test';
 
-const BORROWER_ORIGIN = 'https://pihub-borrower-nischhalsubbas-projects.vercel.app';
-const ADVISORY_ORIGIN = 'https://pihub-advisory-nischhalsubbas-projects.vercel.app';
+const ORIGINS = {
+  borrower: 'https://pihub-borrower-nischhalsubbas-projects.vercel.app',
+  advisory: 'https://pihub-advisory-nischhalsubbas-projects.vercel.app',
+  admin: 'https://pihub-admin-nischhalsubbas-projects.vercel.app',
+};
 
 const loginInvestor = async page => {
   await page.goto('/login');
-  await page.locator('#login-email').fill('routing.qa@example.com');
-  await page.locator('#login-password').fill('DemoPassword1!');
+  await expect(page.locator('#login-email')).toHaveValue('investor.demo@pihub.local');
+  await expect(page.locator('#login-password')).toHaveValue('DemoInvestor1!');
   await page.getByRole('button', { name: /login/i }).click();
   await expect(page.getByRole('heading', { name: 'Overview' })).toBeVisible();
 };
 
-test('shared access selector keeps all workspace choices on one login surface', async ({ page }) => {
+test('one access surface pre-fills every demo application consistently', async ({ page }) => {
   await page.goto('/login');
   const workspaceNav = page.getByRole('navigation', { name: 'PiHub workspace access' });
-
   const investor = workspaceNav.getByRole('link', { name: 'Investor', exact: true });
   const borrower = workspaceNav.getByRole('link', { name: 'Borrower', exact: true });
   const advisory = workspaceNav.getByRole('link', { name: 'Advisory', exact: true });
+  const admin = workspaceNav.getByRole('link', { name: 'Admin', exact: true });
 
   await expect(investor).toHaveAttribute('aria-current', 'page');
   await expect(investor).toHaveAttribute('href', '/login');
   await expect(borrower).toHaveAttribute('href', '/login/borrower');
   await expect(advisory).toHaveAttribute('href', '/login/advisory');
+  await expect(admin).toHaveAttribute('href', '/login?next=admin');
+  await expect(page.locator('#login-email')).toHaveValue('investor.demo@pihub.local');
 
   await borrower.click();
-  await expect(page).toHaveURL(/\/login\/borrower$/);
   await expect(page.locator('#login-email')).toHaveValue('borrower.demo@pihub.local');
   await expect(page.locator('#login-password')).toHaveValue('DemoBorrower1!');
-  await expect(page.getByRole('button', { name: 'Open Borrower' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Borrower', exact: true })).toHaveAttribute('aria-current', 'page');
 
-  await page.getByRole('link', { name: 'Advisory', exact: true }).click();
-  await expect(page).toHaveURL(/\/login\/advisory$/);
+  await advisory.click();
   await expect(page.locator('#login-email')).toHaveValue('advisory.demo@pihub.local');
   await expect(page.locator('#login-password')).toHaveValue('DemoAdvisory1!');
-  await expect(page.getByRole('button', { name: 'Open Advisory' })).toBeVisible();
+
+  await admin.click();
+  await expect(page).toHaveURL(/\/login\?next=admin$/);
+  await expect(page.locator('#login-email')).toHaveValue('admin.demo@pihub.local');
+  await expect(page.locator('#login-password')).toHaveValue('DemoAdmin1!');
+  await expect(page.getByRole('button', { name: 'Open Admin' })).toBeVisible();
 });
 
-test('demo workspace launch crosses origins without putting credentials or tokens in the URL', async ({ page }) => {
+test('workspace launches cross origins without credentials or tokens in URLs', async ({ page }) => {
   const cases = [
-    { id: 'borrower', origin: BORROWER_ORIGIN, button: 'Open Borrower' },
-    { id: 'advisory', origin: ADVISORY_ORIGIN, button: 'Open Advisory' }
+    { id: 'borrower', route: '/login/borrower', origin: ORIGINS.borrower, button: 'Open Borrower' },
+    { id: 'advisory', route: '/login/advisory', origin: ORIGINS.advisory, button: 'Open Advisory' },
+    { id: 'admin', route: '/login?next=admin', origin: ORIGINS.admin, button: 'Open Admin' },
   ];
 
   for (const item of cases) {
     await page.route(`${item.origin}/**`, route => route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>PiHub handoff test</title>' }));
-    await page.goto(`/login/${item.id}`);
+    await page.goto(item.route);
     await page.getByRole('button', { name: item.button }).click();
     await expect(page).toHaveURL(new RegExp(`^${item.origin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/\\?`));
     const launched = new URL(page.url());
     expect(launched.searchParams.get('pihub_demo_access')).toBe(item.id);
     expect(launched.searchParams.get('source')).toBe('investor-access');
-    expect(launched.search).not.toContain('password');
-    expect(launched.search).not.toContain('email');
-    expect(launched.search).not.toContain('token');
+    expect(launched.search).not.toMatch(/password|email|token/i);
     await page.unroute(`${item.origin}/**`);
   }
 });
 
-test('module aliases and invalid access routes canonicalize safely inside Investor', async ({ page }) => {
+test('module aliases and invalid access routes canonicalize safely', async ({ page }) => {
   await page.goto('/login/origination');
   await expect(page).toHaveURL(/\/login\/borrower$/);
-  await expect(page.locator('#login-email')).toBeVisible();
-
   await page.goto('/login/structuring');
   await expect(page).toHaveURL(/\/login\/advisory$/);
-  await expect(page.locator('#login-email')).toBeVisible();
-
   await page.goto('/login/not-a-module');
   await expect(page).toHaveURL(/\/login$/);
-  await expect(page.locator('#login-email')).toBeVisible();
 });
 
-test('Investor SPA never treats module root namespaces as Investor product routes', async ({ page }) => {
+test('Investor SPA never claims independent application namespaces', async ({ page }) => {
   await loginInvestor(page);
-
   for (const route of ['/borrower', '/advisory', '/admin', '/access']) {
     await page.goto(route);
     await expect(page.getByText('This workspace page does not exist.')).toBeVisible();

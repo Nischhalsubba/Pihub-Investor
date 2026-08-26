@@ -7,10 +7,8 @@
   "packageManager": "npm@10.9.2",
   "engines": { "node": ">=24" },
   "workspaces": [
-    "apps/borrower",
-    "apps/advisory",
-    "apps/admin",
-    "apps/access"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
     "check:platform-suite": "node tooling/check-platform-suite.mjs",

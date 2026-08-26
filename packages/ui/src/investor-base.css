@@ -1,0 +1,49 @@
+/*
+ * PiHub shared application entrypoint.
+ *
+ * Investor is the visual source of truth. Independent applications import this
+ * file once, followed only by their own workflow-composition stylesheet.
+ * Do not add another global theme beside this entrypoint.
+ */
+@import "./platform.css";
+@import "./containment.css";
+@import "./investor-design-system.css";
+@import "./workspace-account.css";
+@import "./workflow-journey.css";
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+}
+
+.ph-app,
+.ph-topbar,
+.ph-shell,
+.ph-mobile-nav,
+.ph-main,
+.ph-page-head,
+.ph-card,
+.ph-panel,
+.ph-table-wrap,
+.ph-route-stage {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ph-table-wrap {
+  width: 100%;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ph-route-stage {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+}
