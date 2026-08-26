@@ -12,7 +12,7 @@ const CONFIG = Object.freeze({
 
 const human = key => ({ states: 'States', counties: 'Counties', services: 'Services', industries: 'Industries', ratingAgencies: 'Rating agencies' }[key] || key);
 const singular = key => ({ states: 'state', counties: 'county', services: 'service', industries: 'industry', ratingAgencies: 'rating agency' }[key] || human(key).toLowerCase());
-const sectionTitle = (config, field) => human(field) === config.title ? `${human(field)} records` : human(field);
+const sectionTitle = (config, field) => human(field) === config.title ? 'Reference records' : human(field);
 const statusKey = (field, value) => `${field}:${value}`;
 
 export default function ReferenceData({ kind }) {
