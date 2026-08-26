@@ -8,6 +8,7 @@ on:
       - 'remediation/**'
       - 'stabilization/**'
       - 'feat/**'
+      - 'fix/**'
       - 'refactor/**'
   pull_request:
     branches:
