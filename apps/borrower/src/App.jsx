@@ -12,7 +12,10 @@ import { APP_ID, APP_LABEL, DEMO_ACCOUNT } from './config';
 import Overview from './Overview';
 import ApplicationStart from './ApplicationStart';
 import FinancingRequest from './FinancingRequest';
-import { Company, Project, Financials, Documents, Requests, Closing, Account } from './pages';
+import ProjectDetails from './ProjectDetails';
+import FinancialDetails from './FinancialDetails';
+import ClosingStatus from './ClosingStatus';
+import { Company, Documents, Requests, Account } from './pages';
 
 const ICONS = {
   overview: 'M4 13h6V4H4v9m10 7h6v-9h-6v9',
@@ -81,11 +84,11 @@ const Workspace = ({ session, onLogout }) => {
         <Route path="/applications/new" element={<ApplicationStart />} />
         <Route path="/financing" element={<FinancingRequest />} />
         <Route path="/company" element={<Company />} />
-        <Route path="/project" element={<Project />} />
-        <Route path="/financials" element={<Financials />} />
+        <Route path="/project" element={<ProjectDetails />} />
+        <Route path="/financials" element={<FinancialDetails />} />
         <Route path="/documents" element={<Documents />} />
         <Route path="/requests" element={<Requests />} />
-        <Route path="/closing" element={<Closing />} />
+        <Route path="/closing" element={<ClosingStatus />} />
         <Route path="/account" element={<Account />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
