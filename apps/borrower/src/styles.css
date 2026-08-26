@@ -1,21 +1,6 @@
 /* Borrower owns workflow composition only.
    Investor is the visual source of truth: shell, controls, typography, surfaces,
-   account menu, spacing and motion all come from packages/ui.
-   The rules below are scoped to Borrower composition and exact Investor geometry. */
-
-.ph-app[data-workspace="borrower"] {
-  --pi-shell-content-max: 1440px;
-}
-
-.ph-app[data-workspace="borrower"] .ph-main {
-  padding: 28px clamp(24px, 2.2vw, 40px) 56px !important;
-}
-
-.ph-app[data-workspace="borrower"] .ph-route-stage {
-  width: min(100%, var(--pi-shell-content-max));
-  max-width: var(--pi-shell-content-max);
-  margin-inline: auto;
-}
+   account menu, spacing and motion all come from packages/ui. */
 
 /* Account profile mirrors the Investor institution-profile composition while
    preserving Borrower-owned business information and permissions. */
@@ -233,9 +218,6 @@
 }
 
 @media (max-width: 820px) {
-  .ph-app[data-workspace="borrower"] .ph-main {
-    padding: 22px 18px 40px !important;
-  }
   .borrower-profile-hero { grid-template-columns: 1fr; padding: 18px; }
   .borrower-profile-badges { justify-content: flex-start; }
   .borrower-profile-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -245,11 +227,11 @@
 }
 
 @media (max-width: 560px) {
-  .ph-app[data-workspace="borrower"] .ph-main { padding-left: 14px !important; padding-right: 14px !important; }
   .borrower-profile-hero,
   .borrower-account-form { padding: 16px; border-radius: 15px; }
   .borrower-profile-mark { width: 54px; height: 54px; flex-basis: 54px; border-radius: 13px; font-size: 15px; }
   .borrower-profile-summary { grid-template-columns: 1fr; }
   .borrower-profile-actions { display: grid; grid-template-columns: 1fr; }
-  .borrower-profile-actions .ph-button { width: 100%; }
+  .borrower-profile-actions > a,
+  .borrower-profile-actions > button { width: 100%; }
 }
