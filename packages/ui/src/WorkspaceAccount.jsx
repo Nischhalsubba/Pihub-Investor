@@ -26,11 +26,13 @@ export default function WorkspaceAccount({
   onHome,
   secondaryAction,
   menuItems,
+  subtitle,
   logoutLabel = 'Sign out',
 }) {
   const [open, setOpen] = useState(false);
   const root = useRef(null);
   const menu = useRef(null);
+  const accountSubtitle = subtitle || [user.organization, user.role].filter(Boolean).join(' · ');
 
   const close = () => setOpen(false);
 
@@ -116,7 +118,7 @@ export default function WorkspaceAccount({
         onClick={() => setOpen(value => !value)}
       >
         <span className="ph-avatar" aria-hidden="true">{initials(user.name)}</span>
-        <span className="ph-user-copy"><strong>{user.name}</strong><small>{user.role}</small></span>
+        <span className="ph-user-copy"><strong>{user.name}</strong><small>{accountSubtitle}</small></span>
         <span className="ph-account-chevron" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="m7 9 5 5 5-5" /></svg>
         </span>
@@ -131,7 +133,7 @@ export default function WorkspaceAccount({
       >
         <div className="ph-account-menu-head" aria-hidden="true">
           <strong>{user.name}</strong>
-          <span>{user.role}</span>
+          <span>{accountSubtitle}</span>
         </div>
         {items.map(item => (
           <button
