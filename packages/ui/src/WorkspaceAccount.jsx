@@ -32,7 +32,10 @@ export default function WorkspaceAccount({
   const [open, setOpen] = useState(false);
   const root = useRef(null);
   const menu = useRef(null);
-  const accountSubtitle = subtitle || [user.organization, user.role].filter(Boolean).join(' · ');
+  const hasExplicitInvestorMenu = Array.isArray(menuItems) && menuItems.length > 0;
+  const accountSubtitle = subtitle || (hasExplicitInvestorMenu
+    ? user.role
+    : [user.organization, user.role].filter(Boolean).join(' · '));
 
   const close = () => setOpen(false);
 
@@ -99,7 +102,7 @@ export default function WorkspaceAccount({
     onHome ? { label: 'Workspace overview', icon: 'home', onSelect: onHome } : null,
     secondaryAction ? { ...secondaryAction, icon: secondaryAction.icon || 'profile' } : null,
   ].filter(Boolean);
-  const items = Array.isArray(menuItems) && menuItems.length ? menuItems : fallbackItems;
+  const items = hasExplicitInvestorMenu ? menuItems : fallbackItems;
 
   const run = item => {
     close();
