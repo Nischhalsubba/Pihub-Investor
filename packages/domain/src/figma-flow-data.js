@@ -39,6 +39,11 @@ export const FINANCING_PRODUCTS = Object.freeze([
     ratingRequired: false,
     provider: 'Rhein Capital Partners',
     availability: 'Open',
+    createdAt: '2026-07-15',
+    deadline: '2026-10-31',
+    interest: 'EURIBOR + 475 bps',
+    description: 'Senior secured development financing for well-capitalized residential projects with defined construction milestones and documented sponsor equity.',
+    attachments: ['Indicative term sheet.pdf', 'Due diligence checklist.pdf'],
   },
   {
     id: 'PRD-2402',
@@ -56,6 +61,11 @@ export const FINANCING_PRODUCTS = Object.freeze([
     ratingRequired: false,
     provider: 'NordBank Credit Fund',
     availability: 'Open',
+    createdAt: '2026-07-28',
+    deadline: '2026-11-15',
+    interest: 'EURIBOR + 525 bps',
+    description: 'Short-duration acquisition bridge for completed or substantially de-risked assets while long-term financing or disposal is arranged.',
+    attachments: ['Acquisition bridge criteria.pdf'],
   },
   {
     id: 'PRD-2403',
@@ -73,6 +83,11 @@ export const FINANCING_PRODUCTS = Object.freeze([
     ratingRequired: true,
     provider: 'PiHub Credit Partners',
     availability: 'Open',
+    createdAt: '2026-08-02',
+    deadline: '2026-12-31',
+    interest: 'EURIBOR + 390 bps',
+    description: 'Flexible revolving working-capital line for established operating companies with recurring revenues and transparent monthly reporting.',
+    attachments: ['Revolver information pack.pdf'],
   },
   {
     id: 'PRD-2404',
@@ -90,6 +105,11 @@ export const FINANCING_PRODUCTS = Object.freeze([
     ratingRequired: true,
     provider: 'TradeFlow Finance',
     availability: 'Open',
+    createdAt: '2026-08-10',
+    deadline: '2026-10-15',
+    interest: 'Risk-based margin',
+    description: 'Purchase-order and inventory financing for qualified trading businesses with verifiable buyer and supplier relationships.',
+    attachments: ['Finetrading eligibility.pdf'],
   },
 ]);
 
