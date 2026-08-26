@@ -27,7 +27,7 @@ const ICONS = {
   products: 'M4 5h16v14H4zM8 9h8M8 13h5',
   applications: 'M6 3h9l4 4v14H6zM9 9h6M9 13h6M9 17h4',
   request: 'M7 3h10l3 3v15H7zM10 11h7M10 15h7',
-  company: 'M4 21V8l8-4 8 4 8 4v13M9 21v-5h6v5',
+  company: 'M4 21V8l8-4 8 4v13M9 21v-5h6v5',
   project: 'M3 21h18M5 21V9l7-5 7 5v12',
   financials: 'M4 19V9M10 19V5M16 19v-7M22 19H2',
   documents: 'M6 3h9l4 4v14H6zM9 13h7M9 17h5',
