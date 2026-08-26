@@ -16,6 +16,13 @@ const modules = [
     loginPath: '/login/advisory',
     heading: 'Transaction overview',
   },
+  {
+    id: 'admin',
+    label: 'Admin',
+    origin: 'https://pihub-admin-nischhalsubbas-projects.vercel.app',
+    loginPath: '/login?next=admin',
+    heading: 'Platform governance',
+  },
 ];
 
 const browser = await chromium.launch({ headless: true });
@@ -49,11 +56,31 @@ try {
       await handoffPage.getByRole('heading', { name: module.heading }).waitFor({ state: 'visible', timeout: 30_000 });
       if (handoffPage.url().startsWith(CENTRAL)) throw new Error(`${module.label} valid handoff was incorrectly returned to central login.`);
       if (handoffPage.url().includes('pihub_demo_access')) throw new Error(`${module.label} did not remove the demo handoff marker from the URL.`);
+
       const sidebar = handoffPage.locator('.ph-sidebar');
       await sidebar.waitFor({ state: 'visible', timeout: 15_000 });
-      const sidebarColor = await sidebar.evaluate(node => getComputedStyle(node).backgroundColor);
-      if (sidebarColor !== 'rgb(11, 18, 32)') throw new Error(`${module.label} live shell is not using the Investor dark rail; got ${sidebarColor}.`);
-      console.log(`PASS ${module.label}: central handoff opens the live Investor-design workspace without a second login.`);
+      const shell = await handoffPage.evaluate(() => ({
+        sidebar: getComputedStyle(document.querySelector('.ph-sidebar')).backgroundColor,
+        sidebarWidth: getComputedStyle(document.querySelector('.ph-sidebar')).width,
+        topbarHeight: getComputedStyle(document.querySelector('.ph-topbar')).height,
+        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      }));
+      if (shell.sidebar !== 'rgb(11, 18, 32)') throw new Error(`${module.label} live shell is not using the Investor dark rail; got ${shell.sidebar}.`);
+      if (shell.sidebarWidth !== '232px') throw new Error(`${module.label} live sidebar width drifted; got ${shell.sidebarWidth}.`);
+      if (shell.topbarHeight !== '68px') throw new Error(`${module.label} live header height drifted; got ${shell.topbarHeight}.`);
+      if (shell.overflow > 2) throw new Error(`${module.label} live page has ${shell.overflow}px horizontal overflow.`);
+      await handoffPage.getByRole('button', { name: /Open search and command menu/i }).waitFor({ state: 'visible', timeout: 10_000 });
+      await handoffPage.getByRole('button', { name: 'Open account menu' }).waitFor({ state: 'visible', timeout: 10_000 });
+      const standaloneSignout = await handoffPage.getByRole('button', { name: 'Sign out', exact: true }).count();
+      if (standaloneSignout) throw new Error(`${module.label} still exposes a standalone topbar Sign out button instead of the shared account dropdown.`);
+
+      if (module.id === 'borrower') {
+        await handoffPage.getByRole('link', { name: 'New application', exact: true }).first().click();
+        await handoffPage.getByRole('heading', { name: 'Start a financing application' }).waitFor({ state: 'visible', timeout: 10_000 });
+        await handoffPage.getByRole('button', { name: 'Create application' }).waitFor({ state: 'visible', timeout: 10_000 });
+      }
+
+      console.log(`PASS ${module.label}: live shared shell, utilities and authenticated workspace match the Investor contract.`);
     } catch (error) {
       failed = true;
       console.error(`FAIL ${module.label} handoff: ${error.message}`);
