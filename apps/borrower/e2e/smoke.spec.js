@@ -42,7 +42,7 @@ test('borrower design contract, Investor-style utilities and every destination',
 
   for (const [label, path, heading] of routes) {
     await page.getByRole('link', { name: label, exact: true }).first().click();
-    await expect(page).toHaveURL(new RegExp(`${path.replace('/', '\\/')}`));
+    await expect(page).toHaveURL(new RegExp(`${path.replaceAll('/', '\\/')}(?:\\?.*)?$`));
     await expect(page.getByRole('heading', { name: heading })).toBeVisible();
   }
   expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(2);
@@ -64,18 +64,36 @@ test('create application starts a clean editable draft', async ({ page }) => {
   await expect(page.getByLabel('Requested amount (EUR)')).toHaveValue('22500000');
 });
 
-test('borrower mutations persist', async ({ page }) => {
+test('borrower application inputs and process mutations persist', async ({ page }) => {
   await open(page);
   await page.goto('/financing');
   await page.getByLabel('Requested amount (EUR)').fill('19500000');
   await page.getByRole('button', { name: 'Save financing request' }).click();
   await page.reload();
   await expect(page.getByLabel('Requested amount (EUR)')).toHaveValue('19500000');
+
   await page.goto('/company');
   await page.getByLabel('Employees').fill('31');
   await page.getByRole('button', { name: 'Save company' }).click();
   await page.reload();
   await expect(page.getByLabel('Employees')).toHaveValue('31');
+
+  await page.goto('/project');
+  await page.getByLabel('Residential units').fill('126');
+  await page.getByLabel('Expected completion').fill('Q2 2029');
+  await page.getByRole('button', { name: 'Save project' }).click();
+  await page.reload();
+  await expect(page.getByLabel('Residential units')).toHaveValue('126');
+  await expect(page.getByLabel('Expected completion')).toHaveValue('Q2 2029');
+
+  await page.goto('/financials');
+  await page.getByLabel('Revenue (EUR)').fill('26750000');
+  await page.getByLabel('Sponsor equity (%)').fill('33');
+  await page.getByRole('button', { name: 'Save financials' }).click();
+  await page.reload();
+  await expect(page.getByLabel('Revenue (EUR)')).toHaveValue('26750000');
+  await expect(page.getByLabel('Sponsor equity (%)')).toHaveValue('33');
+
   await page.goto('/documents');
   await page.getByRole('button', { name: 'Mark demo upload' }).first().click();
   await expect(page.getByText('Uploaded', { exact: true }).first()).toBeVisible();
