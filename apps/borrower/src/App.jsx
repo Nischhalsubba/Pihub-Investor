@@ -10,15 +10,20 @@ import { DEMO_DEAL } from '../../../packages/domain/src/demo-data';
 import PlatformShell from '../../../packages/ui/src/PlatformShell';
 import { APP_ID, APP_LABEL, DEMO_ACCOUNT } from './config';
 import Overview from './Overview';
+import ProductMarketplace from './ProductMarketplace';
+import ProductDetail from './ProductDetail';
+import Applications from './Applications';
 import ApplicationStart from './ApplicationStart';
+import CorporateInformation from './CorporateInformation';
 import FinancingRequest from './FinancingRequest';
 import ProjectDetails from './ProjectDetails';
 import FinancialDetails from './FinancialDetails';
 import ClosingStatus from './ClosingStatus';
-import { Company, Documents, Requests, Account } from './pages';
+import { Documents, Requests, Account } from './pages';
 
 const ICONS = {
   overview: 'M4 13h6V4H4v9m10 7h6v-9h-6v9',
+  products: 'M4 5h16v14H4zM8 9h8M8 13h5',
   applications: 'M6 3h9l4 4v14H6zM9 9h6M9 13h6M9 17h4',
   request: 'M7 3h10l3 3v15H7zM10 11h7M10 15h7',
   company: 'M4 21V8l8-4 8 4v13M9 21v-5h6v5',
@@ -32,10 +37,14 @@ const ICONS = {
 
 const NAVIGATION = [
   { label: 'Workspace', items: [{ label: 'Overview', to: '/', iconPath: ICONS.overview }] },
-  { label: 'Financing', items: [
+  { label: 'Discover', items: [
+    { label: 'Financing products', to: '/products', iconPath: ICONS.products },
+    { label: 'My applications', to: '/applications', iconPath: ICONS.applications },
+  ] },
+  { label: 'Application', items: [
     { label: 'New application', to: '/applications/new', iconPath: ICONS.applications },
     { label: 'Financing request', to: '/financing', iconPath: ICONS.request },
-    { label: 'Company', to: '/company', iconPath: ICONS.company },
+    { label: 'Corporate information', to: '/corporate-information', iconPath: ICONS.company },
     { label: 'Project / Property', to: '/project', iconPath: ICONS.project },
     { label: 'Financials', to: '/financials', iconPath: ICONS.financials },
   ] },
@@ -72,7 +81,7 @@ const Workspace = ({ session, onLogout }) => {
       environmentDetail="Local browser data · no live records"
       navigationSections={NAVIGATION}
       primaryAction={{ label: 'New application', to: '/applications/new' }}
-      footerCopy="Borrower shows application progress, borrower-owned information and requests from PiHub."
+      footerCopy="Borrower owns product discovery, application data and borrower-side closing actions for the shared deal."
       user={session.user}
       onLogout={onLogout}
       onHome={() => navigate('/')}
@@ -82,9 +91,13 @@ const Workspace = ({ session, onLogout }) => {
     >
       <Routes>
         <Route path="/" element={<Overview />} />
+        <Route path="/products" element={<ProductMarketplace />} />
+        <Route path="/products/:productId" element={<ProductDetail />} />
+        <Route path="/applications" element={<Applications />} />
         <Route path="/applications/new" element={<ApplicationStart />} />
         <Route path="/financing" element={<FinancingRequest />} />
-        <Route path="/company" element={<Company />} />
+        <Route path="/corporate-information" element={<CorporateInformation />} />
+        <Route path="/company" element={<Navigate to="/corporate-information" replace />} />
         <Route path="/project" element={<ProjectDetails />} />
         <Route path="/financials" element={<FinancialDetails />} />
         <Route path="/documents" element={<Documents />} />
