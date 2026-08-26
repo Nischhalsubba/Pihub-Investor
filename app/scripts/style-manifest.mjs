@@ -25,7 +25,7 @@ export const styleGroups = [
   },
   {
     name: 'product',
-    files: ['pihub-product.css']
+    files: ['pihub-product.css', 'pihub-cross-module-workflow.css']
   },
   {
     name: 'canonical',
