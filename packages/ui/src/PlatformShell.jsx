@@ -49,6 +49,9 @@ export default function PlatformShell({
   notifications = [],
   routeKey,
   headerVariant = 'investor',
+  contentMaxWidth,
+  mainGutter,
+  compactMainGutter,
   children,
 }) {
   const navigate = useNavigate();
@@ -74,6 +77,13 @@ export default function PlatformShell({
   }, [commandItems, query]);
   const unread = notifications.filter(item => item.unread !== false).length;
   const shortcut = shortcutLabel();
+  const shellStyle = useMemo(() => {
+    const style = {};
+    if (contentMaxWidth) style['--pi-shell-content-max'] = contentMaxWidth;
+    if (mainGutter) style['--pi-main-gutter'] = mainGutter;
+    if (compactMainGutter) style['--pi-main-gutter-compact'] = compactMainGutter;
+    return Object.keys(style).length ? style : undefined;
+  }, [compactMainGutter, contentMaxWidth, mainGutter]);
 
   useEffect(() => {
     const key = event => {
@@ -121,7 +131,7 @@ export default function PlatformShell({
   };
 
   return (
-    <div className="ph-app" data-workspace={applicationId} data-header-variant={headerVariant}>
+    <div className="ph-app" data-workspace={applicationId} data-header-variant={headerVariant} style={shellStyle}>
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <header className="ph-topbar" aria-label={`${workspaceBadge} workspace header`}>
         <div className="ph-topbar-leading">
