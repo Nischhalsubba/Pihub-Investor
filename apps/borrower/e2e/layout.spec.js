@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 const open = page => page.goto('/?pihub_demo_access=borrower&source=investor-access');
 
-test('borrower wide dashboard uses the Investor desktop canvas', async ({ page }) => {
+test('borrower wide dashboard uses the exact Investor desktop canvas', async ({ page }) => {
   await page.setViewportSize({ width: 2048, height: 1053 });
   await open(page);
   await expect(page.getByRole('heading', { name: 'Financing overview' })).toBeVisible();
@@ -16,6 +16,7 @@ test('borrower wide dashboard uses the Investor desktop canvas', async ({ page }
     const priorityIconRect = priorityIcon.getBoundingClientRect();
     const mainStyle = getComputedStyle(main);
     return {
+      mainWidth: mainRect.width,
       stageWidth: stageRect.width,
       paddingLeft: parseFloat(mainStyle.paddingLeft),
       paddingRight: parseFloat(mainStyle.paddingRight),
@@ -27,11 +28,11 @@ test('borrower wide dashboard uses the Investor desktop canvas', async ({ page }
     };
   });
 
-  expect(layout.stageWidth).toBeGreaterThanOrEqual(1599);
-  expect(layout.stageWidth).toBeLessThanOrEqual(1601);
-  expect(layout.paddingLeft).toBe(28);
-  expect(layout.paddingRight).toBe(28);
-  expect(layout.leftGutter).toBeLessThanOrEqual(120);
+  expect(layout.stageWidth).toBeGreaterThanOrEqual(1439);
+  expect(layout.stageWidth).toBeLessThanOrEqual(1441);
+  expect(layout.paddingLeft).toBe(40);
+  expect(layout.paddingRight).toBe(40);
+  expect(Math.abs(layout.leftGutter - ((layout.mainWidth - layout.stageWidth) / 2))).toBeLessThanOrEqual(2);
   expect(Math.abs(layout.leftGutter - layout.rightGutter)).toBeLessThanOrEqual(2);
   expect(layout.priorityIconWidth).toBeGreaterThanOrEqual(20);
   expect(layout.priorityIconWidth).toBeLessThanOrEqual(24);
