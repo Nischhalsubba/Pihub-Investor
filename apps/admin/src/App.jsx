@@ -34,6 +34,11 @@ const NAVIGATION = [
   ] },
 ];
 
+const NOTIFICATIONS = [
+  { id: 'admin-kyb', title: 'KYB review requires action', detail: 'Berlin Living GmbH annual review is due.', to: '/compliance' },
+  { id: 'admin-access', title: 'Review module access', detail: 'Confirm role and workspace access remain appropriate.', to: '/users' },
+];
+
 const CentralAccessRedirect = () => {
   useEffect(() => { redirectToCentralAccess(APP_ID); }, []);
   return null;
@@ -52,12 +57,14 @@ const Workspace = ({ session, onLogout }) => {
       contextSubtitle="Identity · access · compliance · audit"
       environmentDetail="Local browser data · no live policy changes"
       navigationSections={NAVIGATION}
+      primaryAction={{ label: 'Compliance queue', to: '/compliance' }}
       footerCopy="Admin governs identity, policy, compliance, audit and the canonical workflow control plane."
       footerMeta="CONTROL"
       user={session.user}
       onLogout={onLogout}
       onHome={() => navigate('/')}
       accountSecondaryAction={{ label: 'Platform status', onSelect: () => navigate('/platform') }}
+      notifications={NOTIFICATIONS}
       routeKey={location.pathname}
     >
       <Routes>
