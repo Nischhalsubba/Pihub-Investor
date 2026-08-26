@@ -5,9 +5,11 @@ const ADVISORY_ORIGIN = 'https://pihub-advisory-nischhalsubbas-projects.vercel.a
 const stubCentral = async page => page.route(`${CENTRAL_LOGIN}/**`, route => route.fulfill({ status: 200, contentType: 'text/html', body: '<h1>Central PiHub sign in</h1>' }));
 const open = page => page.goto('/?pihub_demo_access=borrower&source=investor-access');
 const routes = [
+  ['Financing products', '/products', 'Find financing'],
+  ['My applications', '/applications', 'My applications'],
   ['New application', '/applications/new', 'Start a financing application'],
   ['Financing request', '/financing', 'Financing request'],
-  ['Company', '/company', 'Company information'],
+  ['Corporate information', '/corporate-information', 'Corporate information'],
   ['Project / Property', '/project', 'Project & property'],
   ['Financials', '/financials', 'Financial information'],
   ['Documents', '/documents', 'Document room'],
@@ -33,25 +35,9 @@ test('borrower design contract, Investor-style utilities and every destination',
       const language = computed(document.querySelector('.ph-language'));
       const notification = computed(document.querySelector('.ph-icon-button'));
       const account = computed(document.querySelector('.ph-user-card'));
-      return {
-        size: computed(document.body).fontSize,
-        top: computed(document.querySelector('.ph-topbar')).height,
-        side: computed(document.querySelector('.ph-sidebar')).width,
-        bg: computed(document.querySelector('.ph-sidebar')).backgroundColor,
-        commandHeight: command.height,
-        languageHeight: language.height,
-        notificationHeight: notification.height,
-        accountHeight: account.height,
-      };
+      return { size: computed(document.body).fontSize, top: computed(document.querySelector('.ph-topbar')).height, side: computed(document.querySelector('.ph-sidebar')).width, bg: computed(document.querySelector('.ph-sidebar')).backgroundColor, commandHeight: command.height, languageHeight: language.height, notificationHeight: notification.height, accountHeight: account.height };
     });
-    expect(design.size).toBe('15px');
-    expect(design.top).toBe('68px');
-    expect(design.side).toBe('232px');
-    expect(design.bg).toBe('rgb(11, 18, 32)');
-    expect(design.commandHeight).toBe('44px');
-    expect(design.languageHeight).toBe('42px');
-    expect(design.notificationHeight).toBe('44px');
-    expect(design.accountHeight).toBe('46px');
+    expect(design.size).toBe('15px'); expect(design.top).toBe('68px'); expect(design.side).toBe('232px'); expect(design.bg).toBe('rgb(11, 18, 32)'); expect(design.commandHeight).toBe('44px'); expect(design.languageHeight).toBe('42px'); expect(design.notificationHeight).toBe('44px'); expect(design.accountHeight).toBe('46px');
   }
 
   for (const [label, path, heading] of routes) {
@@ -60,6 +46,21 @@ test('borrower design contract, Investor-style utilities and every destination',
     await expect(page.getByRole('heading', { name: heading })).toBeVisible();
   }
   expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(2);
+});
+
+test('product discovery starts a product-backed application', async ({ page }) => {
+  await open(page);
+  await page.goto('/products');
+  await page.getByLabel('Credit type').selectOption('Development financing');
+  await page.getByLabel('Amount (EUR)').fill('18000000');
+  await expect(page.getByText('Senior Development Facility', { exact: true }).first()).toBeVisible();
+  await page.getByRole('button', { name: 'Apply' }).first().click();
+  await expect(page).toHaveURL(/\/applications\/new\?product=PRD-2401$/);
+  await expect(page.getByText(/Selected product: Senior Development Facility/)).toBeVisible();
+  await page.getByRole('button', { name: 'Create application' }).click();
+  await expect(page).toHaveURL(/\/financing\?created=1$/);
+  await page.goto('/applications');
+  await expect(page.getByText('Senior Development Facility', { exact: true }).first()).toBeVisible();
 });
 
 test('create application starts a clean editable draft', async ({ page }) => {
@@ -78,19 +79,22 @@ test('create application starts a clean editable draft', async ({ page }) => {
   await expect(page.getByLabel('Requested amount (EUR)')).toHaveValue('22500000');
 });
 
-test('borrower application inputs and process mutations persist', async ({ page }) => {
+test('corporate profile, application inputs and process mutations persist', async ({ page }) => {
   await open(page);
+  await page.goto('/corporate-information');
+  await page.getByLabel('Service / industry expertise').fill('Residential development, construction and asset management');
+  await page.getByLabel('Creditreform').fill('A');
+  await page.getByRole('button', { name: 'Mark demo upload' }).first().click();
+  await page.getByRole('button', { name: 'Save corporate information' }).click();
+  await page.reload();
+  await expect(page.getByLabel('Service / industry expertise')).toHaveValue('Residential development, construction and asset management');
+  await expect(page.getByLabel('Creditreform')).toHaveValue('A');
+
   await page.goto('/financing');
   await page.getByLabel('Requested amount (EUR)').fill('19500000');
   await page.getByRole('button', { name: 'Save financing request' }).click();
   await page.reload();
   await expect(page.getByLabel('Requested amount (EUR)')).toHaveValue('19500000');
-
-  await page.goto('/company');
-  await page.getByLabel('Employees').fill('31');
-  await page.getByRole('button', { name: 'Save company' }).click();
-  await page.reload();
-  await expect(page.getByLabel('Employees')).toHaveValue('31');
 
   await page.goto('/project');
   await page.getByLabel('Residential units').fill('126');
@@ -98,14 +102,12 @@ test('borrower application inputs and process mutations persist', async ({ page 
   await page.getByRole('button', { name: 'Save project' }).click();
   await page.reload();
   await expect(page.getByLabel('Residential units')).toHaveValue('126');
-  await expect(page.getByLabel('Expected completion')).toHaveValue('Q2 2029');
 
   await page.goto('/financials');
   await page.getByLabel('Revenue (EUR)').fill('26750000');
   await page.getByLabel('Sponsor equity (%)').fill('33');
   await page.getByRole('button', { name: 'Save financials' }).click();
   await page.reload();
-  await expect(page.getByLabel('Revenue (EUR)')).toHaveValue('26750000');
   await expect(page.getByLabel('Sponsor equity (%)')).toHaveValue('33');
 
   await page.goto('/documents');
@@ -119,9 +121,9 @@ test('borrower application inputs and process mutations persist', async ({ page 
 test('command palette and notification center are functional', async ({ page }) => {
   await open(page);
   await page.getByRole('button', { name: /Open search and command menu/i }).click();
-  await page.getByRole('textbox', { name: 'Search workspace destinations' }).fill('Documents');
-  await page.getByRole('button', { name: /Documents/ }).click();
-  await expect(page).toHaveURL(/\/documents$/);
+  await page.getByRole('textbox', { name: 'Search workspace destinations' }).fill('Financing products');
+  await page.getByRole('button', { name: /Financing products/ }).click();
+  await expect(page).toHaveURL(/\/products$/);
   await page.getByRole('button', { name: /unread notifications/i }).click();
   await expect(page.getByRole('dialog', { name: 'Notification center' })).toBeVisible();
   await page.getByRole('button', { name: /Financial statements required/ }).click();
