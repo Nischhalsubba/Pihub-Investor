@@ -38,6 +38,11 @@ const NAVIGATION = [
   ] },
 ];
 
+const NOTIFICATIONS = [
+  { id: 'advisory-term-sheet', title: 'Term-sheet comments are due', detail: 'Resolve sponsor comments before documentation kickoff.', to: '/execution' },
+  { id: 'advisory-valuation', title: 'Valuation sign-off pending', detail: 'Independent valuation review remains open.', to: '/due-diligence' },
+];
+
 const CentralAccessRedirect = () => {
   useEffect(() => { redirectToCentralAccess(APP_ID); }, []);
   return null;
@@ -62,6 +67,7 @@ const Workspace = ({ session, onLogout }) => {
       onLogout={onLogout}
       onHome={() => navigate('/')}
       accountSecondaryAction={{ label: 'Execution tasks', onSelect: () => navigate('/tasks') }}
+      notifications={NOTIFICATIONS}
       routeKey={location.pathname}
     >
       <Routes>

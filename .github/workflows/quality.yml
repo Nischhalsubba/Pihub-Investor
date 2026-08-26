@@ -91,17 +91,17 @@ jobs:
         run: npx --yes turbo@2.8.0 run test:unit build
         env:
           TURBO_TELEMETRY_DISABLED: '1'
-      - name: Install Chromium for new-app smoke tests
+      - name: Install cross-browser engines for independent-app QA
         working-directory: apps/borrower
-        run: npx playwright install --with-deps chromium
-      - name: Browser smoke tests for independent apps
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Cross-browser smoke, workflow and accessibility tests for independent apps
         run: |
           status=0
           for app in borrower advisory admin access; do
             npm --prefix "apps/$app" run test:e2e || status=1
           done
           exit "$status"
-      - name: Verify live Borrower and Advisory deployment routing
+      - name: Verify live Borrower, Advisory and Admin deployment routing
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         working-directory: apps/borrower
         run: node e2e/live-production.mjs

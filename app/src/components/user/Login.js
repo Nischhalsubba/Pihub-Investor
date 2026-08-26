@@ -121,7 +121,7 @@ const Login = ({ signin: signIn, errorMessage }) => {
       proofItems={proofItems}
     >
       <form className="form-signin" onSubmit={onSubmit} noValidate>
-        <div className="alert alert-light border py-2 px-3 mb-3" role="status">
+        <div className="alert alert-light border py-2 px-3 mb-3 text-dark" role="status">
           <strong className="d-block mb-1">{selectedApplication.label} {isCurrentApplication ? 'demo sign in' : 'demo access'}</strong>
           <span>{isCurrentApplication ? 'Demo credentials are prefilled in this demo build. Production sign-in never exposes demo credentials.' : 'Use this same PiHub access screen. The destination opens without a second login page.'}</span>
         </div>

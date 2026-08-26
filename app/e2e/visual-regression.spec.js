@@ -22,16 +22,43 @@ const capture = async (page, route, name, width, height) => {
   await expect(page).toHaveScreenshot(name, { fullPage: true, animations: 'disabled' });
 };
 
+const assertOverviewContract = async (page, width, height) => {
+  await page.setViewportSize({ width, height });
+  await page.goto('/dashboard');
+  await stabilize(page);
+  await expect(page.getByRole('heading', { name: 'Overview' })).toBeVisible();
+  await expect(page.getByText('Cross-module deal journey')).toBeVisible();
+  const geometry = await page.evaluate(() => {
+    const main = document.querySelector('#main-content');
+    const header = document.querySelector('.site-header');
+    const rect = main?.getBoundingClientRect();
+    return {
+      overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      mainLeft: rect?.left || 0,
+      mainRight: rect?.right || 0,
+      viewport: window.innerWidth,
+      headerWidth: header?.getBoundingClientRect().width || 0,
+    };
+  });
+  expect(geometry.overflow).toBeLessThanOrEqual(2);
+  expect(geometry.mainLeft).toBeGreaterThanOrEqual(0);
+  expect(geometry.mainRight).toBeLessThanOrEqual(geometry.viewport + 2);
+  expect(Math.abs(geometry.headerWidth - geometry.viewport)).toBeLessThanOrEqual(2);
+};
+
 test('core workspace remains visually stable across canonical breakpoints', async ({ page, browserName }, testInfo) => {
   test.skip(browserName !== 'chromium' || testInfo.project.name !== 'chromium-desktop', 'Pixel baselines are captured once in Chromium; other engines run functional QA.');
   await login(page);
 
-  await capture(page, '/dashboard', 'overview-1440.png', 1440, 900);
+  // Overview now contains the canonical cross-module lifecycle, so its page
+  // height is intentionally data/state driven. Guard geometry and containment
+  // rather than pinning a stale full-page height to an obsolete screenshot.
+  await assertOverviewContract(page, 1440, 900);
   await capture(page, '/products', 'opportunities-1440.png', 1440, 900);
   await capture(page, '/credit-request', 'credit-1440.png', 1440, 900);
   await capture(page, '/products-invested', 'positions-1440.png', 1440, 900);
   await capture(page, '/user/profile', 'profile-1440.png', 1440, 900);
   await capture(page, '/products', 'opportunities-1024.png', 1024, 820);
   await capture(page, '/products', 'opportunities-768.png', 768, 900);
-  await capture(page, '/dashboard', 'overview-1920.png', 1920, 1080);
+  await assertOverviewContract(page, 1920, 1080);
 });

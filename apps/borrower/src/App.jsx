@@ -10,10 +10,16 @@ import { DEMO_DEAL } from '../../../packages/domain/src/demo-data';
 import PlatformShell from '../../../packages/ui/src/PlatformShell';
 import { APP_ID, APP_LABEL, DEMO_ACCOUNT } from './config';
 import Overview from './Overview';
-import { Financing, Company, Project, Financials, Documents, Requests, Closing, Account } from './pages';
+import ApplicationStart from './ApplicationStart';
+import FinancingRequest from './FinancingRequest';
+import ProjectDetails from './ProjectDetails';
+import FinancialDetails from './FinancialDetails';
+import ClosingStatus from './ClosingStatus';
+import { Company, Documents, Requests, Account } from './pages';
 
 const ICONS = {
   overview: 'M4 13h6V4H4v9m10 7h6v-9h-6v9',
+  applications: 'M6 3h9l4 4v14H6zM9 9h6M9 13h6M9 17h4',
   request: 'M7 3h10l3 3v15H7zM10 11h7M10 15h7',
   company: 'M4 21V8l8-4 8 4v13M9 21v-5h6v5',
   project: 'M3 21h18M5 21V9l7-5 7 5v12',
@@ -27,6 +33,7 @@ const ICONS = {
 const NAVIGATION = [
   { label: 'Workspace', items: [{ label: 'Overview', to: '/', iconPath: ICONS.overview }] },
   { label: 'Financing', items: [
+    { label: 'New application', to: '/applications/new', iconPath: ICONS.applications },
     { label: 'Financing request', to: '/financing', iconPath: ICONS.request },
     { label: 'Company', to: '/company', iconPath: ICONS.company },
     { label: 'Project / Property', to: '/project', iconPath: ICONS.project },
@@ -38,6 +45,11 @@ const NAVIGATION = [
     { label: 'Terms & closing', to: '/closing', iconPath: ICONS.closing },
     { label: 'Account', to: '/account', iconPath: ICONS.account },
   ] },
+];
+
+const NOTIFICATIONS = [
+  { id: 'borrower-docs', title: 'Financial statements required', detail: 'FY2025 audited statements are still required for review.', to: '/documents' },
+  { id: 'borrower-request', title: 'PiHub information request open', detail: 'Review outstanding borrower actions and due dates.', to: '/requests' },
 ];
 
 const CentralAccessRedirect = () => {
@@ -58,23 +70,25 @@ const Workspace = ({ session, onLogout }) => {
       contextSubtitle={DEMO_DEAL.name}
       environmentDetail="Local browser data · no live records"
       navigationSections={NAVIGATION}
-      primaryAction={{ label: 'Continue application', to: '/financing' }}
+      primaryAction={{ label: 'New application', to: '/applications/new' }}
       footerCopy="Borrower shows application progress, borrower-owned information and requests from PiHub."
       user={session.user}
       onLogout={onLogout}
       onHome={() => navigate('/')}
       accountSecondaryAction={{ label: 'Organization account', onSelect: () => navigate('/account') }}
+      notifications={NOTIFICATIONS}
       routeKey={location.pathname}
     >
       <Routes>
         <Route path="/" element={<Overview />} />
-        <Route path="/financing" element={<Financing />} />
+        <Route path="/applications/new" element={<ApplicationStart />} />
+        <Route path="/financing" element={<FinancingRequest />} />
         <Route path="/company" element={<Company />} />
-        <Route path="/project" element={<Project />} />
-        <Route path="/financials" element={<Financials />} />
+        <Route path="/project" element={<ProjectDetails />} />
+        <Route path="/financials" element={<FinancialDetails />} />
         <Route path="/documents" element={<Documents />} />
         <Route path="/requests" element={<Requests />} />
-        <Route path="/closing" element={<Closing />} />
+        <Route path="/closing" element={<ClosingStatus />} />
         <Route path="/account" element={<Account />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
