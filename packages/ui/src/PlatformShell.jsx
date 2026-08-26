@@ -34,8 +34,6 @@ export default function PlatformShell({
   brandTitle,
   brandSubtitle,
   workspaceBadge,
-  contextTitle,
-  contextSubtitle,
   environmentDetail,
   navigationSections,
   primaryAction,
@@ -138,11 +136,6 @@ export default function PlatformShell({
                 <small>{environmentDetail}</small>
               </span>
             </div>
-            <span className="ph-workspace-badge">{workspaceBadge}</span>
-            <span className="ph-workspace-context-copy">
-              <strong>{contextTitle}</strong>
-              <small>{contextSubtitle}</small>
-            </span>
           </div>
         </div>
         <div className="ph-topbar-spacer" />
