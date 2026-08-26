@@ -5,7 +5,7 @@ import { Card, Field, PageHead, Status } from './ui';
 import { DEMO_ACCOUNT } from './config';
 import { readLocal, writeLocal } from './local-state';
 
-const PROFILE_SEED = Object.freeze({
+export const BORROWER_PROFILE_SEED = Object.freeze({
   name: DEMO_ACCOUNT.name,
   organization: DEMO_ACCOUNT.organization,
   role: DEMO_ACCOUNT.role,
@@ -53,7 +53,7 @@ const ProfileSummary = ({ profile }) => (
 );
 
 export function AccountProfile() {
-  const profile = readLocal('account-profile', PROFILE_SEED);
+  const profile = readLocal('account-profile', BORROWER_PROFILE_SEED);
   return <div className="ph-page-shell borrower-account-page">
     <PageHead
       eyebrow="Borrower / Account"
@@ -107,7 +107,7 @@ export function AccountProfile() {
 }
 
 export function AccountEdit() {
-  const [form, setForm] = useState(() => readLocal('account-profile', PROFILE_SEED));
+  const [form, setForm] = useState(() => readLocal('account-profile', BORROWER_PROFILE_SEED));
   const [message, setMessage] = useState('');
   const update = event => setForm(current => ({ ...current, [event.target.name]: event.target.value }));
   const save = event => {
@@ -124,6 +124,7 @@ export function AccountEdit() {
       website: form.website.trim(),
     };
     writeLocal('account-profile', normalized);
+    window.dispatchEvent(new CustomEvent('pihub:borrower-profile-updated', { detail: normalized }));
     setForm(normalized);
     setMessage('Profile changes saved locally.');
   };
