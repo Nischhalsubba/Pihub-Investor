@@ -21,10 +21,10 @@ export default function ProductMarketplace() {
   }), [filters]);
 
   const apply = product => {
+    if (product.availability !== 'Open') return;
     writeLocal('selected-product', product);
     navigate(`/applications/new?product=${encodeURIComponent(product.id)}`);
   };
-
   const reset = () => setFilters({ creditType: '', industry: '', region: '', amount: '', term: '', deadline: '' });
 
   return <div className="ph-page-shell">
@@ -41,15 +41,15 @@ export default function ProductMarketplace() {
     </Card>
     <div className="ph-card" aria-live="polite">
       <div className="ph-card-head"><div><h2>{products.length} matching financing products</h2><p>Product discovery follows the legacy PiHub functional flow while using the current Investor interface system.</p></div></div>
-      <div className="ph-table-wrap"><table className="ph-table"><thead><tr><th>Product</th><th>Credit type</th><th>Region</th><th>Amount range</th><th>Term</th><th>Deadline</th><th>Requirements</th><th /></tr></thead><tbody>{products.map(product => <tr key={product.id}>
+      <div className="ph-table-wrap"><table className="ph-table"><thead><tr><th>Product</th><th>Credit type</th><th>Region</th><th>Amount range</th><th>Term</th><th>Deadline</th><th>Status</th><th /></tr></thead><tbody>{products.map(product => <tr key={product.id}>
         <td><strong>{product.title}</strong><small>{product.provider}</small></td>
         <td>{product.creditType}<small>{product.industry}</small></td>
         <td>{product.region}<small>{product.county}</small></td>
         <td className="ph-mono">{euro(product.minAmount)} – {euro(product.maxAmount)}</td>
         <td className="ph-mono">{product.minTerm}–{product.maxTerm} mo</td>
         <td className="ph-mono">{product.deadline}</td>
-        <td><div className="ph-inline"><Status tone={product.ndaRequired ? 'warn' : 'good'}>{product.ndaRequired ? 'NDA' : 'No NDA'}</Status>{product.ratingRequired ? <Status>Rating</Status> : null}</div></td>
-        <td><div className="ph-inline"><Link className="ph-button secondary" to={`/products/${product.id}`}>Details</Link><button className="ph-button primary" type="button" onClick={() => apply(product)}>Apply</button></div></td>
+        <td><div className="ph-inline"><Status tone={product.availability === 'Open' ? 'good' : 'warn'}>{product.availability}</Status>{product.ndaRequired ? <Status>NDA</Status> : null}{product.ratingRequired ? <Status>Rating</Status> : null}</div></td>
+        <td><div className="ph-inline"><Link className="ph-button secondary" to={`/products/${product.id}`}>Details</Link><button className="ph-button primary" type="button" disabled={product.availability !== 'Open'} onClick={() => apply(product)}>{product.availability === 'Open' ? 'Apply' : 'Paused'}</button></div></td>
       </tr>)}</tbody></table></div>
       {!products.length ? <div className="ph-empty"><strong>No products match these criteria.</strong><span>Broaden the amount, term, industry, region or deadline filters.</span></div> : null}
     </div>
