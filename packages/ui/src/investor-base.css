@@ -13,15 +13,14 @@
 @import "./workflow-journey.css";
 
 /*
- * Desktop canvas parity.
- * The production Investor workspace uses a 1600px content canvas inside a
- * 232px rail with 28px page gutters. The independent workspaces had drifted
- * to a 1440px canvas plus wider gutters, which made dashboards look shrunken
- * and stranded in the middle of wide screens. Keep the shared apps on the
- * same geometry as Investor instead of inventing a second desktop layout.
+ * Shared layout defaults. PlatformShell may override these variables for an
+ * application that is explicitly aligning to a different verified Investor
+ * viewport contract without allowing an app stylesheet to redefine global UI.
  */
 :root {
   --pi-shell-content-max: 1600px;
+  --pi-main-gutter: 28px;
+  --pi-main-gutter-compact: 18px;
 }
 
 html,
@@ -46,8 +45,8 @@ body,
 }
 
 .ph-main {
-  padding-left: 28px !important;
-  padding-right: 28px !important;
+  padding-left: var(--pi-main-gutter) !important;
+  padding-right: var(--pi-main-gutter) !important;
 }
 
 .ph-table-wrap {
@@ -56,11 +55,6 @@ body,
   -webkit-overflow-scrolling: touch;
 }
 
-/*
- * Keep each independent route on the same bounded desktop canvas as Investor.
- * This rule intentionally comes after the generic containment selector above
- * so max-width:100% cannot silently defeat the 1600px design-system contract.
- */
 .ph-route-stage {
   width: 100%;
   max-width: var(--pi-shell-content-max);
@@ -91,8 +85,8 @@ body,
 
 @media (max-width: 820px) {
   .ph-main {
-    padding-left: 18px !important;
-    padding-right: 18px !important;
+    padding-left: var(--pi-main-gutter-compact) !important;
+    padding-right: var(--pi-main-gutter-compact) !important;
   }
 }
 
