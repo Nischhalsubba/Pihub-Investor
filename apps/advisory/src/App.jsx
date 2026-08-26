@@ -54,6 +54,7 @@ const Workspace = ({ session, onLogout }) => {
   return (
     <PlatformShell
       applicationId={APP_ID}
+      headerVariant="investor"
       brandTitle="PiHub Advisory"
       brandSubtitle="Structuring workspace"
       workspaceBadge={APP_LABEL}
