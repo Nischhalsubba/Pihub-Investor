@@ -1,3 +1,5 @@
 /* Admin owns governance composition only.
    The former green Admin theme is intentionally removed. Palette, typography,
-   spacing, controls and shell geometry now come from the Investor design system. */
+   spacing, controls and shell geometry now come from the Investor design system.
+   Wide-dashboard sizing intentionally inherits the production Investor canvas
+   through packages/ui/src/investor-base.css. */
