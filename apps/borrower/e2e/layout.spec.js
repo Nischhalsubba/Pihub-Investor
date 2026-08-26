@@ -10,8 +10,10 @@ test('borrower wide dashboard uses the Investor desktop canvas', async ({ page }
   const layout = await page.evaluate(() => {
     const main = document.querySelector('.ph-main');
     const stage = document.querySelector('.ph-route-stage');
+    const priorityIcon = document.querySelector('.ph-priority-icon');
     const mainRect = main.getBoundingClientRect();
     const stageRect = stage.getBoundingClientRect();
+    const priorityIconRect = priorityIcon.getBoundingClientRect();
     const mainStyle = getComputedStyle(main);
     return {
       stageWidth: stageRect.width,
@@ -19,6 +21,8 @@ test('borrower wide dashboard uses the Investor desktop canvas', async ({ page }
       paddingRight: parseFloat(mainStyle.paddingRight),
       leftGutter: stageRect.left - mainRect.left,
       rightGutter: mainRect.right - stageRect.right,
+      priorityIconWidth: priorityIconRect.width,
+      priorityIconHeight: priorityIconRect.height,
       overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
     };
   });
@@ -29,5 +33,9 @@ test('borrower wide dashboard uses the Investor desktop canvas', async ({ page }
   expect(layout.paddingRight).toBe(28);
   expect(layout.leftGutter).toBeLessThanOrEqual(120);
   expect(Math.abs(layout.leftGutter - layout.rightGutter)).toBeLessThanOrEqual(2);
+  expect(layout.priorityIconWidth).toBeGreaterThanOrEqual(20);
+  expect(layout.priorityIconWidth).toBeLessThanOrEqual(24);
+  expect(layout.priorityIconHeight).toBeGreaterThanOrEqual(20);
+  expect(layout.priorityIconHeight).toBeLessThanOrEqual(24);
   expect(layout.overflow).toBeLessThanOrEqual(2);
 });
