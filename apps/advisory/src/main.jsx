@@ -6,5 +6,6 @@ import '../../../packages/ui/src/containment.css';
 import '../../../packages/ui/src/workspace-system.css';
 import './styles.css';
 import '../../../packages/ui/src/investor-design-system.css';
+import '../../../packages/ui/src/workspace-account.css';
 import App from './App';
 createRoot(document.getElementById('root')).render(<React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>);
