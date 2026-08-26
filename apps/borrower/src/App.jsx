@@ -1,6 +1,89 @@
-import React,{useEffect,useMemo,useState}from'react';import{Link,Navigate,NavLink,Route,Routes,useLocation,useNavigate}from'react-router-dom-v6';import{clearDemoSession,consumeDemoAccessHandoff,readDemoSession,redirectToCentralAccess}from'../../../packages/platform/src/demo-session';import{DEMO_DEAL}from'../../../packages/domain/src/demo-data';import WorkspaceAccount from'../../../packages/ui/src/WorkspaceAccount';import{APP_ID,APP_LABEL,DEMO_ACCOUNT}from'./config';import Overview from'./Overview';import{Financing,Company,Project,Financials,Documents,Requests,Closing,Account}from'./pages';
-const NAV=[{label:'Workspace',items:[['Overview','/','overview']]},{label:'Financing',items:[['Financing request','/financing','request'],['Company','/company','company'],['Project / Property','/project','project'],['Financials','/financials','financials']]},{label:'Process',items:[['Documents','/documents','documents'],['PiHub requests','/requests','requests'],['Terms & closing','/closing','closing'],['Account','/account','account']]}];
-const Icon=({name})=><span className="ph-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d={name==='overview'?'M4 13h6V4H4v9m10 7h6v-9h-6v9':name==='request'?'M7 3h10l3 3v15H7zM10 11h7M10 15h7':name==='company'?'M4 21V8l8-4 8 4v13M9 21v-5h6v5':name==='project'?'M3 21h18M5 21V9l7-5 7 5v12':name==='financials'?'M4 19V9M10 19V5M16 19v-7M22 19H2':name==='documents'?'M6 3h9l4 4v14H6zM9 13h7M9 17h5':name==='requests'?'M4 5h16v12H8l-4 4zM8 9h8M8 13h5':name==='closing'?'M4 12l5 5L20 6M4 18h12':'M4 21a8 8 0 0 1 16 0M8 8a4 4 0 1 0 8 0'}/></svg></span>;
-const Redirect=()=>{useEffect(()=>{redirectToCentralAccess(APP_ID)},[]);return null};
-const Workspace=({session,onLogout})=>{const location=useLocation(),navigate=useNavigate(),items=useMemo(()=>NAV.flatMap(s=>s.items),[]);const link=i=><NavLink key={i[1]} to={i[1]} end={i[1]==='/'} className={({isActive})=>`ph-nav-link${isActive?' active':''}`}><Icon name={i[2]}/><span>{i[0]}</span></NavLink>;return <div className="ph-app" data-workspace="borrower"><header className="ph-topbar"><div className="ph-topbar-leading"><button className="ph-brand" type="button" onClick={()=>navigate('/')}><span className="ph-brandmark">PH</span><span className="ph-brand-copy"><strong>PiHub Borrower</strong><small>Origination workspace</small></span></button><div className="ph-workspace-context"><span className="ph-workspace-badge">Borrower</span><span className="ph-workspace-context-copy"><strong>{DEMO_DEAL.id}</strong><small>{DEMO_DEAL.name}</small></span></div></div><div className="ph-topbar-spacer"/><div className="ph-topbar-controls"><div className="ph-environment-chip" aria-label="Demo environment"><span className="ph-environment-dot"/><span className="ph-environment-copy"><strong>Demo workspace</strong><small>Local browser data · no live records</small></span></div><WorkspaceAccount user={session.user} onLogout={onLogout} onHome={()=>navigate('/')} secondaryAction={{label:'Organization account',onSelect:()=>navigate('/account')}}/></div></header><div className="ph-mobile-nav" aria-label={`${APP_LABEL} navigation`}>{items.map(link)}</div><div className="ph-shell"><aside className="ph-sidebar"><div className="ph-sidebar-primary"><Link className="ph-button primary" to="/financing">Continue application</Link></div>{NAV.map(s=><div className="ph-sidebar-section" key={s.label}><div className="ph-nav-label">{s.label}</div>{s.items.map(link)}</div>)}<div className="ph-sidebar-foot"><div className="ph-sidebar-foot-copy">Borrower shows application progress, borrower-owned information and requests from PiHub.</div><div className="ph-system-line"><i/><b>DEMO DATA</b><span>EUR</span></div></div></aside><main className="ph-main" key={location.pathname}><Routes><Route path="/" element={<Overview/>}/><Route path="/financing" element={<Financing/>}/><Route path="/company" element={<Company/>}/><Route path="/project" element={<Project/>}/><Route path="/financials" element={<Financials/>}/><Route path="/documents" element={<Documents/>}/><Route path="/requests" element={<Requests/>}/><Route path="/closing" element={<Closing/>}/><Route path="/account" element={<Account/>}/><Route path="*" element={<Navigate to="/" replace/>}/></Routes></main></div></div>};
-export default function App(){const[session]=useState(()=>consumeDemoAccessHandoff({applicationId:APP_ID,account:DEMO_ACCOUNT})||readDemoSession(APP_ID));if(!session)return <Redirect/>;return <Workspace session={session} onLogout={()=>{clearDemoSession(APP_ID);redirectToCentralAccess(APP_ID)}}/>}
+import React, { useEffect, useState } from 'react';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom-v6';
+import {
+  clearDemoSession,
+  consumeDemoAccessHandoff,
+  readDemoSession,
+  redirectToCentralAccess,
+} from '../../../packages/platform/src/demo-session';
+import { DEMO_DEAL } from '../../../packages/domain/src/demo-data';
+import PlatformShell from '../../../packages/ui/src/PlatformShell';
+import { APP_ID, APP_LABEL, DEMO_ACCOUNT } from './config';
+import Overview from './Overview';
+import { Financing, Company, Project, Financials, Documents, Requests, Closing, Account } from './pages';
+
+const ICONS = {
+  overview: 'M4 13h6V4H4v9m10 7h6v-9h-6v9',
+  request: 'M7 3h10l3 3v15H7zM10 11h7M10 15h7',
+  company: 'M4 21V8l8-4 8 4v13M9 21v-5h6v5',
+  project: 'M3 21h18M5 21V9l7-5 7 5v12',
+  financials: 'M4 19V9M10 19V5M16 19v-7M22 19H2',
+  documents: 'M6 3h9l4 4v14H6zM9 13h7M9 17h5',
+  requests: 'M4 5h16v12H8l-4 4zM8 9h8M8 13h5',
+  closing: 'M4 12l5 5L20 6M4 18h12',
+  account: 'M4 21a8 8 0 0 1 16 0M8 8a4 4 0 1 0 8 0',
+};
+
+const NAVIGATION = [
+  { label: 'Workspace', items: [{ label: 'Overview', to: '/', iconPath: ICONS.overview }] },
+  { label: 'Financing', items: [
+    { label: 'Financing request', to: '/financing', iconPath: ICONS.request },
+    { label: 'Company', to: '/company', iconPath: ICONS.company },
+    { label: 'Project / Property', to: '/project', iconPath: ICONS.project },
+    { label: 'Financials', to: '/financials', iconPath: ICONS.financials },
+  ] },
+  { label: 'Process', items: [
+    { label: 'Documents', to: '/documents', iconPath: ICONS.documents },
+    { label: 'PiHub requests', to: '/requests', iconPath: ICONS.requests },
+    { label: 'Terms & closing', to: '/closing', iconPath: ICONS.closing },
+    { label: 'Account', to: '/account', iconPath: ICONS.account },
+  ] },
+];
+
+const CentralAccessRedirect = () => {
+  useEffect(() => { redirectToCentralAccess(APP_ID); }, []);
+  return null;
+};
+
+const Workspace = ({ session, onLogout }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  return (
+    <PlatformShell
+      applicationId={APP_ID}
+      brandTitle="PiHub Borrower"
+      brandSubtitle="Origination workspace"
+      workspaceBadge={APP_LABEL}
+      contextTitle={DEMO_DEAL.id}
+      contextSubtitle={DEMO_DEAL.name}
+      environmentDetail="Local browser data · no live records"
+      navigationSections={NAVIGATION}
+      primaryAction={{ label: 'Continue application', to: '/financing' }}
+      footerCopy="Borrower shows application progress, borrower-owned information and requests from PiHub."
+      user={session.user}
+      onLogout={onLogout}
+      onHome={() => navigate('/')}
+      accountSecondaryAction={{ label: 'Organization account', onSelect: () => navigate('/account') }}
+      routeKey={location.pathname}
+    >
+      <Routes>
+        <Route path="/" element={<Overview />} />
+        <Route path="/financing" element={<Financing />} />
+        <Route path="/company" element={<Company />} />
+        <Route path="/project" element={<Project />} />
+        <Route path="/financials" element={<Financials />} />
+        <Route path="/documents" element={<Documents />} />
+        <Route path="/requests" element={<Requests />} />
+        <Route path="/closing" element={<Closing />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </PlatformShell>
+  );
+};
+
+export default function App() {
+  const [session] = useState(() => consumeDemoAccessHandoff({ applicationId: APP_ID, account: DEMO_ACCOUNT }) || readDemoSession(APP_ID));
+  if (!session) return <CentralAccessRedirect />;
+  return <Workspace session={session} onLogout={() => { clearDemoSession(APP_ID); redirectToCentralAccess(APP_ID); }} />;
+}
