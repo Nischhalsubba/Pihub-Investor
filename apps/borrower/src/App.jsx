@@ -18,7 +18,8 @@ import FinancingRequest from './FinancingRequest';
 import ProjectDetails from './ProjectDetails';
 import FinancialDetails from './FinancialDetails';
 import ClosingStatus from './ClosingStatus';
-import { AccountEdit, AccountProfile, AccountSecurity } from './AccountCenter';
+import { AccountEdit, AccountProfile, AccountSecurity, BORROWER_PROFILE_SEED } from './AccountCenter';
+import { readLocal } from './local-state';
 import { Documents, Requests } from './pages';
 
 const ICONS = {
@@ -26,7 +27,7 @@ const ICONS = {
   products: 'M4 5h16v14H4zM8 9h8M8 13h5',
   applications: 'M6 3h9l4 4v14H6zM9 9h6M9 13h6M9 17h4',
   request: 'M7 3h10l3 3v15H7zM10 11h7M10 15h7',
-  company: 'M4 21V8l8-4 8 4v13M9 21v-5h6v5',
+  company: 'M4 21V8l8-4 8 4 8 4v13M9 21v-5h6v5',
   project: 'M3 21h18M5 21V9l7-5 7 5v12',
   financials: 'M4 19V9M10 19V5M16 19v-7M22 19H2',
   documents: 'M6 3h9l4 4v14H6zM9 13h7M9 17h5',
@@ -69,11 +70,26 @@ const CentralAccessRedirect = () => {
 const Workspace = ({ session, onLogout }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [profile, setProfile] = useState(() => readLocal('account-profile', BORROWER_PROFILE_SEED));
+
+  useEffect(() => {
+    const updateProfile = event => setProfile(event.detail || readLocal('account-profile', BORROWER_PROFILE_SEED));
+    window.addEventListener('pihub:borrower-profile-updated', updateProfile);
+    return () => window.removeEventListener('pihub:borrower-profile-updated', updateProfile);
+  }, []);
+
   const accountMenuItems = useMemo(() => [
     { label: 'Profile', icon: 'profile', onSelect: () => navigate('/account') },
     { label: 'Edit Profile', icon: 'edit', onSelect: () => navigate('/account/edit') },
     { label: 'Reset Password', icon: 'lock', onSelect: () => navigate('/account/security') },
   ], [navigate]);
+
+  const shellUser = useMemo(() => ({
+    ...session.user,
+    name: profile.name || session.user.name,
+    organization: profile.organization || session.user.organization,
+    role: profile.role || session.user.role,
+  }), [profile, session.user]);
 
   return (
     <PlatformShell
@@ -86,7 +102,7 @@ const Workspace = ({ session, onLogout }) => {
       navigationSections={NAVIGATION}
       primaryAction={{ label: 'New application', to: '/applications/new' }}
       footerCopy="Borrower owns product discovery, application data and borrower-side closing actions for the shared deal."
-      user={session.user}
+      user={shellUser}
       onLogout={onLogout}
       onHome={() => navigate('/')}
       accountMenuItems={accountMenuItems}
