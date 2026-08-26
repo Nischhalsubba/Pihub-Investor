@@ -11,6 +11,7 @@ import PlatformShell from '../../../packages/ui/src/PlatformShell';
 import { APP_ID, APP_LABEL, DEMO_ACCOUNT } from './config';
 import Overview from './Overview';
 import ProductMarketplace from './ProductMarketplace';
+import ProductDetail from './ProductDetail';
 import Applications from './Applications';
 import ApplicationStart from './ApplicationStart';
 import CorporateInformation from './CorporateInformation';
@@ -91,6 +92,7 @@ const Workspace = ({ session, onLogout }) => {
       <Routes>
         <Route path="/" element={<Overview />} />
         <Route path="/products" element={<ProductMarketplace />} />
+        <Route path="/products/:productId" element={<ProductDetail />} />
         <Route path="/applications" element={<Applications />} />
         <Route path="/applications/new" element={<ApplicationStart />} />
         <Route path="/financing" element={<FinancingRequest />} />
