@@ -1,0 +1,36 @@
+{
+  "teamSlug": "nischhalsubbas-projects",
+  "productionBranch": "main",
+  "modules": {
+    "investor": {
+      "project": "pihub-investor",
+      "rootDirectory": ".",
+      "vercelConfig": "vercel.json",
+      "productionUrl": "https://pihub-investor.vercel.app"
+    },
+    "borrower": {
+      "project": "pihub-borrower",
+      "rootDirectory": "apps/borrower",
+      "vercelConfig": "apps/borrower/vercel.json",
+      "productionUrl": "https://pihub-borrower-nischhalsubbas-projects.vercel.app"
+    },
+    "advisory": {
+      "project": "pihub-advisory",
+      "rootDirectory": "apps/advisory",
+      "vercelConfig": "apps/advisory/vercel.json",
+      "productionUrl": "https://pihub-advisory-nischhalsubbas-projects.vercel.app"
+    },
+    "admin": {
+      "project": "pihub-admin",
+      "rootDirectory": "apps/admin",
+      "vercelConfig": "apps/admin/vercel.json",
+      "productionUrl": "https://pihub-admin-nischhalsubbas-projects.vercel.app"
+    },
+    "access": {
+      "project": "pihub-access",
+      "rootDirectory": "apps/access",
+      "vercelConfig": "apps/access/vercel.json",
+      "productionUrl": "https://pihub-access-nischhalsubbas-projects.vercel.app"
+    }
+  }
+}
