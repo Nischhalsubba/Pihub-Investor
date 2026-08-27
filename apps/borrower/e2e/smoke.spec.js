@@ -20,7 +20,7 @@ const routes = [
 
 test('borrower design contract, Investor-style utilities and every destination', async ({ page }) => {
   await open(page);
-  await expect(page.locator('.ph-app[data-header-variant="investor"]')).toBeVisible();
+  await expect(page.locator('.ph-app[data-workspace="borrower"][data-header-variant="investor"]')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Financing overview' })).toBeVisible();
   await expect(page.getByRole('button', { name: /Open search and command menu/i })).toBeVisible();
   await expect(page.getByRole('group', { name: 'Language selector' })).toBeVisible();
@@ -28,16 +28,34 @@ test('borrower design contract, Investor-style utilities and every destination',
   await expect(page.getByRole('button', { name: 'Open account menu' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Sign out' })).toHaveCount(0);
 
-  if ((page.viewportSize()?.width || 0) > 820) {
+  if ((page.viewportSize()?.width || 0) > 1320) {
     const design = await page.evaluate(() => {
       const computed = node => getComputedStyle(node);
       const command = computed(document.querySelector('.ph-command-trigger'));
       const language = computed(document.querySelector('.ph-language'));
       const notification = computed(document.querySelector('.ph-icon-button'));
       const account = computed(document.querySelector('.ph-user-card'));
-      return { size: computed(document.body).fontSize, top: computed(document.querySelector('.ph-topbar')).height, side: computed(document.querySelector('.ph-sidebar')).width, bg: computed(document.querySelector('.ph-sidebar')).backgroundColor, commandHeight: command.height, languageHeight: language.height, notificationHeight: notification.height, accountHeight: account.height };
+      return {
+        size: computed(document.body).fontSize,
+        top: computed(document.querySelector('.ph-topbar')).height,
+        side: computed(document.querySelector('.ph-sidebar')).width,
+        bg: computed(document.querySelector('.ph-sidebar')).backgroundColor,
+        commandHeight: command.height,
+        languageHeight: language.height,
+        notificationHeight: notification.height,
+        accountHeight: account.height,
+        accountMinWidth: account.minWidth,
+      };
     });
-    expect(design.size).toBe('15px'); expect(design.top).toBe('68px'); expect(design.side).toBe('232px'); expect(design.bg).toBe('rgb(11, 18, 32)'); expect(design.commandHeight).toBe('44px'); expect(design.languageHeight).toBe('42px'); expect(design.notificationHeight).toBe('44px'); expect(design.accountHeight).toBe('46px');
+    expect(design.size).toBe('15px');
+    expect(design.top).toBe('68px');
+    expect(design.side).toBe('232px');
+    expect(design.bg).toBe('rgb(11, 18, 32)');
+    expect(design.commandHeight).toBe('44px');
+    expect(design.languageHeight).toBe('42px');
+    expect(design.notificationHeight).toBe('44px');
+    expect(design.accountHeight).toBe('46px');
+    expect(design.accountMinWidth).toBe('218px');
   }
 
   for (const [label, path, heading] of routes) {
@@ -141,12 +159,63 @@ test('borrower submission hands the canonical deal to Advisory without credentia
   expect(url.search).not.toMatch(/password|email|token/i);
 });
 
-test('borrower account dropdown and one login surface', async ({ page }) => {
+test('borrower account trigger and dropdown match Investor geometry and content', async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await open(page);
+  const trigger = page.getByRole('button', { name: 'Open account menu' });
+  const triggerBox = await trigger.boundingBox();
+  expect(triggerBox?.height).toBeGreaterThanOrEqual(45);
+  expect(triggerBox?.height).toBeLessThanOrEqual(47);
+  expect(triggerBox?.width).toBeGreaterThanOrEqual(218);
+
+  await trigger.click();
+  const menu = page.getByRole('menu');
+  await expect(menu).toBeVisible();
+  await expect(page.getByRole('menuitem', { name: 'Profile', exact: true })).toBeVisible();
+  await expect(page.getByRole('menuitem', { name: 'Edit Profile', exact: true })).toBeVisible();
+  await expect(page.getByRole('menuitem', { name: 'Reset Password', exact: true })).toBeVisible();
+  await expect(page.getByRole('menuitem', { name: 'Logout', exact: true })).toBeVisible();
+  const menuBox = await menu.boundingBox();
+  expect(menuBox?.width).toBeGreaterThanOrEqual(259);
+  expect(menuBox?.width).toBeLessThanOrEqual(261);
+  expect(Math.abs((menuBox.x + menuBox.width) - (triggerBox.x + triggerBox.width))).toBeLessThanOrEqual(2);
+});
+
+test('borrower profile menu routes, profile editing and password reset work end to end', async ({ page }) => {
+  await open(page);
+  await page.getByRole('button', { name: 'Open account menu' }).click();
+  await page.getByRole('menuitem', { name: 'Edit Profile', exact: true }).click();
+  await expect(page).toHaveURL(/\/account\/edit$/);
+  await expect(page.getByRole('heading', { name: 'Edit Profile' })).toBeVisible();
+  await page.getByLabel('Full name').fill('Nina Berger QA');
+  await page.getByRole('button', { name: 'Save Profile' }).click();
+  await expect(page.getByText('Profile changes saved locally.')).toBeVisible();
+  await expect(page.locator('.ph-user-copy strong')).toHaveText('Nina Berger QA');
+
+  await page.reload();
+  await expect(page.locator('.ph-user-copy strong')).toHaveText('Nina Berger QA');
+  await page.getByRole('button', { name: 'Open account menu' }).click();
+  await page.getByRole('menuitem', { name: 'Profile', exact: true }).click();
+  await expect(page).toHaveURL(/\/account$/);
+  await expect(page.getByRole('heading', { name: 'Organization account' })).toBeVisible();
+  await expect(page.getByText('Nina Berger QA', { exact: true }).first()).toBeVisible();
+
+  await page.getByRole('button', { name: 'Open account menu' }).click();
+  await page.getByRole('menuitem', { name: 'Reset Password', exact: true }).click();
+  await expect(page).toHaveURL(/\/account\/security$/);
+  await page.getByLabel('Current password').fill('DemoBorrower1!');
+  await page.getByLabel('New password').fill('BorrowerNew1!');
+  await page.getByLabel('Confirm new password').fill('BorrowerNew1!');
+  await page.getByRole('button', { name: 'Reset Password', exact: true }).last().click();
+  await expect(page.getByText(/Password reset flow completed in demo mode/)).toBeVisible();
+});
+
+test('borrower logout remains inside the Investor-style account dropdown', async ({ page }) => {
   await open(page);
   await page.getByRole('button', { name: 'Open account menu' }).click();
   await expect(page.getByRole('menu')).toBeVisible();
   await stubCentral(page);
-  await page.getByRole('menuitem', { name: 'Sign out' }).click();
+  await page.getByRole('menuitem', { name: 'Logout', exact: true }).click();
   await expect(page).toHaveURL(`${CENTRAL_LOGIN}/login/borrower`);
 });
 

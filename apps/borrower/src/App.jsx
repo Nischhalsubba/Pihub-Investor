@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom-v6';
 import {
   clearDemoSession,
@@ -6,7 +6,6 @@ import {
   readDemoSession,
   redirectToCentralAccess,
 } from '../../../packages/platform/src/demo-session';
-import { DEMO_DEAL } from '../../../packages/domain/src/demo-data';
 import PlatformShell from '../../../packages/ui/src/PlatformShell';
 import { APP_ID, APP_LABEL, DEMO_ACCOUNT } from './config';
 import Overview from './Overview';
@@ -19,7 +18,9 @@ import FinancingRequest from './FinancingRequest';
 import ProjectDetails from './ProjectDetails';
 import FinancialDetails from './FinancialDetails';
 import ClosingStatus from './ClosingStatus';
-import { Documents, Requests, Account } from './pages';
+import { AccountEdit, AccountProfile, AccountSecurity, BORROWER_PROFILE_SEED } from './AccountCenter';
+import { readLocal } from './local-state';
+import { Documents, Requests } from './pages';
 
 const ICONS = {
   overview: 'M4 13h6V4H4v9m10 7h6v-9h-6v9',
@@ -69,6 +70,27 @@ const CentralAccessRedirect = () => {
 const Workspace = ({ session, onLogout }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [profile, setProfile] = useState(() => readLocal('account-profile', BORROWER_PROFILE_SEED));
+
+  useEffect(() => {
+    const updateProfile = event => setProfile(event.detail || readLocal('account-profile', BORROWER_PROFILE_SEED));
+    window.addEventListener('pihub:borrower-profile-updated', updateProfile);
+    return () => window.removeEventListener('pihub:borrower-profile-updated', updateProfile);
+  }, []);
+
+  const accountMenuItems = useMemo(() => [
+    { label: 'Profile', icon: 'profile', onSelect: () => navigate('/account') },
+    { label: 'Edit Profile', icon: 'edit', onSelect: () => navigate('/account/edit') },
+    { label: 'Reset Password', icon: 'lock', onSelect: () => navigate('/account/security') },
+  ], [navigate]);
+
+  const shellUser = useMemo(() => ({
+    ...session.user,
+    name: profile.name || session.user.name,
+    organization: profile.organization || session.user.organization,
+    role: profile.role || session.user.role,
+  }), [profile, session.user]);
+
   return (
     <PlatformShell
       applicationId={APP_ID}
@@ -76,18 +98,20 @@ const Workspace = ({ session, onLogout }) => {
       brandTitle="PiHub Borrower"
       brandSubtitle="Origination workspace"
       workspaceBadge={APP_LABEL}
-      contextTitle={DEMO_DEAL.id}
-      contextSubtitle={DEMO_DEAL.name}
       environmentDetail="Local browser data · no live records"
       navigationSections={NAVIGATION}
       primaryAction={{ label: 'New application', to: '/applications/new' }}
       footerCopy="Borrower owns product discovery, application data and borrower-side closing actions for the shared deal."
-      user={session.user}
+      user={shellUser}
       onLogout={onLogout}
       onHome={() => navigate('/')}
-      accountSecondaryAction={{ label: 'Organization account', onSelect: () => navigate('/account') }}
+      accountMenuItems={accountMenuItems}
+      accountLogoutLabel="Logout"
       notifications={NOTIFICATIONS}
       routeKey={location.pathname}
+      contentMaxWidth="1440px"
+      mainGutter="clamp(24px, 2.2vw, 40px)"
+      compactMainGutter="18px"
     >
       <Routes>
         <Route path="/" element={<Overview />} />
@@ -103,7 +127,9 @@ const Workspace = ({ session, onLogout }) => {
         <Route path="/documents" element={<Documents />} />
         <Route path="/requests" element={<Requests />} />
         <Route path="/closing" element={<ClosingStatus />} />
-        <Route path="/account" element={<Account />} />
+        <Route path="/account" element={<AccountProfile />} />
+        <Route path="/account/edit" element={<AccountEdit />} />
+        <Route path="/account/security" element={<AccountSecurity />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </PlatformShell>

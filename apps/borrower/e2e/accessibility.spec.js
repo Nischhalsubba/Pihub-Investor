@@ -9,11 +9,11 @@ const assertPage = async page => {
   expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(2);
 };
 
-test('Borrower overview, creation and financing stay WCAG-clean and contained', async ({ page }) => {
+test('Borrower overview, creation, financing and account center stay WCAG-clean and contained', async ({ page }) => {
   await open(page);
   await assertPage(page);
-  await page.goto('/applications/new');
-  await assertPage(page);
-  await page.goto('/financing');
-  await assertPage(page);
+  for (const route of ['/applications/new', '/financing', '/account', '/account/edit', '/account/security']) {
+    await page.goto(route);
+    await assertPage(page);
+  }
 });
