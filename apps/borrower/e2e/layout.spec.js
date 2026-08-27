@@ -63,7 +63,11 @@ test('borrower cards, filters and actions inherit exact Investor primitives', as
       cardPadding: style(card)?.paddingTop,
       cardHeadDisplay: style(cardHead)?.display,
       selectHeight: select?.getBoundingClientRect().height,
+      selectMinHeight: style(select)?.minHeight,
+      selectRadius: style(select)?.borderRadius,
       inputHeight: input?.getBoundingClientRect().height,
+      inputMinHeight: style(input)?.minHeight,
+      inputRadius: style(input)?.borderRadius,
       actionHeight: action?.getBoundingClientRect().height,
       tableRadius: style(table)?.borderRadius,
       overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -74,8 +78,11 @@ test('borrower cards, filters and actions inherit exact Investor primitives', as
   expect(geometry.cardBorder).toBe('1px');
   expect(geometry.cardPadding).toBe('18px');
   expect(geometry.cardHeadDisplay).toBe('flex');
+  expect(geometry.selectMinHeight).toBe('46px');
+  expect(geometry.selectRadius).toBe('10px');
   expect(geometry.selectHeight).toBeGreaterThanOrEqual(45);
-  expect(geometry.selectHeight).toBeLessThanOrEqual(47);
+  expect(geometry.inputMinHeight).toBe('46px');
+  expect(geometry.inputRadius).toBe('10px');
   expect(geometry.inputHeight).toBeGreaterThanOrEqual(45);
   expect(geometry.inputHeight).toBeLessThanOrEqual(47);
   expect(geometry.actionHeight).toBeGreaterThanOrEqual(43);
