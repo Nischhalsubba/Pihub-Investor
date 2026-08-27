@@ -1,0 +1,157 @@
+name: Bootstrap PiHub Vercel modules
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bootstrap:
+    name: Create, link and deploy PiHub projects
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TEAM_ID: team_HLWnL5pQNj3x8woHsjGhFRUB
+      VERCEL_SCOPE: nischhalsubbas-projects
+      REPOSITORY: Nischhalsubba/Pihub-Investor
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Require Vercel API token
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error::VERCEL_TOKEN is not configured. Add a Vercel token with project-management permission as a GitHub Actions secret, then run this workflow once."
+            exit 1
+          fi
+
+      - name: Create or repair independent Vercel projects
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          ensure_project() {
+            project="$1"
+            root_directory="$2"
+
+            status="$(curl -sS -o /tmp/vercel-project.json -w '%{http_code}' \
+              -H "Authorization: Bearer $VERCEL_TOKEN" \
+              "https://api.vercel.com/v9/projects/$project?teamId=$VERCEL_TEAM_ID")"
+
+            if [ "$status" = "404" ]; then
+              echo "Creating $project from $root_directory"
+              jq -n \
+                --arg name "$project" \
+                --arg root "$root_directory" \
+                --arg repo "$REPOSITORY" \
+                '{
+                  name: $name,
+                  framework: "vite",
+                  gitRepository: { type: "github", repo: $repo },
+                  rootDirectory: $root,
+                  installCommand: "npm ci --legacy-peer-deps",
+                  buildCommand: "npm run build",
+                  outputDirectory: "dist",
+                  publicSource: true
+                }' > /tmp/vercel-project-body.json
+              curl --fail-with-body -sS -X POST \
+                -H "Authorization: Bearer $VERCEL_TOKEN" \
+                -H "Content-Type: application/json" \
+                "https://api.vercel.com/v11/projects?teamId=$VERCEL_TEAM_ID" \
+                --data-binary @/tmp/vercel-project-body.json > /tmp/vercel-project-created.json
+            elif [ "$status" = "200" ]; then
+              echo "Repairing $project root directory -> $root_directory"
+              jq -n \
+                --arg root "$root_directory" \
+                '{
+                  framework: "vite",
+                  rootDirectory: $root,
+                  installCommand: "npm ci --legacy-peer-deps",
+                  buildCommand: "npm run build",
+                  outputDirectory: "dist"
+                }' > /tmp/vercel-project-body.json
+              curl --fail-with-body -sS -X PATCH \
+                -H "Authorization: Bearer $VERCEL_TOKEN" \
+                -H "Content-Type: application/json" \
+                "https://api.vercel.com/v9/projects/$project?teamId=$VERCEL_TEAM_ID" \
+                --data-binary @/tmp/vercel-project-body.json > /tmp/vercel-project-updated.json
+            else
+              cat /tmp/vercel-project.json || true
+              echo "::error::Unable to inspect $project. Vercel returned HTTP $status."
+              exit 1
+            fi
+          }
+
+          ensure_project pihub-borrower apps/borrower
+          ensure_project pihub-advisory apps/advisory
+          ensure_project pihub-admin apps/admin
+          ensure_project pihub-access apps/access
+
+      - name: Configure Access production workspace links
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          set -euo pipefail
+          cat > /tmp/access-env.json <<'JSON'
+          [
+            {"key":"VITE_INVESTOR_APP_URL","value":"https://pihub-investor.vercel.app","type":"plain","target":["production","preview"]},
+            {"key":"VITE_BORROWER_APP_URL","value":"https://pihub-borrower-nischhalsubbas-projects.vercel.app","type":"plain","target":["production","preview"]},
+            {"key":"VITE_ADVISORY_APP_URL","value":"https://pihub-advisory-nischhalsubbas-projects.vercel.app","type":"plain","target":["production","preview"]},
+            {"key":"VITE_ADMIN_APP_URL","value":"https://pihub-admin-nischhalsubbas-projects.vercel.app","type":"plain","target":["production","preview"]}
+          ]
+          JSON
+          curl --fail-with-body -sS -X POST \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.vercel.com/v10/projects/pihub-access/env?upsert=true&teamId=$VERCEL_TEAM_ID" \
+            --data-binary @/tmp/access-env.json > /tmp/access-env-result.json
+
+      - name: Link projects to GitHub and force production deployments
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          deploy_project() {
+            project="$1"
+            directory="$2"
+            echo "Linking and deploying $project from $directory"
+            npx --yes vercel@latest link "$directory" --yes --project "$project" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
+            npx --yes vercel@latest git connect --yes --cwd "$directory" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN" || true
+            npx --yes vercel@latest deploy --prod --force --yes --cwd "$directory" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
+          }
+
+          # Investor intentionally remains the repository-root project; its root
+          # vercel.json builds /app and must never be reused for another module.
+          deploy_project pihub-investor .
+          deploy_project pihub-borrower apps/borrower
+          deploy_project pihub-advisory apps/advisory
+          deploy_project pihub-admin apps/admin
+          deploy_project pihub-access apps/access
+
+      - name: Verify project root directories
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          set -euo pipefail
+          verify_root() {
+            project="$1"
+            expected="$2"
+            actual="$(curl --fail-with-body -sS \
+              -H "Authorization: Bearer $VERCEL_TOKEN" \
+              "https://api.vercel.com/v9/projects/$project?teamId=$VERCEL_TEAM_ID" | jq -r '.rootDirectory // "."')"
+            if [ "$actual" != "$expected" ]; then
+              echo "::error::$project rootDirectory is '$actual', expected '$expected'."
+              exit 1
+            fi
+            echo "$project -> $actual"
+          }
+          verify_root pihub-investor .
+          verify_root pihub-borrower apps/borrower
+          verify_root pihub-advisory apps/advisory
+          verify_root pihub-admin apps/admin
+          verify_root pihub-access apps/access

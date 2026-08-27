@@ -86,8 +86,8 @@ jobs:
           for app in borrower advisory admin access; do
             npm ci --prefix "apps/$app" --legacy-peer-deps --no-audit --no-fund
           done
-      - name: Enforce platform boundaries and Investor deployment contract
-        run: node tooling/check-platform-suite.mjs
+      - name: Enforce platform boundaries and Vercel module roots
+        run: node tooling/check-platform-suite.mjs && node tooling/check-vercel-modules.mjs
       - name: Unit tests and production builds through Turborepo
         run: npx --yes turbo@2.8.0 run test:unit build
         env:
