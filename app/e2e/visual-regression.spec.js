@@ -27,7 +27,9 @@ const assertOverviewContract = async (page, width, height) => {
   await page.goto('/dashboard');
   await stabilize(page);
   await expect(page.getByRole('heading', { name: 'Overview' })).toBeVisible();
-  await expect(page.getByText('Cross-module deal journey')).toBeVisible();
+  // Investor is now an application-owned repository. The former demo journey
+  // composed Borrower/Advisory/Admin state and must not leak back into Investor.
+  await expect(page.getByText('Cross-module deal journey')).toHaveCount(0);
   const geometry = await page.evaluate(() => {
     const main = document.querySelector('#main-content');
     const header = document.querySelector('.site-header');
@@ -50,9 +52,8 @@ test('core workspace remains visually stable across canonical breakpoints', asyn
   test.skip(browserName !== 'chromium' || testInfo.project.name !== 'chromium-desktop', 'Pixel baselines are captured once in Chromium; other engines run functional QA.');
   await login(page);
 
-  // Overview now contains the canonical cross-module lifecycle, so its page
-  // height is intentionally data/state driven. Guard geometry and containment
-  // rather than pinning a stale full-page height to an obsolete screenshot.
+  // Overview is data/state driven. Guard the standalone Investor ownership
+  // boundary and geometry rather than pinning its full-page height to a snapshot.
   await assertOverviewContract(page, 1440, 900);
   await capture(page, '/products', 'opportunities-1440.png', 1440, 900);
   await capture(page, '/credit-request', 'credit-1440.png', 1440, 900);
