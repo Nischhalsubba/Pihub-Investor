@@ -10,15 +10,17 @@ export default function PlatformRouteMotion({ routeKey, children }) {
 
     media.add('(prefers-reduced-motion: no-preference)', () => {
       const context = gsap.context(() => {
+        // Keep route content fully opaque while it moves into place. Fading the
+        // entire route temporarily blended text with its background and could
+        // drop otherwise-compliant Investor colors below WCAG contrast ratios.
         gsap.fromTo(root.current,
-          { autoAlpha: 0, y: 8 },
+          { y: 8 },
           {
-            autoAlpha: 1,
             y: 0,
             duration: 0.24,
             ease: 'power2.out',
             overwrite: 'auto',
-            clearProps: 'transform,opacity,visibility',
+            clearProps: 'transform',
           });
       }, root);
       return () => context.revert();
