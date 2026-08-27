@@ -1,6 +1,7 @@
 import { chromium } from '@playwright/test';
 
 const CENTRAL = 'https://pihub-investor.vercel.app';
+const ACCESS = 'https://pihub-access-nischhalsubbas-projects.vercel.app';
 const modules = [
   {
     id: 'borrower',
@@ -112,6 +113,36 @@ try {
     } finally {
       await handoffContext.close();
     }
+  }
+
+  const accessContext = await browser.newContext();
+  const accessPage = await accessContext.newPage();
+  try {
+    await accessPage.goto(ACCESS, { waitUntil: 'domcontentloaded', timeout: 45_000 });
+    await accessPage.getByRole('heading', { name: 'Choose your workspace' }).waitFor({ state: 'visible', timeout: 30_000 });
+    if (accessPage.url().startsWith('https://vercel.com/login')) throw new Error('Access is still behind Vercel Authentication.');
+
+    const expectedLinks = [
+      ['Investor', CENTRAL],
+      ['Borrower', 'https://pihub-borrower-nischhalsubbas-projects.vercel.app'],
+      ['Advisory', 'https://pihub-advisory-nischhalsubbas-projects.vercel.app'],
+      ['Admin', 'https://pihub-admin-nischhalsubbas-projects.vercel.app'],
+    ];
+    for (const [label, expectedOrigin] of expectedLinks) {
+      const link = accessPage.getByRole('link', { name: `Open ${label}`, exact: true });
+      await link.waitFor({ state: 'visible', timeout: 10_000 });
+      const href = await link.getAttribute('href');
+      if (href !== expectedOrigin) throw new Error(`Access ${label} link is '${href}', expected '${expectedOrigin}'.`);
+    }
+    const configured = await accessPage.locator('.access-card .ph-status.good', { hasText: 'Configured' }).count();
+    if (configured !== 4) throw new Error(`Access has ${configured}/4 configured workspace origins.`);
+    console.log('PASS Access: public gateway is live and every workspace origin is configured.');
+  } catch (error) {
+    failed = true;
+    console.error(`FAIL Access live gateway: ${error.message}`);
+    console.error(`Current URL: ${accessPage.url()}`);
+  } finally {
+    await accessContext.close();
   }
 } finally {
   await browser.close();
