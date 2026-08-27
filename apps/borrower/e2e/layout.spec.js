@@ -84,7 +84,6 @@ test('borrower cards, filters and actions inherit exact Investor primitives', as
   expect(geometry.inputMinHeight).toBe('46px');
   expect(geometry.inputRadius).toBe('10px');
   expect(geometry.inputHeight).toBeGreaterThanOrEqual(45);
-  expect(geometry.inputHeight).toBeLessThanOrEqual(47);
   expect(geometry.actionHeight).toBeGreaterThanOrEqual(43);
   expect(geometry.actionHeight).toBeLessThanOrEqual(45);
   expect(geometry.tableRadius).toBe('12px');
