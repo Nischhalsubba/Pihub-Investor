@@ -198,7 +198,7 @@ test('borrower profile menu routes, profile editing and password reset work end 
   await page.getByRole('menuitem', { name: 'Profile', exact: true }).click();
   await expect(page).toHaveURL(/\/account$/);
   await expect(page.getByRole('heading', { name: 'Organization account' })).toBeVisible();
-  await expect(page.getByText('Nina Berger QA', { exact: true }).first()).toBeVisible();
+  await expect(page.getByRole('main').getByText('Nina Berger QA', { exact: true }).first()).toBeVisible();
 
   await page.getByRole('button', { name: 'Open account menu' }).click();
   await page.getByRole('menuitem', { name: 'Reset Password', exact: true }).click();
