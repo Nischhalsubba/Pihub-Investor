@@ -77,11 +77,28 @@ body,
 }
 
 /*
- * Sidebar section labels are normal-size text and therefore need WCAG AA
- * contrast. #71809a on the canonical #0b1220 Investor rail is > 4.5:1.
+ * Shared WCAG AA hardening. These selectors remain part of the Investor-derived
+ * system so every independent module receives the same compliant treatment.
  */
 .ph-nav-label {
   color: #71809a !important;
+}
+
+.ph-brand-copy small {
+  color: #a7b3c5 !important;
+}
+
+.ph-user-copy small {
+  color: #536078 !important;
+}
+
+.ph-button.primary,
+.ph-button.primary:link,
+.ph-button.primary:visited,
+.ph-button.primary:hover,
+.ph-button.primary:focus-visible {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 @media (max-width: 820px) {
