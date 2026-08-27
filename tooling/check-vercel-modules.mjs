@@ -14,11 +14,11 @@ if (manifest.teamSlug !== 'nischhalsubbas-projects') fail('teamSlug must remain 
 if (manifest.productionBranch !== 'main') fail('productionBranch must remain main');
 
 const expected = {
-  investor: { project: 'pihub-investor', rootDirectory: '.', config: 'vercel.json' },
-  borrower: { project: 'pihub-borrower', rootDirectory: 'apps/borrower', config: 'apps/borrower/vercel.json' },
-  advisory: { project: 'pihub-advisory', rootDirectory: 'apps/advisory', config: 'apps/advisory/vercel.json' },
-  admin: { project: 'pihub-admin', rootDirectory: 'apps/admin', config: 'apps/admin/vercel.json' },
-  access: { project: 'pihub-access', rootDirectory: 'apps/access', config: 'apps/access/vercel.json' },
+  investor: { project: 'pihub-investor', rootDirectory: '.', config: 'vercel.json', outsideRoot: false },
+  borrower: { project: 'pihub-borrower', rootDirectory: 'apps/borrower', config: 'apps/borrower/vercel.json', outsideRoot: true },
+  advisory: { project: 'pihub-advisory', rootDirectory: 'apps/advisory', config: 'apps/advisory/vercel.json', outsideRoot: true },
+  admin: { project: 'pihub-admin', rootDirectory: 'apps/admin', config: 'apps/admin/vercel.json', outsideRoot: true },
+  access: { project: 'pihub-access', rootDirectory: 'apps/access', config: 'apps/access/vercel.json', outsideRoot: true },
 };
 
 for (const [id, contract] of Object.entries(expected)) {
@@ -27,6 +27,7 @@ for (const [id, contract] of Object.entries(expected)) {
   if (module.project !== contract.project) fail(`${id}: project must be ${contract.project}`);
   if (module.rootDirectory !== contract.rootDirectory) fail(`${id}: rootDirectory must be ${contract.rootDirectory}`);
   if (module.vercelConfig !== contract.config) fail(`${id}: vercelConfig must be ${contract.config}`);
+  if (module.sourceFilesOutsideRootDirectory !== contract.outsideRoot) fail(`${id}: sourceFilesOutsideRootDirectory must be ${contract.outsideRoot}`);
   if (!/^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(module.productionUrl || '')) fail(`${id}: productionUrl must be an https://*.vercel.app alias`);
   const configPath = path.join(root, contract.config);
   if (!fs.existsSync(configPath)) fail(`${id}: ${contract.config} is missing`);
