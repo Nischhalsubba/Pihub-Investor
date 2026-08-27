@@ -33,9 +33,10 @@ test('advisory wide dashboard uses the Investor desktop canvas', async ({ page }
   expect(layout.paddingRight).toBe(28);
   expect(layout.leftGutter).toBeLessThanOrEqual(120);
   expect(Math.abs(layout.leftGutter - layout.rightGutter)).toBeLessThanOrEqual(2);
-  expect(layout.priorityIconWidth).toBeGreaterThanOrEqual(20);
-  expect(layout.priorityIconWidth).toBeLessThanOrEqual(24);
-  expect(layout.priorityIconHeight).toBeGreaterThanOrEqual(20);
-  expect(layout.priorityIconHeight).toBeLessThanOrEqual(24);
+  // Shared Investor parity uses the same 36px framed priority icon here.
+  expect(layout.priorityIconWidth).toBeGreaterThanOrEqual(35);
+  expect(layout.priorityIconWidth).toBeLessThanOrEqual(37);
+  expect(layout.priorityIconHeight).toBeGreaterThanOrEqual(35);
+  expect(layout.priorityIconHeight).toBeLessThanOrEqual(37);
   expect(layout.overflow).toBeLessThanOrEqual(2);
 });
