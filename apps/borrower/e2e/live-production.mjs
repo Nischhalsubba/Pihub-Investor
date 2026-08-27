@@ -75,6 +75,30 @@ try {
       if (standaloneSignout) throw new Error(`${module.label} still exposes a standalone topbar Sign out button instead of the shared account dropdown.`);
 
       if (module.id === 'borrower') {
+        await handoffPage.goto(`${module.origin}/products`, { waitUntil: 'domcontentloaded', timeout: 30_000 });
+        await handoffPage.getByRole('heading', { name: 'Find financing' }).waitFor({ state: 'visible', timeout: 10_000 });
+        await handoffPage.getByRole('button', { name: 'Reset filters', exact: true }).waitFor({ state: 'visible', timeout: 10_000 });
+        const parity = await handoffPage.evaluate(() => {
+          const card = document.querySelector('.ph-card');
+          const cardHead = card?.querySelector('.ph-card-head');
+          const action = cardHead?.querySelector('.ph-card-head-action .ph-button');
+          const select = document.querySelector('.ph-field select');
+          return {
+            cardRadius: card ? getComputedStyle(card).borderRadius : null,
+            cardPadding: card ? getComputedStyle(card).paddingTop : null,
+            cardHeadDisplay: cardHead ? getComputedStyle(cardHead).display : null,
+            actionHeight: action?.getBoundingClientRect().height || 0,
+            selectMinHeight: select ? getComputedStyle(select).minHeight : null,
+            overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+          };
+        });
+        if (parity.cardRadius !== '12px') throw new Error(`Borrower live card radius is not Investor parity; got ${parity.cardRadius}.`);
+        if (parity.cardPadding !== '18px') throw new Error(`Borrower live card padding is not Investor parity; got ${parity.cardPadding}.`);
+        if (parity.cardHeadDisplay !== 'flex') throw new Error(`Borrower live card header action contract is missing; got ${parity.cardHeadDisplay}.`);
+        if (parity.actionHeight < 43 || parity.actionHeight > 45) throw new Error(`Borrower live card action height drifted; got ${parity.actionHeight}px.`);
+        if (parity.selectMinHeight !== '46px') throw new Error(`Borrower live select does not use the Investor 46px control minimum; got ${parity.selectMinHeight}.`);
+        if (parity.overflow > 2) throw new Error(`Borrower live product page has ${parity.overflow}px horizontal overflow.`);
+
         await handoffPage.getByRole('link', { name: 'New application', exact: true }).first().click();
         await handoffPage.getByRole('heading', { name: 'Start a financing application' }).waitFor({ state: 'visible', timeout: 10_000 });
         await handoffPage.getByRole('button', { name: 'Create application' }).waitFor({ state: 'visible', timeout: 10_000 });
