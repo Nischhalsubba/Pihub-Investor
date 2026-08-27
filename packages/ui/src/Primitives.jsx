@@ -11,12 +11,19 @@ export const PageHead = ({ eyebrow, title, subtitle, action }) => (
   </div>
 );
 
-export const Card = ({ title, children, className = '', labelledBy }) => {
+export const Card = ({ title, children, className = '', labelledBy, action }) => {
   const headingId = useId();
   const id = labelledBy || headingId;
   return (
     <section className={`ph-card ${className}`.trim()} aria-labelledby={title ? id : undefined}>
-      {title ? <h2 id={id}>{title}</h2> : null}
+      {title || action ? (
+        <div className="ph-card-head">
+          <div className="ph-card-head-copy">
+            {title ? <h2 id={id}>{title}</h2> : null}
+          </div>
+          {action ? <div className="ph-card-head-action">{action}</div> : null}
+        </div>
+      ) : null}
       {children}
     </section>
   );

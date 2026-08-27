@@ -26,7 +26,7 @@ const initials = value => String(value || '')
   .toUpperCase();
 
 const ProfileSummary = ({ profile }) => (
-  <section className="borrower-profile-hero" aria-labelledby="borrower-profile-name">
+  <section className="ph-card borrower-profile-hero" aria-labelledby="borrower-profile-name">
     <div className="borrower-profile-identity">
       <div className="borrower-profile-mark" aria-hidden="true">{initials(profile.organization)}</div>
       <div className="borrower-profile-identity-copy">
