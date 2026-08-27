@@ -1,4 +1,4 @@
-name: Validate PiHub platform
+name: Validate PiHub Investor
 
 on:
   push:
@@ -62,57 +62,5 @@ jobs:
           path: |
             app/playwright-report/
             app/test-results/
-          if-no-files-found: warn
-          retention-days: 7
-
-  platform-apps-quality:
-    name: Borrower, Advisory, Admin and Access
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 24
-          cache: npm
-          cache-dependency-path: |
-            apps/borrower/package-lock.json
-            apps/advisory/package-lock.json
-            apps/admin/package-lock.json
-            apps/access/package-lock.json
-      - name: Install independent app dependencies
-        run: |
-          for app in borrower advisory admin access; do
-            npm ci --prefix "apps/$app" --legacy-peer-deps --no-audit --no-fund
-          done
-      - name: Enforce platform boundaries and Vercel module roots
-        run: node tooling/check-platform-suite.mjs && node tooling/check-vercel-modules.mjs && node --check apps/borrower/e2e/live-production.mjs
-      - name: Unit tests and production builds through Turborepo
-        run: npx --yes turbo@2.8.0 run test:unit build
-        env:
-          TURBO_TELEMETRY_DISABLED: '1'
-      - name: Install cross-browser engines for independent-app QA
-        working-directory: apps/borrower
-        run: npx playwright install --with-deps chromium firefox webkit
-      - name: Cross-browser smoke, workflow and accessibility tests for independent apps
-        run: |
-          status=0
-          for app in borrower advisory admin access; do
-            npm --prefix "apps/$app" run test:e2e || status=1
-          done
-          exit "$status"
-      - name: Verify live Borrower, Advisory, Admin and Access deployment routing
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        working-directory: apps/borrower
-        run: node e2e/live-production.mjs
-      - name: Preserve platform-app Playwright failure diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: platform-apps-playwright-failure-${{ github.run_id }}
-          path: |
-            apps/*/playwright-report/
-            apps/*/test-results/
           if-no-files-found: warn
           retention-days: 7

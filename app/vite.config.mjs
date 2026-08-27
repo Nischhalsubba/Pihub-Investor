@@ -1,7 +1,6 @@
 import { defineConfig, loadEnv, transformWithOxc } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
-import { sharedPackageResolve } from '../tooling/vite-shared-package-resolve.mjs';
 
 const truthy = value => ['1', 'true', 'yes', 'on'].includes(String(value || '').trim().toLowerCase());
 
@@ -33,17 +32,14 @@ export default defineConfig(({ mode }) => {
   const read = key => process.env[key] !== undefined ? process.env[key] : env[key];
   const demoValue = read('REACT_APP_DEMO') || '';
   const production = mode === 'production';
-  const shared = sharedPackageResolve(import.meta.url);
 
   return {
     plugins: [legacyJsxInJs(production), react({ include: /\.(jsx|tsx)$/ })],
-    server: { fs: { allow: [fileURLToPath(new URL('..', import.meta.url))] } },
     resolve: {
       alias: [
-        ...shared.alias,
         { find: /^react-router-dom$/, replacement: fileURLToPath(new URL('./src/routerCompat.jsx', import.meta.url)) },
       ],
-      dedupe: shared.dedupe,
+      dedupe: ['react', 'react-dom'],
     },
     define: {
       __PIHUB_DEMO__: JSON.stringify(truthy(demoValue)),
