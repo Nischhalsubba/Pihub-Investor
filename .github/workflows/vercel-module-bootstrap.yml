@@ -56,34 +56,40 @@ jobs:
                   installCommand: "npm ci --legacy-peer-deps",
                   buildCommand: "npm run build",
                   outputDirectory: "dist",
-                  publicSource: true
+                  publicSource: true,
+                  sourceFilesOutsideRootDirectory: true,
+                  enableAffectedProjectsDeployments: true
                 }' > /tmp/vercel-project-body.json
               curl --fail-with-body -sS -X POST \
                 -H "Authorization: Bearer $VERCEL_TOKEN" \
                 -H "Content-Type: application/json" \
                 "https://api.vercel.com/v11/projects?teamId=$VERCEL_TEAM_ID" \
                 --data-binary @/tmp/vercel-project-body.json > /tmp/vercel-project-created.json
-            elif [ "$status" = "200" ]; then
-              echo "Repairing $project root directory -> $root_directory"
-              jq -n \
-                --arg root "$root_directory" \
-                '{
-                  framework: "vite",
-                  rootDirectory: $root,
-                  installCommand: "npm ci --legacy-peer-deps",
-                  buildCommand: "npm run build",
-                  outputDirectory: "dist"
-                }' > /tmp/vercel-project-body.json
-              curl --fail-with-body -sS -X PATCH \
-                -H "Authorization: Bearer $VERCEL_TOKEN" \
-                -H "Content-Type: application/json" \
-                "https://api.vercel.com/v9/projects/$project?teamId=$VERCEL_TEAM_ID" \
-                --data-binary @/tmp/vercel-project-body.json > /tmp/vercel-project-updated.json
-            else
+            elif [ "$status" != "200" ]; then
               cat /tmp/vercel-project.json || true
               echo "::error::Unable to inspect $project. Vercel returned HTTP $status."
               exit 1
             fi
+
+            # Always enforce the monorepo settings. Every independent module
+            # imports /packages outside its Root Directory, so excluding those
+            # files would deploy the right project name with the wrong source.
+            jq -n \
+              --arg root "$root_directory" \
+              '{
+                framework: "vite",
+                rootDirectory: $root,
+                installCommand: "npm ci --legacy-peer-deps",
+                buildCommand: "npm run build",
+                outputDirectory: "dist",
+                sourceFilesOutsideRootDirectory: true,
+                enableAffectedProjectsDeployments: true
+              }' > /tmp/vercel-project-body.json
+            curl --fail-with-body -sS -X PATCH \
+              -H "Authorization: Bearer $VERCEL_TOKEN" \
+              -H "Content-Type: application/json" \
+              "https://api.vercel.com/v9/projects/$project?teamId=$VERCEL_TEAM_ID" \
+              --data-binary @/tmp/vercel-project-body.json > /tmp/vercel-project-updated.json
           }
 
           ensure_project pihub-borrower apps/borrower
@@ -118,40 +124,53 @@ jobs:
 
           deploy_project() {
             project="$1"
-            directory="$2"
-            echo "Linking and deploying $project from $directory"
-            npx --yes vercel@latest link "$directory" --yes --project "$project" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
-            npx --yes vercel@latest git connect --yes --cwd "$directory" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN" || true
-            npx --yes vercel@latest deploy --prod --force --yes --cwd "$directory" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
+            echo "Connecting and deploying $project from the repository root"
+
+            # Upload the whole monorepo. The Vercel project's Root Directory
+            # then selects its application while still allowing shared packages.
+            npx --yes vercel@latest git connect --yes \
+              --cwd . --project "$project" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN" || true
+            npx --yes vercel@latest deploy --prod --force --yes \
+              --cwd . --project "$project" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
           }
 
           # Investor intentionally remains the repository-root project; its root
           # vercel.json builds /app and must never be reused for another module.
-          deploy_project pihub-investor .
-          deploy_project pihub-borrower apps/borrower
-          deploy_project pihub-advisory apps/advisory
-          deploy_project pihub-admin apps/admin
-          deploy_project pihub-access apps/access
+          deploy_project pihub-investor
+          deploy_project pihub-borrower
+          deploy_project pihub-advisory
+          deploy_project pihub-admin
+          deploy_project pihub-access
 
-      - name: Verify project root directories
+      - name: Verify project root directories and shared source access
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           set -euo pipefail
-          verify_root() {
+
+          verify_project() {
             project="$1"
-            expected="$2"
-            actual="$(curl --fail-with-body -sS \
+            expected_root="$2"
+            expected_outside="$3"
+            payload="$(curl --fail-with-body -sS \
               -H "Authorization: Bearer $VERCEL_TOKEN" \
-              "https://api.vercel.com/v9/projects/$project?teamId=$VERCEL_TEAM_ID" | jq -r '.rootDirectory // "."')"
-            if [ "$actual" != "$expected" ]; then
-              echo "::error::$project rootDirectory is '$actual', expected '$expected'."
+              "https://api.vercel.com/v9/projects/$project?teamId=$VERCEL_TEAM_ID")"
+            actual_root="$(printf '%s' "$payload" | jq -r '.rootDirectory // "."')"
+            actual_outside="$(printf '%s' "$payload" | jq -r '.sourceFilesOutsideRootDirectory // false')"
+
+            if [ "$actual_root" != "$expected_root" ]; then
+              echo "::error::$project rootDirectory is '$actual_root', expected '$expected_root'."
               exit 1
             fi
-            echo "$project -> $actual"
+            if [ "$actual_outside" != "$expected_outside" ]; then
+              echo "::error::$project sourceFilesOutsideRootDirectory is '$actual_outside', expected '$expected_outside'."
+              exit 1
+            fi
+            echo "$project -> root=$actual_root outsideRoot=$actual_outside"
           }
-          verify_root pihub-investor .
-          verify_root pihub-borrower apps/borrower
-          verify_root pihub-advisory apps/advisory
-          verify_root pihub-admin apps/admin
-          verify_root pihub-access apps/access
+
+          verify_project pihub-investor . false
+          verify_project pihub-borrower apps/borrower true
+          verify_project pihub-advisory apps/advisory true
+          verify_project pihub-admin apps/admin true
+          verify_project pihub-access apps/access true
