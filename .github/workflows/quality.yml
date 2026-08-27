@@ -87,7 +87,7 @@ jobs:
             npm ci --prefix "apps/$app" --legacy-peer-deps --no-audit --no-fund
           done
       - name: Enforce platform boundaries and Vercel module roots
-        run: node tooling/check-platform-suite.mjs && node tooling/check-vercel-modules.mjs
+        run: node tooling/check-platform-suite.mjs && node tooling/check-vercel-modules.mjs && node --check apps/borrower/e2e/live-production.mjs
       - name: Unit tests and production builds through Turborepo
         run: npx --yes turbo@2.8.0 run test:unit build
         env:
