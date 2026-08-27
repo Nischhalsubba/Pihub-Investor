@@ -204,8 +204,8 @@ test('borrower profile menu routes, profile editing and password reset work end 
   await page.getByRole('menuitem', { name: 'Reset Password', exact: true }).click();
   await expect(page).toHaveURL(/\/account\/security$/);
   await page.getByLabel('Current password').fill('DemoBorrower1!');
-  await page.getByLabel('New password').fill('BorrowerNew1!');
-  await page.getByLabel('Confirm new password').fill('BorrowerNew1!');
+  await page.getByLabel('New password', { exact: true }).fill('BorrowerNew1!');
+  await page.getByLabel('Confirm new password', { exact: true }).fill('BorrowerNew1!');
   await page.getByRole('button', { name: 'Reset Password', exact: true }).last().click();
   await expect(page.getByText(/Password reset flow completed in demo mode/)).toBeVisible();
 });
