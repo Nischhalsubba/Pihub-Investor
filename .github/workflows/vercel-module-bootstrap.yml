@@ -13,6 +13,7 @@ jobs:
     env:
       VERCEL_TEAM_ID: team_HLWnL5pQNj3x8woHsjGhFRUB
       VERCEL_SCOPE: nischhalsubbas-projects
+      VERCEL_CLI_VERSION: 59.3.0
       REPOSITORY: Nischhalsubba/Pihub-Investor
     steps:
       - uses: actions/checkout@v5
@@ -117,7 +118,7 @@ jobs:
             "https://api.vercel.com/v10/projects/pihub-access/env?upsert=true&teamId=$VERCEL_TEAM_ID" \
             --data-binary @/tmp/access-env.json > /tmp/access-env-result.json
 
-      - name: Link independent projects to GitHub and force production deployments
+      - name: Connect independent projects to GitHub and deploy main
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
@@ -125,17 +126,66 @@ jobs:
 
           deploy_project() {
             project="$1"
-            echo "Connecting and deploying $project from the repository root"
-
-            # Link the repository root to each Vercel project in turn. The
-            # project's Root Directory selects the app while the full monorepo
-            # upload keeps shared /packages available to the build.
-            npx --yes vercel@latest link --yes \
+            echo "Connecting $project to GitHub"
+            npx --yes "vercel@$VERCEL_CLI_VERSION" link --yes \
               --cwd . --project "$project" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
-            npx --yes vercel@latest git connect --yes \
-              --cwd . --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN" || true
-            npx --yes vercel@latest deploy --prod --force --yes \
+            npx --yes "vercel@$VERCEL_CLI_VERSION" git connect --yes \
               --cwd . --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
+
+            # Trigger a Git-source production build. Vercel clones the complete
+            # repository and applies the project's Root Directory, which is the
+            # safe monorepo path for apps that import shared /packages.
+            jq -n \
+              --arg name "$project" \
+              '{
+                name: $name,
+                project: $name,
+                target: "production",
+                gitSource: {
+                  type: "github",
+                  org: "Nischhalsubba",
+                  repo: "Pihub-Investor",
+                  ref: "main"
+                }
+              }' > /tmp/vercel-deploy-body.json
+
+            response="$(curl --fail-with-body -sS -X POST \
+              -H "Authorization: Bearer $VERCEL_TOKEN" \
+              -H "Content-Type: application/json" \
+              "https://api.vercel.com/v13/deployments?teamId=$VERCEL_TEAM_ID" \
+              --data-binary @/tmp/vercel-deploy-body.json)"
+            deployment_id="$(printf '%s' "$response" | jq -r '.id // empty')"
+            deployment_url="$(printf '%s' "$response" | jq -r '.url // empty')"
+            if [ -z "$deployment_id" ]; then
+              printf '%s\n' "$response"
+              echo "::error::$project deployment did not return a deployment id."
+              exit 1
+            fi
+            echo "$project deployment $deployment_id -> $deployment_url"
+
+            for attempt in $(seq 1 120); do
+              details="$(curl --fail-with-body -sS \
+                -H "Authorization: Bearer $VERCEL_TOKEN" \
+                "https://api.vercel.com/v13/deployments/$deployment_id?teamId=$VERCEL_TEAM_ID&withGitRepoInfo=true")"
+              state="$(printf '%s' "$details" | jq -r '.readyState // .status // "UNKNOWN"')"
+              case "$state" in
+                READY)
+                  echo "$project production deployment is READY."
+                  return 0
+                  ;;
+                ERROR|CANCELED)
+                  printf '%s\n' "$details"
+                  echo "::error::$project production deployment ended in $state."
+                  exit 1
+                  ;;
+                *)
+                  sleep 5
+                  ;;
+              esac
+            done
+
+            echo "::error::$project production deployment did not become READY within 10 minutes."
+            exit 1
           }
 
           # Investor is already Git-connected at the repository root and is
