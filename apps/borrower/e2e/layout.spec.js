@@ -34,9 +34,11 @@ test('borrower wide dashboard uses the exact Investor desktop canvas', async ({ 
   expect(layout.paddingRight).toBe(40);
   expect(Math.abs(layout.leftGutter - ((layout.mainWidth - layout.stageWidth) / 2))).toBeLessThanOrEqual(2);
   expect(Math.abs(layout.leftGutter - layout.rightGutter)).toBeLessThanOrEqual(2);
-  expect(layout.priorityIconWidth).toBeGreaterThanOrEqual(20);
-  expect(layout.priorityIconWidth).toBeLessThanOrEqual(24);
-  expect(layout.priorityIconHeight).toBeGreaterThanOrEqual(20);
-  expect(layout.priorityIconHeight).toBeLessThanOrEqual(24);
+  // The current Investor-derived priority treatment is a 36px framed icon,
+  // not the older unframed 20–24px glyph the stale regression expected.
+  expect(layout.priorityIconWidth).toBeGreaterThanOrEqual(35);
+  expect(layout.priorityIconWidth).toBeLessThanOrEqual(37);
+  expect(layout.priorityIconHeight).toBeGreaterThanOrEqual(35);
+  expect(layout.priorityIconHeight).toBeLessThanOrEqual(37);
   expect(layout.overflow).toBeLessThanOrEqual(2);
 });

@@ -65,29 +65,29 @@ export default function WorkspaceAccount({
       gsap.set(menu.current, {
         autoAlpha: open ? 1 : 0,
         y: 0,
-        scale: 1,
         pointerEvents: open ? 'auto' : 'none',
       });
       return () => gsap.killTweensOf(menu.current);
     }
 
     if (open) {
+      // Investor's account popover has fixed geometry. Animate position and
+      // opacity only so its 260px contract does not briefly shrink mid-open.
       gsap.fromTo(menu.current,
-        { autoAlpha: 0, y: -6, scale: 0.985, pointerEvents: 'none' },
+        { autoAlpha: 0, y: -6, pointerEvents: 'none' },
         {
           autoAlpha: 1,
           y: 0,
-          scale: 1,
           pointerEvents: 'auto',
           duration: 0.16,
           ease: 'power2.out',
           overwrite: 'auto',
+          clearProps: 'transform',
         });
     } else {
       gsap.to(menu.current, {
         autoAlpha: 0,
         y: -4,
-        scale: 0.99,
         pointerEvents: 'none',
         duration: 0.11,
         ease: 'power1.in',
