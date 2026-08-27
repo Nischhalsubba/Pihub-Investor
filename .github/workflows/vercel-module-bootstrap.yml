@@ -57,7 +57,6 @@ jobs:
                   buildCommand: "npm run build",
                   outputDirectory: "dist",
                   publicSource: true,
-                  sourceFilesOutsideRootDirectory: true,
                   enableAffectedProjectsDeployments: true
                 }' > /tmp/vercel-project-body.json
               curl --fail-with-body -sS -X POST \
@@ -71,9 +70,8 @@ jobs:
               exit 1
             fi
 
-            # Always enforce the monorepo settings. Every independent module
-            # imports /packages outside its Root Directory, so excluding those
-            # files would deploy the right project name with the wrong source.
+            # Always enforce the monorepo settings after creation. Every
+            # independent module imports /packages outside its Root Directory.
             jq -n \
               --arg root "$root_directory" \
               '{
@@ -127,7 +125,8 @@ jobs:
             echo "Connecting and deploying $project from the repository root"
 
             # Upload the whole monorepo. The Vercel project's Root Directory
-            # then selects its application while still allowing shared packages.
+            # selects its app while sourceFilesOutsideRootDirectory keeps the
+            # shared /packages contract available to Vite.
             npx --yes vercel@latest git connect --yes \
               --cwd . --project "$project" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN" || true
             npx --yes vercel@latest deploy --prod --force --yes \
