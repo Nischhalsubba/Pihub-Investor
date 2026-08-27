@@ -6,31 +6,36 @@
       "project": "pihub-investor",
       "rootDirectory": ".",
       "vercelConfig": "vercel.json",
-      "productionUrl": "https://pihub-investor.vercel.app"
+      "productionUrl": "https://pihub-investor.vercel.app",
+      "sourceFilesOutsideRootDirectory": false
     },
     "borrower": {
       "project": "pihub-borrower",
       "rootDirectory": "apps/borrower",
       "vercelConfig": "apps/borrower/vercel.json",
-      "productionUrl": "https://pihub-borrower-nischhalsubbas-projects.vercel.app"
+      "productionUrl": "https://pihub-borrower-nischhalsubbas-projects.vercel.app",
+      "sourceFilesOutsideRootDirectory": true
     },
     "advisory": {
       "project": "pihub-advisory",
       "rootDirectory": "apps/advisory",
       "vercelConfig": "apps/advisory/vercel.json",
-      "productionUrl": "https://pihub-advisory-nischhalsubbas-projects.vercel.app"
+      "productionUrl": "https://pihub-advisory-nischhalsubbas-projects.vercel.app",
+      "sourceFilesOutsideRootDirectory": true
     },
     "admin": {
       "project": "pihub-admin",
       "rootDirectory": "apps/admin",
       "vercelConfig": "apps/admin/vercel.json",
-      "productionUrl": "https://pihub-admin-nischhalsubbas-projects.vercel.app"
+      "productionUrl": "https://pihub-admin-nischhalsubbas-projects.vercel.app",
+      "sourceFilesOutsideRootDirectory": true
     },
     "access": {
       "project": "pihub-access",
       "rootDirectory": "apps/access",
       "vercelConfig": "apps/access/vercel.json",
-      "productionUrl": "https://pihub-access-nischhalsubbas-projects.vercel.app"
+      "productionUrl": "https://pihub-access-nischhalsubbas-projects.vercel.app",
+      "sourceFilesOutsideRootDirectory": true
     }
   }
 }
