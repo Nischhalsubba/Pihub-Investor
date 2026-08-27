@@ -70,8 +70,10 @@ jobs:
               exit 1
             fi
 
-            # Always enforce the monorepo settings after creation. Every
-            # independent module imports /packages outside its Root Directory.
+            # Every independent module imports /packages outside its Root
+            # Directory and must remain publicly reachable so the central PiHub
+            # login can perform the cross-origin handoff. Vercel Authentication
+            # on these apps blocks the product before PiHub auth can run.
             jq -n \
               --arg root "$root_directory" \
               '{
@@ -81,7 +83,8 @@ jobs:
                 buildCommand: "npm run build",
                 outputDirectory: "dist",
                 sourceFilesOutsideRootDirectory: true,
-                enableAffectedProjectsDeployments: true
+                enableAffectedProjectsDeployments: true,
+                ssoProtection: null
               }' > /tmp/vercel-project-body.json
             curl --fail-with-body -sS -X PATCH \
               -H "Authorization: Bearer $VERCEL_TOKEN" \
@@ -124,13 +127,15 @@ jobs:
             project="$1"
             echo "Connecting and deploying $project from the repository root"
 
-            # Upload the whole monorepo. The Vercel project's Root Directory
-            # selects its app while sourceFilesOutsideRootDirectory keeps the
-            # shared /packages contract available to Vite.
-            npx --yes vercel@latest git connect --yes \
-              --cwd . --project "$project" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN" || true
-            npx --yes vercel@latest deploy --prod --force --yes \
+            # Link the repository root to each Vercel project in turn. The
+            # project's Root Directory selects the app while the full monorepo
+            # upload keeps shared /packages available to the build.
+            npx --yes vercel@latest link --yes \
               --cwd . --project "$project" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
+            npx --yes vercel@latest git connect --yes \
+              --cwd . --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN" || true
+            npx --yes vercel@latest deploy --prod --force --yes \
+              --cwd . --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
           }
 
           # Investor intentionally remains the repository-root project; its root
@@ -141,7 +146,7 @@ jobs:
           deploy_project pihub-admin
           deploy_project pihub-access
 
-      - name: Verify project root directories and shared source access
+      - name: Verify project roots, shared source access and public handoff state
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
@@ -151,11 +156,13 @@ jobs:
             project="$1"
             expected_root="$2"
             expected_outside="$3"
+            expected_sso="$4"
             payload="$(curl --fail-with-body -sS \
               -H "Authorization: Bearer $VERCEL_TOKEN" \
               "https://api.vercel.com/v9/projects/$project?teamId=$VERCEL_TEAM_ID")"
             actual_root="$(printf '%s' "$payload" | jq -r '.rootDirectory // "."')"
             actual_outside="$(printf '%s' "$payload" | jq -r '.sourceFilesOutsideRootDirectory // false')"
+            actual_sso="$(printf '%s' "$payload" | jq -r 'if .ssoProtection == null then "false" else "true" end')"
 
             if [ "$actual_root" != "$expected_root" ]; then
               echo "::error::$project rootDirectory is '$actual_root', expected '$expected_root'."
@@ -165,11 +172,15 @@ jobs:
               echo "::error::$project sourceFilesOutsideRootDirectory is '$actual_outside', expected '$expected_outside'."
               exit 1
             fi
-            echo "$project -> root=$actual_root outsideRoot=$actual_outside"
+            if [ "$actual_sso" != "$expected_sso" ]; then
+              echo "::error::$project Vercel Authentication state is '$actual_sso', expected '$expected_sso'."
+              exit 1
+            fi
+            echo "$project -> root=$actual_root outsideRoot=$actual_outside vercelAuth=$actual_sso"
           }
 
-          verify_project pihub-investor . false
-          verify_project pihub-borrower apps/borrower true
-          verify_project pihub-advisory apps/advisory true
-          verify_project pihub-admin apps/admin true
-          verify_project pihub-access apps/access true
+          verify_project pihub-investor . false false
+          verify_project pihub-borrower apps/borrower true false
+          verify_project pihub-advisory apps/advisory true false
+          verify_project pihub-admin apps/admin true false
+          verify_project pihub-access apps/access true false
