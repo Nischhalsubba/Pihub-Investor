@@ -1,5 +1,0 @@
-/* Advisory owns transaction/execution composition only.
-   All visual tokens, palette, typography, spacing, controls and shell geometry
-   come from packages/ui/src/investor-design-system.css.
-   Wide-dashboard sizing intentionally inherits the production Investor canvas
-   through packages/ui/src/investor-base.css. */
