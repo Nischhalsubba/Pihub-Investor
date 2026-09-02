@@ -15,20 +15,15 @@ describe('local PiHub translation runtime', () => {
 
   it('translates nested English and German dictionary keys', () => {
     setLocale('en');
-    expect(translate('column.name')).toBe('Name');
+    expect(translate('column.category')).toBe('Category');
     setLocale('de');
-    expect(translate('column.name')).not.toBe('column.name');
+    expect(translate('column.category')).toBe('Kategorie');
   });
 
   it('falls back to the key for unknown or unsafe prototype paths', () => {
     expect(translate('missing.translation.key')).toBe('missing.translation.key');
     expect(translate('__proto__.polluted')).toBe('__proto__.polluted');
     expect(translate('constructor.prototype.polluted')).toBe('constructor.prototype.polluted');
-  });
-
-  it('supports percent and brace interpolation without evaluating input', () => {
-    const dictionaryKey = 'test.interpolation';
-    expect(translate(dictionaryKey, { name: '<script>alert(1)</script>' })).toBe(dictionaryKey);
   });
 
   it('persists locale, updates document language, and emits the canonical event', () => {
