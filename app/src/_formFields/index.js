@@ -5,7 +5,7 @@ import Multiselect from 'react-widgets/lib/Multiselect';
 import 'react-widgets/dist/css/react-widgets.css';
 import Dropzone from 'react-dropzone';
 import Translate from '../i18n/Translate';
-import counterpart from 'counterpart';
+import { translate } from '../_utils/locale';
 import InputRange from 'react-input-range';
 
 const getFieldId = (input, id) => id || (input && input.name ? `field-${input.name.replace(/[^a-zA-Z0-9_-]/g, '-')}` : undefined);
@@ -19,11 +19,7 @@ const FieldError = ({ fieldId, meta }) => {
 
 const localizedSelectPlaceholder = placeholder => {
   if (typeof placeholder === 'string' && placeholder && placeholder !== 'select' && placeholder !== 'select tags') return placeholder;
-  try {
-    return counterpart.translate('placeholder.select');
-  } catch (error) {
-    return 'Select';
-  }
+  return translate('placeholder.select') || 'Select';
 };
 
 export const inputField = ({ input, label, type, className, id, placeholder, meta, ...rest }) => {
@@ -160,7 +156,7 @@ export const renderDropzoneField = ({ input, name, id, meta }) => {
             {...getRootProps({
               className: 'file-uploader file-uploader--small dropzone',
               role: 'button',
-              'aria-label': counterpart.translate('label.fileupload'),
+              'aria-label': translate('label.fileupload'),
               'aria-invalid': invalid || undefined,
               'aria-describedby': invalid ? getErrorId(fieldId) : undefined
             })}
@@ -182,14 +178,7 @@ export const radioButton = ({ input, label, className, meta }) => {
   const valueKey = String(input.value === undefined ? '' : input.value).replace(/[^a-zA-Z0-9_-]/g, '-');
   const fieldId = `${input.name}-${valueKey || 'option'}`;
   const invalid = hasError(meta);
-  let accessibleLabel = label;
-  if (!accessibleLabel) {
-    try {
-      accessibleLabel = input.value === 'true' ? counterpart.translate('label.yes') : input.value === 'false' ? counterpart.translate('label.no') : input.value;
-    } catch (error) {
-      accessibleLabel = input.value;
-    }
-  }
+  const accessibleLabel = label || (input.value === 'true' ? translate('label.yes') : input.value === 'false' ? translate('label.no') : input.value);
   return (
     <span className="radio-control">
       <input
