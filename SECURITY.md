@@ -16,12 +16,13 @@ PiHub Investor treats authentication, authorization, financial integrity, depend
 The first blocking production dependency audit identified:
 
 - React Router advisories through the aliased `react-router-dom-v6@6.30.1` path.
-- An unused direct `counterpart@0.18.6` dependency with an unfixed prototype-pollution advisory.
+- `counterpart@0.18.6`, which was used as a narrow English/German dictionary runtime and has an unfixed prototype-pollution advisory.
 
 The security baseline remediation:
 
 - upgraded the React Router v6 alias to `react-router-dom@6.30.6` using npm so package-lock integrity and transitive resolution were regenerated normally;
-- removed the unused `counterpart` dependency instead of waiving its no-fix advisory;
+- removed `counterpart` and replaced its small runtime role with a local PiHub translator that uses the existing English/German dictionaries, rejects unsafe prototype-path segments, supports the interpolation/plural behavior needed by the application, and falls back safely to English;
+- changed the i18n architecture check so vulnerable or deprecated translation runtimes, including `counterpart`, cannot be silently reintroduced;
 - verified the resulting production dependency graph with the blocking audit before committing the regenerated lockfile.
 
 Do not hand-edit `package-lock.json`, use broad `npm audit fix --force`, or suppress production vulnerability findings merely to make CI green.
