@@ -37,14 +37,14 @@ describe('authToken helpers', () => {
   test('recognizes expired and near-expiry JWTs', () => {
     const now = 2_000_000;
     expect(isTokenExpired(makeToken({ exp: 1 }), now)).toBe(true);
-    expect(isTokenExpired(makeToken({ exp: 2005 }), now)).toBe(false);
-    expect(isTokenExpired(makeToken({ exp: 2.02 }), now)).toBe(true);
+    expect(isTokenExpired(makeToken({ exp: 2040 }), now)).toBe(false);
+    expect(isTokenExpired(makeToken({ exp: 2020 }), now)).toBe(true);
   });
 
   test('rejects a JWT that is not valid yet beyond clock skew', () => {
     const now = 2_000_000;
     expect(isTokenNotYetValid(makeToken({ nbf: 2100 }), now)).toBe(true);
-    expect(isTokenNotYetValid(makeToken({ nbf: 2.02 }), now)).toBe(false);
+    expect(isTokenNotYetValid(makeToken({ nbf: 2020 }), now)).toBe(false);
   });
 
   test('accepts opaque bearer tokens for server-side validation', () => {
