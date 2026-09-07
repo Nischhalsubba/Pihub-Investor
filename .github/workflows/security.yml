@@ -37,7 +37,7 @@ jobs:
           cache: npm
           cache-dependency-path: app/package-lock.json
       - name: Install locked dependencies
-        run: npm ci --legacy-peer-deps --ignore-scripts --no-audit --no-fund
+        run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Audit high-severity dependencies
         run: npm audit --audit-level=high
 
