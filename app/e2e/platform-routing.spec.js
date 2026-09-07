@@ -45,6 +45,11 @@ test('one access surface pre-fills every demo application consistently', async (
 });
 
 test('workspace launches cross origins without credentials or tokens in URLs', async ({ page }) => {
+  // This test validates handoff URL security, not transition motion. Disable non-essential
+  // motion so WebKit cannot race an auth-surface entrance while Playwright scrolls the
+  // submit control into view on the taller Admin access variant.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+
   const cases = [
     { id: 'borrower', route: '/login/borrower', origin: ORIGINS.borrower, button: 'Open Borrower' },
     { id: 'advisory', route: '/login/advisory', origin: ORIGINS.advisory, button: 'Open Advisory' },
@@ -54,7 +59,11 @@ test('workspace launches cross origins without credentials or tokens in URLs', a
   for (const item of cases) {
     await page.route(`${item.origin}/**`, route => route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>PiHub handoff test</title>' }));
     await page.goto(item.route);
-    await page.getByRole('button', { name: item.button }).click();
+    const launch = page.getByRole('button', { name: item.button });
+    await expect(launch).toBeVisible();
+    await launch.scrollIntoViewIfNeeded();
+    await expect(launch).toBeInViewport();
+    await launch.click();
     await expect(page).toHaveURL(new RegExp(`^${item.origin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/\\?`));
     const launched = new URL(page.url());
     expect(launched.searchParams.get('pihub_demo_access')).toBe(item.id);
