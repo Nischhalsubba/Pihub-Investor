@@ -41,7 +41,7 @@ The production application lives in `/app`. The repository-level `vercel.json` i
 ```bash
 git clone https://github.com/Nischhalsubba/Pihub-Investor.git
 cd Pihub-Investor/app
-npm ci --legacy-peer-deps
+npm ci
 npm run dev
 ```
 
