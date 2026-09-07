@@ -24,6 +24,8 @@ const toText = value => {
 };
 
 class ViewProduct extends Component {
+  state = { actionPending: null };
+
   componentDidMount() {
     if (!this.props.location.state) { this.props.history.push('/products'); return; }
     this.props.getProductById(this.props.location.state.id);
@@ -69,10 +71,35 @@ class ViewProduct extends Component {
     return documents.filter(Boolean).map((doc, index) => <button className="document-row" type="button" key={`${toText(doc.path) || toText(doc.file_name) || 'document'}-${index}`} onClick={() => this.props.downloadToken(doc.path, doc.file_name, doc.file_type)}><span className="document-icon" aria-hidden="true"><i className="bx bx-file" /></span><span className="document-copy"><strong>{toText(doc.file_name) || `File ${index + 1}`}</strong><small>{toText(doc.file_type) || 'Document'}</small></span><i className="bx bx-download document-download" aria-hidden="true" /></button>);
   };
 
-  handleDelete = id => {
+  handleDelete = async id => {
+    if (this.state.actionPending) return;
     const message = Translator.getLocale() === 'de' ? 'Dieses Produkt wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.' : 'Delete this product? This action cannot be undone.';
     if (!window.confirm(message)) return;
-    this.props.deleteProduct(id, () => this.props.history.push('/products'));
+
+    this.setState({ actionPending: 'delete' });
+    try {
+      const success = await this.props.deleteProduct(id);
+      if (success) this.props.history.push('/products');
+    } finally {
+      this.setState({ actionPending: null });
+    }
+  };
+
+  handleStatusAction = async (id, action) => {
+    if (this.state.actionPending) return;
+    const isGerman = Translator.getLocale() === 'de';
+    if (action === 'postpone') {
+      const message = isGerman ? 'Dieses Produkt verschieben? Es ist bis zur Reaktivierung nicht verfügbar.' : 'Postpone this product? It will be unavailable until it is reactivated.';
+      if (!window.confirm(message)) return;
+    }
+
+    this.setState({ actionPending: action });
+    try {
+      const success = await this.props.postponeProduct(id, action);
+      if (success) this.props.history.push('/products');
+    } finally {
+      this.setState({ actionPending: null });
+    }
   };
 
   activityItems = product => {
@@ -95,6 +122,7 @@ class ViewProduct extends Component {
     const isGerman = Translator.getLocale() === 'de';
     const title = toText(product_title) || (isGerman ? 'Produktdetail' : 'Product detail');
     const normalizedStatus = toText(status);
+    const { actionPending } = this.state;
 
     return <Fragment>
       {normalizedStatus === 'deleted' ? <div className="alert alert-danger" role="status"><Translate content="label.deletedmsg" /></div> : null}
@@ -114,7 +142,7 @@ class ViewProduct extends Component {
 
       <ActivityTimeline title={isGerman ? 'Aktivitätsverlauf' : 'Opportunity activity'} description={isGerman ? 'Status- und Prüfereignisse für diese Gelegenheit.' : 'Status and screening events associated with this opportunity.'} items={this.activityItems(product)} />
 
-      {normalizedStatus !== 'deleted' ? <section className="detail-actions" aria-label="Product actions"><div><strong>{isGerman ? 'Produktaktionen' : 'Product actions'}</strong><span>{isGerman ? 'Statusänderungen wirken sich auf die Verfügbarkeit dieses Produkts aus.' : 'Status changes affect the availability of this product.'}</span></div><div className="detail-actions-buttons">{normalizedStatus !== 'postponed' ? <button className="btn btn-warning" type="button" onClick={() => this.props.postponeProduct(id, 'postpone', () => this.props.history.push('/products'))}><Translate content="button.postpone" /></button> : <button className="btn btn-secondary" type="button" onClick={() => this.props.postponeProduct(id, 'undo_postpone', () => this.props.history.push('/products'))}><Translate content="button.undopostpone" /></button>}<button className="btn btn-danger" type="button" onClick={() => this.handleDelete(id)}><Translate content="button.delete" /></button></div></section> : null}
+      {normalizedStatus !== 'deleted' ? <section className="detail-actions" aria-label="Product actions" aria-busy={actionPending ? 'true' : 'false'}><div><strong>{isGerman ? 'Produktaktionen' : 'Product actions'}</strong><span>{isGerman ? 'Statusänderungen wirken sich auf die Verfügbarkeit dieses Produkts aus.' : 'Status changes affect the availability of this product.'}</span></div><div className="detail-actions-buttons">{normalizedStatus !== 'postponed' ? <button className="btn btn-warning" type="button" disabled={Boolean(actionPending)} onClick={() => this.handleStatusAction(id, 'postpone')}><Translate content="button.postpone" /></button> : <button className="btn btn-secondary" type="button" disabled={Boolean(actionPending)} onClick={() => this.handleStatusAction(id, 'undo_postpone')}><Translate content="button.undopostpone" /></button>}<button className="btn btn-danger" type="button" disabled={Boolean(actionPending)} onClick={() => this.handleDelete(id)}><Translate content="button.delete" /></button></div></section> : null}
       {id ? <div className="detail-related"><RequestedByList id={id} name={title} /></div> : null}
     </Fragment>;
   }
