@@ -2,6 +2,8 @@ import {
   normalizeToken,
   decodeJwtPayload,
   isTokenExpired,
+  isTokenNotYetValid,
+  isTokenUsable,
   getStoredToken,
   setStoredToken,
   clearStoredToken
@@ -32,9 +34,21 @@ describe('authToken helpers', () => {
     expect(decodeJwtPayload(token)).toMatchObject({ sub: 'demo-investor' });
   });
 
-  test('recognizes expired JWTs', () => {
-    expect(isTokenExpired(makeToken({ exp: 1 }))).toBe(true);
-    expect(isTokenExpired(makeToken({ exp: 4102444800 }))).toBe(false);
+  test('recognizes expired and near-expiry JWTs', () => {
+    const now = 2_000_000;
+    expect(isTokenExpired(makeToken({ exp: 1 }), now)).toBe(true);
+    expect(isTokenExpired(makeToken({ exp: 2040 }), now)).toBe(false);
+    expect(isTokenExpired(makeToken({ exp: 2020 }), now)).toBe(true);
+  });
+
+  test('rejects a JWT that is not valid yet beyond clock skew', () => {
+    const now = 2_000_000;
+    expect(isTokenNotYetValid(makeToken({ nbf: 2100 }), now)).toBe(true);
+    expect(isTokenNotYetValid(makeToken({ nbf: 2020 }), now)).toBe(false);
+  });
+
+  test('accepts opaque bearer tokens for server-side validation', () => {
+    expect(isTokenUsable('opaque-session-token', 2_000_000)).toBe(true);
   });
 
   test('stores a bearer token only for the current browser session', () => {
@@ -44,6 +58,12 @@ describe('authToken helpers', () => {
     expect(sessionStorage.getItem('pihub-auth-session-v2')).toBe('2');
     expect(localStorage.getItem('token')).toBeNull();
     expect(getStoredToken()).toBe(token);
+  });
+
+  test('does not store a token that is already expired or not active', () => {
+    expect(setStoredToken(makeToken({ exp: 1 }))).toBe(false);
+    expect(setStoredToken(makeToken({ nbf: 4102444800 }))).toBe(false);
+    expect(sessionStorage.getItem('token')).toBeNull();
   });
 
   test('does not resurrect a legacy persistent token', () => {

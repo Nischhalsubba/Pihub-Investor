@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { AUTH_USER } from '../../actions/types';
-import { clearStoredToken, getStoredToken, isTokenExpired, normalizeToken } from '../../_utils/authToken';
+import { clearStoredToken, getStoredToken, isTokenUsable, normalizeToken } from '../../_utils/authToken';
 
 export default ChildComponent => {
   class ComposedComponent extends Component {
@@ -15,7 +15,7 @@ export default ChildComponent => {
         reduxToken &&
         storedToken &&
         reduxToken === storedToken &&
-        !isTokenExpired(reduxToken)
+        isTokenUsable(reduxToken)
       );
     }
 
