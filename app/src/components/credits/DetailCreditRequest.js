@@ -10,7 +10,7 @@ import { showToast } from '../../_utils/workspaceEvents';
 import Translator from '../../i18n/Translate';
 
 class DetailCreditRequest extends Component {
-  state = { detail: null, refresh: false };
+  state = { detail: null, refresh: false, decisionPending: false };
 
   componentDidMount() {
     if (!this.props.location.state) { this.props.history.push('/products'); return; }
@@ -32,15 +32,22 @@ class DetailCreditRequest extends Component {
     if (pId && aId) this.props.getApplicationDetail(pId, aId);
   };
 
-  changeStatus = status => {
+  changeStatus = async status => {
+    if (this.state.decisionPending) return;
     const isGerman = Translator.getLocale() === 'de';
     const message = status === 'accepted' ? (isGerman ? 'Diese Kreditanfrage annehmen?' : 'Accept this credit request?') : (isGerman ? 'Diese Kreditanfrage ablehnen?' : 'Reject this credit request?');
     if (!window.confirm(message)) return;
+
     const { pId, aId } = this.getIds();
-    this.props.changeStatus(pId, aId, status, () => {
-      this.setState({ refresh: !this.state.refresh });
+    this.setState({ decisionPending: true });
+    try {
+      const success = await this.props.changeStatus(pId, aId, status);
+      if (!success) return;
+      this.setState(state => ({ refresh: !state.refresh }));
       showToast(status === 'accepted' ? 'Credit request accepted and moved into the portfolio workflow.' : 'Credit request rejected.', { type: status === 'accepted' ? 'success' : 'info', title: 'Decision recorded' });
-    });
+    } finally {
+      this.setState({ decisionPending: false });
+    }
   };
 
   activityItems = detail => {
@@ -60,13 +67,14 @@ class DetailCreditRequest extends Component {
     if (!detail) return <div className="data-loading" role="status" aria-live="polite"><Translate content="placeholder.justASecond" /></div>;
     const isGerman = Translator.getLocale() === 'de';
     const { status } = detail;
+    const { decisionPending } = this.state;
 
     return <Fragment>
       <CreditInfo location={this.props.location} detail={detail} />
       <ActivityTimeline title={isGerman ? 'Entscheidungsverlauf' : 'Credit activity'} description={isGerman ? 'Zeitlicher Verlauf dieser Kreditanfrage.' : 'Decision and deadline events for this credit request.'} items={this.activityItems(detail)} />
-      <section className="decision-panel" aria-label={isGerman ? 'Entscheidung' : 'Decision'}>
+      <section className="decision-panel" aria-label={isGerman ? 'Entscheidung' : 'Decision'} aria-busy={decisionPending ? 'true' : 'false'}>
         <div className="decision-copy"><span>{isGerman ? 'Entscheidung' : 'Decision'}</span><strong>{isGerman ? 'Kreditanfrage prüfen' : 'Review credit request'}</strong><p>{isGerman ? 'Bestätigen Sie die Anfrage erst nach Prüfung der Beträge, Fristen, Sicherheiten und Unterlagen.' : 'Confirm the request only after reviewing amounts, deadlines, collateral and documents.'}</p></div>
-        <div className="decision-actions"><button className="btn btn-danger" type="button" disabled={status === 'rejected'} onClick={() => this.changeStatus('rejected')}><i className="bx bx-x" aria-hidden="true" /><Translate content="label.reject" /></button><button className="btn btn-primary" type="button" disabled={status === 'accepted'} onClick={() => this.changeStatus('accepted')}><i className="bx bx-check" aria-hidden="true" /><Translate content="label.accept" /></button></div>
+        <div className="decision-actions"><button className="btn btn-danger" type="button" disabled={decisionPending || status === 'rejected'} onClick={() => this.changeStatus('rejected')}><i className="bx bx-x" aria-hidden="true" /><Translate content="label.reject" /></button><button className="btn btn-primary" type="button" disabled={decisionPending || status === 'accepted'} onClick={() => this.changeStatus('accepted')}><i className="bx bx-check" aria-hidden="true" /><Translate content="label.accept" /></button></div>
       </section>
     </Fragment>;
   }
