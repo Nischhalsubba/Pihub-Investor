@@ -11,6 +11,14 @@ import {
   SINGLE_PRODUCT
 } from './types';
 
+const PRODUCT_STATUS_ACTIONS = new Set(['postpone', 'undo_postpone']);
+export const isAllowedProductStatusAction = action => PRODUCT_STATUS_ACTIONS.has(action);
+
+const normalizeIdentifier = value => {
+  if (value === null || value === undefined) return '';
+  return String(value).trim();
+};
+
 const toDisplayText = value => {
   if (value === null || value === undefined) return '';
   if (typeof value === 'string' || typeof value === 'number') return String(value);
@@ -107,8 +115,8 @@ export const addProduct = (details, callback, onUploadProgress) => async dispatc
         onUploadProgress(Math.min(100, Math.round((event.loaded / event.total) * 100)));
       }
     });
-    if (response) callback();
-    return true;
+    if (response && typeof callback === 'function') callback();
+    return Boolean(response);
   } catch (error) {
     dispatch({ type: ERROR, payload: getApiErrorMessage(error, 'Unable to add product right now.') });
     return false;
@@ -156,8 +164,8 @@ export const updateProduct = (details, id, callback, onUploadProgress) => async 
         }
       }
     );
-    if (response) callback();
-    return true;
+    if (response && typeof callback === 'function') callback();
+    return Boolean(response);
   } catch (error) {
     dispatch({ type: ERROR, payload: getApiErrorMessage(error, 'Unable to edit product right now.') });
     return false;
@@ -166,20 +174,38 @@ export const updateProduct = (details, id, callback, onUploadProgress) => async 
 
 export const deleteProduct = (id, callback) => async dispatch => {
   dispatch({ type: CLEAR_ERROR });
+  const productId = normalizeIdentifier(id);
+  if (!productId) {
+    dispatch({ type: ERROR, payload: 'A product identifier is required before deletion.' });
+    return false;
+  }
+
   try {
-    const response = await client.delete(`${routes.addProduct}/${encodeURIComponent(id)}`);
-    if (response) callback();
+    const response = await client.delete(`${routes.addProduct}/${encodeURIComponent(productId)}`);
+    if (!response) return false;
+    if (typeof callback === 'function') callback();
+    return true;
   } catch (error) {
     dispatch({ type: ERROR, payload: getApiErrorMessage(error, 'Unable to delete product right now.') });
+    return false;
   }
 };
 
 export const postponeProduct = (id, status, callback) => async dispatch => {
   dispatch({ type: CLEAR_ERROR });
+  const productId = normalizeIdentifier(id);
+  if (!productId || !isAllowedProductStatusAction(status)) {
+    dispatch({ type: ERROR, payload: 'This product status change is incomplete or invalid.' });
+    return false;
+  }
+
   try {
-    const response = await client.put(`${routes.products}/${encodeURIComponent(id)}/status`, { action: status });
-    if (response) callback();
+    const response = await client.put(`${routes.products}/${encodeURIComponent(productId)}/status`, { action: status });
+    if (!response) return false;
+    if (typeof callback === 'function') callback();
+    return true;
   } catch (error) {
     dispatch({ type: ERROR, payload: getApiErrorMessage(error, 'Unable to update product status right now.') });
+    return false;
   }
 };
