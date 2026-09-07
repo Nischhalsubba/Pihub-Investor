@@ -34,9 +34,22 @@ export const signin = ({ email, password }, callback) => async dispatch => {
       return;
     }
 
+    // Storage performs the canonical browser-side validity check. Do not put a
+    // token into Redux unless the same token was accepted for the session; this
+    // keeps the protected route tree and request interceptors on one source of
+    // truth for expiry/not-before handling.
+    if (!setStoredToken(token)) {
+      clearStoredToken();
+      dispatch({ type: AUTH_USER, payload: undefined });
+      dispatch({
+        type: AUTH_ERROR,
+        payload: 'The server returned a session that is expired or not active yet. Please sign in again.'
+      });
+      return;
+    }
+
     const payload = decodeJwtPayload(token);
     const scopes = payload && Array.isArray(payload.scopes) ? payload.scopes : [];
-    setStoredToken(token);
     dispatch({ type: SCOPE, payload: scopes[0] !== 'unconfirmed_scope' });
     dispatch({ type: AUTH_USER, payload: token });
   } catch (error) {
