@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useMemo } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import reduxThunk from 'redux-thunk';
+import { thunk as reduxThunk } from 'redux-thunk';
 import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom-v6';
 import { getStoredToken } from './_utils/authToken';
 import { initializeLocale } from './_utils/locale';
