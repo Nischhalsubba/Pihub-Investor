@@ -1,4 +1,4 @@
-name: Remove unused legacy vendor files
+name: Refresh legacy vendor assets
 
 on:
   push:
@@ -9,35 +9,35 @@ permissions:
   contents: write
 
 jobs:
-  cleanup:
-    if: ${{ !contains(github.event.head_commit.message, '[vendor-cleanup]') }}
+  refresh-vendor:
+    if: ${{ !contains(github.event.head_commit.message, '[vendor-refresh]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: chore/remove-unused-legacy-vendor-2026-09-13
-      - name: Verify legacy vendor files are unreferenced
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install maintained compatible vendor releases
         shell: bash
         run: |
           set -euo pipefail
-          matches="$(grep -RInE 'jquery\.js|bootstrap\.js' app \
-            --exclude='jquery.js' \
-            --exclude='bootstrap.js' \
-            --exclude-dir='node_modules' \
-            --exclude-dir='.git' || true)"
-          if [ -n "$matches" ]; then
-            echo "Legacy vendor references found; refusing automatic deletion:"
-            echo "$matches"
-            exit 1
-          fi
-      - name: Remove unused legacy vendor files
+          tmp="$(mktemp -d)"
+          cd "$tmp"
+          npm init -y >/dev/null 2>&1
+          npm install --ignore-scripts --no-audit --no-fund jquery@3.7.1 bootstrap@4.6.2 popper.js@1.16.1
+          cp node_modules/jquery/dist/jquery.js "$GITHUB_WORKSPACE/app/public/assets/js/jquery.js"
+          cp node_modules/bootstrap/dist/js/bootstrap.js "$GITHUB_WORKSPACE/app/public/assets/js/bootstrap.js"
+          cp node_modules/bootstrap/dist/css/bootstrap.min.css "$GITHUB_WORKSPACE/app/public/assets/css/bootstrap.min.css"
+          cp node_modules/popper.js/dist/umd/popper.min.js "$GITHUB_WORKSPACE/app/public/assets/js/popper.min.js"
+      - name: Commit refreshed vendor assets
         run: |
-          rm -f app/public/assets/js/jquery.js app/public/assets/js/bootstrap.js
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A app/public/assets/js/jquery.js app/public/assets/js/bootstrap.js
+          git add app/public/assets/js/jquery.js app/public/assets/js/bootstrap.js app/public/assets/css/bootstrap.min.css app/public/assets/js/popper.min.js
           if git diff --cached --quiet; then
             exit 0
           fi
-          git commit -m "chore: remove unused legacy vendor scripts [vendor-cleanup]"
+          git commit -m "fix: refresh legacy vendor assets [vendor-refresh]"
           git push
