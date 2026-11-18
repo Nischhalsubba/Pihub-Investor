@@ -63,3 +63,7 @@ Vercel project: `pihub-investor`
 Production branch: `main`
 
 Repository Root Directory: `.`. The root `vercel.json` delegates installation/build/output to `/app`, so other PiHub applications cannot accidentally be deployed from this repository.
+
+## Maintainer review checklist
+
+Before changing critical product behavior or public claims, use the [Investor decision evidence protocol](docs/INVESTOR_DECISION_AUDIT.md) to record evidence, verification and rollback expectations.
